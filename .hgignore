@@ -1,0 +1,10 @@
+
+
+syntax: glob
+session*
+url/*
+elpa/*
+ac-comphist.dat
+auto-save-list/*
+*~
+regexp:.*\#.*#$

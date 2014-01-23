@@ -1,0 +1,70 @@
+;;;; Emacs Bookmark Format Version 1 ;;;;
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("phobos"
+ (filename . "/usr/include/dmd/phobos/")
+ (front-context-string . "std\n  -rw-r--r--")
+ (rear-context-string . "96 Jul  3  2013 ")
+ (position . 364))
+("decodeToken.py"
+ (filename . "~/pysbe/decodeToken.py")
+ (front-context-string)
+ (rear-context-string . "ion()\n    break\n")
+ (position . 8553))
+("TestSchema.xml"
+ (filename . "~/repos/simple-binary-encoding/examples/resources/TestSchema.xml")
+ (front-context-string . "<?xml version=\"1")
+ (rear-context-string)
+ (position . 2))
+("gtd.org"
+ (filename . "~/org/gtd.org")
+ (front-context-string . "* Tasks\n** TODO ")
+ (rear-context-string . "[ ] John Sharp\n\n")
+ (position . 1345))
+("org-capture-last-stored-marker"
+ (filename . "~/org/gtd.org")
+ (front-context-string . "** TODO \n\n* Task")
+ (rear-context-string . " [ ] John Sharp\n")
+ (position . 1344))
+("org-refile-last-stored"
+ (filename . "~/org/gtd.org")
+ (front-context-string . "** TODO \n\n* Task")
+ (rear-context-string . " [ ] John Sharp\n")
+ (position . 1344))
+("org-capture-last-stored"
+ (filename . "~/org/journal.org")
+ (front-context-string . "**** Bla\nEntered")
+ (rear-context-string . "14-01-13 Monday\n")
+ (position . 2564))
+("notes.rst"
+ (filename . "~/notes.rst")
+ (front-context-string)
+ (rear-context-string)
+ (position . 1))
+(".bashrc"
+ (filename . "~/.bashrc")
+ (front-context-string . "# ~/.bashrc: exe")
+ (rear-context-string)
+ (position . 1))
+("lock-free-training"
+ (filename . "~/lock-free-training/")
+ (front-context-string)
+ (rear-context-string . "96 May  9 21:59 ")
+ (position . 1114))
+("init.el"
+ (filename . "~/.emacs.d/init.el")
+ (front-context-string . "\n\n\n\n\n(defun rebo")
+ (rear-context-string . "C-c s\") 'ispell)")
+ (position . 2321))
+("skye"
+ (filename . "/ssh2:andy@skye:/")
+ (front-context-string . "..\n  -rw-rw-r--@")
+ (rear-context-string . "34 Aug 17 17:23 ")
+ (position . 146))
+("TODO.org"
+ (filename . "~/TODO.org")
+ (front-context-string . "*** [#A] Gradle\n")
+ (rear-context-string . "r\n    Cool huh\n\n")
+ (position . 90))
+)
