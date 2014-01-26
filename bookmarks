@@ -2,7 +2,19 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("phobos"
+(("posix"
+ (filename . "/usr/include/dmd/druntime/import/core/sys/posix/")
+ (front-context-string . "arpa\n  -rw-r--r-")
+ (rear-context-string . "96 Jul  3  2013 ")
+ (position . 237))
+("The date/time prompt"
+ (front-context-string . "\n8.2.1 The date/")
+ (rear-context-string . "ting timestamps\n")
+ (position . 216748)
+ (filename . "/usr/share/info/emacs-24/org")
+ (info-node . "The date/time prompt")
+ (handler . Info-bookmark-jump))
+("phobos"
  (filename . "/usr/include/dmd/phobos/")
  (front-context-string . "std\n  -rw-r--r--")
  (rear-context-string . "96 Jul  3  2013 ")
@@ -33,10 +45,10 @@
  (rear-context-string . " [ ] John Sharp\n")
  (position . 1344))
 ("org-capture-last-stored"
- (filename . "~/org/journal.org")
- (front-context-string . "**** Bla\nEntered")
- (rear-context-string . "14-01-13 Monday\n")
- (position . 2564))
+ (filename . "~/org/gtd.org")
+ (front-context-string . "** TODO Get Gen\n")
+ (rear-context-string . "he other stuff.\n")
+ (position . 2400))
 ("notes.rst"
  (filename . "~/notes.rst")
  (front-context-string)

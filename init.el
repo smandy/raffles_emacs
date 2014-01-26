@@ -6,7 +6,24 @@
 
 
 
+(require 'compile)
+;; D mode compilations now respected by compilation mode..... Think Russell Winder is responsible for this.
+(add-to-list
+ 'compilation-error-regexp-alist
+ '("^\\([^ \n]+\\)(\\([0-9]+\\)): \\(?:Error\\|.\\|warnin\\(g\\)\\|remar\\(k\\)\\)"
+   1 2 nil (3 . 4)))
 
+(defun do-revert () 
+  (interactive) 
+  (revert-buffer nil 't)
+)
+
+(defun revert-buffer-with-prejudice () 
+  (interactive) 
+  (revert-buffer t t )
+)
+
+(global-set-key (kbd "C-c r")  'revert-buffer-with-prejudice)
 
 (package-initialize)
 
@@ -41,7 +58,9 @@
       (add-to-list 'alist (get-tuple-from-plist the-plist))
       (setq the-plist (cddr the-plist)))
     alist))
+
 (require 'package)
+
 (add-to-list 'package-archives 
 	     '("marmalade" .
 	       "http://marmalade-repo.org/packages/"))
@@ -49,7 +68,7 @@
 (package-initialize)
 
 (require 'color-theme)
-(color-theme-jonadabian)
+(color-theme-arjen)
 
 (global-set-key [f1] 'wg-switch-to-workgroup)
 (global-set-key [f7] 'compile)
@@ -93,9 +112,6 @@
 
 (global-set-key (kbd "C-c s") 'ispell)
 
-
-
-
 (defun reboot-python ()
   (interactive)
   (save-current-buffer
@@ -118,12 +134,16 @@
         ("j" "Journal" entry (file+datetree "~/org/journal.org")
              "* %U %?")))
 
-;(set-default-font "Ubuntu Mono:pixelsize=12:foundry=unknown:weight=normal:slant=normal:width=normal:spacing=100:scalable=true")
-;(set-default-font "Ubuntu Mono:pixelsize=16:foundry=unknown:weight=normal:slant=normal:width=normal:spacing=100:scalable=true")
-;(set-default-font "Ubuntu Mono:pixelsize=20:foundry=unknown:weight=normal:slant=normal:width=normal:spacing=100:scalable=true")
-;(set-default-font "Ubuntu Mono:pixelsize=12:foundry=unknown:weight=normal:slant=normal:width=normal:spacing=100:scalable=true")
+(set-frame-font "-misc-fixed-medium-r-normal--13-*-100-100-c-80-iso8859-8")
+(set-frame-font "-misc-fixed-medium-r-normal--14-*-75-75-c-70-iso8859-5")
+(set-frame-font "-misc-fixed-medium-r-normal--15-*-75-75-c-90-iso8859-1")
+(set-frame-font "-urw-Nimbus Mono L-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+(set-frame-font "-urw-Nimbus Mono L-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+(set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+(set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-15-*-*-*-m-0-iso10646-1")
+(set-frame-font "-misc-fixed-medium-r-normal--20-*-75-75-c-100-iso8859-3")
+(set-frame-font "-misc-fixed-medium-r-semicondensed--13-*-75-75-c-60-iso8859-15")
 
-(set-default-font "Liberation Mono:pixelsize=14")
 (add-to-list 'load-path "~/.emacs.d/python-mode")
 
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
@@ -238,7 +258,6 @@
 					; (elpy-enable)
 					; (elpy-use-ipython)
 (ido-mode 't)
-
 
 
 
