@@ -116,7 +116,8 @@
   (interactive)
   (save-current-buffer
     ; Stop it from prompting at us
-    ( let ( kill-buffer-query-functions '() )
+    ( let ( kill-buffer-query-functi;; (set-frame-font "-misc-fixed-medium-r-normal--13-*-100-100-c-80-iso8859-8")
+ons '() )
       (if (get-buffer "*Python*") (kill-buffer "*Python*") )
       (if (get-buffer "*Jython*") (kill-buffer "*Jython*") )
       ; (py-shell) todo this seems to launch a messed up ipython
@@ -134,14 +135,16 @@
         ("j" "Journal" entry (file+datetree "~/org/journal.org")
              "* %U %?")))
 
-(set-frame-font "-misc-fixed-medium-r-normal--13-*-100-100-c-80-iso8859-8")
-(set-frame-font "-misc-fixed-medium-r-normal--14-*-75-75-c-70-iso8859-5")
-(set-frame-font "-misc-fixed-medium-r-normal--15-*-75-75-c-90-iso8859-1")
-(set-frame-font "-urw-Nimbus Mono L-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")
-(set-frame-font "-urw-Nimbus Mono L-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
-(set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
-(set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-15-*-*-*-m-0-iso10646-1")
-(set-frame-font "-misc-fixed-medium-r-normal--20-*-75-75-c-100-iso8859-3")
+;; (set-frame-font "-misc-fixed-medium-r-normal--13-*-100-100-c-80-iso8859-8")
+;; (set-frame-font "-misc-fixed-medium-r-normal--14-*-75-75-c-70-iso8859-5")
+;; (set-frame-font "-misc-fixed-medium-r-normal--15-*-75-75-c-90-iso8859-1")
+;; (set-frame-font "-urw-Nimbus Mono L-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+;; (set-frame-font "-urw-Nimbus Mono L-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-15-*-*-*-m-0-iso10646-1")
+;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
+
+;; (set-frame-font "-misc-fixed-medium-r-normal--20-*-75-75-c-100-iso8859-3")
 (set-frame-font "-misc-fixed-medium-r-semicondensed--13-*-75-75-c-60-iso8859-15")
 
 (add-to-list 'load-path "~/.emacs.d/python-mode")
@@ -213,12 +216,6 @@
  )
 
 
-;; (set-default-font "Liberation Mono:pixelsize=12")
-;; (set-default-font "Liberation Mono:pixelsize=12")
-;; (set-default-font "Liberation Mono:pixelsize=12")
-;; (set-default-font "Liberation Mono:pixelsize=12")
-;; (set-default-font "Liberation Mono:pixelsize=12")
-;; (set-default-font "Liberation Mono:pixelsize=25")
 
 (add-to-list 'load-path "~/.emacs.d/python-mode")
 
