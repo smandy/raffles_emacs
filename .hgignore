@@ -10,3 +10,4 @@ auto-save-list/*
 regexp:.*\#.*#$
 bookmarks
 workgroups.el
+monky/.git/**

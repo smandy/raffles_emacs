@@ -4,7 +4,14 @@
 	     '("marmalade" .
 	       "http://marmalade-repo.org/packages/"))
 
-
+(add-to-list 'load-path "~/.emacs.d/monky")
+(require 'monky)
+;; By default monky spawns a seperate hg process for every command.
+;; This will be slow if the repo contains lot of changes.
+;; if `monky-process-type' is set to cmdserver then monky will spawn a single
+;; cmdserver and communicate over pipe.
+;; Available only on mercurial versions 1.9 or higher
+(setq monky-process-type 'cmdserver)
 
 (require 'compile)
 ;; D mode compilations now respected by compilation mode..... Think Russell Winder is responsible for this.
@@ -18,9 +25,17 @@
   (revert-buffer nil 't)
 )
 
+(require 'org-crypt)
+(org-crypt-use-before-save-magic)
+(setq org-tags-exclude-from-inheritance (quote ("crypt")))
+;; GPG key to use for encryption
+;; Either the Key ID or set to nil to use symmetric encryption.
+(setq org-crypt-key "9059B882D50776AA")
+
+
 (defun revert-buffer-with-prejudice () 
   (interactive) 
-  (revert-buffer t t )
+  (revert-buffer 't 't )
 )
 
 (global-set-key (kbd "C-c r")  'revert-buffer-with-prejudice)
@@ -28,10 +43,17 @@
 (package-initialize)
 
 (global-set-key [f1]  'wg-switch-to-workgroup)
+(global-set-key [f2]  'wg-switch-to-notes)
 (global-set-key [f7]  'compile)
 (global-set-key [f8]  'reboot-python)
 (global-set-key [f9]  'py-execute-region)
 (global-set-key [f10] 'switch-to-shell)
+
+
+(defun switch-to-notes () 
+  (interactive)
+  (switch-to-buffer "gtd.org")
+  )
 
 (defun switch-to-shell () 
   (interactive)
@@ -111,13 +133,26 @@
 (global-set-key "\C-cb" 'org-iswitchb)
 
 (global-set-key (kbd "C-c s") 'ispell)
+(global-set-key (kbd "C-c s") 'ispell)
+(global-set-key (kbd "C-c r") 'revert-buffer-with-prejudice)
+
+
+(defun do-revert () 
+  (interactive) 
+  (revert-buffer nil 't)
+)
+
+(defun revert-buffer-with-prejudice () 
+  (interactive) 
+  (revert-buffer t t )
+)
+
 
 (defun reboot-python ()
   (interactive)
   (save-current-buffer
     ; Stop it from prompting at us
-    ( let ( kill-buffer-query-functi;; (set-frame-font "-misc-fixed-medium-r-normal--13-*-100-100-c-80-iso8859-8")
-ons '() )
+    ( let ( kill-buffer-query-functions '() )
       (if (get-buffer "*Python*") (kill-buffer "*Python*") )
       (if (get-buffer "*Jython*") (kill-buffer "*Jython*") )
       ; (py-shell) todo this seems to launch a messed up ipython
@@ -139,21 +174,25 @@ ons '() )
 ;; (set-frame-font "-misc-fixed-medium-r-normal--15-*-75-75-c-90-iso8859-1")
 ;; (set-frame-font "-urw-Nimbus Mono L-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 ;; (set-frame-font "-urw-Nimbus Mono L-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-10-*-*-*-m-0-iso10646-1")
+;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-15-*-*-*-m-0-iso10646-1")
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
-
-(set-frame-font "-misc-fixed-medium-r-semicondensed--13-*-75-75-c-60-iso8859-15")
-;; (set-frame-font "-misc-fixed-medium-r-normal--20-*-75-75-c-100-iso8859-3")
-;; (set-frame-font "-misc-fixed-medium-r-normal--13-*-100-100-c-80-iso8859-8")
+;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-23-*-*-*-m-0-iso10646-1")
+;;(set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-8")
+;; (set-frame-font "-misc-fixed-medium-r-normal--11-*-100-100-c-80-iso8859-8")
+;; (set-frame-font "-misc-fixed-medium-r-normal--12-*-100-100-c-80-iso8859-8")
+;; (set-frame-font "-misc-fixed-medium-r-normal--14-*-75-75-c-100-iso8859-3")
+(set-frame-font "-misc-fixed-medium-r-normal--15-*-75-75-c-90-iso8859-16")
+;;(set-frame-font "-misc-fixed-medium-r-semicondensed--13-*-75-75-c-60-iso8859-15")
 
 (add-to-list 'load-path "~/.emacs.d/python-mode")
 
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
 (setq interpreter-mode-alist (cons '("python" . python-mode)
 				   interpreter-mode-alist))
-(autoload 'python-mode "python-mode" "Python editing mode." t
-  )
+(autoload 'python-mode "python-mode" "Python editing mode." t)
 
 (require 'ipython)
 (require 'workgroups)
@@ -201,11 +240,10 @@ ons '() )
  '(org-hide-leading-stars t)
  '(py-python-command-args (quote ("--pylab")))
  '(python-python-command "ipython --pylab")
+ '(revert-without-query (quote (".*\\.dat")))
  '(show-paren-mode t)
  '(show-paren-style (quote mixed))
  '(tool-bar-mode nil))
-
-
 
 
 (custom-set-faces
@@ -215,15 +253,12 @@ ons '() )
  ;; If there is more than one, they won't work right.
  )
 
-
-
 (add-to-list 'load-path "~/.emacs.d/python-mode")
 
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
 (setq interpreter-mode-alist (cons '("python" . python-mode)
 				   interpreter-mode-alist))
-(autoload 'python-mode "python-mode" "Python editing mode." t
-  )
+(autoload 'python-mode "python-mode" "Python editing mode." t)
 
 (require 'ipython)
 
@@ -235,17 +270,44 @@ ons '() )
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 
-
 (require 'color-theme)
 
 
+(define-minor-mode sensitive-mode
+  "For sensitive files like password lists.
+It disables backup creation and auto saving.
+
+With no argument, this command toggles the mode.
+Non-null prefix argument turns on the mode.
+Null prefix argument turns off the mode."
+  ;; The initial value.
+  nil
+  ;; The indicator for the mode line.
+  " Sensitive"
+  ;; The minor mode bindings.
+  nil
+  (if (symbol-value sensitive-mode)
+      (progn
+	;; disable backups
+	(set (make-local-variable 'backup-inhibited) t)	
+	;; disable auto-save
+	(if auto-save-default
+	    (auto-save-mode -1)))
+    ;resort to default value of backup-inhibited
+    (kill-local-variable 'backup-inhibited)
+    ;resort to default auto save setting
+    (if auto-save-default
+	(auto-save-mode 1))))
+
+(setq auto-mode-alist
+ (append '(("\\.gpg$" . sensitive-mode))
+               auto-mode-alist))
 
 ;; (defun set-auto-complete-as-completion-at-point-function ()
 ;;   (setq wcompletion-at-point-functions '(auto-complete)))
 ;; (add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
 ;; (add-hook 'nrepl-mode-hook 'set-auto-complete-as-completion-at-point-function)
 ;; (add-hook 'nrepl-interaction-mode-hook 'set-auto-complete-as-completion-at-point-function)
-
 					;(setq py-install-directory "/home/andy/.emacs.d/python-mode.el-6.1.1")
 					;(add-to-list 'load-path py-install-directory)
 					;(require 'python-mode)
@@ -255,9 +317,3 @@ ons '() )
 					; (elpy-enable)
 					; (elpy-use-ipython)
 (ido-mode 't)
-
-
-
-
-
-
