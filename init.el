@@ -4,14 +4,9 @@
 	     '("marmalade" .
 	       "http://marmalade-repo.org/packages/"))
 
-(add-to-list 'load-path "~/.emacs.d/monky")
-(require 'monky)
-;; By default monky spawns a seperate hg process for every command.
-;; This will be slow if the repo contains lot of changes.
-;; if `monky-process-type' is set to cmdserver then monky will spawn a single
-;; cmdserver and communicate over pipe.
-;; Available only on mercurial versions 1.9 or higher
-(setq monky-process-type 'cmdserver)
+(defun slurp (x) (with-temp-buffer a
+		      (insert-file-contents x)
+		      (buffer-string) ) )
 
 (require 'compile)
 ;; D mode compilations now respected by compilation mode..... Think Russell Winder is responsible for this.
@@ -90,7 +85,7 @@
 (package-initialize)
 
 (require 'color-theme)
-(color-theme-arjen)
+(color-theme-hober)
 
 (global-set-key [f1] 'wg-switch-to-workgroup)
 (global-set-key [f7] 'compile)
@@ -179,6 +174,8 @@
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-15-*-*-*-m-0-iso10646-1")
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
+;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-21-*-*-*-m-0-iso10646-1")
+;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-22-*-*-*-m-0-iso10646-1")
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-23-*-*-*-m-0-iso10646-1")
 ;;(set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-8")
 ;; (set-frame-font "-misc-fixed-medium-r-normal--11-*-100-100-c-80-iso8859-8")
@@ -270,9 +267,6 @@
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 
-(require 'color-theme)
-
-
 (define-minor-mode sensitive-mode
   "For sensitive files like password lists.
 It disables backup creation and auto saving.
@@ -304,7 +298,8 @@ Null prefix argument turns off the mode."
                auto-mode-alist))
 
 ;; (defun set-auto-complete-as-completion-at-point-function ()
-;;   (setq wcompletion-at-point-functions '(auto-complete)))
+;;   (setq wcompletion-at-point-function
+;; '(auto-complete)))
 ;; (add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
 ;; (add-hook 'nrepl-mode-hook 'set-auto-complete-as-completion-at-point-function)
 ;; (add-hook 'nrepl-interaction-mode-hook 'set-auto-complete-as-completion-at-point-function)
@@ -317,3 +312,5 @@ Null prefix argument turns off the mode."
 					; (elpy-enable)
 					; (elpy-use-ipython)
 (ido-mode 't)
+
+
