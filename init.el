@@ -27,7 +27,6 @@
 ;; Either the Key ID or set to nil to use symmetric encryption.
 (setq org-crypt-key "9059B882D50776AA")
 
-
 (defun revert-buffer-with-prejudice () 
   (interactive) 
   (revert-buffer 't 't )
@@ -167,6 +166,12 @@
 
 ;; (set-frame-font "-misc-fixed-medium-r-normal--14-*-75-75-c-70-iso8859-5")
 ;; (set-frame-font "-misc-fixed-medium-r-normal--15-*-75-75-c-90-iso8859-1")
+;; (set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-8")
+;; (set-frame-font "-misc-fixed-medium-r-normal--11-*-100-100-c-80-iso8859-8")
+;; (set-frame-font "-misc-fixed-medium-r-normal--12-*-100-100-c-80-iso8859-8")
+;; (set-frame-font "-misc-fixed-medium-r-normal--14-*-75-75-c-100-iso8859-3")
+(set-frame-font "-misc-fixed-medium-r-normal--15-*-75-75-c-90-iso8859-16")
+;;(set-frame-font "-misc-fixed-medium-r-semicondensed--13-*-75-75-c-60-iso8859-15")
 ;; (set-frame-font "-urw-Nimbus Mono L-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 ;; (set-frame-font "-urw-Nimbus Mono L-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-10-*-*-*-m-0-iso10646-1")
@@ -177,12 +182,6 @@
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-21-*-*-*-m-0-iso10646-1")
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-22-*-*-*-m-0-iso10646-1")
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-23-*-*-*-m-0-iso10646-1")
-;;(set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-8")
-;; (set-frame-font "-misc-fixed-medium-r-normal--11-*-100-100-c-80-iso8859-8")
-;; (set-frame-font "-misc-fixed-medium-r-normal--12-*-100-100-c-80-iso8859-8")
-;; (set-frame-font "-misc-fixed-medium-r-normal--14-*-75-75-c-100-iso8859-3")
-(set-frame-font "-misc-fixed-medium-r-normal--15-*-75-75-c-90-iso8859-16")
-;;(set-frame-font "-misc-fixed-medium-r-semicondensed--13-*-75-75-c-60-iso8859-15")
 
 (add-to-list 'load-path "~/.emacs.d/python-mode")
 
@@ -190,6 +189,7 @@
 (setq interpreter-mode-alist (cons '("python" . python-mode)
 				   interpreter-mode-alist))
 (autoload 'python-mode "python-mode" "Python editing mode." t)
+
 
 (require 'ipython)
 (require 'workgroups)
@@ -217,7 +217,6 @@
 					; (elpy-use-ipython)
 (ido-mode 't)
 
-
 (require 'flymake-haskell-multi)
 
 (autoload 'ghc-init "ghc" nil t)
@@ -240,6 +239,7 @@
  '(revert-without-query (quote (".*\\.dat")))
  '(show-paren-mode t)
  '(show-paren-style (quote mixed))
+ '(tab-width 3)
  '(tool-bar-mode nil))
 
 
