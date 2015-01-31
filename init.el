@@ -1,8 +1,14 @@
+
 (require 'package)
 
 (add-to-list 'package-archives 
-	     '("marmalade" .
-	       "http://marmalade-repo.org/packages/"))
+	     '("marmalade" . "http://marmalade-repo.org/packages/")
+	     ;'("melpa"     . "http://melpa.org/packages/")
+	     )
+;(add-to-list 'load-path "~/.emacs.d/python-mode")
+;(cons 1 '(2 3 4 ))
+;(add-to-list 'load-path "~/.emacs.d")
+;(add-to-list 'load-path "~/.emacs.d/color-theme")
 
 (defun slurp (x) (with-temp-buffer a
 		      (insert-file-contents x)
@@ -36,6 +42,8 @@
 
 (package-initialize)
 
+
+
 (global-set-key [f1]  'wg-switch-to-workgroup)
 (global-set-key [f2]  'wg-switch-to-notes)
 (global-set-key [f7]  'compile)
@@ -55,7 +63,6 @@
   )
 
 (require 'auto-complete-config)
-
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 (require 'auto-complete-config)
 (ac-config-default)
@@ -77,14 +84,11 @@
 
 (require 'package)
 
-(add-to-list 'package-archives 
-	     '("marmalade" .
-	       "http://marmalade-repo.org/packages/"))
 
 (package-initialize)
 
-(require 'color-theme)
-(color-theme-hober)
+;(require 'color-theme)
+(load-theme 'deeper-blue)
 
 (global-set-key [f1] 'wg-switch-to-workgroup)
 (global-set-key [f7] 'compile)
@@ -183,7 +187,14 @@
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-22-*-*-*-m-0-iso10646-1")
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-23-*-*-*-m-0-iso10646-1")
 
-(add-to-list 'load-path "~/.emacs.d/python-mode")
+;(add-to-list 'load-path "~/.emacs.d/python-mode")
+
+; Put in the front - have had issues/conflicts with elpa :-(
+(setq load-path (cons "/home/andy/.emacs.d/python-mode" load-path))
+(setq load-path (cons "/home/andy/.emacs.d/ipython"     load-path))
+
+
+;(require 'python-mode)
 
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
 (setq interpreter-mode-alist (cons '("python" . python-mode)
@@ -191,12 +202,11 @@
 (autoload 'python-mode "python-mode" "Python editing mode." t)
 
 
-(require 'ipython)
-(require 'workgroups)
+;l(require 'workgroups)
 
-(workgroups-mode 1)
-(setq wg-prefix-key (kbd "C-c w"))
-(wg-load "~/.emacs.d/workgroups.el")
+;(workgroups-mode 1)
+;(setq wg-prefix-key (kbd "C-c w"))
+;(wg-load "~/.emacs.d/workgroups.el")
 
 (tool-bar-mode 0)
 (menu-bar-mode 0)
@@ -222,6 +232,10 @@
 (autoload 'ghc-init "ghc" nil t)
 (add-hook 'haskell-mode-hook (lambda () (ghc-init) ))
 (add-hook 'haskell-mode-hook 'flymake-haskell-multi-load)
+
+
+(require 'ipython)
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -249,68 +263,5 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
-(add-to-list 'load-path "~/.emacs.d/python-mode")
-
-(setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
-(setq interpreter-mode-alist (cons '("python" . python-mode)
-				   interpreter-mode-alist))
-(autoload 'python-mode "python-mode" "Python editing mode." t)
-
-(require 'ipython)
-
-(require 'workgroups)
-(workgroups-mode 1)
-(setq wg-prefix-key (kbd "C-c w"))
-(wg-load "~/.emacs.d/workgroups.el")
-
-(tool-bar-mode 0)
-(menu-bar-mode 0)
-
-(define-minor-mode sensitive-mode
-  "For sensitive files like password lists.
-It disables backup creation and auto saving.
-
-With no argument, this command toggles the mode.
-Non-null prefix argument turns on the mode.
-Null prefix argument turns off the mode."
-  ;; The initial value.
-  nil
-  ;; The indicator for the mode line.
-  " Sensitive"
-  ;; The minor mode bindings.
-  nil
-  (if (symbol-value sensitive-mode)
-      (progn
-	;; disable backups
-	(set (make-local-variable 'backup-inhibited) t)	
-	;; disable auto-save
-	(if auto-save-default
-	    (auto-save-mode -1)))
-    ;resort to default value of backup-inhibited
-    (kill-local-variable 'backup-inhibited)
-    ;resort to default auto save setting
-    (if auto-save-default
-	(auto-save-mode 1))))
-
-(setq auto-mode-alist
- (append '(("\\.gpg$" . sensitive-mode))
-               auto-mode-alist))
-
-;; (defun set-auto-complete-as-completion-at-point-function ()
-;;   (setq wcompletion-at-point-function
-;; '(auto-complete)))
-;; (add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
-;; (add-hook 'nrepl-mode-hook 'set-auto-complete-as-completion-at-point-function)
-;; (add-hook 'nrepl-interaction-mode-hook 'set-auto-complete-as-completion-at-point-function)
-					;(setq py-install-directory "/home/andy/.emacs.d/python-mode.el-6.1.1")
-					;(add-to-list 'load-path py-install-directory)
-					;(require 'python-mode)
-					;(require 'python-mode)
-					;(require 'ipython)
-					;(color-theme-solarized-darkp)
-					; (elpy-enable)
-					; (elpy-use-ipython)
-(ido-mode 't)
 
 
