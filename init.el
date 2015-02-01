@@ -193,7 +193,6 @@
 (setq load-path (cons "/home/andy/.emacs.d/python-mode" load-path))
 (setq load-path (cons "/home/andy/.emacs.d/ipython"     load-path))
 
-
 ;(require 'python-mode)
 
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
