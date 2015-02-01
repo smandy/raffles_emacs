@@ -3,12 +3,11 @@
 
 (add-to-list 'package-archives 
 	     '("marmalade" . "http://marmalade-repo.org/packages/")
-	     ;'("melpa"     . "http://melpa.org/packages/")
+	     '("melpa"     . "http://melpa.org/packages/")
 	     )
 ;(add-to-list 'load-path "~/.emacs.d/python-mode")
 ;(cons 1 '(2 3 4 ))
 ;(add-to-list 'load-path "~/.emacs.d")
-;(add-to-list 'load-path "~/.emacs.d/color-theme")
 
 (defun slurp (x) (with-temp-buffer a
 		      (insert-file-contents x)
@@ -42,7 +41,7 @@
 
 (package-initialize)
 
-
+(setq load-path (cons "~/.emacs.d/color-theme"  load-path ) )
 
 (global-set-key [f1]  'wg-switch-to-workgroup)
 (global-set-key [f2]  'wg-switch-to-notes)
@@ -50,7 +49,6 @@
 (global-set-key [f8]  'reboot-python)
 (global-set-key [f9]  'py-execute-region)
 (global-set-key [f10] 'switch-to-shell)
-
 
 (defun switch-to-notes () 
   (interactive)
@@ -87,8 +85,8 @@
 
 (package-initialize)
 
-;(require 'color-theme)
-(load-theme 'deeper-blue)
+(require 'color-theme)
+(color-theme-hober)
 
 (global-set-key [f1] 'wg-switch-to-workgroup)
 (global-set-key [f7] 'compile)
@@ -110,7 +108,7 @@
 
 (windmove-default-keybindings 'meta)
 
-(require 'color-theme)
+;(require 'color-theme)
 					; (elpy-enable)
 (defun plist-to-alist (the-plist)
   (defun get-tuple-from-plist (the-plist)
@@ -189,11 +187,18 @@
 
 ;(add-to-list 'load-path "~/.emacs.d/python-mode")
 
-; Put in the front - have had issues/conflicts with elpa :-(
+; Put in thegge front - have had issues/conflicts with elpa :-(
 (setq load-path (cons "/home/andy/.emacs.d/python-mode" load-path))
 (setq load-path (cons "/home/andy/.emacs.d/ipython"     load-path))
 
 ;(require 'python-mode)
+
+(defun insert-hg-ignore () 
+  (interactive)
+  (insert "`hg root`/.hgignore"))
+
+(global-set-key (kbd "C-c C-h C-g C-i" ) 'insert-hg-ignore)
+
 
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
 (setq interpreter-mode-alist (cons '("python" . python-mode)
@@ -212,7 +217,8 @@
 
 ;; (defun set-auto-complete-as-completion-at-point-function ()
 ;;   (setq wcompletion-at-point-functions '(auto-complete)))
-;; (add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
+;; (add-hook 'auto-complete-mode-hook 'set-auto-complete-as-comple
+;;tion-at-point-function)
 ;; (add-hook 'nrepl-mode-hook 'set-auto-complete-as-completion-at-point-function)
 ;; (add-hook 'nrepl-interaction-mode-hook 'set-auto-complete-as-completion-at-point-function)
 

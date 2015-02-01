@@ -11,3 +11,4 @@ regexp:.*\#.*#$
 bookmarks
 workgroups.el
 monky/.git/**
+tramp
