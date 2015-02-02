@@ -14,7 +14,7 @@
 		      (buffer-string) ) )
 
 (require 'compile)
-;; D mode compilations now respected by compilation mode..... Think Russell Winder is responsible for this.
+
 (add-to-list
  'compilation-error-regexp-alist
  '("^\\([^ \n]+\\)(\\([0-9]+\\)): \\(?:Error\\|.\\|warnin\\(g\\)\\|remar\\(k\\)\\)"
@@ -49,6 +49,28 @@
 (global-set-key [f8]  'reboot-python)
 (global-set-key [f9]  'py-execute-region)
 (global-set-key [f10] 'switch-to-shell)
+
+
+
+(defun dump-fonts ()
+  (interactive)
+  (let* ( 
+	 (bufferName (format "fonts_%s.el" (system-name) ) ) 
+	 (myInsert (lambda (x) (progn (insert x) (insert "\n") ) ) )
+	 (fileName (format "%s/%s" (getenv "HOME")  bufferName) )
+	 )
+    (switch-to-buffer bufferName)
+    (erase-buffer)
+    (mapcar (lambda (x) (insert (format "(set-frame-font \"%s\" )\n"  x) ) )  (x-list-fonts "*") )
+    (mark-whole-buffer)
+					;(keep-lines "normal-normal")
+    (sort-lines nil (point-min) (point-max))
+    (write-file fileName )
+    (kill-buffer bufferName)
+    (message (format "Saved %s ... " fileName)  )
+    )
+  )
+
 
 (defun switch-to-notes () 
   (interactive)
@@ -155,6 +177,8 @@
       )
     )
   )
+
+
 
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline "~/org/gtd.org" "Tasks")
