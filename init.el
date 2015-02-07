@@ -108,7 +108,8 @@
 (package-initialize)
 
 (require 'color-theme)
-(color-theme-hober)
+(color-theme-deep-blue)
+;(color-theme-hober)
 
 (global-set-key [f1] 'wg-switch-to-workgroup)
 (global-set-key [f7] 'compile)
