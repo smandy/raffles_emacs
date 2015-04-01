@@ -1,3 +1,10 @@
+(defun slurp (x) 
+  (with-temp-buffer 
+	 ign
+	 (insert-file-contents x)
+	 (buffer-string) ) )
+
+(require 'compile)
 
 (require 'package)
 
@@ -9,21 +16,28 @@
 ;(cons 1 '(2 3 4 ))
 ;(add-to-list 'load-path "~/.emacs.d")
 
-(defun slurp (x) (with-temp-buffer a
-		      (insert-file-contents x)
-		      (buffer-string) ) )
+; For node.js
+(add-to-list 'compilation-error-regexp-alist
+		'("[\w]+ at .*(\\(.*\\):\\([0-9]+\\):.*).*"
+		  1 2 ) )
 
-(require 'compile)
+(setq compilation-error-regexp-alist (cdr compilation-error-regexp-alist))
 
 (add-to-list
  'compilation-error-regexp-alist
  '("^\\([^ \n]+\\)(\\([0-9]+\\)): \\(?:Error\\|.\\|warnin\\(g\\)\\|remar\\(k\\)\\)"
    1 2 nil (3 . 4)))
 
+
+
+(add-to-list 'load-path "~/.emacs.d/vendor/jade-mode")
+(require 'sws-mode)
+(require 'jade-mode)
+(add-to-list 'auto-mode-alist '("\\.dt\\'" . sws-mode))
+
 (defun do-revert () 
   (interactive) 
-  (revert-buffer nil 't)
-)
+  (revert-buffer nil 't))
 
 (require 'org-crypt)
 (org-crypt-use-before-save-magic)
@@ -34,12 +48,16 @@
 
 (defun revert-buffer-with-prejudice () 
   (interactive) 
-  (revert-buffer 't 't )
-)
+  (revert-buffer 't 't ))
 
 (global-set-key (kbd "C-c r")  'revert-buffer-with-prejudice)
 
 (package-initialize)
+
+
+
+
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 
 (setq load-path (cons "~/.emacs.d/color-theme"  load-path ) )
 
@@ -50,37 +68,28 @@
 (global-set-key [f9]  'py-execute-region)
 (global-set-key [f10] 'switch-to-shell)
 
-
-
 (defun dump-fonts ()
   (interactive)
   (let* ( 
-	 (bufferName (format "fonts_%s.el" (system-name) ) ) 
-	 (myInsert (lambda (x) (progn (insert x) (insert "\n") ) ) )
-	 (fileName (format "%s/%s" (getenv "HOME")  bufferName) )
-	 )
+			(bufferName (format "fonts_%s.el" (system-name) ) ) 
+			(myInsert (lambda (x) (progn (insert x) (insert "\n") ) ) )
+			(fileName (format "%s/%s" (getenv "HOME")  bufferName) ))
     (switch-to-buffer bufferName)
     (erase-buffer)
     (mapcar (lambda (x) (insert (format "(set-frame-font \"%s\" )\n"  x) ) )  (x-list-fonts "*") )
     (mark-whole-buffer)
-					;(keep-lines "normal-normal")
     (sort-lines nil (point-min) (point-max))
     (write-file fileName )
     (kill-buffer bufferName)
-    (message (format "Saved %s ... " fileName)  )
-    )
-  )
-
+    (message (format "Saved %s ... " fileName))))
 
 (defun switch-to-notes () 
   (interactive)
-  (switch-to-buffer "gtd.org")
-  )
+  (switch-to-buffer "gtd.org"))
 
 (defun switch-to-shell () 
   (interactive)
-  (switch-to-buffer "*shell*")
-  )
+  (switch-to-buffer "*shell*"))
 
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
@@ -108,8 +117,8 @@
 (package-initialize)
 
 (require 'color-theme)
-(color-theme-deep-blue)
-;(color-theme-hober)
+;(color-theme-deep-blue)
+(color-theme-hober)
 
 (global-set-key [f1] 'wg-switch-to-workgroup)
 (global-set-key [f7] 'compile)
@@ -120,8 +129,7 @@
 
 (defun switch-to-shell () 
   (interactive)
-  (switch-to-buffer "*shell*")
-  )
+  (switch-to-buffer "*shell*"))
 
 (require 'auto-complete-config)
 
@@ -158,37 +166,28 @@
 
 (defun do-revert () 
   (interactive) 
-  (revert-buffer nil 't)
-)
+  (revert-buffer nil 't))
 
 (defun revert-buffer-with-prejudice () 
   (interactive) 
-  (revert-buffer t t )
-)
+  (revert-buffer t t ))
 
 
 (defun reboot-python ()
   (interactive)
   (save-current-buffer
-    ; Stop it from prompting at us
-    ( let ( kill-buffer-query-functions '() )
+    (let ( kill-buffer-query-functions '() )
       (if (get-buffer "*Python*") (kill-buffer "*Python*") )
-      (if (get-buffer "*Jython*") (kill-buffer "*Jython*") )
-      ; (py-shell) todo this seems to launch a messed up ipython
-      )
-    )
-  )
-
-
+      (if (get-buffer "*Jython*") (kill-buffer "*Jython*") ))))
 
 (setq org-capture-templates
-      '(("t" "Todo" entry (file+headline "~/org/gtd.org" "Tasks")
+      '(("t" "Todo" entry (file+headline "~/Dropbox/gtd.org" "Tasks")
              "* TODO %?\n")
-	("p" "Performance" entry (file+headline "~/org/gtd.org" "Performance")
+	("p" "Performance" entry (file+headline "~/Dropbox/gtd.org" "Performance")
 	    "* TODO %?\n")
-	("s" "Schedule" entry (file+headline "~/org/gtd.org" "Schedule")
+	("s" "Schedule" entry (file+headline "~/Dropbox/gtd.org" "Schedule")
 	 "* %?\n")
-        ("j" "Journal" entry (file+datetree "~/org/journal.org")
+        ("j" "Journal" entry (file+datetree "~/Dropbox/journal.org")
              "* %U %?")))
 
 ;; (set-frame-font "-misc-fixed-medium-r-normal--14-*-75-75-c-70-iso8859-5")
@@ -196,7 +195,7 @@
 ;; (set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-8")
 ;; (set-frame-font "-misc-fixed-medium-r-normal--11-*-100-100-c-80-iso8859-8")
 ;; (set-frame-font "-misc-fixed-medium-r-normal--12-*-100-100-c-80-iso8859-8")
-;; (set-frame-font "-misc-fixed-medium-r-normal--14-*-75-75-c-100-iso8859-3")
+;; (set-frame-font "-misc-fixed-medium-r-normal--14-*-100-100-c-80-iso8859-8")
 (set-frame-font "-misc-fixed-medium-r-normal--15-*-75-75-c-90-iso8859-16")
 ;;(set-frame-font "-misc-fixed-medium-r-semicondensed--13-*-75-75-c-60-iso8859-15")
 ;; (set-frame-font "-urw-Nimbus Mono L-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")
@@ -209,6 +208,9 @@
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-21-*-*-*-m-0-iso10646-1")
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-22-*-*-*-m-0-iso10646-1")
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-23-*-*-*-m-0-iso10646-1")
+
+
+;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-40-*-*-*-m-0-iso10646-1")
 
 ;(add-to-list 'load-path "~/.emacs.d/python-mode")
 
@@ -224,18 +226,19 @@
 
 (global-set-key (kbd "C-c C-h C-g C-i" ) 'insert-hg-ignore)
 
+(add-to-list 'auto-mode-alist '("SConstruct" . python-mode) )
+(add-to-list 'auto-mode-alist '("SConscript" . python-mode) )
+(add-to-list 'auto-mode-alist '("\\.py$" . python-mode) )
 
-(setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
 (setq interpreter-mode-alist (cons '("python" . python-mode)
 				   interpreter-mode-alist))
 (autoload 'python-mode "python-mode" "Python editing mode." t)
 
-
-;l(require 'workgroups)
-
-;(workgroups-mode 1)
-;(setq wg-prefix-key (kbd "C-c w"))
-;(wg-load "~/.emacs.d/workgroups.el")
+(require 'workgroups)
+(setq wg-prefix-key (kbd "C-c w"))
+(setq wg-file "~/wg.el")
+(workgroups-mode 1)
+(wg-load wg-file)
 
 (tool-bar-mode 0)
 (menu-bar-mode 0)
@@ -265,6 +268,12 @@
 
 
 (require 'ipython)
+
+
+;(add-to-list 'load-path "/path/to/js2-mode/directory")
+
+(autoload 'js2-mode "js2-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 
 (custom-set-variables
