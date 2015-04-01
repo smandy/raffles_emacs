@@ -1,8 +1,3 @@
-(defun slurp (x) 
-  (with-temp-buffer 
-	 ign
-	 (insert-file-contents x)
-	 (buffer-string) ) )
 
 (require 'compile)
 
@@ -15,6 +10,21 @@
 ;(add-to-list 'load-path "~/.emacs.d/python-mode")
 ;(cons 1 '(2 3 4 ))
 ;(add-to-list 'load-path "~/.emacs.d")
+(defun slurp (x) 
+  (with-temp-buffer 
+	 ign
+	 (insert-file-contents x)
+	 (buffer-string) ) )
+
+; For d
+(add-to-list 'compilation-error-regexp-alist
+		'("^object\.Exception@\\(.*\\)(\\([0-9]+\\)).*"
+		  1 2 ) )
+
+; For d
+(add-to-list 'compilation-error-regexp-alist
+		'("^core\.exception\.AssertError@\\(.*\\)(\\([0-9]+\\)).*"
+		  1 2 ) )
 
 ; For node.js
 (add-to-list 'compilation-error-regexp-alist
