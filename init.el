@@ -1,6 +1,4 @@
-
 (require 'compile)
-
 (require 'package)
 
 (add-to-list 'package-archives 
@@ -28,22 +26,34 @@
 
 ; For node.js
 (add-to-list 'compilation-error-regexp-alist
-		'("[\w]+ at .*(\\(.*\\):\\([0-9]+\\):.*).*"
+				 '("^.*at.*(\\(.*\\):\\([0-9]+\\):.*"
 		  1 2 ) )
-
-(setq compilation-error-regexp-alist (cdr compilation-error-regexp-alist))
+; (setq compilation-error-regexp-alist (cdr compilation-error-regexp-alist))
 
 (add-to-list
  'compilation-error-regexp-alist
  '("^\\([^ \n]+\\)(\\([0-9]+\\)): \\(?:Error\\|.\\|warnin\\(g\\)\\|remar\\(k\\)\\)"
    1 2 nil (3 . 4)))
 
+(defun revert-buffer-with-prejudice () 
+  (interactive) 
+  (revert-buffer t t )
+  )
 
+(global-set-key (kbd "C-c r")  'revert-buffer-with-prejudice)
 
 (add-to-list 'load-path "~/.emacs.d/vendor/jade-mode")
 (require 'sws-mode)
 (require 'jade-mode)
+
 (add-to-list 'auto-mode-alist '("\\.dt\\'" . sws-mode))
+
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
+(defun find-file-in-clipboard () 
+  (interactive)
+  (find-file-at-point (x-get-clipboard)))
+(global-set-key (kbd "C-c p")  'find-file-in-clipboard)
 
 (defun do-revert () 
   (interactive) 
@@ -149,8 +159,8 @@
 
 (windmove-default-keybindings 'meta)
 
-;(require 'color-theme)
-					; (elpy-enable)
+; (require 'color-theme)
+; (elpy-enable)
 (defun plist-to-alist (the-plist)
   (defun get-tuple-from-plist (the-plist)
     (when the-plist
@@ -173,7 +183,6 @@
 (global-set-key (kbd "C-c s") 'ispell)
 (global-set-key (kbd "C-c r") 'revert-buffer-with-prejudice)
 
-
 (defun do-revert () 
   (interactive) 
   (revert-buffer nil 't))
@@ -182,7 +191,6 @@
   (interactive) 
   (revert-buffer t t ))
 
-
 (defun reboot-python ()
   (interactive)
   (save-current-buffer
@@ -190,15 +198,19 @@
       (if (get-buffer "*Python*") (kill-buffer "*Python*") )
       (if (get-buffer "*Jython*") (kill-buffer "*Jython*") ))))
 
-(setq org-capture-templates
-      '(("t" "Todo" entry (file+headline "~/Dropbox/gtd.org" "Tasks")
-             "* TODO %?\n")
-	("p" "Performance" entry (file+headline "~/Dropbox/gtd.org" "Performance")
-	    "* TODO %?\n")
-	("s" "Schedule" entry (file+headline "~/Dropbox/gtd.org" "Schedule")
-	 "* %?\n")
-        ("j" "Journal" entry (file+datetree "~/Dropbox/journal.org")
-             "* %U %?")))
+(setq org-capture-templates '(
+										("t" "Todo" entry (file+headline "~/Dropbox/gtd.org" "Tasks")
+										 "* TODO %?\n%F")
+										("r" "Todo" entry (file+headline "~/Dropbox/gtd.org" "Tasks")
+											"* TODO %?\n  %i\n  %a")
+										("r" "Todo" entry (file+headline "~/Dropbox/gtd.org" "Tasks")
+										 "* TODO %?\n%F")
+										("p" "Performance" entry (file+headline "~/Dropbox/gtd.org" "Performance")
+										 "* TODO %?\n")
+										("s" "Schedule" entry (file+headline "~/Dropbox/gtd.org" "Schedule")
+										 "* %?\n")
+										("j" "Journal" entry (file+datetree "~/Dropbox/journal.org")
+										 "* %U %?")))
 
 ;; (set-frame-font "-misc-fixed-medium-r-normal--14-*-75-75-c-70-iso8859-5")
 ;; (set-frame-font "-misc-fixed-medium-r-normal--15-*-75-75-c-90-iso8859-1")
@@ -271,15 +283,11 @@
 (ido-mode 't)
 
 (require 'flymake-haskell-multi)
-
 (autoload 'ghc-init "ghc" nil t)
 (add-hook 'haskell-mode-hook (lambda () (ghc-init) ))
 (add-hook 'haskell-mode-hook 'flymake-haskell-multi-load)
 
-
 (require 'ipython)
-
-
 ;(add-to-list 'load-path "/path/to/js2-mode/directory")
 
 (autoload 'js2-mode "js2-mode" nil t)
