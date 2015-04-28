@@ -14,6 +14,10 @@
 	 (insert-file-contents x)
 	 (buffer-string) ) )
 
+
+(global-set-key (kbd "C-x C-o") 'ff-find-other-file)
+
+
 ; For d
 (add-to-list 'compilation-error-regexp-alist
 		'("^object\.Exception@\\(.*\\)(\\([0-9]+\\)).*"
@@ -47,6 +51,9 @@
 (require 'jade-mode)
 
 (add-to-list 'auto-mode-alist '("\\.dt\\'" . sws-mode))
+
+(add-to-list 'auto-mode-alist '("build\\.gradle" . groovy-mode))
+
 
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
@@ -236,6 +243,16 @@
 
 ;(add-to-list 'load-path "~/.emacs.d/python-mode")
 
+  (defun unfill-paragraph (&optional region)
+      "Takes a multi-line paragraph and makes it into a single line of text."
+      (interactive (progn (barf-if-buffer-read-only) '(t)))
+      (let ((fill-column (point-max)))
+        (fill-paragraph nil region)))
+
+
+(global-set-key (kbd "M-Q") 'unfill-paragraph)
+;(define-key global-map "\M-Q" 'unfill-paragraph)
+
 ; Put in thegge front - have had issues/conflicts with elpa :-(
 (setq load-path (cons "/home/andy/.emacs.d/python-mode" load-path))
 (setq load-path (cons "/home/andy/.emacs.d/ipython"     load-path))
@@ -286,6 +303,8 @@
 (autoload 'ghc-init "ghc" nil t)
 (add-hook 'haskell-mode-hook (lambda () (ghc-init) ))
 (add-hook 'haskell-mode-hook 'flymake-haskell-multi-load)
+
+(setq-default indent-tabs-mode nil)
 
 (require 'ipython)
 ;(add-to-list 'load-path "/path/to/js2-mode/directory")
