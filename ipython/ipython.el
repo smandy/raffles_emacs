@@ -310,9 +310,22 @@ gets converted to:
       (while (re-search-forward ipython-de-output-prompt-regexp end t)
         (replace-match "" t nil)))))
 
+;(defvar ipython-completion-command-string
+;  "print ';'.join(__IP.Completer.all_completions('%s')) #PYTHON-MODE SILENT\n"
+;  "The string send to ipython to query for all possible completions")
+
 (defvar ipython-completion-command-string
-  "print ';'.join(__IP.Completer.all_completions('%s')) #PYTHON-MODE SILENT\n"
+  "print ';'.join(get_ipython().Completer.all_completions('%s')) #PYTHON-MODE SILENT\n"
   "The string send to ipython to query for all possible completions")
+
+
+
+;; AS 2010-01-11 
+;; Made change according to https://bugs.launchpad.net/ipython/+bug/290228
+
+;(defvar ipython-completion-command-string
+;  "print(';'.join(__IP.Completer.all_completions('%s'))) #PYTHON-MODE SILENT\n"
+;  "The string send to ipython to query for all possible completions")
 
 
 ;; xemacs doesn't have `comint-preoutput-filter-functions' so we'll try the
@@ -343,19 +356,22 @@ in the current *Python* session."
               (append comint-output-filter-functions
                       '(ansi-color-filter-apply
                         (lambda (string)
-                                        ;(message (format "DEBUG filtering: %s" string))
+                                        (message (format "DEBUG filtering: %s" string))
                           (setq ugly-return (concat ugly-return string))
                           (delete-region comint-last-output-start
                                          (process-mark (get-buffer-process (current-buffer)))))))))
-                                        ;(message (format "#DEBUG pattern: '%s'" pattern))
+                                        (message (format "#DEBUG pattern: '%s'" pattern))
         (process-send-string python-process
                               (format ipython-completion-command-string pattern))
         (accept-process-output python-process)
-                                        ;(message (format "DEBUG return: %s" ugly-return))
+	(message (format "DEBUG return: %s" ugly-return))
+	
         (setq completions
               (split-string (substring ugly-return 0 (position ?\n ugly-return)) sep))
         (setq completion-table (loop for str in completions
                                      collect (list str nil)))
+
+	
         (setq completion (try-completion pattern completion-table))
         (cond ((eq completion t))
               ((null completion)
@@ -392,16 +408,23 @@ in the current *Python* session."
            completion
          (comint-preoutput-filter-functions
           (append comint-preoutput-filter-functions
-                  '(ansi-color-filter-apply
-                    (lambda (string)
-                      (setq ugly-return (concat ugly-return string))
-                      "")))))
+		  
+                  '( (lambda (string) (message (format "Before got %s\n" string)) string)
+		     ansi-color-filter-apply
+		     (lambda (string) (message (format "After got %s\n" string)) string)
+                    (lambda (string) (setq ugly-return (concat ugly-return string)) "")
+		    ))))
+
+
+      (message (format "DEBUG Completion patttern %s" (format ipython-completion-command-string pattern) ) )
       (process-send-string python-process
                             (format ipython-completion-command-string pattern))
+
       (accept-process-output python-process)
+      (message (format "DEBUG ugly return is" ugly-return))
       (setq completions
             (split-string (substring ugly-return 0 (position ?\n ugly-return)) sep))
-                                        ;(message (format "DEBUG completions: %S" completions))
+      (message (format "DEBUG completions: %S" completions))
       (setq completion-table (loop for str in completions
                                    collect (list str nil)))
       (setq completion (try-completion pattern completion-table))
