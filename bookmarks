@@ -1,0 +1,30 @@
+;;;; Emacs Bookmark Format Version 1 ;;;;
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("org-capture-last-stored"
+ (filename . "~/Dropbox/journal.org")
+ (front-context-string . "**** [2015-04-01")
+ (rear-context-string . "04-01 Wednesday\n")
+ (position . 51))
+("phobos"
+ (filename . "/usr/include/dmd/phobos/std/")
+ (front-context-string . "..\n  -rw-r--r-- ")
+ (rear-context-string . "96 Feb  1 03:35 ")
+ (position . 175))
+("gtd.org"
+ (filename . "~/Dropbox/gtd.org")
+ (front-context-string . "* Oz\n** Flight\n\n")
+ (rear-context-string)
+ (position . 1))
+("init.el"
+ (filename . "~/.emacs.d/init.el")
+ (front-context-string . "(defun slurp (x)")
+ (rear-context-string)
+ (position . 1))
+("andy"
+ (filename . "/media/andy/58da8f33-32a6-40e9-90df-c397bce7dcaf/andy/")
+ (front-context-string . ".adobe\n  drwxrwx")
+ (rear-context-string . "96 Jun 12  2013 ")
+ (position . 266))
+)

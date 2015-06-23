@@ -206,17 +206,17 @@
       (if (get-buffer "*Jython*") (kill-buffer "*Jython*") ))))
 
 (setq org-capture-templates '(
-										("t" "Todo" entry (file+headline "~/Dropbox/gtd.org" "Tasks")
+										("t" "Todo" entry (file+headline "~/Dropbox/gtd/gtd.org" "Tasks")
 										 "* TODO %?\n%F")
-										("r" "Todo" entry (file+headline "~/Dropbox/gtd.org" "Tasks")
+										("r" "Todo" entry (file+headline "~/Dropbox/gtd/gtd.org" "Tasks")
 											"* TODO %?\n  %i\n  %a")
-										("r" "Todo" entry (file+headline "~/Dropbox/gtd.org" "Tasks")
+										("r" "Todo" entry (file+headline "~/Dropbox/gtd/gtd.org" "Tasks")
 										 "* TODO %?\n%F")
-										("p" "Performance" entry (file+headline "~/Dropbox/gtd.org" "Performance")
+										("p" "Performance" entry (file+headline "~/Dropbox/gtd/gtd.org" "Performance")
 										 "* TODO %?\n")
-										("s" "Schedule" entry (file+headline "~/Dropbox/gtd.org" "Schedule")
+										("s" "Schedule" entry (file+headline "~/Dropbox/gtd/gtd.org" "Schedule")
 										 "* %?\n")
-										("j" "Journal" entry (file+datetree "~/Dropbox/journal.org")
+										("j" "Journal" entry (file+datetree "~/Dropbox/gtd/journal.org")
 										 "* %U %?")))
 
 
