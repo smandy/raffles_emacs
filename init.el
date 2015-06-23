@@ -17,7 +17,7 @@
 
 (global-set-key (kbd "C-x C-o") 'ff-find-other-file)
 
-
+(global-set-key (kbd "C-c C-m C-s" ) 'magit-status)
 ; For d
 (add-to-list 'compilation-error-regexp-alist
 		'("^object\.Exception@\\(.*\\)(\\([0-9]+\\)).*"
