@@ -13,7 +13,7 @@
  (rear-context-string . "96 Feb  1 03:35 ")
  (position . 175))
 ("gtd.org"
- (filename . "~/Dropbox/gtd.org")
+ (filename . "~/Dropbox/gtd/gtd.org")
  (front-context-string . "* Oz\n** Flight\n\n")
  (rear-context-string)
  (position . 1))
