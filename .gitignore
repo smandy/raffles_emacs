@@ -2,3 +2,5 @@
 /elpa/archives/gnu/archive-contents~
 *~
 *.elc
+/.idea/**
+/tramp

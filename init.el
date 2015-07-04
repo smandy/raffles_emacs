@@ -145,7 +145,9 @@
 
 (require 'color-theme)
 ;(color-theme-deep-blue)
-(color-theme-hober)
+;(color-theme-hober)
+(color-theme-cobalt)
+
 
 (global-set-key [f1] 'wg-switch-to-workgroup)
 (global-set-key [f7] 'compile)
@@ -201,7 +203,7 @@
 (defun reboot-python ()
   (interactive)
   (save-current-buffer
-    ; Disable querying while we delete.
+    ; Disable querying while we delete.|
     (let ( kill-buffer-query-functions '() )
       (if (get-buffer "*Python*") (kill-buffer "*Python*") )
       (if (get-buffer "*Jython*") (kill-buffer "*Jython*") ))))
@@ -220,9 +222,7 @@
 										("j" "Journal" entry (file+datetree "~/Dropbox/gtd/journal.org")
 										 "* %U %?")))
 
-
 ;; (set-frame-font "-misc-fixed-medium-r-normal--10-*-100-100-c-60-iso8859-1" )
-
 ;; (set-frame-font "-misc-fixed-medium-r-normal--6-*-75-75-c-70-iso8859-5")
 ;; (set-frame-font "-misc-fixed-medium-r-normal--15-*-75-75-c-90-iso8859-1")
 ;; (set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-8")
@@ -241,7 +241,6 @@
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-21-*-*-*-m-0-iso10646-1")
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-22-*-*-*-m-0-iso10646-1")
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-23-*-*-*-m-0-iso10646-1")
-
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-40-*-*-*-m-0-iso10646-1")
 
 ;(add-to-list 'load-path "~/.emacs.d/python-mode")
