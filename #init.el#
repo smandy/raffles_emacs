@@ -52,6 +52,8 @@
 
 (add-to-list 'auto-mode-alist '("\\.dt\\'" . sws-mode))
 
+(add-to-list 'auto-mode-alist '("\\.ice\\'" . idl-mode))
+
 (add-to-list 'auto-mode-alist '("build\\.gradle" . groovy-mode))
 
 
