@@ -2,11 +2,18 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("org-capture-last-stored"
- (filename . "~/Dropbox/journal.org")
- (front-context-string . "**** [2015-04-01")
- (rear-context-string . "04-01 Wednesday\n")
- (position . 51))
+(("skye_andy"
+ (filename .
+           #("/scp:andy@skye:/" 1 4
+             (tramp-default t)))
+ (front-context-string . "  /scp:andy@skye")
+ (rear-context-string)
+ (position . 1))
+("org-capture-last-stored"
+ (filename . "~/Dropbox/gtd/gtd.org")
+ (front-context-string . "** TODO XR Do th")
+ (rear-context-string . "box/gtd/gtd.org\n")
+ (position . 800))
 ("phobos"
  (filename . "/usr/include/dmd/phobos/std/")
  (front-context-string . "..\n  -rw-r--r-- ")
