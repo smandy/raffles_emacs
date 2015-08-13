@@ -7,3 +7,6 @@
 /.idea/**
 \#*\#
 /elpa/**
+/vendor/slime/
+.python-environments
+vendor/swank-js
