@@ -46,6 +46,9 @@
 
 (global-set-key (kbd "C-x C-o") 'ff-find-other-file)
 
+(global-set-key (kbd "M-x") 'helm-M-x)
+
+
 (global-set-key (kbd "C-c C-m C-s" ) 'magit-status)
 ;; For d
 (add-to-list 'compilation-error-regexp-alist
@@ -271,12 +274,19 @@
 ;; (elpy-enable)
 ;; (elpy-use-ipython)
 
-(ido-mode 't)
+; supercede with helm
+;(ido-mode 't)  
+
 
 (require 'flymake-haskell-multi)
 (autoload 'ghc-init "ghc" nil t)
 (add-hook 'haskell-mode-hook (lambda () (ghc-init) ))
 (add-hook 'haskell-mode-hook 'flymake-haskell-multi-load)
+
+
+
+
+
 
 (setq-default indent-tabs-mode nil)
 
@@ -344,12 +354,44 @@
 (global-set-key (kbd "C-c s") 'ispell)
 (global-set-key (kbd "C-c r") 'revert-buffer-with-prejudice)
 
+;; (eval-after-load 'flycheck
+;;   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+
+
 (require 'flycheck-pyflakes)
 (add-hook 'python-mode-hook 'flycheck-mode)
 
 (autoload 'pylint "pylint")
 (add-hook 'python-mode-hook 'pylint-add-menu-items)
 (add-hook 'python-mode-hook 'pylint-add-key-bindings)
+
+(require 'semantic)
+
+;; Enable EDE (Project Management) features
+(global-ede-mode 1)
+;; (semantic-load-enable-excessive-code-helpers)      ; Enable prototype help and smart completion
+
+(setq helm-semantic-fuzzy-match t
+      helm-imenu-fuzzy-match    t)
+
+
+;;(global-srecode-minor-mode 1)            ; Enable template insertion menu
+
+    ;; (add-hook 'c++-mode-hook 'irony-mode)
+    ;; (add-hook 'c-mode-hook 'irony-mode)
+    ;; (add-hook 'objc-mode-hook 'irony-mode)
+    ;; replace the `completion-at-point' and `complete-symbol' bindings in
+    ;; irony-mode's buffers by irony-mode's asynchronous function
+    ;; (defun my-irony-mode-hook ()
+    ;;   (define-key irony-mode-map [remap completion-at-point]
+    ;;     'irony-completion-at-point-async)
+    ;;   (define-key irony-mode-map [remap complete-symbol]
+    ;;     'irony-completion-at-point-async))
+    ;; (add-hook 'irony-mode-hook 'my-irony-mode-hook)
+
+    ;; Only needed on Windows
+    (when (eq system-type 'windows-nt)
+      (setq w32-pipe-read-delay 0))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

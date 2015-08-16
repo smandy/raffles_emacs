@@ -11,9 +11,9 @@
  (position . 1))
 ("org-capture-last-stored"
  (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** TODO XR Do th")
- (rear-context-string . "box/gtd/gtd.org\n")
- (position . 800))
+ (front-context-string . "** TODO THX1138 ")
+ (rear-context-string . "r! Randall XKCD\n")
+ (position . 1011))
 ("phobos"
  (filename . "/usr/include/dmd/phobos/std/")
  (front-context-string . "..\n  -rw-r--r-- ")

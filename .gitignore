@@ -10,3 +10,7 @@
 /vendor/slime/
 .python-environments
 vendor/swank-js
+/irony/bin/irony-server
+irony
+/semanticdb/!mnt!hdd!andy!qt1!semantic.cache
+/semanticdb/!mnt!hdd!andy!repos!dev!argo!src!semantic.cache
