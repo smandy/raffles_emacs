@@ -47,7 +47,10 @@
 (global-set-key (kbd "C-x C-o") 'ff-find-other-file)
 
 (global-set-key (kbd "M-x") 'helm-M-x)
-
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "C-c C-h C-s") 'helm-swoop)
+(global-set-key (kbd "C-x C-b") 'helm-mini)
+(global-set-key (kbd "C-x r b") 'helm-bookmarks)
 
 (global-set-key (kbd "C-c C-m C-s" ) 'magit-status)
 ;; For d
@@ -180,6 +183,8 @@
 (global-set-key [f10] 'switch-to-shell)
 (global-set-key (kbd "C-c o") 'ff-find-other-file)
 (global-set-key (kbd "C-c f") 'find-file-at-point)
+
+
 
 (defun switch-to-shell () 
   (interactive)
