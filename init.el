@@ -51,6 +51,8 @@
 (global-set-key (kbd "C-c C-h C-s") 'helm-swoop)
 (global-set-key (kbd "C-x C-b") 'helm-mini)
 (global-set-key (kbd "C-x r b") 'helm-bookmarks)
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key [f5] 'helm-resume )
 
 (global-set-key (kbd "C-c C-m C-s" ) 'magit-status)
 ;; For d
