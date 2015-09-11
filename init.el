@@ -5,8 +5,6 @@
 (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
 ;; Org favourite
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
-
-
 ;; (set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-8")
 ;; (set-frame-font "-misc-fixed-medium-r-normal--6-*-75-75-c-70-iso8859-5")
 ;; (set-frame-font "-misc-fixed-medium-r-normal--11-*-100-100-c-80-iso8859-8")
@@ -22,6 +20,8 @@
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-22-*-*-*-m-0-iso10646-1")
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-23-*-*-*-m-0-iso10646-1")
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-40-*-*-*-m-0-iso10646-1")
+
+(set-frame-font "Liberation Mono 10")
 
 ;;(add-to-list 'load-path "~/.emacs.d/python-mode")
 ;;(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
@@ -46,10 +46,11 @@
 
 (global-set-key (kbd "C-x C-o") 'ff-find-other-file)
 
+
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (global-set-key (kbd "C-c C-h C-s") 'helm-swoop)
-(global-set-key (kbd "C-x C-b") 'helm-mini)
+(global-set-key (kbd "C-x b") 'helm-mini)
 (global-set-key (kbd "C-x r b") 'helm-bookmarks)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key [f5] 'helm-resume )
@@ -95,6 +96,7 @@
   (interactive) 
   (revert-buffer nil 't))
 
+
 ;;(require 'org-crypt)
 ;;(org-crypt-use-before-save-magic)
 ;;(setq org-tags-exclude-from-inheritance (quote ("crypt")))
@@ -132,9 +134,8 @@
 (defun dump-fonts ()
   (interactive)
   (let* ( 
-			(bufferName (format "fonts_%s.el" (system-name) ) ) 
-			(myInsert (lambda (x) (progn (insert x) (insert "\n") ) ) )
-			(fileName (format "%s/%s" (getenv "HOME")  bufferName) ))
+         (bufferName (format "fonts_%s.el" (system-name) ) ) 
+         (fileName (format "%s/%s" (getenv "HOME")  bufferName) ))
     (switch-to-buffer bufferName)
     (erase-buffer)
     (mapcar (lambda (x) (insert (format "(set-frame-font \"%s\" )\n"  x) ) )  (x-list-fonts "*") )
@@ -284,19 +285,12 @@
 ; supercede with helm
 ;(ido-mode 't)  
 
-
 (require 'flymake-haskell-multi)
 (autoload 'ghc-init "ghc" nil t)
 (add-hook 'haskell-mode-hook (lambda () (ghc-init) ))
 (add-hook 'haskell-mode-hook 'flymake-haskell-multi-load)
 
-
-
-
-
-
 (setq-default indent-tabs-mode nil)
-
 ;;(require 'ipython)
 ;;(add-to-list 'load-path "/path/to/js2-mode/directory")
 
@@ -337,6 +331,7 @@
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
+
 (setq org-capture-templates '(
 			      ("t" "Todo" entry (file+headline "~/Dropbox/gtd/gtd.org" "Tasks")
 			       "* TODO %?\n%F")
@@ -358,12 +353,7 @@
 
 
 (global-set-key (kbd "C-c s") 'ispell)
-(global-set-key (kbd "C-c s") 'ispell)
 (global-set-key (kbd "C-c r") 'revert-buffer-with-prejudice)
-
-;; (eval-after-load 'flycheck
-;;   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
-
 
 (require 'flycheck-pyflakes)
 (add-hook 'python-mode-hook 'flycheck-mode)
@@ -375,7 +365,7 @@
 (require 'semantic)
 
 ;; Enable EDE (Project Management) features
-(global-ede-mode 1)
+;; (global-ede-mode 1)
 ;; (semantic-load-enable-excessive-code-helpers)      ; Enable prototype help and smart completion
 
 (setq helm-semantic-fuzzy-match t
@@ -409,7 +399,7 @@
  '(org-directory "~/Dropbox/gtd")
  '(org-hide-leading-stars t)
  '(python-shell-interpreter "ipython")
- '(python-shell-interpreter-args "--pylab=qt4"))
+ '(python-shell-interpreter-args "--pylab=qt"))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

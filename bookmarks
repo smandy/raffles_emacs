@@ -10,10 +10,10 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** TODO THX1138 ")
- (rear-context-string . "r! Randall XKCD\n")
- (position . 1011))
+ (filename . "~/Dropbox/gtd/journal.org")
+ (front-context-string . "**** [2015-09-05")
+ (rear-context-string . "15-09-06 Sunday\n")
+ (position . 14413))
 ("phobos"
  (filename . "/usr/include/dmd/phobos/std/")
  (front-context-string . "..\n  -rw-r--r-- ")

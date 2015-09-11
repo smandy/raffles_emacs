@@ -1,0 +1,6 @@
+ls -gl
+pwd
+echo > $1
+ls -gl
+pwd
+find . 
