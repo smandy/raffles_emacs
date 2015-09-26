@@ -1,5 +1,4 @@
-;; (set-frame-font "fixed 14")
-;; (set-frame-font "Nimbus-Bold")
+;; (set-frame-font "fixed 30")
 
 ;;(set-frame-font "-misc-fixed-medium-r-normal--10-*-100-100-c-60-iso8859-1" )
 (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
@@ -8,6 +7,9 @@
 ;; (set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-8")
 ;; (set-frame-font "-misc-fixed-medium-r-normal--6-*-75-75-c-70-iso8859-5")
 ;; (set-frame-font "-misc-fixed-medium-r-normal--11-*-100-100-c-80-iso8859-8")
+
+;;(set-frame-font "Misc Fixed 8")
+
 ;; (set-frame-font "-misc-fixed-medium-r-semicondensed--13-*-75-75-c-60-iso8859-15")
 ;; (set-frame-font "-misc-fixed-medium-r-normal--15-*-75-75-c-90-iso8859-16")
 ;; (set-frame-font "-urw-Nimbus Mono L-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")
@@ -21,7 +23,8 @@
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-23-*-*-*-m-0-iso10646-1")
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-40-*-*-*-m-0-iso10646-1")
 
-(set-frame-font "Liberation Mono 10")
+;; (set-frame-font "Fixed 10")
+(set-frame-font "Liberation Mono 15")
 
 ;;(add-to-list 'load-path "~/.emacs.d/python-mode")
 ;;(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
@@ -46,10 +49,10 @@
 
 (global-set-key (kbd "C-x C-o") 'ff-find-other-file)
 
-
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (global-set-key (kbd "C-c C-h C-s") 'helm-swoop)
+(global-set-key (kbd "C-c C-h C-l") 'helm-locate)
 (global-set-key (kbd "C-x b") 'helm-mini)
 (global-set-key (kbd "C-x r b") 'helm-bookmarks)
 (global-set-key (kbd "M-x") 'helm-M-x)
@@ -124,7 +127,6 @@
 (global-set-key [f2]  'wg-switch-to-notes)
 (global-set-key [f3]  'switch-to-org)
 (global-set-key [f4]  'magit-status)
-
 
 (global-set-key [f7]  'compile)
 (global-set-key [f8]  'reboot-python)
@@ -370,6 +372,19 @@
 
 (setq helm-semantic-fuzzy-match t
       helm-imenu-fuzzy-match    t)
+
+;; TODO - These two broken I think . Problem with the lambda
+(defun compile-in-buffer (cmd buf)
+  (interactive)
+  (let* ((compilation-buffer-name-function (lambda () buf) ) )
+    (compile cmd)))
+
+(defun compile-dev ()
+  (interactive)
+  (compile-in-buffer "cd ~/repos/dev/cpp && scons" "dev")
+  )
+
+;; (compile-dev)
 
 
 ;;(global-srecode-minor-mode 1)            ; Enable template insertion menu
