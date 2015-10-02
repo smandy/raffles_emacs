@@ -25,16 +25,17 @@
 " nil 2)
     ("ifunc" "#include <functional>
 " nil 3)
+    ("iialg" "#include <algorithm>" nil 2)
     ("iios" "#include <iostream>
-" nil 3)
+" nil 4)
     ("imain" "int main(int argc, char *argv[]) {
-}" nil 3)
+}" nil 4)
     ("imap" "#include <map>
 " nil 2)
     ("ipair" "#include <pair>
 " nil 2)
     ("istr" "#include <string>
-" nil 2)
+" nil 3)
     ("iter" "iterator" nil 3)
     ("itup" "#include <tuple>
 " nil 2)
@@ -42,16 +43,16 @@
 " nil 2)
     ("iuos" "#include <unordered_set>
 " nil 2)
-    ("ivec" "#include <vector>" nil 4)
+    ("ivec" "#include <vector>" nil 5)
     ("sendl" "std::endl" nil 6)
     ("smap" "std::map" nil 6)
     ("sout" "std::cout" nil 6)
     ("spair" "std::pair" nil 3)
-    ("sstr" "std::string" nil 2)
+    ("sstr" "std::string" nil 4)
     ("stup" "std::tuple" nil 2)
     ("suom" "std::unordered_map" nil 4)
     ("suos" "std::unordered_set" nil 4)
-    ("svec" "std::vector" nil 3)
+    ("svec" "std::vector" nil 6)
     ("u32" "uint32_t" nil 12)
     ("u64" "uint64_t" nil 5)
     ("unss" "using namespace std;
@@ -70,7 +71,9 @@
 
 (define-abbrev-table 'completion-list-mode-abbrev-table '())
 
-(define-abbrev-table 'd-mode-abbrev-table '())
+(define-abbrev-table 'd-mode-abbrev-table
+  '(
+   ))
 
 (define-abbrev-table 'debugger-mode-abbrev-table '())
 
@@ -170,7 +173,9 @@
 
 (define-abbrev-table 'python-mode-abbrev-table '())
 
-(define-abbrev-table 'python-mode-skeleton-abbrev-table '())
+(define-abbrev-table 'python-mode-skeleton-abbrev-table
+  '(
+   ))
 
 (define-abbrev-table 'select-tags-table-mode-abbrev-table '())
 

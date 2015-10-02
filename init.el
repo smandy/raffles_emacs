@@ -1,4 +1,4 @@
-;; (set-frame-font "fixed 30")
+;; (set-frame-font "misc fixed 12")
 
 ;;(set-frame-font "-misc-fixed-medium-r-normal--10-*-100-100-c-60-iso8859-1" )
 (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
@@ -23,8 +23,8 @@
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-23-*-*-*-m-0-iso10646-1")
 ;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-40-*-*-*-m-0-iso10646-1")
 
-;; (set-frame-font "Fixed 10")
-(set-frame-font "Liberation Mono 15")
+;; (set-frame-font "Misc Fixed 12")
+(set-frame-font "Liberation Mono 10")
 
 ;;(add-to-list 'load-path "~/.emacs.d/python-mode")
 ;;(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
@@ -54,6 +54,8 @@
 (global-set-key (kbd "C-c C-h C-s") 'helm-swoop)
 (global-set-key (kbd "C-c C-h C-l") 'helm-locate)
 (global-set-key (kbd "C-x b") 'helm-mini)
+(global-set-key (kbd "C-x C-b") 'helm-mini)
+
 (global-set-key (kbd "C-x r b") 'helm-bookmarks)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key [f5] 'helm-resume )
@@ -114,9 +116,6 @@
 (global-set-key (kbd "C-c r")  'revert-buffer-with-prejudice)
 
 (package-initialize)
-
-;;(setq load-path (cons "~/.emacs.d/color-theme"  load-path ) )
-
 
 (defun switch-to-org ()
   (interactive)
@@ -180,7 +179,9 @@
 ;;(color-theme-deep-blue)
 ;;(color-theme-hober)
 ;;(color-theme-cobalt)
-(color-theme-clarity)
+;;(color-theme-clarity)
+
+(color-theme-midnight)
 
 (global-set-key [f1] 'wg-switch-to-workgroup)
 (global-set-key [f7] 'compile)
@@ -188,8 +189,6 @@
 (global-set-key [f10] 'switch-to-shell)
 (global-set-key (kbd "C-c o") 'ff-find-other-file)
 (global-set-key (kbd "C-c f") 'find-file-at-point)
-
-
 
 (defun switch-to-shell () 
   (interactive)
@@ -372,6 +371,8 @@
 
 (setq helm-semantic-fuzzy-match t
       helm-imenu-fuzzy-match    t)
+
+
 
 ;; TODO - These two broken I think . Problem with the lambda
 (defun compile-in-buffer (cmd buf)
