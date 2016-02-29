@@ -2,7 +2,17 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("ice-demos"
+(("dconf_talk"
+ (filename . "/mnt/hdd/andy/repos/dconf_talk/")
+ (front-context-string . "andy_autumn.png\n")
+ (rear-context-string . "98 Jun 23  2015 ")
+ (position . 232))
+("devd"
+ (filename . "~/repos/dev/d/")
+ (front-context-string . "..\n  -rwxrwxr-x ")
+ (rear-context-string . "96 Feb 20 11:33 ")
+ (position . 175))
+("ice-demos"
  (filename . "/mnt/hdd/andy/repos/ice-demos/")
  (front-context-string . "cpp\n  drwxrwxr-x")
  (rear-context-string . "96 Dec 31 18:15 ")
@@ -31,9 +41,9 @@
  (position . 1))
 ("org-capture-last-stored"
  (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** TODO gRPC ( G")
- (rear-context-string . "mework. Flakes.\n")
- (position . 2591))
+ (front-context-string . "** TODO Learn CM")
+ (rear-context-string . "nary Psychology\n")
+ (position . 3317))
 ("phobos"
  (filename . "/usr/include/dmd/phobos/std/")
  (front-context-string . "..\n  -rw-r--r-- ")

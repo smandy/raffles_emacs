@@ -1,25 +1,6 @@
-(set-frame-font "Fixed 10")
-
-;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
-;; (set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-8")
-;; (set-frame-font "-misc-fixed-medium-r-normal--6-*-75-75-c-70-iso8859-5")
-;; (set-frame-font "-misc-fixed-medium-r-semicondensed--13-*-75-75-c-60-iso8859-15")
-;; (set-frame-font "-urw-Nimbus Mono L-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")
-;; (set-frame-font "-urw-Nimbus Mono L-bold-normal-normal-*-*-*-*-*-m-0-iso10646-1")
-;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-10-*-*-*-m-0-iso10646-1")
-;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
-;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-15-*-*-*-m-0-iso10646-1")
-;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-21-*-*-*-m-0-iso10646-1")
-;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-22-*-*-*-m-0-iso10646-1")
-;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-23-*-*-*-m-0-iso10646-1")
-;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-40-*-*-*-m-0-iso10646-1")
-;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-80-*-*-*-m-0-iso10646-1")
-;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
-;; (set-frame-font "Fixed 10")
-;; (set-frame-font "Liberation Mono 12")
-;; (set-frame-font "-unknown-Liberation Mono-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
-;;(set-frame-font "-misc-fixed-medium-r-normal--15-*-75-75-c-90-iso8859-16")
-(set-frame-font "-misc-fixed-medium-r-normal--11-*-100-100-c-80-iso8859-8")
+; (set-frame-font "Liberation Mono 11")
+; (set-frame-font "Fixed 10")
+(set-frame-font "Ubuntu Mono 11")
 
 (require 'compile)
 (require 'package)
@@ -31,6 +12,9 @@
 (setq auto-mode-alist
       (cons '("SConscript" . python-mode) auto-mode-alist))
 
+(add-hook 'after-init-hook 'my-after-init-hook)
+(defun my-after-init-hook ()
+  (require 'edts-start))
 
 (defun slurp (x)
   (with-temp-buffer 
@@ -56,12 +40,6 @@
 
 (global-set-key (kbd "C-x b") 'helm-mini)
 (global-set-key (kbd "C-x C-b") 'helm-mini)
-
-
-
-
-
-;;(global-set-key (kbd "C-x C-b") 'helm-mini)
 
 (global-set-key (kbd "C-x r b") 'helm-bookmarks)
 (global-set-key (kbd "M-x") 'helm-M-x)
@@ -102,7 +80,6 @@
 (defun find-file-in-clipboard () 
   (interactive)
   (find-file-at-point (x-get-clipboard)))
-
 (global-set-key (kbd "C-c p")  'find-file-in-clipboard)
 
 (defun do-revert () 
@@ -113,10 +90,12 @@
   (interactive) 
   (revert-buffer 't 't ))
 
-(global-set-key (kbd "C-c r")  'revert-buffer-with-prejudice)
+ (global-set-key (kbd "C-c r")  'revert-buffer-with-prejudice)
 
 (package-initialize)
 
+;;(global-set-key (kbd "C-s")  'swiper-helm))
+(global-set-key (kbd "C-s")  'isearch-forward)
 
 (eval-after-load "haskell-mode"
   '(progn
@@ -129,6 +108,8 @@
      (define-key haskell-mode-map (kbd "C-c M-.") nil)
      (define-key haskell-mode-map (kbd "C-c C-d") nil)))
 
+;(global-set-key "\C-s" '
+
 (require 'haskell-interactive-mode)
 (require 'haskell-process)
 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
@@ -139,6 +120,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(c-basic-offset 4)
+ '(company-clang-arguments (quote ("-std=c++0x")))
  '(haskell-process-auto-import-loaded-modules t)
  '(haskell-process-log t)
  '(haskell-process-suggest-remove-import-lines t)
@@ -147,6 +129,11 @@
  '(org-hide-leading-stars t)
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--pylab=qt")
+ '(safe-local-variable-values
+   (quote
+    ((test-case-name . twisted\.internet\.test\.test_qtreactor)
+     (test-case-name . twisted\.internet\.test\.test_inotify)
+     (test-case-name . twisted\.internet\.test\.test_core))))
  '(tab-width 4))
 (defun switch-to-org ()
   (interactive)
@@ -354,6 +341,11 @@
   (compile-in-buffer "cd ~/repos/pingu && rdmd -unittest rangeExperiment.d" "rangeExperiment"))
 
 
+(eval-after-load 'company
+  '(progn
+     (define-key company-mode-map (kbd "C-:") 'helm-company)
+     (define-key company-active-map (kbd "C-:") 'helm-company)))
+
 (defun pingu ()
   (interactive)
   (compile-in-buffer "cd ~/repos/pingu && rdmd -unittest --main -version=diagnostic Order.d" "pingu"))
@@ -363,10 +355,15 @@
   (interactive)
   (compile-in-buffer "cd ~/repos/pingu && rdmd Order.d" "pingu"))
 
+(eval-after-load 'company
+  '(progn
+     (define-key company-mode-map (kbd "C-:") 'helm-company)
+     (define-key company-active-map (kbd "C-:") 'helm-company)))
 
 (add-to-list 'exec-path "/home/andy/bin")
 
-
+(autoload 'utop-minor-mode "utop" "Minor mode for utop" t)
+(add-hook 'tuareg-mode-hook 'utop-minor-mode)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
