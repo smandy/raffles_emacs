@@ -1,11 +1,17 @@
-; (set-frame-font "Liberation Mono 11")
-; (set-frame-font "Fixed 10")
-(set-frame-font "Ubuntu Mono 11")
+;;; init.el --- Andy's emacs config
+
+;;; Commentary:
+
+;; Raffles laptop emacs config
+
+;;; Code: 
+
+(set-frame-font "Ubuntu Mono 13")
 
 (require 'compile)
 (require 'package)
 
-(add-to-list 'package-archives '("melpa"     . "http://melpa.org/packages/") )
+(add-to-list 'package-archives '("melpa"     . "http://melpa.org/packages/"))
 
 (setq auto-mode-alist
       (cons '("SConstruct" . python-mode) auto-mode-alist))
@@ -14,15 +20,17 @@
 
 (add-hook 'after-init-hook 'my-after-init-hook)
 (defun my-after-init-hook ()
+  "A hook."
   (require 'edts-start))
 
 (defun slurp (x)
+  "Clojure slurp function.  Slurp file X."
   (with-temp-buffer 
-    ign
     (insert-file-contents x)
     (buffer-string)))
 
 (defun debug-discovery ()
+  "Debug the discovery app."
   (interactive)
   (gdb "gdb -i=mi -nx -x /home/andy/discovery.gdbinit"))
 
@@ -43,7 +51,9 @@
 
 (global-set-key (kbd "C-x r b") 'helm-bookmarks)
 (global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key [f5] 'helm-resume )
+(global-set-key [f5] 'helm-resume)
+
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
 (global-set-key (kbd "C-c C-m C-s" ) 'magit-status)
 ;; For d
@@ -66,49 +76,42 @@
  'compilation-error-regexp-alist
  '("^\\([^ \n]+\\)(\\([0-9]+\\)): \\(?:Error\\|.\\|warnin\\(g\\)\\|remar\\(k\\)\\)"
    1 2 nil (3 . 4)))
-
 (defun revert-buffer-with-prejudice () 
   (interactive) 
-  (revert-buffer 't 't )
-  )
+  (revert-buffer 't 't))
 
 (global-set-key (kbd "C-c r")  'revert-buffer-with-prejudice)
 
 (add-to-list 'auto-mode-alist '("build\\.gradle" . groovy-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
+(defun compile-in-own-buffer (buf cmd)
+  (interactive)
+  (let ((compilation-buffer-name-function (lambda (x) buf) ))
+    (compile cmd)))
+
+(defun compile-agora ()
+  (interactive)
+  (compile-in-own-buffer "build agora" "cd ~/repos/agora && cmake -G 'Ninja' && ninja"))
+
+(defun compile-discovery ()
+  (interactive)
+  (compile-in-own-buffer "build discovery" "cd ~/repos/agora && make"))
+
 (defun find-file-in-clipboard () 
   (interactive)
   (find-file-at-point (x-get-clipboard)))
+
 (global-set-key (kbd "C-c p")  'find-file-in-clipboard)
 
 (defun do-revert () 
   (interactive) 
   (revert-buffer nil 't))
 
-(defun revert-buffer-with-prejudice () 
-  (interactive) 
-  (revert-buffer 't 't ))
-
- (global-set-key (kbd "C-c r")  'revert-buffer-with-prejudice)
-
 (package-initialize)
 
 ;;(global-set-key (kbd "C-s")  'swiper-helm))
 (global-set-key (kbd "C-s")  'isearch-forward)
-
-(eval-after-load "haskell-mode"
-  '(progn
-     (define-key haskell-mode-map (kbd "C-x C-d") nil)
-     (define-key haskell-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
-     (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-file)
-     (define-key haskell-mode-map (kbd "C-c C-b") 'haskell-interactive-switch)
-     (define-key haskell-mode-map (kbd "C-c C-t") 'haskell-process-do-type)
-     (define-key haskell-mode-map (kbd "C-c C-i") 'haskell-process-do-info)
-     (define-key haskell-mode-map (kbd "C-c M-.") nil)
-     (define-key haskell-mode-map (kbd "C-c C-d") nil)))
-
-;(global-set-key "\C-s" '
 
 (require 'haskell-interactive-mode)
 (require 'haskell-process)
@@ -120,13 +123,54 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(c-basic-offset 4)
+ '(clang-format-executable "clang-format-3.4")
  '(company-clang-arguments (quote ("-std=c++0x")))
+ '(compilation-message-face (quote default))
+ '(cua-global-mark-cursor-color "#2aa198")
+ '(cua-normal-cursor-color "#839496")
+ '(cua-overwrite-cursor-color "#b58900")
+ '(cua-read-only-cursor-color "#859900")
+ '(custom-safe-themes
+   (quote
+    ("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "40c66989886b3f05b0c4f80952f128c6c4600f85b1f0996caa1fa1479e20c082" "067d9b8104c0a98c916d524b47045367bdcd9cf6cda393c5dae8cd8f7eb18e2a" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+ '(flycheck-clang-language-standard "c++11")
+ '(flycheck-gcc-language-standard "c++11")
  '(haskell-process-auto-import-loaded-modules t)
  '(haskell-process-log t)
  '(haskell-process-suggest-remove-import-lines t)
+ '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
+ '(highlight-symbol-colors
+   (--map
+    (solarized-color-blend it "#002b36" 0.25)
+    (quote
+     ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
+ '(highlight-symbol-foreground-color "#93a1a1")
+ '(highlight-tail-colors
+   (quote
+    (("#073642" . 0)
+     ("#546E00" . 20)
+     ("#00736F" . 30)
+     ("#00629D" . 50)
+     ("#7B6000" . 60)
+     ("#8B2C02" . 70)
+     ("#93115C" . 85)
+     ("#073642" . 100))))
+ '(hl-bg-colors
+   (quote
+    ("#7B6000" "#8B2C02" "#990A1B" "#93115C" "#3F4D91" "#00629D" "#00736F" "#546E00")))
+ '(hl-fg-colors
+   (quote
+    ("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
+ '(magit-diff-use-overlays nil)
+ '(nrepl-message-colors
+   (quote
+    ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
+ '(nyan-mode t)
  '(org-agenda-files (quote ("~/Dropbox/gtd/gtd.org")))
  '(org-directory "~/Dropbox/gtd")
  '(org-hide-leading-stars t)
+ '(pos-tip-background-color "#073642")
+ '(pos-tip-foreground-color "#93a1a1")
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--pylab=qt")
  '(safe-local-variable-values
@@ -134,7 +178,18 @@
     ((test-case-name . twisted\.internet\.test\.test_qtreactor)
      (test-case-name . twisted\.internet\.test\.test_inotify)
      (test-case-name . twisted\.internet\.test\.test_core))))
- '(tab-width 4))
+ '(show-paren-mode t)
+ '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
+ '(tab-width 4)
+ '(term-default-bg-color "#002b36")
+ '(term-default-fg-color "#839496")
+ '(weechat-color-list
+   (quote
+    (unspecified "#002b36" "#073642" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#839496" "#657b83")))
+ '(xterm-color-names
+   ["#073642" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#eee8d5"])
+ '(xterm-color-names-bright
+   ["#002b36" "#cb4b16" "#586e75" "#657b83" "#839496" "#6c71c4" "#93a1a1" "#fdf6e3"]))
 (defun switch-to-org ()
   (interactive)
   (switch-to-buffer "gtd.org")
@@ -144,11 +199,14 @@
 (global-set-key [f2]  'wg-switch-to-notes)
 (global-set-key [f3]  'switch-to-org)
 (global-set-key [f4]  'magit-status)
-
+(global-set-key [f6]  'helm-man-woman)
 (global-set-key [f7]  'compile)
 (global-set-key [f8]  'reboot-python)
 (global-set-key [f9]  'py-execute-region)
 (global-set-key [f10] 'switch-to-shell)
+(global-set-key [f12] 'ace-jump-mode)
+
+(nyan-mode)
 
 (defun dump-fonts ()
   (interactive)
@@ -157,7 +215,7 @@
          (fileName (format "%s/%s" (getenv "HOME")  bufferName) ))
     (switch-to-buffer bufferName)
     (erase-buffer)
-    (mapcar (lambda (x) (insert (format "(set-frame-font \"%s\" )\n"  x) ) )  (x-list-fonts "*") )
+    (mapc (lambda (x) (insert (format "(set-frame-font \"%s\" )\n"  x) ) )  (x-list-fonts "*") )
     (mark-whole-buffer)
     (sort-lines nil (point-min) (point-max))
     (write-file fileName )
@@ -200,31 +258,10 @@
 (global-set-key (kbd "C-c o") 'ff-find-other-file)
 (global-set-key (kbd "C-c f") 'find-file-at-point)
 
-(defun switch-to-shell () 
-  (interactive)
-  (switch-to-buffer "*shell*"))
-
 (windmove-default-keybindings 'meta)
 
-(defun plist-to-alist (the-plist)
-  (defun get-tuple-from-plist (the-plist)
-    (when the-plist
-      (cons (car the-plist) (cadr the-plist))))
-  (let ((alist '()))
-    (while the-plist
-      (add-to-list 'alist (get-tuple-from-plist the-plist))
-      (setq the-plist (cddr the-plist)))
-    alist))
-
-(defun do-revert () 
-  (interactive) 
-  (revert-buffer nil 't))
-
-(defun revert-buffer-with-prejudice () 
-  (interactive) 
-  (revert-buffer t t ))
-
 (defun reboot-python ()
+  "Reboot python."
   (interactive)
   (save-current-buffer
                                         ; Disable querying while we delete.|
@@ -233,7 +270,7 @@
       (if (get-buffer "*Jython*") (kill-buffer "*Jython*") ))))
 
 (defun unfill-paragraph (&optional region)
-  "Takes a multi-line paragraph and makes it into a single line of text."
+  "Takes a multi-line paragraph ( REGION ) and make it into a single line of text."
   (interactive (progn (barf-if-buffer-read-only) '(t)))
   (let ((fill-column (point-max)))
     (fill-paragraph nil region)))
@@ -351,9 +388,6 @@
   (compile-in-buffer "cd ~/repos/pingu && rdmd -unittest --main -version=diagnostic Order.d" "pingu"))
 
 (global-set-key (kbd "C-c C-h C-p") 'pingu)
-(defun pingu ()
-  (interactive)
-  (compile-in-buffer "cd ~/repos/pingu && rdmd Order.d" "pingu"))
 
 (eval-after-load 'company
   '(progn
@@ -371,3 +405,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(provide 'init.el)
+;;; init.el ends here

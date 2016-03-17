@@ -40,10 +40,10 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** TODO Learn CM")
- (rear-context-string . "nary Psychology\n")
- (position . 3317))
+ (filename . "~/Dropbox/gtd/journal.org")
+ (front-context-string . "**** [2016-03-13")
+ (rear-context-string . "16-03-13 Sunday\n")
+ (position . 53336))
 ("phobos"
  (filename . "/usr/include/dmd/phobos/std/")
  (front-context-string . "..\n  -rw-r--r-- ")
