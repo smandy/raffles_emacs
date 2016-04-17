@@ -6,7 +6,16 @@
 
 ;;; Code: 
 
-(set-frame-font "Ubuntu Mono 13")
+(set-frame-font "Ubuntu Mono 12")
+
+(set-frame-font "Fixed 10")
+
+
+;;(set-frame-font "Misc Fixed 12")
+(set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-90-iso8859-3" )
+
+
+
 
 (require 'compile)
 (require 'package)
@@ -35,6 +44,9 @@
   (gdb "gdb -i=mi -nx -x /home/andy/discovery.gdbinit"))
 
 (global-set-key (kbd "C-x C-o") 'ff-find-other-file)
+
+
+
 
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
