@@ -6,16 +6,13 @@
 
 ;;; Code: 
 
-(set-frame-font "Ubuntu Mono 12")
+(set-frame-font "Ubuntu Mono 10")
 
-(set-frame-font "Fixed 10")
+(set-frame-font "Fixed 9")
 
 
 ;;(set-frame-font "Misc Fixed 12")
 (set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-90-iso8859-3" )
-
-
-
 
 (require 'compile)
 (require 'package)
@@ -144,7 +141,7 @@
  '(cua-read-only-cursor-color "#859900")
  '(custom-safe-themes
    (quote
-    ("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "40c66989886b3f05b0c4f80952f128c6c4600f85b1f0996caa1fa1479e20c082" "067d9b8104c0a98c916d524b47045367bdcd9cf6cda393c5dae8cd8f7eb18e2a" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+    ("f9574c9ede3f64d57b3aa9b9cef621d54e2e503f4d75d8613cbcc4ca1c962c21" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "40c66989886b3f05b0c4f80952f128c6c4600f85b1f0996caa1fa1479e20c082" "067d9b8104c0a98c916d524b47045367bdcd9cf6cda393c5dae8cd8f7eb18e2a" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(flycheck-clang-language-standard "c++11")
  '(flycheck-gcc-language-standard "c++11")
  '(haskell-process-auto-import-loaded-modules t)
