@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("dconf_talk"
+(("docs"
+ (filename . "/mnt/hdd/andy/repos/bottle/docs/")
+ (front-context-string . "index.rst\n  drwx")
+ (rear-context-string . "81 Sep 26  2015 ")
+ (position . 728))
+("dconf_talk"
  (filename . "/mnt/hdd/andy/repos/dconf_talk/")
  (front-context-string . "andy_autumn.png\n")
  (rear-context-string . "98 Jun 23  2015 ")

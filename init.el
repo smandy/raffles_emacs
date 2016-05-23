@@ -6,10 +6,9 @@
 
 ;;; Code: 
 
-(set-frame-font "Ubuntu Mono 10")
+(set-frame-font "Ubuntu Mono 12")
 
-(set-frame-font "Fixed 9")
-
+(set-frame-font "Fixed 12")
 
 ;;(set-frame-font "Misc Fixed 12")
 (set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-90-iso8859-3" )
@@ -131,6 +130,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(LaTeX-command "latex -shell-escape")
  '(c-basic-offset 4)
  '(clang-format-executable "clang-format-3.4")
  '(company-clang-arguments (quote ("-std=c++0x")))
@@ -407,6 +407,8 @@
 
 (autoload 'utop-minor-mode "utop" "Minor mode for utop" t)
 (add-hook 'tuareg-mode-hook 'utop-minor-mode)
+
+(load "auctex.el" nil t t)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
