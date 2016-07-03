@@ -6,9 +6,11 @@
 
 ;;; Code: 
 
-(set-frame-font "Ubuntu Mono 12")
+(set-frame-font "Ubuntu Mono 14")
 
-(set-frame-font "Fixed 12")
+(set-frame-font "Fixed 10")
+
+;; Nice runing from Mac. (set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-7" )
 
 ;;(set-frame-font "Misc Fixed 12")
 (set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-90-iso8859-3" )
@@ -40,9 +42,6 @@
   (gdb "gdb -i=mi -nx -x /home/andy/discovery.gdbinit"))
 
 (global-set-key (kbd "C-x C-o") 'ff-find-other-file)
-
-
-
 
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
@@ -131,6 +130,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(LaTeX-command "latex -shell-escape")
+ '(ansi-color-faces-vector
+   [default bold shadow italic underline bold bold-italic bold])
+ '(ansi-color-names-vector
+   (vector "#839496" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#002b36"))
  '(c-basic-offset 4)
  '(clang-format-executable "clang-format-3.4")
  '(company-clang-arguments (quote ("-std=c++0x")))
@@ -139,9 +142,11 @@
  '(cua-normal-cursor-color "#839496")
  '(cua-overwrite-cursor-color "#b58900")
  '(cua-read-only-cursor-color "#859900")
+ '(custom-enabled-themes (quote (sanityinc-solarized-light)))
  '(custom-safe-themes
    (quote
-    ("f9574c9ede3f64d57b3aa9b9cef621d54e2e503f4d75d8613cbcc4ca1c962c21" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "40c66989886b3f05b0c4f80952f128c6c4600f85b1f0996caa1fa1479e20c082" "067d9b8104c0a98c916d524b47045367bdcd9cf6cda393c5dae8cd8f7eb18e2a" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+    ("4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "f9574c9ede3f64d57b3aa9b9cef621d54e2e503f4d75d8613cbcc4ca1c962c21" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "40c66989886b3f05b0c4f80952f128c6c4600f85b1f0996caa1fa1479e20c082" "067d9b8104c0a98c916d524b47045367bdcd9cf6cda393c5dae8cd8f7eb18e2a" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+ '(fci-rule-color "#073642")
  '(flycheck-clang-language-standard "c++11")
  '(flycheck-gcc-language-standard "c++11")
  '(haskell-process-auto-import-loaded-modules t)
@@ -189,9 +194,36 @@
      (test-case-name . twisted\.internet\.test\.test_core))))
  '(show-paren-mode t)
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
+ '(sql-postgres-login-params
+   (quote
+    ((user :default "andy")
+     server
+     (database :default "andy"))))
  '(tab-width 4)
  '(term-default-bg-color "#002b36")
  '(term-default-fg-color "#839496")
+ '(vc-annotate-background nil)
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#dc322f")
+     (40 . "#cb4b16")
+     (60 . "#b58900")
+     (80 . "#859900")
+     (100 . "#2aa198")
+     (120 . "#268bd2")
+     (140 . "#d33682")
+     (160 . "#6c71c4")
+     (180 . "#dc322f")
+     (200 . "#cb4b16")
+     (220 . "#b58900")
+     (240 . "#859900")
+     (260 . "#2aa198")
+     (280 . "#268bd2")
+     (300 . "#d33682")
+     (320 . "#6c71c4")
+     (340 . "#dc322f")
+     (360 . "#cb4b16"))))
+ '(vc-annotate-very-old-color nil)
  '(weechat-color-list
    (quote
     (unspecified "#002b36" "#073642" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#839496" "#657b83")))
@@ -318,6 +350,8 @@
 
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-sources 'ac-source-yasnippet))
 (ac-config-default)
 
 (require 'ac-slime)
@@ -409,6 +443,21 @@
 (add-hook 'tuareg-mode-hook 'utop-minor-mode)
 
 (load "auctex.el" nil t t)
+
+
+;;(define-key octave-mode-map (kbd "C-c C-c") 'octave-send-buffer)
+;;(define-key octave-mode-map (kbd "C-c C-r") 'octave-send-region)
+
+;;(require 'octave)
+(eval-after-load 'octave '(progn
+                           (define-key octave-mode-map (kbd "C-c C-c") 'octave-send-buffer)
+                           (define-key octave-mode-map (kbd "C-c C-r") 'octave-send-region)
+                           ) )
+
+(require 'sql)
+
+(load-file "~/.emacs.d/sql-interactive-remove-continuation-prompt.el")
+(require 'sql-interactive-remove-continuation-prompt)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
