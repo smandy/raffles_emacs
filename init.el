@@ -417,14 +417,14 @@
   (compile-in-buffer "cd ~/repos/dev/cpp && scons" "dev"))
 
 
-(defun dayBetween (s f)
-  (let* ((conv (lambda (x)
+(defun daysBetween (s f)
+  (let* ((seconds-per-day ( * 24 60 60 ))
+         (conv (lambda (x)
                  (let ((bits (mapcar 'string-to-int (split-string x "-"))))
-                   (apply 'encode-time (list 0 0 0 (nth 2 bits) (nth 1 bits) (nth 0 bits)))
-                   )))
+                   (apply 'encode-time (list 0 0 0 (nth 2 bits) (nth 1 bits) (nth 0 bits))))))
          (st (funcall conv s))
          (ft (funcall conv f))
-         (ret (/ (time-to-seconds (time-subtract ft st)) 86400)))
+         (ret (/ (time-to-seconds (time-subtract ft st)) seconds-per-day)))
     ret))
 
 (defun rangeExperiment ()
