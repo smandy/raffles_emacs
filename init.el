@@ -6,7 +6,7 @@
 
 ;;; Code: 
 
-(set-frame-font "Ubuntu Mono 14")
+(set-frame-font "Ubuntu Mono 20")
 
 (set-frame-font "Fixed 10")
 
@@ -415,6 +415,17 @@
 (defun compile-dev ()
   (interactive)
   (compile-in-buffer "cd ~/repos/dev/cpp && scons" "dev"))
+
+
+(defun dayBetween (s f)
+  (let* ((conv (lambda (x)
+                 (let ((bits (mapcar 'string-to-int (split-string x "-"))))
+                   (apply 'encode-time (list 0 0 0 (nth 2 bits) (nth 1 bits) (nth 0 bits)))
+                   )))
+         (st (funcall conv s))
+         (ft (funcall conv f))
+         (ret (/ (time-to-seconds (time-subtract ft st)) 86400)))
+    ret))
 
 (defun rangeExperiment ()
   (interactive)
