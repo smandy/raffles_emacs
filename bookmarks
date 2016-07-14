@@ -68,9 +68,9 @@
  (position . 1))
 ("org-capture-last-stored"
  (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** TODO Bias var")
- (rear-context-string . "cemerick/austin\n")
- (position . 5288))
+ (front-context-string . "** TODO https://")
+ (rear-context-string . "riance_tradeoff\n")
+ (position . 5371))
 ("phobos"
  (filename . "/usr/include/dmd/phobos/std/")
  (front-context-string . "..\n  -rw-r--r-- ")

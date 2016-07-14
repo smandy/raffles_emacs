@@ -6,7 +6,7 @@
 
 ;;; Code: 
 
-(set-frame-font "Ubuntu Mono 20")
+(set-frame-font "Ubuntu Mono 15")
 
 (set-frame-font "Fixed 10")
 
@@ -24,11 +24,6 @@
       (cons '("SConstruct" . python-mode) auto-mode-alist))
 (setq auto-mode-alist
       (cons '("SConscript" . python-mode) auto-mode-alist))
-
-(add-hook 'after-init-hook 'my-after-init-hook)
-(defun my-after-init-hook ()
-  "A hook."
-  (require 'edts-start))
 
 (defun slurp (x)
   "Clojure slurp function.  Slurp file X."
@@ -88,9 +83,13 @@
   (revert-buffer 't 't))
 
 (global-set-key (kbd "C-c r")  'revert-buffer-with-prejudice)
-
 (add-to-list 'auto-mode-alist '("build\\.gradle" . groovy-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
+(require 'cl)
+(setq auto-mode-alist (remove-if
+                       (lambda (x) ( equal (cdr x) 'objc-mode)) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
 
 (defun compile-in-own-buffer (buf cmd)
   (interactive)
@@ -110,6 +109,16 @@
   (find-file-at-point (x-get-clipboard)))
 
 (global-set-key (kbd "C-c p")  'find-file-in-clipboard)
+
+(defun copy-file-name-to-clipboard ()
+  "Copy the current buffer file name to the clipboard."
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (when filename
+      (kill-new filename)
+      (message "Copied buffer file name '%s' to the clipboard." filename))))
 
 (defun do-revert () 
   (interactive) 
@@ -132,59 +141,21 @@
  '(LaTeX-command "latex -shell-escape")
  '(ansi-color-faces-vector
    [default bold shadow italic underline bold bold-italic bold])
- '(ansi-color-names-vector
-   (vector "#839496" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#002b36"))
  '(c-basic-offset 4)
  '(clang-format-executable "clang-format-3.4")
  '(company-clang-arguments (quote ("-std=c++0x")))
  '(compilation-message-face (quote default))
- '(cua-global-mark-cursor-color "#2aa198")
- '(cua-normal-cursor-color "#839496")
- '(cua-overwrite-cursor-color "#b58900")
- '(cua-read-only-cursor-color "#859900")
- '(custom-enabled-themes (quote (sanityinc-solarized-light)))
- '(custom-safe-themes
-   (quote
-    ("4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "f9574c9ede3f64d57b3aa9b9cef621d54e2e503f4d75d8613cbcc4ca1c962c21" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "40c66989886b3f05b0c4f80952f128c6c4600f85b1f0996caa1fa1479e20c082" "067d9b8104c0a98c916d524b47045367bdcd9cf6cda393c5dae8cd8f7eb18e2a" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
- '(fci-rule-color "#073642")
  '(flycheck-clang-language-standard "c++11")
  '(flycheck-gcc-language-standard "c++11")
  '(haskell-process-auto-import-loaded-modules t)
  '(haskell-process-log t)
  '(haskell-process-suggest-remove-import-lines t)
- '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
- '(highlight-symbol-colors
-   (--map
-    (solarized-color-blend it "#002b36" 0.25)
-    (quote
-     ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
- '(highlight-symbol-foreground-color "#93a1a1")
- '(highlight-tail-colors
-   (quote
-    (("#073642" . 0)
-     ("#546E00" . 20)
-     ("#00736F" . 30)
-     ("#00629D" . 50)
-     ("#7B6000" . 60)
-     ("#8B2C02" . 70)
-     ("#93115C" . 85)
-     ("#073642" . 100))))
- '(hl-bg-colors
-   (quote
-    ("#7B6000" "#8B2C02" "#990A1B" "#93115C" "#3F4D91" "#00629D" "#00736F" "#546E00")))
- '(hl-fg-colors
-   (quote
-    ("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
+ '(inferior-octave-startup-args (quote ("-i" "--line-editing")))
  '(magit-diff-use-overlays nil)
- '(nrepl-message-colors
-   (quote
-    ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(nyan-mode t)
  '(org-agenda-files (quote ("~/Dropbox/gtd/gtd.org")))
  '(org-directory "~/Dropbox/gtd")
  '(org-hide-leading-stars t)
- '(pos-tip-background-color "#073642")
- '(pos-tip-foreground-color "#93a1a1")
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--pylab=qt")
  '(safe-local-variable-values
@@ -193,51 +164,22 @@
      (test-case-name . twisted\.internet\.test\.test_inotify)
      (test-case-name . twisted\.internet\.test\.test_core))))
  '(show-paren-mode t)
- '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
  '(sql-postgres-login-params
    (quote
     ((user :default "andy")
      server
      (database :default "andy"))))
  '(tab-width 4)
- '(term-default-bg-color "#002b36")
- '(term-default-fg-color "#839496")
  '(vc-annotate-background nil)
- '(vc-annotate-color-map
-   (quote
-    ((20 . "#dc322f")
-     (40 . "#cb4b16")
-     (60 . "#b58900")
-     (80 . "#859900")
-     (100 . "#2aa198")
-     (120 . "#268bd2")
-     (140 . "#d33682")
-     (160 . "#6c71c4")
-     (180 . "#dc322f")
-     (200 . "#cb4b16")
-     (220 . "#b58900")
-     (240 . "#859900")
-     (260 . "#2aa198")
-     (280 . "#268bd2")
-     (300 . "#d33682")
-     (320 . "#6c71c4")
-     (340 . "#dc322f")
-     (360 . "#cb4b16"))))
  '(vc-annotate-very-old-color nil)
- '(weechat-color-list
-   (quote
-    (unspecified "#002b36" "#073642" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#839496" "#657b83")))
- '(xterm-color-names
-   ["#073642" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#eee8d5"])
- '(xterm-color-names-bright
-   ["#002b36" "#cb4b16" "#586e75" "#657b83" "#839496" "#6c71c4" "#93a1a1" "#fdf6e3"]))
+ )
 (defun switch-to-org ()
   (interactive)
   (switch-to-buffer "gtd.org")
   )
 
 (global-set-key [f1]  'wg-switch-to-workgroup)
-(global-set-key [f2]  'wg-switch-to-notes)
+(global-set-key [f2]  'ace-jump-mode)
 (global-set-key [f3]  'switch-to-org)
 (global-set-key [f4]  'magit-status)
 (global-set-key [f6]  'helm-man-woman)
@@ -425,6 +367,8 @@
          (ft (funcall conv f)))
     (/ (time-to-seconds (time-subtract ft st)) seconds-per-day)))
 
+;; (daysBetween "1973-09-21" "2016-07-12") 15635.0
+ 
 (defun rangeExperiment ()
   (interactive)
   (compile-in-buffer "cd ~/repos/pingu && rdmd -unittest rangeExperiment.d" "rangeExperiment"))
@@ -461,6 +405,7 @@
 (eval-after-load 'octave '(progn
                            (define-key octave-mode-map (kbd "C-c C-c") 'octave-send-buffer)
                            (define-key octave-mode-map (kbd "C-c C-r") 'octave-send-region)
+                           (define-key octave-mode-map (kbd "C-c C-p") 'run-octave)
                            ) )
 
 (require 'sql)
@@ -470,7 +415,7 @@
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; If you edit it by hand, you could mecss it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
