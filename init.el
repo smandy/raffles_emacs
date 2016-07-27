@@ -6,14 +6,13 @@
 
 ;;; Code: 
 
-(set-frame-font "Ubuntu Mono 15")
-
-(set-frame-font "Fixed 10")
+(set-frame-font "Ubuntu Mono 24")
+(set-frame-font "Fixed 14")
 
 ;; Nice runing from Mac. (set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-7" )
 
-;;(set-frame-font "Misc Fixed 12")
-(set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-90-iso8859-3" )
+;;(set-frame-font "Misc Fixed 14")
+(set-frame-font "-misc-fixed-medium-r-normal--18-*-75-75-c-90-iso8859-3" )
 
 (require 'compile)
 (require 'package)
