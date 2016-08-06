@@ -6,19 +6,18 @@
 
 ;;; Code: 
 
-(set-frame-font "Ubuntu Mono 24")
-(set-frame-font "Fixed 14")
+(set-frame-font "Ubuntu Mono 15")
+(set-frame-font "Fixed 12")
 
 ;; Nice runing from Mac. (set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-7" )
-
 ;;(set-frame-font "Misc Fixed 14")
+
 (set-frame-font "-misc-fixed-medium-r-normal--18-*-75-75-c-90-iso8859-3" )
 
 (require 'compile)
 (require 'package)
 
 (add-to-list 'package-archives '("melpa"     . "http://melpa.org/packages/"))
-
 (setq auto-mode-alist
       (cons '("SConstruct" . python-mode) auto-mode-alist))
 (setq auto-mode-alist
@@ -154,6 +153,10 @@
  '(nyan-mode t)
  '(org-agenda-files (quote ("~/Dropbox/gtd/gtd.org")))
  '(org-directory "~/Dropbox/gtd")
+ '(org-format-latex-options
+   (quote
+    (:foreground default :background default :scale 2.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+                 ("begin" "$1" "$" "$$" "\\(" "\\["))))
  '(org-hide-leading-stars t)
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--pylab=qt")
@@ -170,8 +173,7 @@
      (database :default "andy"))))
  '(tab-width 4)
  '(vc-annotate-background nil)
- '(vc-annotate-very-old-color nil)
- )
+ '(vc-annotate-very-old-color nil))
 (defun switch-to-org ()
   (interactive)
   (switch-to-buffer "gtd.org")
@@ -396,7 +398,6 @@
 
 (load "auctex.el" nil t t)
 
-
 ;;(define-key octave-mode-map (kbd "C-c C-c") 'octave-send-buffer)
 ;;(define-key octave-mode-map (kbd "C-c C-r") 'octave-send-region)
 
@@ -407,14 +408,14 @@
                            (define-key octave-mode-map (kbd "C-c C-p") 'run-octave)
                            ) )
 
-(require 'sql)
-
-(load-file "~/.emacs.d/sql-interactive-remove-continuation-prompt.el")
-(require 'sql-interactive-remove-continuation-prompt)
+;; SQL Sticc
+;;(require 'sql)
+;;(load-file "~/.emacs.d/sql-interactive-remove-continuation-prompt.el")
+;;(require 'sql-interactive-remove-continuation-prompt)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mecss it up, so be careful.
+ ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
