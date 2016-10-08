@@ -68,9 +68,9 @@
  (position . 1))
 ("org-capture-last-stored"
  (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** TODO Lagom ht")
- (rear-context-string . "x/scipyRedux.py\n")
- (position . 6547))
+ (front-context-string . "** TODO Mathemat")
+ (rear-context-string . "#node_toc_start\n")
+ (position . 6790))
 ("phobos"
  (filename . "/usr/include/dmd/phobos/std/")
  (front-context-string . "..\n  -rw-r--r-- ")

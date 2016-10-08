@@ -4,10 +4,15 @@
 
 ;; Raffles laptop emacs config
 
-;;; Code: 
+;;; Code:
 
-(set-frame-font "Ubuntu Mono 15")
-(set-frame-font "Fixed 12")
+(set-frame-font "Ubuntu Mono 14")
+
+;; Gorgeous!
+
+;;(set-frame-font "Ubuntu Light 15")
+;;(set-frame-font "Ubuntu Normal 15")
+(set-frame-font "Fixed 10")
 
 ;; Nice runing from Mac. (set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-7" )
 ;;(set-frame-font "Misc Fixed 14")
@@ -22,6 +27,11 @@
       (cons '("SConstruct" . python-mode) auto-mode-alist))
 (setq auto-mode-alist
       (cons '("SConscript" . python-mode) auto-mode-alist))
+
+
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
+(autoload 'jsx-mode "jsx-mode" "JSX mode" t)
+
 
 (defun slurp (x)
   "Clojure slurp function.  Slurp file X."
@@ -408,6 +418,18 @@
                            (define-key octave-mode-map (kbd "C-c C-p") 'run-octave)
                            ) )
 
+(eval-after-load 'nodejs-repl
+  '(progn
+     (define-key js2-mode-map (kbd "C-c C-r") 'nodejs-repl-send-region)))
+
+(defun end-of-sml (a b &rest xs)
+  (interactive)
+  (switch-to-buffer "*SML*")
+  (end-of-buffer) ) 
+
+; (advice-add 'sml-prog-proc-load-file :after 'end-of-sml)
+; (advice-remove 'sml-prog-proc-load-file)
+
 ;; SQL Sticc
 ;;(require 'sql)
 ;;(load-file "~/.emacs.d/sql-interactive-remove-continuation-prompt.el")
@@ -419,6 +441,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
 
 (provide 'init.el)
 ;;; init.el ends here

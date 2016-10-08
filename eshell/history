@@ -4,3 +4,6 @@ echo > $1
 ls -gl
 pwd
 find . 
+top
+top
+top
