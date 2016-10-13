@@ -6,9 +6,7 @@
 
 ;;; Code:
 
-(set-frame-font "Ubuntu Mono 14")
-
-;; Gorgeous!
+(set-frame-font "Ubuntu Mono 20")
 
 ;;(set-frame-font "Ubuntu Light 15")
 ;;(set-frame-font "Ubuntu Normal 15")
@@ -317,7 +315,7 @@
 (setq inferior-lisp-program "/usr/bin/sbcl")
 
 (require 'org)
-(setq org-default-notes-file (concat org-directory "~/Dropbox/gtd/gtd.org") )
+(setq org-default-notes-file (concat org-directory "~/Dropbox/gtd/gtd.org"))
 (define-key global-map "\C-cc" 'org-capture)
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-cc" 'org-capture)
@@ -384,10 +382,10 @@
   (interactive)
   (compile-in-buffer "cd ~/repos/pingu && rdmd -unittest rangeExperiment.d" "rangeExperiment"))
 
-
 (eval-after-load 'company
   '(progn
      (define-key company-mode-map (kbd "C-:") 'helm-company)
+     (define-key company-mode-map (kbd "M-x") 'company-complete)
      (define-key company-active-map (kbd "C-:") 'helm-company)))
 
 (defun pingu ()
@@ -441,7 +439,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
 
 (provide 'init.el)
 ;;; init.el ends here
