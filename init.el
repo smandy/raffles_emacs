@@ -6,7 +6,7 @@
 
 ;;; Code:
 
-(set-frame-font "Ubuntu Mono 20")
+(set-frame-font "Ubuntu Mono 15")
 
 ;;(set-frame-font "Ubuntu Light 15")
 ;;(set-frame-font "Ubuntu Normal 15")
@@ -156,6 +156,7 @@
  '(haskell-process-auto-import-loaded-modules t)
  '(haskell-process-log t)
  '(haskell-process-suggest-remove-import-lines t)
+ '(helm-M-x-fuzzy-match t)
  '(inferior-octave-startup-args (quote ("-i" "--line-editing")))
  '(magit-diff-use-overlays nil)
  '(nyan-mode t)
@@ -385,7 +386,7 @@
 (eval-after-load 'company
   '(progn
      (define-key company-mode-map (kbd "C-:") 'helm-company)
-     (define-key company-mode-map (kbd "M-x") 'company-complete)
+     (define-key company-mode-map (kbd "M-/") 'company-complete)
      (define-key company-active-map (kbd "C-:") 'helm-company)))
 
 (defun pingu ()

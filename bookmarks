@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("postgres.clj"
+(("snippets_mode"
+ (filename . "/mnt/hdd/andy/.emacs.d/elpa/yasnippet-20151227.1550/snippets/c++-mode/")
+ (front-context-string . "assert\n  -rw-r--")
+ (rear-context-string . "66 Dec 31  2015 ")
+ (position . 261))
+("postgres.clj"
  (filename . "~/repos/argo/sql/app/src/app/postgres.clj")
  (front-context-string . "(ns argo)\n\n(impo")
  (rear-context-string)
@@ -67,10 +72,10 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** TODO Mathemat")
- (rear-context-string . "#node_toc_start\n")
- (position . 6790))
+ (filename . "~/Dropbox/gtd/journal.org")
+ (front-context-string . "**** [2016-10-14")
+ (rear-context-string . "16-10-14 Friday\n")
+ (position . 61311))
 ("phobos"
  (filename . "/usr/include/dmd/phobos/std/")
  (front-context-string . "..\n  -rw-r--r-- ")
