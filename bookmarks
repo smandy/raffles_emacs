@@ -2,7 +2,44 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("docs"
+(("scanner"
+ (filename . "/scp:andy@skye:/Users/andy/Pictures/MP Navigator EX/")
+ (front-context-string . ".DS_Store\n  drwx")
+ (rear-context-string . "48 Jul 14  2015 ")
+ (position . 216))
+("journal.org"
+ (filename . "~/Dropbox/gtd/journal.org")
+ (front-context-string . "*** 2016-10-18 T")
+ (rear-context-string . "    years time.\n")
+ (position . 61974))
+("snippets_mode"
+ (filename . "/mnt/hdd/andy/.emacs.d/elpa/yasnippet-20151227.1550/snippets/c++-mode/")
+ (front-context-string . "assert\n  -rw-r--")
+ (rear-context-string . "66 Dec 31  2015 ")
+ (position . 261))
+("postgres.clj"
+ (filename . "~/repos/argo/sql/app/src/app/postgres.clj")
+ (front-context-string . "(ns argo)\n\n(impo")
+ (rear-context-string)
+ (position . 1))
+("argo"
+ (filename . "~/repos/argo/")
+ (front-context-string . "activeTickExampl")
+ (rear-context-string . "96 May 29 19:49 ")
+ (position . 215))
+("postgres_cheatsheet"
+ (filename . "~/Downloads/postgresql83_psql_cheatsheet.pdf")
+ (front-context-string . "%PDF-1.4\n%\307\354\217\242\n5")
+ (rear-context-string)
+ (position . 1)
+ (page . 1)
+ (handler . doc-view-bookmark-jump))
+("vibe.d"
+ (filename . "~/repos/vibe.d/")
+ (front-context-string . "CHANGELOG.md\n  -")
+ (rear-context-string . "41 Jun 11 13:42 ")
+ (position . 232))
+("docs"
  (filename . "/mnt/hdd/andy/repos/bottle/docs/")
  (front-context-string . "index.rst\n  drwx")
  (rear-context-string . "81 Sep 26  2015 ")
@@ -46,9 +83,9 @@
  (position . 1))
 ("org-capture-last-stored"
  (filename . "~/Dropbox/gtd/journal.org")
- (front-context-string . "    \n**** <2016-")
- (rear-context-string . "16-05-06 Friday\n")
- (position . 57260))
+ (front-context-string . "**** [2016-10-18")
+ (rear-context-string . "6-10-18 Tuesday\n")
+ (position . 61997))
 ("phobos"
  (filename . "/usr/include/dmd/phobos/std/")
  (front-context-string . "..\n  -rw-r--r-- ")

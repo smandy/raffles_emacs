@@ -4,7 +4,7 @@
 
 ;; Raffles laptop emacs config
 
-;;; Code: 
+;;; Code:
 
 (set-frame-font "Ubuntu Mono 13")
 
@@ -13,24 +13,27 @@
 (setq helm-echo-input-in-header-line nil)
 ;; Nice runing from Mac. (set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-7" )
 
+;;(set-frame-font "Ubuntu Light 15")
+;;(set-frame-font "Ubuntu Normal 15")
+(set-frame-font "Fixed 10")
 
-;;(set-frame-font "Misc Fixed 12")
-(set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-90-iso8859-3" )
+;; Nice runing from Mac. (set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-7" )
+;;(set-frame-font "Misc Fixed 14")
+
+(set-frame-font "-misc-fixed-medium-r-normal--18-*-75-75-c-90-iso8859-3" )
 
 (require 'compile)
 (require 'package)
 
 (add-to-list 'package-archives '("melpa"     . "http://melpa.org/packages/"))
-
 (setq auto-mode-alist
       (cons '("SConstruct" . python-mode) auto-mode-alist))
 (setq auto-mode-alist
       (cons '("SConscript" . python-mode) auto-mode-alist))
 
-(add-hook 'after-init-hook 'my-after-init-hook)
-(defun my-after-init-hook ()
-  "A hook."
-  (require 'edts-start))
+
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
+(autoload 'jsx-mode "jsx-mode" "JSX mode" t)
 
 (defun slurp (x)
   "Clojure slurp function.  Slurp file X."
@@ -90,9 +93,13 @@
   (revert-buffer 't 't))
 
 (global-set-key (kbd "C-c r")  'revert-buffer-with-prejudice)
-
 (add-to-list 'auto-mode-alist '("build\\.gradle" . groovy-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
+(require 'cl)
+(setq auto-mode-alist (remove-if
+                       (lambda (x) ( equal (cdr x) 'objc-mode)) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
 
 (defun compile-in-own-buffer (buf cmd)
   (interactive)
@@ -113,6 +120,16 @@
 
 (global-set-key (kbd "C-c p")  'find-file-in-clipboard)
 
+(defun copy-file-name-to-clipboard ()
+  "Copy the current buffer file name to the clipboard."
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (when filename
+      (kill-new filename)
+      (message "Copied buffer file name '%s' to the clipboard." filename))))
+
 (defun do-revert () 
   (interactive) 
   (revert-buffer nil 't))
@@ -132,53 +149,28 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(LaTeX-command "latex -shell-escape")
+ '(ansi-color-faces-vector
+   [default bold shadow italic underline bold bold-italic bold])
  '(c-basic-offset 4)
  '(clang-format-executable "clang-format-3.4")
  '(company-clang-arguments (quote ("-std=c++0x")))
  '(compilation-message-face (quote default))
- '(cua-global-mark-cursor-color "#2aa198")
- '(cua-normal-cursor-color "#839496")
- '(cua-overwrite-cursor-color "#b58900")
- '(cua-read-only-cursor-color "#859900")
- '(custom-safe-themes
-   (quote
-    ("f9574c9ede3f64d57b3aa9b9cef621d54e2e503f4d75d8613cbcc4ca1c962c21" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "40c66989886b3f05b0c4f80952f128c6c4600f85b1f0996caa1fa1479e20c082" "067d9b8104c0a98c916d524b47045367bdcd9cf6cda393c5dae8cd8f7eb18e2a" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(flycheck-clang-language-standard "c++11")
  '(flycheck-gcc-language-standard "c++11")
  '(haskell-process-auto-import-loaded-modules t)
  '(haskell-process-log t)
  '(haskell-process-suggest-remove-import-lines t)
- '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
- '(highlight-symbol-colors
-   (--map
-    (solarized-color-blend it "#002b36" 0.25)
-    (quote
-     ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
- '(highlight-symbol-foreground-color "#93a1a1")
- '(highlight-tail-colors
-   (quote
-    (("#073642" . 0)
-     ("#546E00" . 20)
-     ("#00736F" . 30)
-     ("#00629D" . 50)
-     ("#7B6000" . 60)
-     ("#8B2C02" . 70)
-     ("#93115C" . 85)
-     ("#073642" . 100))))
- '(hl-bg-colors
-   (quote
-    ("#7B6000" "#8B2C02" "#990A1B" "#93115C" "#3F4D91" "#00629D" "#00736F" "#546E00")))
- '(hl-fg-colors
-   (quote
-    ("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
+ '(helm-M-x-fuzzy-match t)
+ '(inferior-octave-startup-args (quote ("-i" "--line-editing")))
  '(magit-diff-use-overlays nil)
- '(nrepl-message-colors
-   (quote
-    ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(nyan-mode t)
+ '(org-agenda-files (quote ("~/Dropbox/gtd/gtd.org")))
+ '(org-directory "~/Dropbox/gtd")
+ '(org-format-latex-options
+   (quote
+    (:foreground default :background default :scale 2.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+                 ("begin" "$1" "$" "$$" "\\(" "\\["))))
  '(org-hide-leading-stars t)
- '(pos-tip-background-color "#073642")
- '(pos-tip-foreground-color "#93a1a1")
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--pylab=wx")
  '(safe-local-variable-values
@@ -187,24 +179,21 @@
      (test-case-name . twisted\.internet\.test\.test_inotify)
      (test-case-name . twisted\.internet\.test\.test_core))))
  '(show-paren-mode t)
- '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
- '(tab-width 4)
- '(term-default-bg-color "#002b36")
- '(term-default-fg-color "#839496")
- '(weechat-color-list
+ '(sql-postgres-login-params
    (quote
-    (unspecified "#002b36" "#073642" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#839496" "#657b83")))
- '(xterm-color-names
-   ["#073642" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#eee8d5"])
- '(xterm-color-names-bright
-   ["#002b36" "#cb4b16" "#586e75" "#657b83" "#839496" "#6c71c4" "#93a1a1" "#fdf6e3"]))
+    ((user :default "andy")
+     server
+     (database :default "andy"))))
+ '(tab-width 4)
+ '(vc-annotate-background nil)
+ '(vc-annotate-very-old-color nil))
 (defun switch-to-org ()
   (interactive)
   (switch-to-buffer "gtd.org")
   )
 
 (global-set-key [f1]  'wg-switch-to-workgroup)
-(global-set-key [f2]  'wg-switch-to-notes)
+(global-set-key [f2]  'ace-jump-mode)
 (global-set-key [f3]  'switch-to-org)
 (global-set-key [f4]  'magit-status)
 (global-set-key [f6]  'helm-man-woman)
@@ -317,6 +306,8 @@
 
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-sources 'ac-source-yasnippet))
 (ac-config-default)
 
 (require 'ac-slime)
@@ -329,7 +320,7 @@
 (setq inferior-lisp-program "/usr/bin/sbcl")
 
 (require 'org)
-;;(setq org-default-notes-file (concat org-directory "~/Dropbox/gtd/gtd.org") )
+(setq org-default-notes-file (concat org-directory "~/Dropbox/gtd/gtd.org"))
 (define-key global-map "\C-cc" 'org-capture)
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-cc" 'org-capture)
@@ -381,14 +372,25 @@
   (interactive)
   (compile-in-buffer "cd ~/repos/dev/cpp && scons" "dev"))
 
+(defun daysBetween (s f)
+  (let* ((seconds-per-day ( * 24 60 60 ))
+         (conv (lambda (x)
+                 (let ((bits (mapcar 'string-to-int (split-string x "-"))))
+                   (apply 'encode-time (list 0 0 0 (nth 2 bits) (nth 1 bits) (nth 0 bits))))))
+         (st (funcall conv s))
+         (ft (funcall conv f)))
+    (/ (time-to-seconds (time-subtract ft st)) seconds-per-day)))
+
+;; (daysBetween "1973-09-21" "2016-07-12") 15635.0
+ 
 (defun rangeExperiment ()
   (interactive)
   (compile-in-buffer "cd ~/repos/pingu && rdmd -unittest rangeExperiment.d" "rangeExperiment"))
 
-
 (eval-after-load 'company
   '(progn
      (define-key company-mode-map (kbd "C-:") 'helm-company)
+     (define-key company-mode-map (kbd "M-/") 'company-complete)
      (define-key company-active-map (kbd "C-:") 'helm-company)))
 
 (defun pingu ()
@@ -408,6 +410,33 @@
 (add-hook 'tuareg-mode-hook 'utop-minor-mode)
 
 (load "auctex.el" nil t t)
+
+;;(define-key octave-mode-map (kbd "C-c C-c") 'octave-send-buffer)
+;;(define-key octave-mode-map (kbd "C-c C-r") 'octave-send-region)
+
+;;(require 'octave)
+(eval-after-load 'octave '(progn
+                           (define-key octave-mode-map (kbd "C-c C-c") 'octave-send-buffer)
+                           (define-key octave-mode-map (kbd "C-c C-r") 'octave-send-region)
+                           (define-key octave-mode-map (kbd "C-c C-p") 'run-octave)
+                           ) )
+
+(eval-after-load 'nodejs-repl
+  '(progn
+     (define-key js2-mode-map (kbd "C-c C-r") 'nodejs-repl-send-region)))
+
+(defun end-of-sml (a b &rest xs)
+  (interactive)
+  (switch-to-buffer "*SML*")
+  (end-of-buffer) ) 
+
+; (advice-add 'sml-prog-proc-load-file :after 'end-of-sml)
+; (advice-remove 'sml-prog-proc-load-file)
+
+;; SQL Sticc
+;;(require 'sql)
+;;(load-file "~/.emacs.d/sql-interactive-remove-continuation-prompt.el")
+;;(require 'sql-interactive-remove-continuation-prompt)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
