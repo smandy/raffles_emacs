@@ -6,9 +6,13 @@
 
 ;;; Code: 
 
-(set-frame-font "Ubuntu Mono 12")
+(set-frame-font "Ubuntu Mono 13")
 
-(set-frame-font "Fixed 12")
+(set-frame-font "Fixed 9")
+
+(setq helm-echo-input-in-header-line nil)
+;; Nice runing from Mac. (set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-7" )
+
 
 ;;(set-frame-font "Misc Fixed 12")
 (set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-90-iso8859-3" )
@@ -40,9 +44,6 @@
   (gdb "gdb -i=mi -nx -x /home/andy/discovery.gdbinit"))
 
 (global-set-key (kbd "C-x C-o") 'ff-find-other-file)
-
-
-
 
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
@@ -175,13 +176,11 @@
    (quote
     ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(nyan-mode t)
- '(org-agenda-files (quote ("~/Dropbox/gtd/gtd.org")))
- '(org-directory "~/Dropbox/gtd")
  '(org-hide-leading-stars t)
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(python-shell-interpreter "ipython")
- '(python-shell-interpreter-args "--pylab=qt")
+ '(python-shell-interpreter-args "--pylab=wx")
  '(safe-local-variable-values
    (quote
     ((test-case-name . twisted\.internet\.test\.test_qtreactor)
@@ -294,9 +293,9 @@
 
 (require 'workgroups)
 (setq wg-prefix-key (kbd "C-c w"))
-(setq wg-file "~/wg.el")
-(workgroups-mode 1)
-(wg-load wg-file)
+;; (setq wg-file "~/wg.el")
+;; (workgroups-mode 1)
+;;(wg-load wg-file)
 
 (tool-bar-mode 0)
 (menu-bar-mode 0)
@@ -330,7 +329,7 @@
 (setq inferior-lisp-program "/usr/bin/sbcl")
 
 (require 'org)
-(setq org-default-notes-file (concat org-directory "~/Dropbox/gtd/gtd.org") )
+;;(setq org-default-notes-file (concat org-directory "~/Dropbox/gtd/gtd.org") )
 (define-key global-map "\C-cc" 'org-capture)
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-cc" 'org-capture)
