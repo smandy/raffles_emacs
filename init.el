@@ -6,26 +6,25 @@
 
 ;;; Code:
 
-(set-frame-font "Ubuntu Mono 15")
+(set-frame-font "Ubuntu Mono 14")
 
 ;;(set-frame-font "Ubuntu Light 15")
 ;;(set-frame-font "Ubuntu Normal 15")
 (set-frame-font "Fixed 10")
 
 ;; Nice runing from Mac. (set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-7" )
-;;(set-frame-font "Misc Fixed 14")
-
-(set-frame-font "-misc-fixed-medium-r-normal--18-*-75-75-c-90-iso8859-3" )
+;; (set-frame-font "Misc Fixed 14")
+;; (set-frame-font "-misc-fixed-medium-r-normal--18-*-75-75-c-90-iso8859-3" )
 
 (require 'compile)
 (require 'package)
 
 (add-to-list 'package-archives '("melpa"     . "http://melpa.org/packages/"))
+
 (setq auto-mode-alist
       (cons '("SConstruct" . python-mode) auto-mode-alist))
 (setq auto-mode-alist
       (cons '("SConscript" . python-mode) auto-mode-alist))
-
 
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
 (autoload 'jsx-mode "jsx-mode" "JSX mode" t)
@@ -40,6 +39,11 @@
   "Debug the discovery app."
   (interactive)
   (gdb "gdb -i=mi -nx -x /home/andy/discovery.gdbinit"))
+
+(defun debug-chatserver ()
+  "Debug the discovery app."
+  (interactive)
+  (gdb "gdb -i=mi -nx -x /home/andy/chatServer.gdbinit"))
 
 (global-set-key (kbd "C-x C-o") 'ff-find-other-file)
 
@@ -105,6 +109,29 @@
   (interactive)
   (compile-in-own-buffer "build agora" "cd ~/repos/agora && cmake -G 'Ninja' && ninja"))
 
+(defun compile-imgui ()
+  (interactive)
+  (compile-in-own-buffer "build imgui" "cd ~/repos/imgui && scons -c && scons"))
+
+(defun compile-imgui-example ()
+  (interactive)
+  (compile-in-own-buffer "build imgui-example" "cd ~/repos/imgui/examples/sdl_opengl3_example && scons -c && scons"))
+
+
+
+(defun compile-box2d ()
+  (interactive)
+  (compile-in-own-buffer "build box2d" "cd /home/andy/repos/Box2D/Box2D/Box2D && scons -c && scons"))
+
+
+(defun compile-testbed ()
+  (interactive)
+  (compile-in-own-buffer "build testbed" "cd /home/andy/repos/Box2D/Box2D/Testbed && scons -c && scons"))
+
+(defun compile-demo ()
+  (interactive)
+  (compile-in-own-buffer "build demo" "cd ~/repos/imgui/examples/sdl_opengl3_example && scons -c && scons"))
+
 (defun compile-discovery ()
   (interactive)
   (compile-in-own-buffer "build discovery" "cd ~/repos/agora && make"))
@@ -150,8 +177,14 @@
  '(clang-format-executable "clang-format-3.4")
  '(company-clang-arguments (quote ("-std=c++0x")))
  '(compilation-message-face (quote default))
- '(flycheck-clang-language-standard "c++11")
- '(flycheck-gcc-language-standard "c++11")
+ '(display-time-world-list
+   (quote
+    (("America/Chicago" "Chicago")
+     ("America/New_York" "New York")
+     ("Europe/London" "London")
+     ("Australia/Perth" "Perth"))))
+ '(flycheck-clang-language-standard "c++14")
+ '(flycheck-gcc-language-standard "c++14")
  '(haskell-process-auto-import-loaded-modules t)
  '(haskell-process-log t)
  '(haskell-process-suggest-remove-import-lines t)
@@ -163,9 +196,12 @@
  '(org-directory "~/Dropbox/gtd")
  '(org-format-latex-options
    (quote
-    (:foreground default :background default :scale 2.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+    (:foreground default :background default :scale 2.5 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
                  ("begin" "$1" "$" "$$" "\\(" "\\["))))
  '(org-hide-leading-stars t)
+ '(package-selected-packages
+   (quote
+    (swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flymake-haskell-multi flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode d-mode csv-nav csharp-mode color-theme-solarized color-theme-sanityinc-solarized color-theme-eclipse color-theme-cobalt coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--pylab=qt")
  '(safe-local-variable-values
@@ -195,8 +231,12 @@
 (global-set-key [f7]  'compile)
 (global-set-key [f8]  'reboot-python)
 (global-set-key [f9]  'py-execute-region)
-(global-set-key [f10] 'switch-to-shell)
+;;(global-set-key [f10] 'switch-to-shell)
+(global-set-key [f10] 'clang-format-buffer)
 (global-set-key [f12] 'ace-jump-mode)
+(global-set-key [f1] 'wg-switch-to-workgroup)
+(global-set-key (kbd "C-c o") 'ff-find-other-file)
+(global-set-key (kbd "C-c f") 'find-file-at-point)
 
 (nyan-mode)
 
@@ -243,12 +283,6 @@
 (require 'color-theme)
 (color-theme-midnight)
 
-(global-set-key [f1] 'wg-switch-to-workgroup)
-(global-set-key [f7] 'compile)
-(global-set-key [f9] 'py-execute-region)
-(global-set-key [f10] 'switch-to-shell)
-(global-set-key (kbd "C-c o") 'ff-find-other-file)
-(global-set-key (kbd "C-c f") 'find-file-at-point)
 
 (windmove-default-keybindings 'meta)
 
@@ -376,7 +410,7 @@
          (ft (funcall conv f)))
     (/ (time-to-seconds (time-subtract ft st)) seconds-per-day)))
 
-;; (daysBetween "1973-09-21" "2016-07-12") 15635.0
+;; (daysBetween "1973-05-09" "2016-11-01") 15882.041666666666
  
 (defun rangeExperiment ()
   (interactive)
@@ -418,7 +452,9 @@
 
 (eval-after-load 'nodejs-repl
   '(progn
-     (define-key js2-mode-map (kbd "C-c C-r") 'nodejs-repl-send-region)))
+     (define-key js2-mode-map (kbd "C-c C-r") 'nodejs-repl-send-region)
+     (define-key js2-mode-map (kbd "C-c C-c") 'nodejs-repl-send-buffer)
+     ))
 
 (defun end-of-sml (a b &rest xs)
   (interactive)
@@ -428,10 +464,10 @@
 ; (advice-add 'sml-prog-proc-load-file :after 'end-of-sml)
 ; (advice-remove 'sml-prog-proc-load-file)
 
-;; SQL Sticc
-;;(require 'sql)
-;;(load-file "~/.emacs.d/sql-interactive-remove-continuation-prompt.el")
-;;(require 'sql-interactive-remove-continuation-prompt)
+;; SQL Stuff
+;; (require 'sql)
+;; (load-file "~/.emacs.d/sql-interactive-remove-continuation-prompt.el")
+;; (require 'sql-interactive-remove-continuation-prompt)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
