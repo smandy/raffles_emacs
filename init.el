@@ -6,7 +6,12 @@
 
 ;;; Code:
 
-(set-frame-font "Ubuntu Mono 14")
+(set-frame-font "Ubuntu Mono 13")
+
+(set-frame-font "Fixed 9")
+
+(setq helm-echo-input-in-header-line nil)
+;; Nice runing from Mac. (set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-7" )
 
 ;;(set-frame-font "Ubuntu Light 15")
 ;;(set-frame-font "Ubuntu Normal 15")
@@ -203,7 +208,7 @@
    (quote
     (swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flymake-haskell-multi flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode d-mode csv-nav csharp-mode color-theme-solarized color-theme-sanityinc-solarized color-theme-eclipse color-theme-cobalt coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
  '(python-shell-interpreter "ipython")
- '(python-shell-interpreter-args "--pylab=qt")
+ '(python-shell-interpreter-args "--pylab=wx")
  '(safe-local-variable-values
    (quote
     ((test-case-name . twisted\.internet\.test\.test_qtreactor)
@@ -311,9 +316,9 @@
 
 (require 'workgroups)
 (setq wg-prefix-key (kbd "C-c w"))
-(setq wg-file "~/wg.el")
-(workgroups-mode 1)
-(wg-load wg-file)
+;; (setq wg-file "~/wg.el")
+;; (workgroups-mode 1)
+;;(wg-load wg-file)
 
 (tool-bar-mode 0)
 (menu-bar-mode 0)
