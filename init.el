@@ -6,7 +6,7 @@
 
 ;;; Code:
 
-(set-frame-font "Ubuntu Mono 13")
+(set-frame-font "Ubuntu Mono 12")
 
 (set-frame-font "Fixed 9")
 
@@ -113,6 +113,11 @@
 (defun compile-agora ()
   (interactive)
   (compile-in-own-buffer "build agora" "cd ~/repos/agora && cmake -G 'Ninja' && ninja"))
+
+(defun compile-gem ()
+  (interactive)
+  (compile-in-own-buffer "build gem" "cd ~/repos/gem/cpp && scons"))
+
 
 (defun compile-imgui ()
   (interactive)
@@ -406,6 +411,44 @@
   (interactive)
   (compile-in-buffer "cd ~/repos/dev/cpp && scons" "dev"))
 
+(defun square-bracket ()
+  (interactive)
+  (save-excursion)
+  (let* ((start-pos (region-beginning))
+         (end-pos (region-end)))
+    (goto-char start-pos)
+    (insert-char ?\[)
+    (goto-char (1+ end-pos) )
+    (insert-char ?\])))
+
+(defun do-list ()
+  (interactive)
+  (save-excursion 
+    (let* (
+           (start-pos (region-beginning))
+           (start-line (line-number-at-pos start-pos ))
+           (end-line   (line-number-at-pos (region-end))))
+      (message (format "%s %s %s" start-pos start-line end-line))
+      (goto-char start-pos)
+      (message (format "%s %s" end-line (line-number-at-pos)))
+      (while (< (line-number-at-pos) end-line)
+        (message (format "point is %s end is %s" (line-number-at-pos) end-line))
+        (move-beginning-of-line nil)
+        (message "boo")
+        (insert-char ?\")
+        (move-end-of-line nil)
+        (insert-char ?\")
+        (if (> ( - end-line (line-number-at-pos)  ) 1 )
+            (insert-char ?,))
+        (next-line 1)
+        (message "goo")
+        (message (format "point is %s end is %s" (line-number-at-pos) end-line))
+        ))))
+
+(global-set-key (kbd "C-c [") 'square-bracket)
+(global-set-key (kbd "C-c C-p C-p") 'do-list)
+
+
 (defun daysBetween (s f)
   (let* ((seconds-per-day ( * 24 60 60 ))
          (conv (lambda (x)
@@ -417,25 +460,10 @@
 
 ;; (daysBetween "1973-05-09" "2016-11-01") 15882.041666666666
  
-(defun rangeExperiment ()
-  (interactive)
-  (compile-in-buffer "cd ~/repos/pingu && rdmd -unittest rangeExperiment.d" "rangeExperiment"))
-
 (eval-after-load 'company
   '(progn
      (define-key company-mode-map (kbd "C-:") 'helm-company)
      (define-key company-mode-map (kbd "M-/") 'company-complete)
-     (define-key company-active-map (kbd "C-:") 'helm-company)))
-
-(defun pingu ()
-  (interactive)
-  (compile-in-buffer "cd ~/repos/pingu && rdmd -unittest --main -version=diagnostic Order.d" "pingu"))
-
-(global-set-key (kbd "C-c C-h C-p") 'pingu)
-
-(eval-after-load 'company
-  '(progn
-     (define-key company-mode-map (kbd "C-:") 'helm-company)
      (define-key company-active-map (kbd "C-:") 'helm-company)))
 
 (add-to-list 'exec-path "/home/andy/bin")
@@ -447,7 +475,6 @@
 
 ;;(define-key octave-mode-map (kbd "C-c C-c") 'octave-send-buffer)
 ;;(define-key octave-mode-map (kbd "C-c C-r") 'octave-send-region)
-
 ;;(require 'octave)
 (eval-after-load 'octave '(progn
                            (define-key octave-mode-map (kbd "C-c C-c") 'octave-send-buffer)
