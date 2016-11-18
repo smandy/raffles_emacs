@@ -88,9 +88,9 @@
  (position . 1))
 ("org-capture-last-stored"
  (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** TODO MIT Prin")
- (rear-context-string . "( in downloads)\n")
- (position . 8154))
+ (front-context-string . "** TODO Phil Wad")
+ (rear-context-string . "box/gtd/gtd.org\n")
+ (position . 8537))
 ("phobos"
  (filename . "/usr/include/dmd/phobos/std/")
  (front-context-string . "..\n  -rw-r--r-- ")
