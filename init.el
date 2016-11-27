@@ -6,8 +6,8 @@
 
 ;;; Code:
 
-(set-frame-font "Ubuntu Mono 12")
-
+(set-frame-font "Ubuntu Mono 13")
+(set-frame-font "Liberation Mono 13")
 (set-frame-font "Fixed 9")
 
 (setq helm-echo-input-in-header-line nil)
@@ -211,9 +211,10 @@
  '(org-hide-leading-stars t)
  '(package-selected-packages
    (quote
-    (swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flymake-haskell-multi flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode d-mode csv-nav csharp-mode color-theme-solarized color-theme-sanityinc-solarized color-theme-eclipse color-theme-cobalt coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
+    (ag helm-projectile dumb-jump helm-cscope python-mode py-autopep8 material-theme ein better-defaults elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flymake-haskell-multi flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode d-mode csv-nav csharp-mode color-theme-solarized color-theme-sanityinc-solarized color-theme-eclipse color-theme-cobalt coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
+ '(projectile-tags-backend (quote ggtags))
  '(python-shell-interpreter "ipython")
- '(python-shell-interpreter-args "--pylab=wx")
+ '(python-shell-interpreter-args "--pylab=qt")
  '(safe-local-variable-values
    (quote
     ((test-case-name . twisted\.internet\.test\.test_qtreactor)
@@ -235,7 +236,7 @@
 
 (global-set-key [f1]  'wg-switch-to-workgroup)
 (global-set-key [f2]  'ace-jump-mode)
-(global-set-key [f3]  'switch-to-org)
+(global-set-key [f3]  'helm-cscope-find-global-definition)
 (global-set-key [f4]  'magit-status)
 (global-set-key [f6]  'helm-man-woman)
 (global-set-key [f7]  'compile)
@@ -247,6 +248,8 @@
 (global-set-key [f1] 'wg-switch-to-workgroup)
 (global-set-key (kbd "C-c o") 'ff-find-other-file)
 (global-set-key (kbd "C-c f") 'find-file-at-point)
+
+(global-set-key (kbd "C-M-g") 'dumb-jump-go)
 
 (nyan-mode)
 
@@ -355,6 +358,11 @@
 
 (eval-after-load "auto-complete"
   '(add-to-list 'ac-modes 'slime-repl-mode))
+
+(eval-after-load "ggtags"
+  (progn
+    (define-key ggtags-mode-map (kbd "M->") nil)
+    (define-key ggtags-mode-map (kbd "M-<") nil)))
 
 (setq inferior-lisp-program "/usr/bin/sbcl")
 
