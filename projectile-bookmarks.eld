@@ -1,1 +1,1 @@
-("/mnt/hdd/andy/repos/dev/" "/mnt/hdd/andy/repos/sonar/" "/mnt/hdd/andy/repos/logcabin/" "/mnt/hdd/andy/.emacs.d/" "/mnt/hdd/andy/repos/tiger/")
+("/mnt/hdd/andy/repos/sonar/" "/mnt/hdd/andy/repos/dev/" "/mnt/hdd/andy/repos/logcabin/" "/mnt/hdd/andy/.emacs.d/" "/mnt/hdd/andy/repos/tiger/")

@@ -199,6 +199,7 @@
  '(haskell-process-log t)
  '(haskell-process-suggest-remove-import-lines t)
  '(helm-M-x-fuzzy-match t)
+ '(helm-locate-project-list (quote ("/home/andy/repos/dev")))
  '(inferior-octave-startup-args (quote ("-i" "--line-editing")))
  '(magit-diff-use-overlays nil)
  '(nyan-mode t)
@@ -359,10 +360,10 @@
 (eval-after-load "auto-complete"
   '(add-to-list 'ac-modes 'slime-repl-mode))
 
-(eval-after-load "ggtags"
-  (progn
-    (define-key ggtags-mode-map (kbd "M->") nil)
-    (define-key ggtags-mode-map (kbd "M-<") nil)))
+;; (eval-after-load "ggtags"
+;;   (progn
+;;     (define-key ggtags-mode-map (kbd "M->") nil)
+;;     (define-key ggtags-mode-map (kbd "M-<") nil)))
 
 (setq inferior-lisp-program "/usr/bin/sbcl")
 
