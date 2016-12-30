@@ -58,6 +58,12 @@
 (global-set-key (kbd "C-c C-h C-l") 'helm-locate)
 (global-set-key (kbd "C-c C-h C-a") 'helm-do-ag)
 
+(require 'multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
 (global-set-key (kbd "M-g M-f") 'helm-gtags-find-files)
 (global-set-key (kbd "M-g M-t") 'helm-gtags-find-tag)
 (global-set-key (kbd "M-g M-r") 'helm-gtags-find-rtag)
@@ -152,6 +158,8 @@
 
 (global-set-key (kbd "C-c p")  'find-file-in-clipboard)
 
+;; (define-key global-map (kbd "C-c p") nil)
+
 (defun copy-file-name-to-clipboard ()
   "Copy the current buffer file name to the clipboard."
   (interactive)
@@ -187,6 +195,9 @@
  '(clang-format-executable "clang-format-3.4")
  '(company-clang-arguments (quote ("-std=c++0x")))
  '(compilation-message-face (quote default))
+ '(custom-safe-themes
+   (quote
+    ("4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
  '(display-time-world-list
    (quote
     (("America/Chicago" "Chicago")
@@ -212,7 +223,7 @@
  '(org-hide-leading-stars t)
  '(package-selected-packages
    (quote
-    (ag helm-projectile dumb-jump helm-cscope python-mode py-autopep8 material-theme ein better-defaults elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flymake-haskell-multi flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode d-mode csv-nav csharp-mode color-theme-solarized color-theme-sanityinc-solarized color-theme-eclipse color-theme-cobalt coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
+    (wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope python-mode py-autopep8 material-theme ein better-defaults elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flymake-haskell-multi flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode d-mode csv-nav csharp-mode color-theme-solarized color-theme-sanityinc-solarized color-theme-eclipse color-theme-cobalt coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
  '(projectile-tags-backend (quote ggtags))
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--pylab=qt")
@@ -321,7 +332,7 @@
   (interactive)
   (insert "`hg root`/.hgignore"))
 
-(global-set-key (kbd "C-c C-h C-g C-i" ) 'insert-hg-ignore)
+;;(global-set-key (kbd "C-c C-h C-g C-i" ) 'insert-hg-ignore)
 
 (require 'workgroups)
 (setq wg-prefix-key (kbd "C-c w"))
@@ -340,25 +351,23 @@
 (setq-default indent-tabs-mode nil)
 
 (require 'slime-autoloads)
-
 (slime-setup '(slime-fancy))
+(require 'ac-slime)
+(add-hook 'slime-mode-hook      'set-up-slime-ac)
+(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-modes 'slime-repl-mode))
+
 (autoload 'js2-mode "js2-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-
 (add-to-list 'auto-mode-alist '("\\.ice$" . idl-mode))
 
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+
 (eval-after-load "auto-complete"
   '(add-to-list 'ac-sources 'ac-source-yasnippet))
 (ac-config-default)
-
-(require 'ac-slime)
-(add-hook 'slime-mode-hook      'set-up-slime-ac)
-(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
-
-(eval-after-load "auto-complete"
-  '(add-to-list 'ac-modes 'slime-repl-mode))
 
 ;; (eval-after-load "ggtags"
 ;;   (progn
@@ -456,6 +465,49 @@
 
 (global-set-key (kbd "C-c [") 'square-bracket)
 (global-set-key (kbd "C-c C-p C-p") 'do-list)
+
+
+(defun parse-epoch-time (s)
+  "Parse symbol into an epoch time. Use heuristics to determine if dealing
+with micros, seconds, nanos etc. Display result using 'message' if successful"
+  (let* ((x (string-to-number s ))
+         (epoch 1970 )
+         (secsperday (* 24 60 60 ))
+         (secsperyear (* 365.25 secsperday))
+         (inrange
+          (lambda (tup)
+            (let* ((prefix (car tup))
+                   (pow    (cdr tup))
+                   (divisor (expt 10 pow))
+                   (secs (/ x divisor))
+                   (year (+ epoch (/ secs secsperyear))))
+              (when (< 1980 year 2060)
+                (cons secs prefix)))))
+         (match (-some inrange '( ("s"  . 0)
+                                  ("ms" . 3)
+                                  ("µs" . 6)
+                                  ("ns" . 9)))))
+    (if match
+        (let* ((seconds (car match))
+               (prefix  (cdr match))
+               (isofmt  (format-time-string "%Y-%m-%dT%H:%M:%S.%N" (seconds-to-time seconds))))
+          (message (format "%s (%s) -> %s" x prefix isofmt))))))
+
+; (* 234 123)
+; 1482672627.025747002
+
+
+
+(defun parse-epoch-time-at-point ()
+  (interactive)
+  (parse-epoch-time (thing-at-point 'symbol)))
+
+(global-set-key (kbd "C-c C-p C-t") 'parse-epoch-time-at-point)
+
+;(parse-epoch-time "1482672627.025747002" ) a
+;(parse-epoch-time "1482672627025.747023" )
+;(parse-epoch-time "1482672627025747.032" )
+;(parse-epoch-time "1482672627025747023"  )
 
 
 (defun daysBetween (s f)

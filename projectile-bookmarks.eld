@@ -1,1 +1,1 @@
-("/mnt/hdd/andy/repos/sonar/" "/mnt/hdd/andy/repos/dev/" "/mnt/hdd/andy/repos/logcabin/" "/mnt/hdd/andy/.emacs.d/" "/mnt/hdd/andy/repos/tiger/")
+("/mnt/hdd/andy/repos/scheduler/" "/mnt/hdd/andy/.emacs.d/" "/mnt/hdd/andy/Dropbox/gtd/" "/mnt/hdd/andy/repos/ice/" "/mnt/hdd/andy/repos/tiger/" "/mnt/hdd/andy/repos/gem/" "/mnt/hdd/andy/repos/dev/" "/mnt/hdd/andy/repos/sonar/" "/mnt/hdd/andy/repos/logcabin/")
