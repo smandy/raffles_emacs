@@ -472,7 +472,7 @@
 with micros, seconds, nanos etc. Display result using 'message' if successful"
   (let* ((x (string-to-number s ))
          (epoch 1970 )
-         (secsperday (* 24 60 60 ))
+         (secsperday (* 24 60 60))
          (secsperyear (* 365.25 secsperday))
          (inrange
           (lambda (tup)
