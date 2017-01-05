@@ -58,11 +58,6 @@
 (global-set-key (kbd "C-c C-h C-l") 'helm-locate)
 (global-set-key (kbd "C-c C-h C-a") 'helm-do-ag)
 
-(require 'multiple-cursors)
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 (global-set-key (kbd "M-g M-f") 'helm-gtags-find-files)
 (global-set-key (kbd "M-g M-t") 'helm-gtags-find-tag)
@@ -175,6 +170,12 @@
   (revert-buffer nil 't))
 
 (package-initialize)
+
+(require 'multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 ;;(global-set-key (kbd "C-s")  'swiper-helm))
 (global-set-key (kbd "C-s")  'isearch-forward)
@@ -470,7 +471,7 @@
 (defun parse-epoch-time (s)
   "Parse symbol into an epoch time. Use heuristics to determine if dealing
 with micros, seconds, nanos etc. Display result using 'message' if successful"
-  (let* ((x (string-to-number s ))
+  (let* ((x (float (string-to-number s )))
          (epoch 1970 )
          (secsperday (* 24 60 60))
          (secsperyear (* 365.25 secsperday))
