@@ -467,7 +467,6 @@
 (global-set-key (kbd "C-c [") 'square-bracket)
 (global-set-key (kbd "C-c C-p C-p") 'do-list)
 
-
 (defun parse-epoch-time (s)
   "Parse symbol into an epoch time. Use heuristics to determine if dealing
 with micros, seconds, nanos etc. Display result using 'message' if successful"
@@ -494,11 +493,48 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                (isofmt  (format-time-string "%Y-%m-%dT%H:%M:%S.%N" (seconds-to-time seconds))))
           (message (format "%s (%s) -> %s" x prefix isofmt))))))
 
-; (* 234 123)
-; 1482672627.025747002
-
-
-
+; (format-time-string "%H%M%S" (curren2t-time))
+(defun parse-sbe ()
+  (interactive)
+  (save-excursion
+    (let ((sum 0)
+          (size-alist '(("int64"        . 8 )
+                        ("float"        . 4 )
+                        ("double"       . 8 )
+                        ("orderType"    . 1 )
+                        ("responseType" . 1 )
+                        ("side"         . 1 )
+                        ("int32"        . 4 ))))
+      (message "%s" (re-search-backward "<message") )
+      (beginning-of-line)
+      (forward-line)
+      (while (not (re-search-forward "</message>" (line-end-position) t) )
+        (let* ((current-line (buffer-substring-no-properties (line-beginning-position) (line-end-position)))
+               (match-first (lambda (re errMsg)
+                              (string-match re current-line)
+                              (let ((ret (match-string 1 current-line)))
+                                (unless ret
+                                  (error errMsg))
+                                  ret)))
+               (name (funcall match-first "name=\\\"\\([^\\\"]+\\)\\\"" "Cant find name"))
+               (type (funcall match-first "type=\\\"\\([^\\\"]+\\)\\\"" "Cant fine type"))
+               (size (let ((initSize (assoc type size-alist )))
+                       (unless initSize 
+                         (error (format "Can't find size for type '%s' in -- \n'%s'\n*** Fix 'sizes-alist in parse-sbe ****" type current-line)))
+                       (cdr initSize)))
+               (newSum (+ sum size))
+               (trailing (mod sum size))
+               (misalign (not (zerop trailing)))
+               (status (if misalign "ERR" "OK"))
+               (message (format " <!-- %2d + %2d = %2d %3s %s-->" sum size newSum status trailing)))
+          (setq sum newSum)
+          (search-forward "/>" (line-end-position))
+          (insert message)
+          (when (< (point) (line-end-position))
+            (kill-line))
+          (forward-line))))))
+(global-set-key [f3] 'parse-sbe)
+  
 (defun parse-epoch-time-at-point ()
   (interactive)
   (parse-epoch-time (thing-at-point 'symbol)))
@@ -509,7 +545,6 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ;(parse-epoch-time "1482672627025.747023" )
 ;(parse-epoch-time "1482672627025747.032" )
 ;(parse-epoch-time "1482672627025747023"  )
-
 
 (defun daysBetween (s f)
   (let* ((seconds-per-day ( * 24 60 60 ))
