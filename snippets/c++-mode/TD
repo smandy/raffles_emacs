@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: TD
+# key: TD
+# --
+template<typename T>
+struct TD;

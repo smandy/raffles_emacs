@@ -6,9 +6,8 @@
 
 ;;; Code:
 
-(set-frame-font "Ubuntu Mono 14")
-(set-frame-font "Liberation Mono 12")
-
+(set-frame-font "Ubuntu Mono 13")
+(set-frame-font "Liberation Mono 13")
 (set-frame-font "Fixed 9")
 
 (setq helm-echo-input-in-header-line nil)
@@ -19,19 +18,18 @@
 (set-frame-font "Fixed 10")
 
 ;; Nice runing from Mac. (set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-7" )
-;;(set-frame-font "Misc Fixed 14")
-
-(set-frame-font "-misc-fixed-medium-r-normal--18-*-75-75-c-90-iso8859-3" )
+;; (set-frame-font "Misc Fixed 14")
+;; (set-frame-font "-misc-fixed-medium-r-normal--18-*-75-75-c-90-iso8859-3" )
 
 (require 'compile)
 (require 'package)
 
 (add-to-list 'package-archives '("melpa"     . "http://melpa.org/packages/"))
+
 (setq auto-mode-alist
       (cons '("SConstruct" . python-mode) auto-mode-alist))
 (setq auto-mode-alist
       (cons '("SConscript" . python-mode) auto-mode-alist))
-
 
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
 (autoload 'jsx-mode "jsx-mode" "JSX mode" t)
@@ -47,6 +45,11 @@
   (interactive)
   (gdb "gdb -i=mi -nx -x /home/andy/discovery.gdbinit"))
 
+(defun debug-chatserver ()
+  "Debug the discovery app."
+  (interactive)
+  (gdb "gdb -i=mi -nx -x /home/andy/chatServer.gdbinit"))
+
 (global-set-key (kbd "C-x C-o") 'ff-find-other-file)
 
 (global-set-key (kbd "M-x") 'helm-M-x)
@@ -54,6 +57,12 @@
 (global-set-key (kbd "C-c C-h C-s") 'helm-swoop)
 (global-set-key (kbd "C-c C-h C-l") 'helm-locate)
 (global-set-key (kbd "C-c C-h C-a") 'helm-do-ag)
+
+(require 'multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 (global-set-key (kbd "M-g M-f") 'helm-gtags-find-files)
 (global-set-key (kbd "M-g M-t") 'helm-gtags-find-tag)
@@ -111,6 +120,34 @@
   (interactive)
   (compile-in-own-buffer "build agora" "cd ~/repos/agora && cmake -G 'Ninja' && ninja"))
 
+(defun compile-gem ()
+  (interactive)
+  (compile-in-own-buffer "build gem" "cd ~/repos/gem/cpp && scons"))
+
+
+(defun compile-imgui ()
+  (interactive)
+  (compile-in-own-buffer "build imgui" "cd ~/repos/imgui && scons -c && scons"))
+
+(defun compile-imgui-example ()
+  (interactive)
+  (compile-in-own-buffer "build imgui-example" "cd ~/repos/imgui/examples/sdl_opengl3_example && scons -c && scons"))
+
+
+
+(defun compile-box2d ()
+  (interactive)
+  (compile-in-own-buffer "build box2d" "cd /home/andy/repos/Box2D/Box2D/Box2D && scons -c && scons"))
+
+
+(defun compile-testbed ()
+  (interactive)
+  (compile-in-own-buffer "build testbed" "cd /home/andy/repos/Box2D/Box2D/Testbed && scons -c && scons"))
+
+(defun compile-demo ()
+  (interactive)
+  (compile-in-own-buffer "build demo" "cd ~/repos/imgui/examples/sdl_opengl3_example && scons -c && scons"))
+
 (defun compile-discovery ()
   (interactive)
   (compile-in-own-buffer "build discovery" "cd ~/repos/agora && make"))
@@ -120,6 +157,8 @@
   (find-file-at-point (x-get-clipboard)))
 
 (global-set-key (kbd "C-c p")  'find-file-in-clipboard)
+
+;; (define-key global-map (kbd "C-c p") nil)
 
 (defun copy-file-name-to-clipboard ()
   "Copy the current buffer file name to the clipboard."
@@ -156,12 +195,22 @@
  '(clang-format-executable "clang-format-3.4")
  '(company-clang-arguments (quote ("-std=c++0x")))
  '(compilation-message-face (quote default))
- '(flycheck-clang-language-standard "c++11")
- '(flycheck-gcc-language-standard "c++11")
+ '(custom-safe-themes
+   (quote
+    ("4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
+ '(display-time-world-list
+   (quote
+    (("America/Chicago" "Chicago")
+     ("America/New_York" "New York")
+     ("Europe/London" "London")
+     ("Australia/Perth" "Perth"))))
+ '(flycheck-clang-language-standard "c++14")
+ '(flycheck-gcc-language-standard "c++14")
  '(haskell-process-auto-import-loaded-modules t)
  '(haskell-process-log t)
  '(haskell-process-suggest-remove-import-lines t)
  '(helm-M-x-fuzzy-match t)
+ '(helm-locate-project-list (quote ("/home/andy/repos/dev")))
  '(inferior-octave-startup-args (quote ("-i" "--line-editing")))
  '(magit-diff-use-overlays nil)
  '(nyan-mode t)
@@ -169,11 +218,15 @@
  '(org-directory "~/Dropbox/gtd")
  '(org-format-latex-options
    (quote
-    (:foreground default :background default :scale 2.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+    (:foreground default :background default :scale 2.5 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
                  ("begin" "$1" "$" "$$" "\\(" "\\["))))
  '(org-hide-leading-stars t)
+ '(package-selected-packages
+   (quote
+    (wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope python-mode py-autopep8 material-theme ein better-defaults elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flymake-haskell-multi flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode d-mode csv-nav csharp-mode color-theme-solarized color-theme-sanityinc-solarized color-theme-eclipse color-theme-cobalt coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
+ '(projectile-tags-backend (quote ggtags))
  '(python-shell-interpreter "ipython")
- '(python-shell-interpreter-args "--pylab=wx")
+ '(python-shell-interpreter-args "--pylab=qt")
  '(safe-local-variable-values
    (quote
     ((test-case-name . twisted\.internet\.test\.test_qtreactor)
@@ -195,14 +248,20 @@
 
 (global-set-key [f1]  'wg-switch-to-workgroup)
 (global-set-key [f2]  'ace-jump-mode)
-(global-set-key [f3]  'switch-to-org)
+(global-set-key [f3]  'helm-cscope-find-global-definition)
 (global-set-key [f4]  'magit-status)
 (global-set-key [f6]  'helm-man-woman)
 (global-set-key [f7]  'compile)
 (global-set-key [f8]  'reboot-python)
 (global-set-key [f9]  'py-execute-region)
-(global-set-key [f10] 'switch-to-shell)
+;;(global-set-key [f10] 'switch-to-shell)
+(global-set-key [f10] 'clang-format-buffer)
 (global-set-key [f12] 'ace-jump-mode)
+(global-set-key [f1] 'wg-switch-to-workgroup)
+(global-set-key (kbd "C-c o") 'ff-find-other-file)
+(global-set-key (kbd "C-c f") 'find-file-at-point)
+
+(global-set-key (kbd "C-M-g") 'dumb-jump-go)
 
 (nyan-mode)
 
@@ -249,12 +308,6 @@
 (require 'color-theme)
 (color-theme-midnight)
 
-(global-set-key [f1] 'wg-switch-to-workgroup)
-(global-set-key [f7] 'compile)
-(global-set-key [f9] 'py-execute-region)
-(global-set-key [f10] 'switch-to-shell)
-(global-set-key (kbd "C-c o") 'ff-find-other-file)
-(global-set-key (kbd "C-c f") 'find-file-at-point)
 
 (windmove-default-keybindings 'meta)
 
@@ -279,7 +332,7 @@
   (interactive)
   (insert "`hg root`/.hgignore"))
 
-(global-set-key (kbd "C-c C-h C-g C-i" ) 'insert-hg-ignore)
+;;(global-set-key (kbd "C-c C-h C-g C-i" ) 'insert-hg-ignore)
 
 (require 'workgroups)
 (setq wg-prefix-key (kbd "C-c w"))
@@ -298,25 +351,28 @@
 (setq-default indent-tabs-mode nil)
 
 (require 'slime-autoloads)
-
 (slime-setup '(slime-fancy))
+(require 'ac-slime)
+(add-hook 'slime-mode-hook      'set-up-slime-ac)
+(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-modes 'slime-repl-mode))
+
 (autoload 'js2-mode "js2-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-
 (add-to-list 'auto-mode-alist '("\\.ice$" . idl-mode))
 
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+
 (eval-after-load "auto-complete"
   '(add-to-list 'ac-sources 'ac-source-yasnippet))
 (ac-config-default)
 
-(require 'ac-slime)
-(add-hook 'slime-mode-hook      'set-up-slime-ac)
-(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
-
-(eval-after-load "auto-complete"
-  '(add-to-list 'ac-modes 'slime-repl-mode))
+;; (eval-after-load "ggtags"
+;;   (progn
+;;     (define-key ggtags-mode-map (kbd "M->") nil)
+;;     (define-key ggtags-mode-map (kbd "M-<") nil)))
 
 (setq inferior-lisp-program "/usr/bin/sbcl")
 
@@ -373,6 +429,87 @@
   (interactive)
   (compile-in-buffer "cd ~/repos/dev/cpp && scons" "dev"))
 
+(defun square-bracket ()
+  (interactive)
+  (save-excursion)
+  (let* ((start-pos (region-beginning))
+         (end-pos (region-end)))
+    (goto-char start-pos)
+    (insert-char ?\[)
+    (goto-char (1+ end-pos) )
+    (insert-char ?\])))
+
+(defun do-list ()
+  (interactive)
+  (save-excursion 
+    (let* (
+           (start-pos (region-beginning))
+           (start-line (line-number-at-pos start-pos ))
+           (end-line   (line-number-at-pos (region-end))))
+      (message (format "%s %s %s" start-pos start-line end-line))
+      (goto-char start-pos)
+      (message (format "%s %s" end-line (line-number-at-pos)))
+      (while (< (line-number-at-pos) end-line)
+        (message (format "point is %s end is %s" (line-number-at-pos) end-line))
+        (move-beginning-of-line nil)
+        (message "boo")
+        (insert-char ?\")
+        (move-end-of-line nil)
+        (insert-char ?\")
+        (if (> ( - end-line (line-number-at-pos)  ) 1 )
+            (insert-char ?,))
+        (next-line 1)
+        (message "goo")
+        (message (format "point is %s end is %s" (line-number-at-pos) end-line))
+        ))))
+
+(global-set-key (kbd "C-c [") 'square-bracket)
+(global-set-key (kbd "C-c C-p C-p") 'do-list)
+
+
+(defun parse-epoch-time (s)
+  "Parse symbol into an epoch time. Use heuristics to determine if dealing
+with micros, seconds, nanos etc. Display result using 'message' if successful"
+  (let* ((x (string-to-number s ))
+         (epoch 1970 )
+         (secsperday (* 24 60 60))
+         (secsperyear (* 365.25 secsperday))
+         (inrange
+          (lambda (tup)
+            (let* ((prefix (car tup))
+                   (pow    (cdr tup))
+                   (divisor (expt 10 pow))
+                   (secs (/ x divisor))
+                   (year (+ epoch (/ secs secsperyear))))
+              (when (< 1980 year 2060)
+                (cons secs prefix)))))
+         (match (-some inrange '( ("s"  . 0)
+                                  ("ms" . 3)
+                                  ("µs" . 6)
+                                  ("ns" . 9)))))
+    (if match
+        (let* ((seconds (car match))
+               (prefix  (cdr match))
+               (isofmt  (format-time-string "%Y-%m-%dT%H:%M:%S.%N" (seconds-to-time seconds))))
+          (message (format "%s (%s) -> %s" x prefix isofmt))))))
+
+; (* 234 123)
+; 1482672627.025747002
+
+
+
+(defun parse-epoch-time-at-point ()
+  (interactive)
+  (parse-epoch-time (thing-at-point 'symbol)))
+
+(global-set-key (kbd "C-c C-p C-t") 'parse-epoch-time-at-point)
+
+;(parse-epoch-time "1482672627.025747002" ) a
+;(parse-epoch-time "1482672627025.747023" )
+;(parse-epoch-time "1482672627025747.032" )
+;(parse-epoch-time "1482672627025747023"  )
+
+
 (defun daysBetween (s f)
   (let* ((seconds-per-day ( * 24 60 60 ))
          (conv (lambda (x)
@@ -382,27 +519,12 @@
          (ft (funcall conv f)))
     (/ (time-to-seconds (time-subtract ft st)) seconds-per-day)))
 
-;; (daysBetween "1973-09-21" "2016-07-12")
+;; (daysBetween "1973-05-09" "2016-11-01") 15882.041666666666
  
-(defun rangeExperiment ()
-  (interactive)
-  (compile-in-buffer "cd ~/repos/pingu && rdmd -unittest rangeExperiment.d" "rangeExperiment"))
-
 (eval-after-load 'company
   '(progn
      (define-key company-mode-map (kbd "C-:") 'helm-company)
      (define-key company-mode-map (kbd "M-/") 'company-complete)
-     (define-key company-active-map (kbd "C-:") 'helm-company)))
-
-(defun pingu ()
-  (interactive)
-  (compile-in-buffer "cd ~/repos/pingu && rdmd -unittest --main -version=diagnostic Order.d" "pingu"))
-
-(global-set-key (kbd "C-c C-h C-p") 'pingu)
-
-(eval-after-load 'company
-  '(progn
-     (define-key company-mode-map (kbd "C-:") 'helm-company)
      (define-key company-active-map (kbd "C-:") 'helm-company)))
 
 (add-to-list 'exec-path "/home/andy/bin")
@@ -414,7 +536,6 @@
 
 ;;(define-key octave-mode-map (kbd "C-c C-c") 'octave-send-buffer)
 ;;(define-key octave-mode-map (kbd "C-c C-r") 'octave-send-region)
-
 ;;(require 'octave)
 (eval-after-load 'octave '(progn
                            (define-key octave-mode-map (kbd "C-c C-c") 'octave-send-buffer)
@@ -424,7 +545,9 @@
 
 (eval-after-load 'nodejs-repl
   '(progn
-     (define-key js2-mode-map (kbd "C-c C-r") 'nodejs-repl-send-region)))
+     (define-key js2-mode-map (kbd "C-c C-r") 'nodejs-repl-send-region)
+     (define-key js2-mode-map (kbd "C-c C-c") 'nodejs-repl-send-buffer)
+     ))
 
 (defun end-of-sml (a b &rest xs)
   (interactive)
@@ -434,10 +557,10 @@
 ; (advice-add 'sml-prog-proc-load-file :after 'end-of-sml)
 ; (advice-remove 'sml-prog-proc-load-file)
 
-;; SQL Sticc
-;;(require 'sql)
-;;(load-file "~/.emacs.d/sql-interactive-remove-continuation-prompt.el")
-;;(require 'sql-interactive-remove-continuation-prompt)
+;; SQL Stuff
+;; (require 'sql)
+;; (load-file "~/.emacs.d/sql-interactive-remove-continuation-prompt.el")
+;; (require 'sql-interactive-remove-continuation-prompt)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -448,4 +571,3 @@
 
 (provide 'init.el)
 ;;; init.el ends here
-(put 'upcase-region 'disabled nil)
