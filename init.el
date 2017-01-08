@@ -6,7 +6,8 @@
 
 ;;; Code:
 
-(set-frame-font "Ubuntu Mono 13")
+(set-frame-font "Ubuntu Mono 14")
+(set-frame-font "Liberation Mono 12")
 
 (set-frame-font "Fixed 9")
 
@@ -381,7 +382,7 @@
          (ft (funcall conv f)))
     (/ (time-to-seconds (time-subtract ft st)) seconds-per-day)))
 
-;; (daysBetween "1973-09-21" "2016-07-12") 15635.0
+;; (daysBetween "1973-09-21" "2016-07-12")
  
 (defun rangeExperiment ()
   (interactive)
@@ -447,3 +448,4 @@
 
 (provide 'init.el)
 ;;; init.el ends here
+(put 'upcase-region 'disabled nil)
