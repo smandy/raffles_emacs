@@ -26,8 +26,6 @@
 
 (add-to-list 'package-archives '("melpa"     . "http://melpa.org/packages/"))
 
-(package-initialize)
-
 (setq auto-mode-alist
       (cons '("SConstruct" . python-mode) auto-mode-alist))
 (setq auto-mode-alist
@@ -171,7 +169,7 @@
   (interactive) 
   (revert-buffer nil 't))
 
-
+(package-initialize)
 
 (require 'multiple-cursors)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
