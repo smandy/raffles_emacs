@@ -468,7 +468,7 @@
         ))))
 
 (global-set-key (kbd "C-c [") 'square-bracket)
-(global-set-key (kbd "C-c C-p C-p") 'do-list)
+;;(global-set-key (kbd "C-c C-p C-p") 'do-list)
 
 (defun parse-epoch-time (s)
   "Parse symbol into an epoch time. Use heuristics to determine if dealing
