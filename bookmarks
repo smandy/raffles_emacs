@@ -88,9 +88,9 @@
  (position . 1))
 ("org-capture-last-stored"
  (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** TODO How Geor")
- (rear-context-string . "e Consequences.\n")
- (position . 9378))
+ (front-context-string . "** TODO <2017-01")
+ (rear-context-string . "thon/makeCsv.py\n")
+ (position . 9541))
 ("phobos"
  (filename . "/usr/include/dmd/phobos/std/")
  (front-context-string . "..\n  -rw-r--r-- ")

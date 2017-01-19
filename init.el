@@ -53,6 +53,9 @@
 (global-set-key (kbd "C-x C-o") 'ff-find-other-file)
 
 (global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "<menu>") 'helm-M-x)
+
+
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (global-set-key (kbd "C-c C-h C-s") 'helm-swoop)
 (global-set-key (kbd "C-c C-h C-l") 'helm-locate)
@@ -151,8 +154,7 @@
   (interactive)
   (find-file-at-point (x-get-clipboard)))
 
-(global-set-key (kbd "C-c p")  'find-file-in-clipboard)
-
+;; (global-set-key (kbd "C-c p")  'find-file-in-clipboard)
 ;; (define-key global-map (kbd "C-c p") nil)
 
 (defun copy-file-name-to-clipboard ()
@@ -211,6 +213,7 @@
  '(haskell-process-log t)
  '(haskell-process-suggest-remove-import-lines t)
  '(helm-M-x-fuzzy-match t)
+ '(helm-display-buffer-default-size 100)
  '(helm-locate-project-list (quote ("/home/andy/repos/dev")))
  '(inferior-octave-startup-args (quote ("-i" "--line-editing")))
  '(magit-diff-use-overlays nil)
@@ -224,7 +227,7 @@
  '(org-hide-leading-stars t)
  '(package-selected-packages
    (quote
-    (wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope py-autopep8 material-theme ein better-defaults swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flymake-haskell-multi flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode d-mode csv-nav csharp-mode color-theme-solarized color-theme-sanityinc-solarized color-theme-eclipse color-theme-cobalt coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
+    (cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope python-mode py-autopep8 material-theme ein better-defaults elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flymake-haskell-multi flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode d-mode csv-nav csharp-mode color-theme-solarized color-theme-sanityinc-solarized color-theme-eclipse color-theme-cobalt coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
  '(projectile-tags-backend (quote ggtags))
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--pylab=qt")
