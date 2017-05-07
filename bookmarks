@@ -2,7 +2,21 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("Dropbox"
+(("Helm-find-files: ~/repos/"
+ (filename . "/home/andy/repos/")
+ (presel . "/home/andy/repos/.")
+ (handler . helm-ff-bookmark-jump))
+("cpp"
+ (filename . "~/repos/dev/cpp/")
+ (front-context-string . "abbrev\n  -rw-rw-")
+ (rear-context-string . "00 May  2 01:52 ")
+ (position . 230))
+("andy@skye"
+ (filename . "/scp:andy@skye:/Users/andy/")
+ (front-context-string . ".AdminClient.xml")
+ (rear-context-string . "64 Mar 31  2009 ")
+ (position . 221))
+("Dropbox"
  (filename . "~/Dropbox/")
  (front-context-string . "2013-14-taxretur")
  (rear-context-string . "69 Mar 16  2015 ")
@@ -88,9 +102,9 @@
  (position . 1))
 ("org-capture-last-stored"
  (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** TODO <2017-01")
- (rear-context-string . "thon/makeCsv.py\n")
- (position . 9541))
+ (front-context-string . "** TODO BMLL htt")
+ (rear-context-string . "ok Wangle/Folly\n")
+ (position . 10724))
 ("phobos"
  (filename . "/usr/include/dmd/phobos/std/")
  (front-context-string . "..\n  -rw-r--r-- ")

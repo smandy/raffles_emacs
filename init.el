@@ -2,24 +2,26 @@
 
 ;;; Commentary:
 
-;; Raffles laptop emacs config
+;; Raffles laptop Emacs config
 
 ;;; Code:
 
-(set-frame-font "Ubuntu Mono 13")
-(set-frame-font "Liberation Mono 13")
-(set-frame-font "Fixed 9")
+;; (set-frame-font "Fixed 10")
+;; (set-frame-font "Liberation Mono 12")
 
-(setq helm-echo-input-in-header-line nil)
+;; (set-frame-font "Ubuntu Mono 16")
+
+;; (setq helm-echo-input-in-header-line nil)
+
+;; Nice runing from Mac. (set-fraxme-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-7
+;; (set-frame-font "Ubuntu Light 15")
+;; (set-frame-font "Ubuntu Normal 15")
+;; (set-frame-font "Fixed 10")
+
 ;; Nice runing from Mac. (set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-7" )
 
-;;(set-frame-font "Ubuntu Light 15")
-;;(set-frame-font "Ubuntu Normal 15")
-(set-frame-font "Fixed 10")
-
-;; Nice runing from Mac. (set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-7" )
-;; (set-frame-font "Misc Fixed 14")
-;; (set-frame-font "-misc-fixed-medium-r-normal--18-*-75-75-c-90-iso8859-3" )
+;; (set-frame-font "Fixed 10")
+(set-frame-font "-misc-fixed-medium-r-normal--18-*-75-75-c-90-iso8859-3" )
 
 (require 'compile)
 (require 'package)
@@ -31,12 +33,31 @@
 (setq auto-mode-alist
       (cons '("SConscript" . python-mode) auto-mode-alist))
 
+
+(add-to-list 'auto-mode-alist '("\\.hdl\\'" . nand2tetris-mode))
+
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
 (autoload 'jsx-mode "jsx-mode" "JSX mode" t)
 
+(eval-after-load "org-present"
+  '(progn
+     (add-hook 'org-present-mode-hook
+               (lambda ()
+                 (org-present-big)
+                 (org-display-inline-images)
+                                        ;(org-present-hide-cursor)
+                                        ;(org-present-read-only))
+                 ))
+     (add-hook 'org-present-mode-quit-hook
+               (lambda ()
+                 (org-present-small)
+                 (org-remove-inline-images)
+                 (org-present-show-cursor)
+                 (org-present-read-write)))))
+
 (defun slurp (x)
   "Clojure slurp function.  Slurp file X."
-  (with-temp-buffer 
+  (with-temp-buffer
     (insert-file-contents x)
     (buffer-string)))
 
@@ -55,12 +76,10 @@
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "<menu>") 'helm-M-x)
 
-
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (global-set-key (kbd "C-c C-h C-s") 'helm-swoop)
 (global-set-key (kbd "C-c C-h C-l") 'helm-locate)
 (global-set-key (kbd "C-c C-h C-a") 'helm-do-ag)
-
 
 (global-set-key (kbd "M-g M-f") 'helm-gtags-find-files)
 (global-set-key (kbd "M-g M-t") 'helm-gtags-find-tag)
@@ -96,7 +115,7 @@
  'compilation-error-regexp-alist
  '("^\\([^ \n]+\\)(\\([0-9]+\\)): \\(?:Error\\|.\\|warnin\\(g\\)\\|remar\\(k\\)\\)"
    1 2 nil (3 . 4)))
-(defun revert-buffer-with-prejudice () 
+(defun revert-buffer-with-prejudice ()
   (interactive) 
   (revert-buffer 't 't))
 
@@ -114,9 +133,13 @@
   (let ((compilation-buffer-name-function (lambda (x) buf) ))
     (compile cmd)))
 
-(defun compile-agora ()
+(defun compile-agora-debug ()
   (interactive)
-  (compile-in-own-buffer "build agora" "cd ~/repos/agora && cmake -G 'Ninja' && ninja"))
+  (compile-in-own-buffer "build agora" "rm -rf ~/agora_debug && mkdir -p ~/agora_debug && cd ~/agora_debug && cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=~/agora_debug/install -G 'Unix Makefiles' ~/repos/agora && make install"))
+
+(defun compile-agora-release ()
+  (interactive)
+  (compile-in-own-buffer "build agora" "rm -rf ~/agora_release && mkdir -p ~/agora_release && cd ~/agora_release && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=~/agora_release/install -G 'Unix Makefiles' ~/repos/agora && make install"))
 
 (defun compile-gem ()
   (interactive)
@@ -131,12 +154,9 @@
   (interactive)
   (compile-in-own-buffer "build imgui-example" "cd ~/repos/imgui/examples/sdl_opengl3_example && scons -c && scons"))
 
-
-
 (defun compile-box2d ()
   (interactive)
   (compile-in-own-buffer "build box2d" "cd /home/andy/repos/Box2D/Box2D/Box2D && scons -c && scons"))
-
 
 (defun compile-testbed ()
   (interactive)
@@ -152,7 +172,7 @@
 
 (defun find-file-in-clipboard () 
   (interactive)
-  (find-file-at-point (x-get-clipboard)))
+  (find-file-at-point (gui-get-selection)))
 
 ;; (global-set-key (kbd "C-c p")  'find-file-in-clipboard)
 ;; (define-key global-map (kbd "C-c p") nil)
@@ -166,6 +186,11 @@
     (when filename
       (kill-new filename)
       (message "Copied buffer file name '%s' to the clipboard." filename))))
+
+
+(message "foo")
+
+(global-set-key (kbd "C-x p") 'copy-file-name-to-clipboard)
 
 (defun do-revert () 
   (interactive) 
@@ -182,9 +207,20 @@
 ;;(global-set-key (kbd "C-s")  'swiper-helm))
 (global-set-key (kbd "C-s")  'isearch-forward)
 
+(require 'workgroups)
+(setq wg-prefix-key (kbd "C-c w"))
+(workgroups-mode)
+
 (require 'haskell-interactive-mode)
 (require 'haskell-process)
 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+
+(projectile-mode)
+(helm-projectile-on)
+
+;; '(flycheck-clang-language-standard "c++14")
+;; '(flycheck-gcc-language-standard "c++14")
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -196,7 +232,7 @@
    [default bold shadow italic underline bold bold-italic bold])
  '(c-basic-offset 4)
  '(clang-format-executable "clang-format-3.4")
- '(company-clang-arguments (quote ("-std=c++0x")))
+ '(company-clang-arguments nil)
  '(compilation-message-face (quote default))
  '(custom-safe-themes
    (quote
@@ -207,27 +243,61 @@
      ("America/New_York" "New York")
      ("Europe/London" "London")
      ("Australia/Perth" "Perth"))))
+ '(flycheck-c/c++-clang-executable "clang-5.0")
+ '(flycheck-clang-args (quote ("-xc++")))
  '(flycheck-clang-language-standard "c++14")
- '(flycheck-gcc-language-standard "c++14")
  '(haskell-process-auto-import-loaded-modules t)
  '(haskell-process-log t)
  '(haskell-process-suggest-remove-import-lines t)
  '(helm-M-x-fuzzy-match t)
  '(helm-display-buffer-default-size 100)
  '(helm-locate-project-list (quote ("/home/andy/repos/dev")))
+ '(ibuffer-saved-filter-groups (quote (("mydefs" ("agora+dev" (used-mode . c++-mode))))))
+ '(ibuffer-saved-filters
+   (quote
+    (("foo2"
+      ((mode . c++-mode)
+       (or
+        (projectile-files . "/mnt/hdd/andy/repos/dev")
+        (projectile-files . "/mnt/hdd/andy/repos/agora"))))
+     ("foo"
+      ((mode . c++-mode)
+       (or
+        (projectile-files . "/mnt/hdd/andy/repos/dev")
+        (projectile-files . "/mnt/hdd/andy/repos/agora"))))
+     ("~/filters.el"
+      ((mode . c++-mode)
+       (or
+        (projectile-files . "/mnt/hdd/andy/repos/dev")
+        (projectile-files . "/mnt/hdd/andy/repos/agora"))))
+     ("gnus"
+      ((or
+        (mode . message-mode)
+        (mode . mail-mode)
+        (mode . gnus-group-mode)
+        (mode . gnus-summary-mode)
+        (mode . gnus-article-mode))))
+     ("programming"
+      ((or
+        (mode . emacs-lisp-mode)
+        (mode . cperl-mode)
+        (mode . c-mode)
+        (mode . java-mode)
+        (mode . idl-mode)
+        (mode . lisp-mode)))))))
  '(inferior-octave-startup-args (quote ("-i" "--line-editing")))
  '(magit-diff-use-overlays nil)
  '(nyan-mode t)
- '(org-agenda-files (quote ("~/Dropbox/gtd/gtd.org")))
+ '(org-agenda-files nil)
  '(org-directory "~/Dropbox/gtd")
  '(org-format-latex-options
    (quote
-    (:foreground default :background default :scale 2.5 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+    (:foreground default :background default :scale 5.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
                  ("begin" "$1" "$" "$$" "\\(" "\\["))))
  '(org-hide-leading-stars t)
  '(package-selected-packages
    (quote
-    (cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope python-mode py-autopep8 material-theme ein better-defaults elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flymake-haskell-multi flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode d-mode csv-nav csharp-mode color-theme-solarized color-theme-sanityinc-solarized color-theme-eclipse color-theme-cobalt coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
+    (cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode nand2tetris git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flymake-haskell-multi flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode color-theme-solarized color-theme-sanityinc-solarized color-theme-eclipse color-theme-cobalt coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
  '(projectile-tags-backend (quote ggtags))
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--pylab=qt")
@@ -244,7 +314,8 @@
      (database :default "andy"))))
  '(tab-width 4)
  '(vc-annotate-background nil)
- '(vc-annotate-very-old-color nil))
+ '(vc-annotate-very-old-color nil t)
+ '(wg-morph-on nil))
 (defun switch-to-org ()
   (interactive)
   (switch-to-buffer "gtd.org")
@@ -268,6 +339,8 @@
 (global-set-key (kbd "C-M-g") 'dumb-jump-go)
 
 (nyan-mode)
+
+(message "goo")
 
 (defun dump-fonts ()
   (interactive)
@@ -344,6 +417,9 @@
 ;; (workgroups-mode 1)
 ;;(wg-load wg-file)
 
+(message "sue")
+
+
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 
@@ -365,6 +441,9 @@
 (autoload 'js2-mode "js2-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.ice$" . idl-mode))
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+
+(global-set-key (kbd "C-x C-x") 'expand-abbrev)
 
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
@@ -470,6 +549,8 @@
 (global-set-key (kbd "C-c [") 'square-bracket)
 ;;(global-set-key (kbd "C-c C-p C-p") 'do-list)
 
+(message "boo")
+
 (defun parse-epoch-time (s)
   "Parse symbol into an epoch time. Use heuristics to determine if dealing
 with micros, seconds, nanos etc. Display result using 'message' if successful"
@@ -496,7 +577,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                (isofmt  (format-time-string "%Y-%m-%dT%H:%M:%S.%N" (seconds-to-time seconds))))
           (message (format "%s (%s) -> %s" x prefix isofmt))))))
 
-; (format-time-string "%H%M%S" (curren2t-time))
+; (format-time-string "%H:%M:%S" (current-time))
 (defun parse-sbe ()
   (interactive)
   (save-excursion
@@ -549,6 +630,10 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ;(parse-epoch-time "1482672627025747.032" )
 ;(parse-epoch-time "1482672627025747023"  )
 
+(message "garoo")
+
+; (setq python-shell-exec-path '( "/home/andy/anaconda3/bin"))
+
 (defun daysBetween (s f)
   (let* ((seconds-per-day ( * 24 60 60 ))
          (conv (lambda (x)
@@ -589,9 +674,10 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
      ))
 
 (defun end-of-sml (a b &rest xs)
+  "A Im interactive."
   (interactive)
   (switch-to-buffer "*SML*")
-  (end-of-buffer) ) 
+  (end-of-buffer)) 
 
 ; (advice-add 'sml-prog-proc-load-file :after 'end-of-sml)
 ; (advice-remove 'sml-prog-proc-load-file)
