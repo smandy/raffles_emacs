@@ -6,10 +6,10 @@
 
 ;;; Code:
 
-;; (set-frame-font "Fixed 10")
-;; (set-frame-font "Liberation Mono 12")
+;; (set-frame-font "Fixed 12")
+;; (set-frame-font "Liberation Mono 24")
 
-;; (set-frame-font "Ubuntu Mono 16")
+;; (set-frame-font "Ubuntu Mono 48")
 
 ;; (setq helm-echo-input-in-header-line nil)
 
@@ -18,10 +18,9 @@
 ;; (set-frame-font "Ubuntu Normal 15")
 ;; (set-frame-font "Fixed 10")
 
-;; Nice runing from Mac. (set-frame-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-7" )
-
-;; (set-frame-font "Fixed 10")
-(set-frame-font "-misc-fixed-medium-r-normal--18-*-75-75-c-90-iso8859-3" )
+(set-frame-font "-misc-fixed-medium-r-semicondensed--13-*-75-75-c-60-iso8859-16" )
+(set-frame-font "-misc-fixed-medium-r-normal--14-*-75-75-c-70-iso8859-5" )
+(set-frame-font "-misc-fixed-medium-r-normal--15-*-75-75-c-90-iso8859-8" )
 
 (require 'compile)
 (require 'package)
@@ -188,8 +187,6 @@
       (message "Copied buffer file name '%s' to the clipboard." filename))))
 
 
-(message "foo")
-
 (global-set-key (kbd "C-x p") 'copy-file-name-to-clipboard)
 
 (defun do-revert () 
@@ -297,7 +294,7 @@
  '(org-hide-leading-stars t)
  '(package-selected-packages
    (quote
-    (cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode nand2tetris git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flymake-haskell-multi flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode color-theme-solarized color-theme-sanityinc-solarized color-theme-eclipse color-theme-cobalt coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
+    (helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode nand2tetris git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flymake-haskell-multi flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode color-theme-solarized color-theme-sanityinc-solarized color-theme-eclipse color-theme-cobalt coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
  '(projectile-tags-backend (quote ggtags))
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--pylab=qt")
@@ -416,8 +413,6 @@
 ;; (setq wg-file "~/wg.el")
 ;; (workgroups-mode 1)
 ;;(wg-load wg-file)
-
-(message "sue")
 
 
 (tool-bar-mode 0)
@@ -542,7 +537,6 @@
         (if (> ( - end-line (line-number-at-pos)  ) 1 )
             (insert-char ?,))
         (next-line 1)
-        (message "goo")
         (message (format "point is %s end is %s" (line-number-at-pos) end-line))
         ))))
 
@@ -617,6 +611,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
           (when (< (point) (line-end-position))
             (kill-line))
           (forward-line))))))
+
 (global-set-key [f3] 'parse-sbe)
   
 (defun parse-epoch-time-at-point ()
