@@ -7,20 +7,19 @@
 ;;; Code:
 
 ;; (set-frame-font "Fixed 12")
-;; (set-frame-font "Liberation Mono 24")
+;;(set-frame-font "Liberation Mono 14")
+;;(set-frame-font "Ubuntu Mono 18")
+;;(set-frame-font "DejaVu Sans Mono 12")
 
-;; (set-frame-font "Ubuntu Mono 48")
-
+;; (set-frame-font "Bits-Bitstream Sans Mono")
 ;; (setq helm-echo-input-in-header-line nil)
-
 ;; Nice runing from Mac. (set-fraxme-font "-misc-fixed-medium-r-normal--10-*-75-75-c-60-iso8859-7
-;; (set-frame-font "Ubuntu Light 15")
-;; (set-frame-font "Ubuntu Normal 15")
-;; (set-frame-font "Fixed 10")
+;; (set-frame-font "Ubuntu Normal 20")
+;; (set-frame-font "Fixed 13")
 
-(set-frame-font "-misc-fixed-medium-r-semicondensed--13-*-75-75-c-60-iso8859-16" )
-(set-frame-font "-misc-fixed-medium-r-normal--14-*-75-75-c-70-iso8859-5" )
-(set-frame-font "-misc-fixed-medium-r-normal--15-*-75-75-c-90-iso8859-8" )
+;;(set-frame-font "-misc-fixed-medium-r-semicondensed--13-*-75-75-timeo-c-60-iso8859-16" )
+;;(set-frame-font "-misc-fixed-medium-r-normal--14-*-75-75-c-70-iso8859-5" )
+(set-frame-font "-misc-fixed-medium-r-normal--18-*-75-75-c-90-iso8859-8" )
 
 (require 'compile)
 (require 'package)
@@ -134,11 +133,11 @@
 
 (defun compile-agora-debug ()
   (interactive)
-  (compile-in-own-buffer "build agora" "rm -rf ~/agora_debug && mkdir -p ~/agora_debug && cd ~/agora_debug && cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=~/agora_debug/install -G 'Unix Makefiles' ~/repos/agora && make install"))
+  (compile-in-own-buffer "build agora debug" "rm -rf ~/agora_debug && mkdir -p ~/agora_debug && cd ~/agora_debug && cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=~/agora_debug/install -G 'Unix Makefiles' ~/repos/agora && make install"))
 
 (defun compile-agora-release ()
   (interactive)
-  (compile-in-own-buffer "build agora" "rm -rf ~/agora_release && mkdir -p ~/agora_release && cd ~/agora_release && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=~/agora_release/install -G 'Unix Makefiles' ~/repos/agora && make install"))
+  (compile-in-own-buffer "build agora release" "rm -rf ~/agora_release && mkdir -p ~/agora_release && cd ~/agora_release && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=~/agora_release/install -G 'Unix Makefiles' ~/repos/agora && make install"))
 
 (defun compile-gem ()
   (interactive)
@@ -208,9 +207,9 @@
 (setq wg-prefix-key (kbd "C-c w"))
 (workgroups-mode)
 
-(require 'haskell-interactive-mode)
-(require 'haskell-process)
-(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+;;(require 'haskell-interactive-mode)
+;;(require 'haskell-process)
+;;(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 
 (projectile-mode)
 (helm-projectile-on)
@@ -228,7 +227,7 @@
  '(ansi-color-faces-vector
    [default bold shadow italic underline bold bold-italic bold])
  '(c-basic-offset 4)
- '(clang-format-executable "clang-format-3.4")
+ '(clang-format-executable "clang-format")
  '(company-clang-arguments nil)
  '(compilation-message-face (quote default))
  '(custom-safe-themes
@@ -294,10 +293,10 @@
  '(org-hide-leading-stars t)
  '(package-selected-packages
    (quote
-    (helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode nand2tetris git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flymake-haskell-multi flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode color-theme-solarized color-theme-sanityinc-solarized color-theme-eclipse color-theme-cobalt coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
+    (scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
  '(projectile-tags-backend (quote ggtags))
  '(python-shell-interpreter "ipython")
- '(python-shell-interpreter-args "--pylab=qt")
+ '(python-shell-interpreter-args "--simple-prompt")
  '(safe-local-variable-values
    (quote
     ((test-case-name . twisted\.internet\.test\.test_qtreactor)
@@ -353,7 +352,7 @@
     (kill-buffer bufferName)
     (message (format "Saved %s ... " fileName))))
 
-(defun switch-to-notes () 
+(defun switch-to-notes ()
   (interactive)
   (switch-to-buffer "gtd.org"))
 
@@ -417,11 +416,6 @@
 
 (tool-bar-mode 0)
 (menu-bar-mode 0)
-
-(require 'flymake-haskell-multi)
-(autoload 'ghc-init "ghc" nil t)
-(add-hook 'haskell-mode-hook (lambda () (ghc-init) ))
-(add-hook 'haskell-mode-hook 'flymake-haskell-multi-load)
 
 (setq-default indent-tabs-mode nil)
 
@@ -543,8 +537,6 @@
 (global-set-key (kbd "C-c [") 'square-bracket)
 ;;(global-set-key (kbd "C-c C-p C-p") 'do-list)
 
-(message "boo")
-
 (defun parse-epoch-time (s)
   "Parse symbol into an epoch time. Use heuristics to determine if dealing
 with micros, seconds, nanos etc. Display result using 'message' if successful"
@@ -586,7 +578,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
       (message "%s" (re-search-backward "<message") )
       (beginning-of-line)
       (forward-line)
-      (while (not (re-search-forward "</message>" (line-end-position) t) )
+      (while (not (rxce-search-forward "</message>" (line-end-position) t) )
         (let* ((current-line (buffer-substring-no-properties (line-beginning-position) (line-end-position)))
                (match-first (lambda (re errMsg)
                               (string-match re current-line)
@@ -646,7 +638,9 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
      (define-key company-mode-map (kbd "M-/") 'company-complete)
      (define-key company-active-map (kbd "C-:") 'helm-company)))
 
-(add-to-list 'exec-path "/home/andy/bin")
+(add-to-list 'exec-path "/home/andy/bin:/home/andy/.sdkman/candidates/leiningen/current/bin")
+
+(add-to-list 'exec-path "/home/andy/.sdkman/candidates/leiningen/current/bin")
 
 (autoload 'utop-minor-mode "utop" "Minor mode for utop" t)
 (add-hook 'tuareg-mode-hook 'utop-minor-mode)
@@ -667,6 +661,16 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
      (define-key js2-mode-map (kbd "C-c C-r") 'nodejs-repl-send-region)
      (define-key js2-mode-map (kbd "C-c C-c") 'nodejs-repl-send-buffer)
      ))
+
+
+     (add-hook 'js-mode-hook
+               (lambda ()
+                 (define-key js-mode-map (kbd "C-x C-e") 'nodejs-repl-send-last-sexp)
+                 (define-key js-mode-map (kbd "C-c C-r") 'nodejs-repl-send-region)
+                 (define-key js-mode-map (kbd "C-c C-l") 'nodejs-repl-load-file)
+                 (define-key js-mode-map (kbd "C-c C-z") 'nodejs-repl-switch-to-repl)))
+
+
 
 (defun end-of-sml (a b &rest xs)
   "A Im interactive."

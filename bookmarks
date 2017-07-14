@@ -117,7 +117,7 @@
  (position . 1))
 ("init.el"
  (filename . "~/.emacs.d/init.el")
- (front-context-string . "(defun slurp (x)")
+ (front-context-string . ";;; init.el --- ")
  (rear-context-string)
  (position . 1))
 ("andy"
