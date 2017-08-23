@@ -7,3 +7,9 @@ find .
 top
 top
 top
+ls -lg
+pwd
+df .
+ld -l
+ls -lg
+pwd
