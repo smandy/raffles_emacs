@@ -10,7 +10,7 @@
 ;; (set-frame-font "Liberation Mono 16")
 ;; (set-frame-font "Ubuntu Mono 20")
 ;; (set-frame-font "DejaVu Sans Mono 16")
-;; (set-frame-font "Hack 15")
+;; (set-frame-font "Hack 20")
 ;; ΠπðÐþÐσΣ Ж ж Unicode test!!xs
 
 ;; (set-frame-font "Dina 8")
@@ -313,7 +313,7 @@
  '(org-hide-leading-stars t)
  '(package-selected-packages
    (quote
-    (editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
+    (haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
  '(projectile-tags-backend (quote ggtags))
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--simple-prompt --pylab")
@@ -648,8 +648,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
          (st (funcall conv s))
          (ft (funcall conv f)))
     (/ (time-to-seconds (time-subtract ft st)) seconds-per-day)))
-
-;; (daysBetween "1973-05-09" "2017-08-03")
+;; (daysBetween "1973-05-09" "2018-08-26")
  
 (eval-after-load 'company
   '(progn
@@ -657,8 +656,8 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
      (define-key company-mode-map (kbd "M-/") 'company-complete)
      (define-key company-active-map (kbd "C-:") 'helm-company)))
 
-(add-to-list 'exec-path "/home/andy/bin:/home/andy/.sdkman/candidates/leiningen/current/bin")
 
+(add-to-list 'exec-path "/home/andy/bin:/home/andy/.sdkman/candidates/leiningen/current/bin")
 (add-to-list 'exec-path "/home/andy/.sdkman/candidates/leiningen/current/bin")
 
 (autoload 'utop-minor-mode "utop" "Minor mode for utop" t)
@@ -670,10 +669,10 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ;;(define-key octave-mode-map (kbd "C-c C-r") 'octave-send-region)
 ;;(require 'octave)
 (eval-after-load 'octave '(progn
-                           (define-key octave-mode-map (kbd "C-c C-c") 'octave-send-buffer)
-                           (define-key octave-mode-map (kbd "C-c C-r") 'octave-send-region)
-                           (define-key octave-mode-map (kbd "C-c C-p") 'run-octave)
-                           ) )
+                            (define-key octave-mode-map (kbd "C-c C-c") 'octave-send-buffer)
+                            (define-key octave-mode-map (kbd "C-c C-r") 'octave-send-region)
+                            (define-key octave-mode-map (kbd "C-c C-p") 'run-octave)
+                            ))
 
 (eval-after-load 'nodejs-repl
   '(progn
@@ -708,6 +707,12 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 	     (if (string-match "llvm" buffer-file-name)
 		 (progn
 		   (c-set-style "llvm.org"))))))
+
+
+     (require 'haskell-interactive-mode)
+     (require 'haskell-process)
+     (add-hook 'haskell-mode-hook 'interactive-haskell-mode)in
+
 
 (defun end-of-sml (a b &rest xs)
   "A Im interactive."
