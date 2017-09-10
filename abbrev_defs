@@ -23,6 +23,7 @@
     ("fautv" "for ( auto x : " nil 2)
     ("i32" "int32_t" nil 3)
     ("i64" "int64_t" nil 2)
+    ("i8" "int8_t" nil 0)
     ("ialg" "#include <algorithm>
 " nil 2)
     ("ifunc" "#include <functional>
@@ -57,6 +58,7 @@
     ("svec" "std::vector" nil 6)
     ("u32" "uint32_t" nil 12)
     ("u64" "uint64_t" nil 5)
+    ("u8" "uint8_t" nil 2)
     ("unss" "using namespace std;
 " nil 2)
    ))
@@ -64,6 +66,8 @@
 (define-abbrev-table 'c-mode-abbrev-table
   '(
    ))
+
+(define-abbrev-table 'calc-trail-mode-abbrev-table '())
 
 (define-abbrev-table 'calendar-mode-abbrev-table '())
 
@@ -119,9 +123,27 @@
 
 (define-abbrev-table 'fundamental-mode-abbrev-table '())
 
+(define-abbrev-table 'gdb-breakpoints-mode-abbrev-table '())
+
+(define-abbrev-table 'gdb-disassembly-mode-abbrev-table '())
+
+(define-abbrev-table 'gdb-frames-mode-abbrev-table '())
+
+(define-abbrev-table 'gdb-locals-mode-abbrev-table '())
+
+(define-abbrev-table 'gdb-memory-mode-abbrev-table '())
+
+(define-abbrev-table 'gdb-registers-mode-abbrev-table '())
+
+(define-abbrev-table 'gdb-script-mode-abbrev-table '())
+
+(define-abbrev-table 'gdb-threads-mode-abbrev-table '())
+
 (define-abbrev-table 'global-abbrev-table '())
 
 (define-abbrev-table 'grep-mode-abbrev-table '())
+
+(define-abbrev-table 'gud-mode-abbrev-table '())
 
 (define-abbrev-table 'haskell-cabal-mode-abbrev-table '())
 
@@ -134,6 +156,8 @@
 (define-abbrev-table 'haskell-mode-abbrev-table '())
 
 (define-abbrev-table 'haskell-presentation-mode-abbrev-table '())
+
+(define-abbrev-table 'haskell-yesod-parse-routes-mode-abbrev-table '())
 
 (define-abbrev-table 'helm-grep-mode-abbrev-table '())
 

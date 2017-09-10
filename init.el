@@ -7,11 +7,11 @@
 ;;; Code:
 
 ;; (set-frame-font "Fixed 15")
-;; (set-frame-font "Liberation Mono 16")
-;; (set-frame-font "Ubuntu Mono 20")
+;; (set-frame-font "Liberation Mono 24")
+;; (set-frame-font "Ubuntu Mono 18")
 ;; (set-frame-font "DejaVu Sans Mono 16")
 ;; (set-frame-font "Hack 20")
-;; ΠπðÐþÐσΣ Ж ж Unicode test!!xs
+;; ΠπðÐþÐσΣ Ж ж Unicode test!!
 
 ;; (set-frame-font "Dina 8")
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-12-*-*-*-c-60-iso10646-1" )
@@ -45,11 +45,9 @@
 
 (add-to-list 'package-archives '("melpa"     . "http://melpa.org/packages/"))
 
-(setq auto-mode-alist
-      (cons '("SConstruct" . python-mode) auto-mode-alist))
-(setq auto-mode-alist
-      (cons '("SConscript" . python-mode) auto-mode-alist))
-
+(add-to-list 'auto-mode-alist '("SConscript" . python-mode))
+(add-to-list 'auto-mode-alist '("SConstruct" . python-mode))
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 ;;(add-to-list 'auto-mode-alist '("\\.hdl\\'" . nand2tetris-mode))
 
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
@@ -81,6 +79,21 @@
   "Debug the discovery app."
   (interactive)
   (gdb "gdb -i=mi -nx -x /home/andy/discovery.gdbinit"))
+
+(defun debug-test-binary ()
+  "Debug the discovery app."
+  (interactive)
+  (gdb "gdb -i=mi -nx -x /home/andy/gdbinit/test_binary.gdbinit"))
+
+(defun debug-test-admin ()
+  "Debug the discovery app."
+  (interactive)
+  (gdb "gdb -i=mi -nx -x /home/andy/gdbinit/test_admin.gdbinit"))
+
+(defun test_agora ()
+  "Debug the discovery app."
+  (interactive)
+  (gdb "gdb -i=mi -nx -x /home/andy/gdbinit/test_agora.gdbinit"))
 
 (defun debug-chatserver ()
   "Debug the discovery app."
@@ -132,7 +145,7 @@
  '("^\\([^ \n]+\\)(\\([0-9]+\\)): \\(?:Error\\|.\\|warnin\\(g\\)\\|remar\\(k\\)\\)"
    1 2 nil (3 . 4)))
 (defun revert-buffer-with-prejudice ()
-  (interactive) 
+  (interactive)
   (revert-buffer 't 't))
 
 (global-set-key (kbd "C-c r")  'revert-buffer-with-prejudice)
@@ -231,7 +244,6 @@
 
 (projectile-mode)
 (helm-projectile-on)
-
 ;; '(flycheck-clang-language-standard "c++14")
 ;; '(flycheck-gcc-language-standard "c++14")
 
@@ -244,7 +256,7 @@
  '(LaTeX-command "latex -shell-escape")
  '(ansi-color-faces-vector
    [default bold shadow italic underline bold bold-italic bold])
- '(c-basic-offset 4)
+ '(c-basic-offset 2)
  '(clang-format-executable "clang-format")
  '(company-clang-arguments nil)
  '(compilation-message-face (quote default))
@@ -261,6 +273,7 @@
  '(flycheck-c/c++-clang-executable "clang-5.0")
  '(flycheck-clang-args (quote ("-xc++")))
  '(flycheck-clang-language-standard "c++14")
+ '(gdb-many-windows t)
  '(haskell-process-auto-import-loaded-modules t)
  '(haskell-process-log t)
  '(haskell-process-suggest-remove-import-lines t)
@@ -308,12 +321,12 @@
  '(org-directory "~/Dropbox/gtd")
  '(org-format-latex-options
    (quote
-    (:foreground default :background default :scale 5.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+    (:foreground default :background default :scale 2.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
                  ("begin" "$1" "$" "$$" "\\(" "\\["))))
  '(org-hide-leading-stars t)
  '(package-selected-packages
    (quote
-    (haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
+    (erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
  '(projectile-tags-backend (quote ggtags))
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--simple-prompt --pylab")
@@ -711,7 +724,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
      (require 'haskell-interactive-mode)
      (require 'haskell-process)
-     (add-hook 'haskell-mode-hook 'interactive-haskell-mode)in
+     (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 
 
 (defun end-of-sml (a b &rest xs)
