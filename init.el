@@ -10,7 +10,7 @@
 ;; (set-frame-font "Liberation Mono 24")
 ;; (set-frame-font "Ubuntu Mono 18")
 ;; (set-frame-font "DejaVu Sans Mono 16")
-;; (set-frame-font "Hack 20")
+;; (set-frame-font "Hack 15")
 ;; ΠπðÐþÐσΣ Ж ж Unicode test!!
 
 ;; (set-frame-font "Dina 8")
@@ -166,6 +166,16 @@
   (interactive)
   (compile-in-own-buffer "build agora debug" "rm -rf ~/agora_debug && mkdir -p ~/agora_debug && cd ~/agora_debug && cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=~/agora_debug/install -G 'Unix Makefiles' ~/repos/agora && make install"))
 
+(defun compile-box2d ()
+  (interactive)
+  (compile-in-own-buffer "build box2d debug" "rm -rf ~/box2d_debug && mkdir -p ~/box2d_debug && cd ~/box2d_debug && cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=~/agora_debug/install -G 'Unix Makefiles' ~/repos/Box2D && make VERBOSE=1"))
+
+
+(defun compile-box2d ()
+  (interactive)
+  (compile-in-own-buffer "build box2d debug" "cd ~/box2d_debug && cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=~/agora_debug/install -G 'Unix Makefiles' ~/repos/Box2D && make VERBOSE=1"))
+
+
 (defun compile-agora-release ()
   (interactive)
   (compile-in-own-buffer "build agora release" "rm -rf ~/agora_release && mkdir -p ~/agora_release && cd ~/agora_release && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=~/agora_release/install -G 'Unix Makefiles' ~/repos/agora && make install"))
@@ -183,9 +193,6 @@
   (interactive)
   (compile-in-own-buffer "build imgui-example" "cd ~/repos/imgui/examples/sdl_opengl3_example && scons -c && scons"))
 
-(defun compile-box2d ()
-  (interactive)
-  (compile-in-own-buffer "build box2d" "cd /home/andy/repos/Box2D/Box2D/Box2D && scons -c && scons"))
 
 (defun compile-testbed ()
   (interactive)
@@ -530,6 +537,13 @@
   (interactive)
   (compile-in-buffer "cd ~/repos/dev/cpp && scons" "dev"))
 
+(defun compile-asteroids ()
+  (interactive)
+  (compile-in-buffer "cd ~/repos/sdl/asteroids && scons" "asteroids"))
+
+
+(setq helm-dash-common-docsets '("org.libsdl.sdl20" "C++"))
+
 (defun square-bracket ()
   (interactive)
   (save-excursion)
@@ -744,8 +758,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+ ;; Your init file should contain only one such instance. ;; If there is more than one, they won't work right.
  )
 
 (provide 'init.el)
