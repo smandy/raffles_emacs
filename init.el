@@ -7,13 +7,16 @@
 ;;; Code:
 
 ;; (set-frame-font "Fixed 15")
-;; (set-frame-font "Liberation Mono 24")
-;; (set-frame-font "Ubuntu Mono 18")
+;; (set-frame-font "Liberation Mono 16")
+;; (set-frame-font "Ubuntu Mono 20")
 ;; (set-frame-font "DejaVu Sans Mono 16")
 ;; (set-frame-font "Hack 15")
 ;; ΠπðÐþÐσΣ Ж ж Unicode test!!
 
-;; (set-frame-font "Dina 8")
+;; (set-frame-font "Dina 12")
+;; (set-frame-font "Dina 10")
+;; (set-frame-font "Dina 13")
+
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-12-*-*-*-c-60-iso10646-1" )
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-14-*-*-*-c-80-iso10646-1" )
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1" )
@@ -38,13 +41,32 @@
 ;;(set-frame-font "-misc-fixed-medium-r-semicondensed--13-*-75-75-timeo-c-60-iso8859-16" )
 ;;(set-frame-font "-misc-fixed-medium-r-normal--14-*-75-75-c-70-iso8859-5" )
 
-(set-frame-font "-misc-fixed-medium-r-normal--24-*-75-75-c-90-iso8859-8" )
+(set-frame-font "-misc-fixed-medium-r-normal--30-*-75-75-c-90-iso8859-8" )
+(set-frame-font "-misc-fixed-medium-r-normal--12-*-75-75-c-90-iso8859-8" )
+(set-frame-font "Misc Fixed 12") 
 
 (require 'compile)
 (require 'package)
 
-(add-to-list 'package-archives '("melpa"     . "http://melpa.org/packages/"))
+(require 'dash)
+(require 's)
 
+(defun commify (s)
+  (->>
+   s
+   (s-reverse)
+   (s-split "")
+   (cdr)
+   (-partition 3)
+   (-interpose '(","))
+   (-flatten)
+   (s-join "")
+   (s-reverse)))
+
+;; (commify "46376647367436") "46,376,647,367,436" 
+
+
+(add-to-list 'package-archives '("melpa"     . "http://melpa.org/packages/"))
 (add-to-list 'auto-mode-alist '("SConscript" . python-mode))
 (add-to-list 'auto-mode-alist '("SConstruct" . python-mode))
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
@@ -85,6 +107,12 @@
   (interactive)
   (gdb "gdb -i=mi -nx -x /home/andy/gdbinit/test_binary.gdbinit"))
 
+(defun debug-test-mmapper ()
+  "Mmapper"
+  (interactive)
+  (shell-command "rm -rf /tmp/test.*")
+  (gdb "gdb -i=mi -nx -x /home/andy/gdbinit/test_mmapper.gdbinit"))
+
 (defun debug-test-admin ()
   "Debug the discovery app."
   (interactive)
@@ -99,6 +127,11 @@
   "Debug the discovery app."
   (interactive)
   (gdb "gdb -i=mi -nx -x /home/andy/chatServer.gdbinit"))
+
+(defun debug-epoll-session ()
+  "Debug the discovery app."
+  (interactive)
+  (gdb "gdb -i=mi -nx -x /home/andy/gdbinit/test_epoll.gdbinit"))
 
 (global-set-key (kbd "C-x C-o") 'ff-find-other-file)
 
@@ -162,9 +195,30 @@
   (let ((compilation-buffer-name-function (lambda (x) buf) ))
     (compile cmd)))
 
+;;(require 'flycheck-kotlin)
+;;(add-hook 'kotlin-mode-hook 'flycheck-mode)o
+
+
 (defun compile-agora-debug ()
   (interactive)
   (compile-in-own-buffer "build agora debug" "rm -rf ~/agora_debug && mkdir -p ~/agora_debug && cd ~/agora_debug && cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=~/agora_debug/install -G 'Unix Makefiles' ~/repos/agora && make install"))
+
+(defun compile-agora-release ()
+  (interactive)
+  (compile-in-own-buffer "build agora release" "rm -rf ~/agora_debug && mkdir -p ~/agora_release && cd ~/agora_release && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=~/agora_release/install -G 'Unix Makefiles' ~/repos/agora && make install"))
+
+(defun fast-compile-agora-debug ()
+  (interactive)
+  (compile-in-own-buffer "build agora debug" "cd ~/agora_debug && make -j 4"))
+
+(defun fast-compile-agora-release ()
+  (interactive)
+  (compile-in-own-buffer "build agora release" "cd ~/agora_release && make -j 4 && make install"))
+
+(defun fast-compile-agora-release ()
+  (interactive)
+  (compile-in-own-buffer "build agora release" "cd ~/agora_release && make -j 4"))
+
 
 (defun compile-box2d ()
   (interactive)
@@ -185,9 +239,6 @@
   (compile-in-own-buffer "build gem" "cd ~/repos/gem/cpp && scons"))
 
 
-(defun compile-imgui ()
-  (interactive)
-  (compile-in-own-buffer "build imgui" "cd ~/repos/imgui && scons -c && scons"))
 
 (defun compile-imgui-example ()
   (interactive)
@@ -208,9 +259,12 @@
 
 (defun find-file-in-clipboard () 
   (interactive)
-  (find-file-at-point (gui-get-selection)))
+  (message "f is %s" (car kill-ring))
+  (find-file-at-point (car kill-ring)))
 
-;; (global-set-key (kbd "C-c p")  'find-file-in-clipboard)
+;;(x-get-selection) 
+
+(global-set-key (kbd "C-c p")  'find-file-in-clipboard)
 ;; (define-key global-map (kbd "C-c p") nil)
 
 (defun copy-file-name-to-clipboard ()
@@ -222,7 +276,6 @@
     (when filename
       (kill-new filename)
       (message "Copied buffer file name '%s' to the clipboard." filename))))
-
 
 (global-set-key (kbd "C-x p") 'copy-file-name-to-clipboard)
 
@@ -263,7 +316,7 @@
  '(LaTeX-command "latex -shell-escape")
  '(ansi-color-faces-vector
    [default bold shadow italic underline bold bold-italic bold])
- '(c-basic-offset 2)
+ '(c-basic-offset 4)
  '(clang-format-executable "clang-format")
  '(company-clang-arguments nil)
  '(compilation-message-face (quote default))
@@ -322,18 +375,18 @@
         (mode . lisp-mode)))))))
  '(inferior-octave-startup-args (quote ("-i" "--line-editing")))
  '(magit-diff-use-overlays nil)
- '(midnight-mode t)
+ '(midnight-mode nil)
  '(nyan-mode t)
- '(org-agenda-files nil)
+ '(org-agenda-files (quote ("~/Dropbox/gtd")))
  '(org-directory "~/Dropbox/gtd")
  '(org-format-latex-options
    (quote
-    (:foreground default :background default :scale 2.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+    (:foreground default :background default :scale 2.702 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
                  ("begin" "$1" "$" "$$" "\\(" "\\["))))
  '(org-hide-leading-stars t)
  '(package-selected-packages
    (quote
-    (erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
+    (julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
  '(projectile-tags-backend (quote ggtags))
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--simple-prompt --pylab")
@@ -343,7 +396,7 @@
      (test-case-name . twisted\.internet\.test\.test_inotify)
      (test-case-name . twisted\.internet\.test\.test_core))))
  '(show-paren-mode t)
- '(sql-postgres-login-params
+ '(sql-postgres-login-paramsupo
    (quote
     ((user :default "andy")
      server
@@ -544,38 +597,38 @@
 
 (setq helm-dash-common-docsets '("org.libsdl.sdl20" "C++"))
 
-(defun square-bracket ()
-  (interactive)
-  (save-excursion)
-  (let* ((start-pos (region-beginning))
-         (end-pos (region-end)))
-    (goto-char start-pos)
-    (insert-char ?\[)
-    (goto-char (1+ end-pos) )
-    (insert-char ?\])))
+;; (defun square-bracket ()
+;;   (interactive)
+;;   (save-excursion)
+;;   (let* ((start-pos (region-beginning))
+;;          (end-pos (region-end)))
+;;     (goto-char start-pos)
+;;     (insert-char ?\[)
+;;     (goto-char (1+ end-pos) )
+;;     (insert-char ?\])))
 
-(defun do-list ()
-  (interactive)
-  (save-excursion 
-    (let* (
-           (start-pos (region-beginning))
-           (start-line (line-number-at-pos start-pos ))
-           (end-line   (line-number-at-pos (region-end))))
-      (message (format "%s %s %s" start-pos start-line end-line))
-      (goto-char start-pos)
-      (message (format "%s %s" end-line (line-number-at-pos)))
-      (while (< (line-number-at-pos) end-line)
-        (message (format "point is %s end is %s" (line-number-at-pos) end-line))
-        (move-beginning-of-line nil)
-        (message "boo")
-        (insert-char ?\")
-        (move-end-of-line nil)
-        (insert-char ?\")
-        (if (> ( - end-line (line-number-at-pos)  ) 1 )
-            (insert-char ?,))
-        (next-line 1)
-        (message (format "point is %s end is %s" (line-number-at-pos) end-line))
-        ))))
+;; (defun do-list ()
+;;   (interactive)
+;;   (save-excursion 
+;;     (let* (
+;;            (start-pos (region-beginning))
+;;            (start-line (line-number-at-pos start-pos ))
+;;            (end-line   (line-number-at-pos (region-end))))
+;;       (message (format "%s %s %s" start-pos start-line end-line))
+;;       (goto-char start-pos)
+;;       (message (format "%s %s" end-line (line-number-at-pos)))
+;;       (while (< (line-number-at-pos) end-line)
+;;         (message (format "point is %s end is %s" (line-number-at-pos) end-line))
+;;         (move-beginning-of-line nil)
+;;         (message "boo")
+;;         (insert-char ?\")
+;;         (move-end-of-line nil)
+;;         (insert-char ?\")
+;;         (if (> ( - end-line (line-number-at-pos)  ) 1 )
+;;             (insert-char ?,))
+;;         (next-line 1)
+;;         (message (format "point is %s end is %s" (line-number-at-pos) end-line))
+;;         ))))
 
 (global-set-key (kbd "C-c [") 'square-bracket)
 ;;(global-set-key (kbd "C-c C-p C-p") 'do-list)
@@ -583,7 +636,7 @@
 (defun parse-epoch-time (s)
   "Parse symbol into an epoch time. Use heuristics to determine if dealing
 with micros, seconds, nanos etc. Display result using 'message' if successful"
-  (let* ((x (float (string-to-number s )))e
+  (let* ((x (float (string-to-number s )))
          (epoch 1970 )
          (secsperday (* 24 60 60))
          (secsperyear (* 365.25 secsperday))
@@ -621,7 +674,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
       (message "%s" (re-search-backward "<message") )
       (beginning-of-line)
       (forward-line)
-      (while (not (rxce-search-forward "</message>" (line-end-position) t) )
+      (while (not (re-search-forward "</message>" (line-end-position) t) )
         (let* ((current-line (buffer-substring-no-properties (line-beginning-position) (line-end-position)))
                (match-first (lambda (re errMsg)
                               (string-match re current-line)
@@ -656,11 +709,10 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (global-set-key (kbd "C-c C-p C-t") 'parse-epoch-time-at-point)
 
 ;(parse-epoch-time "1482672627.025747002" ) 
-;(parse-epoch-time "1482672627025.747023" )
+;(parse-epoch-time "1482672627025.747023" ) 
 ;(parse-epoch-time "1482672627025747.032" ) 
 ;(parse-epoch-time "1482672627025747023"  )
 
-(message "garoo")
 
 ; (setq python-shell-exec-path '( "/home/andy/anaconda3/bin"))
 
@@ -675,7 +727,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
          (st (funcall conv s))
          (ft (funcall conv f)))
     (/ (time-to-seconds (time-subtract ft st)) seconds-per-day)))
-;; (daysBetween "1973-05-09" "2018-08-26")
+;; (daysBetween "1973-05-09" "2017-10-12") 
  
 (eval-after-load 'company
   '(progn
@@ -758,9 +810,12 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance. ;; If there is more than one, they won't work right.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  )
 
 (provide 'init.el)
 ;;; init.el ends here
+
+
 

@@ -16,4 +16,5 @@
 (setq mc/cmds-to-run-once
       '(
         mouse-buffer-menu
+        mouse-set-region
         ))
