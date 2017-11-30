@@ -63,7 +63,7 @@
    (s-join "")
    (s-reverse)))
 
-;; (commify "46376647367436") "46,376,647,367,436" 
+;; (commify "4637664736743v6") "46,376,647,367,436" 
 
 
 (add-to-list 'package-archives '("melpa"     . "http://melpa.org/packages/"))
