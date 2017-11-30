@@ -51,19 +51,6 @@
 (require 'dash)
 (require 's)
 
-(defun commify (s)
-  (->>
-   s
-   (s-reverse)
-   (s-split "")
-   (cdr)
-   (-partition 3)
-   (-interpose '(","))
-   (-flatten)
-   (s-join "")
-   (s-reverse)))
-
-;; (commify "4637664736743v6") "46,376,647,367,436" 
 
 
 (add-to-list 'package-archives '("melpa"     . "http://melpa.org/packages/"))
@@ -701,6 +688,21 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
           (forward-line))))))
 
 (global-set-key [f3] 'parse-sbe)
+
+(defun commify (s)
+  (->>
+   s
+   (format "%s")
+   (s-reverse)
+   (s-split "")
+   (cdr)
+   (-partition 3)
+   (-interpose '(","))
+   (-flatten)
+   (s-join "")
+   (s-reverse)))
+
+;; (commify 463766473674326) "463,766,473,674,326"
   
 (defun parse-epoch-time-at-point ()
   (interactive)
