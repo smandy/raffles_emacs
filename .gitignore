@@ -23,3 +23,5 @@ semanticdb/**
 /recentf
 /eshell/.#history
 /projectile.cache
+session**
+games/**

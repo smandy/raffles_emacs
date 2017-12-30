@@ -7,8 +7,8 @@
 ;;; Code:
 
 ;; (set-frame-font "Fixed 15")
-;; (set-frame-font "Liberation Mono 16")
-;; (set-frame-font "Ubuntu Mono 20")
+;; (set-frame-font "Liberation Mono 14")
+;; (set-frame-font "Ubuntu Mono 24")
 ;; (set-frame-font "DejaVu Sans Mono 16")
 ;; (set-frame-font "Hack 15")
 ;; ΠπðÐþÐσΣ Ж ж Unicode test!!
@@ -41,17 +41,13 @@
 ;;(set-frame-font "-misc-fixed-medium-r-semicondensed--13-*-75-75-timeo-c-60-iso8859-16" )
 ;;(set-frame-font "-misc-fixed-medium-r-normal--14-*-75-75-c-70-iso8859-5" )
 
-(set-frame-font "-misc-fixed-medium-r-normal--30-*-75-75-c-90-iso8859-8" )
-(set-frame-font "-misc-fixed-medium-r-normal--12-*-75-75-c-90-iso8859-8" )
-(set-frame-font "Misc Fixed 12") 
+;; (set-frame-font "-misc-fixed-medium-r-normal--30-*-75-75-c-90-iso8859-8" )
+;; (set-frame-font "-misc-fixed-medium-r-normal--12-*-75-75-c-90-iso8859-8" )
+;; (set-frame-font "Misc Fixed 12") 
 
+(set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 (require 'compile)
 (require 'package)
-
-(require 'dash)
-(require 's)
-
-
 
 (add-to-list 'package-archives '("melpa"     . "http://melpa.org/packages/"))
 (add-to-list 'auto-mode-alist '("SConscript" . python-mode))
@@ -272,7 +268,10 @@
 
 (package-initialize)
 
+(require 'dash)
+(require 's)
 (require 'multiple-cursors)
+
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
@@ -310,7 +309,7 @@
  '(custom-enabled-themes (quote (sanityinc-solarized-dark)))
  '(custom-safe-themes
    (quote
-    ("4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
+    ("7bc31a546e510e6bde482ebca992e293a54cb075a0cbfb384bf2bf5357d4dee3" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
  '(display-time-world-list
    (quote
     (("America/Chicago" "Chicago")
@@ -373,7 +372,7 @@
  '(org-hide-leading-stars t)
  '(package-selected-packages
    (quote
-    (julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
+    (indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
  '(projectile-tags-backend (quote ggtags))
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--simple-prompt --pylab")
@@ -458,9 +457,8 @@
 (package-initialize)
 (require 'color-theme)
 (color-theme-initialize)
-
-(color-theme-sanityinc-solarized 'dark)
-
+;;(color-theme-sanityinc-solarized 'dark)
+(color-theme-midnight)
 
 (windmove-default-keybindings 'meta)
 
@@ -472,6 +470,26 @@
     (let ( kill-buffer-query-functions '() )
       (if (get-buffer "*Python*") (kill-buffer "*Python*") )
       (if (get-buffer "*Jython*") (kill-buffer "*Jython*") ))))
+
+(defun reboot-nodejs ()
+  "Reboot node."
+  (interactive)
+  (save-current-buffer
+    (let (kill-buffer-query-functions '())
+      (if (get-buffer "*nodejs*")
+          (kill-buffer "*nodejs*")))))
+    
+  ;;   (sit-for 1)
+  ;;   (nodejs-repl-switch-to-repl)))
+
+  ;; (save-current-buffer
+  ;;   (sit-for 1)
+  ;;   (nodejs-repl-send-buffer)))
+
+(defun temp ()
+  (interactive)
+  (let* (proc (nodejs-repl--get-or-create-process))
+    (message "proc is %s" proc)))
 
 (defun unfill-paragraph (&optional region)
   "Takes a multi-line paragraph ( REGION ) and make it into a single line of text."
@@ -556,7 +574,7 @@
 (global-set-key (kbd "C-c r") 'revert-buffer-with-prejudice)
 
 (require 'flycheck-pyflakes)
-(add-hook 'python-mode-hook 'flycheck-mode)
+(add-hooka 'python-mode-hook 'flycheck-mode)
 
 (autoload 'pylint "pylint")
 (add-hook 'python-mode-hook 'pylint-add-menu-items)
@@ -702,7 +720,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
    (s-join "")
    (s-reverse)))
 
-;; (commify 463766473674326) "463,766,473,674,326"
+;; (commify 463766473674326)
   
 (defun parse-epoch-time-at-point ()
   (interactive)
@@ -710,9 +728,9 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 (global-set-key (kbd "C-c C-p C-t") 'parse-epoch-time-at-point)
 
-;(parse-epoch-time "1482672627.025747002" ) 
-;(parse-epoch-time "1482672627025.747023" ) 
-;(parse-epoch-time "1482672627025747.032" ) 
+;(parse-epoch-time "1482672627.025747002" )
+;(parse-epoch-time "1482672627025.747023" )
+;(parse-epoch-time "1482672627025747.032" )
 ;(parse-epoch-time "1482672627025747023"  )
 
 
@@ -759,15 +777,15 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
   '(progn
      (define-key js2-mode-map (kbd "C-c C-r") 'nodejs-repl-send-region)
      (define-key js2-mode-map (kbd "C-c C-c") 'nodejs-repl-send-buffer)
+     (define-key js2-mode-map [f8] 'reboot-nodejs)
      ))
-
-
-     (add-hook 'js-mode-hook
+     (add-hook 'js2-mode-hook
                (lambda ()
-                 (define-key js-mode-map (kbd "C-x C-e") 'nodejs-repl-send-last-sexp)
-                 (define-key js-mode-map (kbd "C-c C-r") 'nodejs-repl-send-region)
-                 (define-key js-mode-map (kbd "C-c C-l") 'nodejs-repl-load-file)
-                 (define-key js-mode-map (kbd "C-c C-z") 'nodejs-repl-switch-to-repl)))
+                 (define-key js2-mode-map (kbd "C-x C-e") 'nodejs-repl-send-last-expression)
+                 (define-key js2-mode-map (kbd "C-c C-r") 'nodejs-repl-send-region)
+                 (define-key js2-mode-map (kbd "C-c C-l") 'nodejs-repl-load-file)
+                 (define-key js2-mode-map (kbd "C-c C-p") 'nodejs-repl)
+                 (define-key js2-mode-map (kbd "C-c C-z") 'nodejs-repl-switch-to-repl)))
 
 ;; Add a cc-mode style for editing LLVM C and C++ code
 (c-add-style "llvm.org"
