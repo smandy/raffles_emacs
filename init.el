@@ -8,12 +8,12 @@
 
 ;; (set-frame-font "Fixed 15")
 ;; (set-frame-font "Liberation Mono 14")
-;; (set-frame-font "Ubuntu Mono 24")
-;; (set-frame-font "DejaVu Sans Mono 16")
-;; (set-frame-font "Hack 15")
+;; (set-frame-font "Ubuntu Mono 20")
+;; (sent-frame-font "DejaVu Sans Mono 16")
+;; (set-frame-font "Hack 20")
 ;; ΠπðÐþÐσΣ Ж ж Unicode test!!
 
-;; (set-frame-font "Dina 12")
+;; (Nset-frame-font "Dina 12")
 ;; (set-frame-font "Dina 10")
 ;; (set-frame-font "Dina 13")
 
@@ -31,14 +31,14 @@
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1" )
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 
+
 ;;(set-frame-font "Liberation Mono 14")
 
 ;; (setq helm-echo-input-in-header-line nil)
 ;; Nice runing from Mac. (set-fraxme-font "-misc-fiaxed-medium-r-normal--10-*-75-75-c-60-iso8859-7
-;; (set-frame-font "Ubuntu Mono 16")
+;; (set-frame-font "Ubuntu Mono 24")
 ;; (set-frame-font "Fixed 12")
 
-;;(set-frame-font "-misc-fixed-medium-r-semicondensed--13-*-75-75-timeo-c-60-iso8859-16" )
 ;;(set-frame-font "-misc-fixed-medium-r-normal--14-*-75-75-c-70-iso8859-5" )
 
 ;; (set-frame-font "-misc-fixed-medium-r-normal--30-*-75-75-c-90-iso8859-8" )
@@ -306,7 +306,6 @@
  '(clang-format-executable "clang-format")
  '(company-clang-arguments nil)
  '(compilation-message-face (quote default))
- '(custom-enabled-themes (quote (sanityinc-solarized-dark)))
  '(custom-safe-themes
    (quote
     ("7bc31a546e510e6bde482ebca992e293a54cb075a0cbfb384bf2bf5357d4dee3" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
@@ -574,7 +573,7 @@
 (global-set-key (kbd "C-c r") 'revert-buffer-with-prejudice)
 
 (require 'flycheck-pyflakes)
-(add-hooka 'python-mode-hook 'flycheck-mode)
+(add-hook 'python-mode-hook 'flycheck-mode)
 
 (autoload 'pylint "pylint")
 (add-hook 'python-mode-hook 'pylint-add-menu-items)
@@ -839,3 +838,4 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 
 
+(put 'narrow-to-region 'disabled nil)

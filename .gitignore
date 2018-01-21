@@ -25,3 +25,5 @@ semanticdb/**
 /projectile.cache
 session**
 games/**
+image-dired/**
+url/**
