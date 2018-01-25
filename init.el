@@ -8,7 +8,7 @@
 
 ;; (set-frame-font "Fixed 15")
 ;; (set-frame-font "Liberation Mono 14")
-;; (set-frame-font "Ubuntu Mono 20")
+;; (set-frame-font "Ubuntu Mono 14")
 ;; (sent-frame-font "DejaVu Sans Mono 16")
 ;; (set-frame-font "Hack 20")
 ;; ΠπðÐþÐσΣ Ж ж Unicode test!!
@@ -468,7 +468,11 @@
                                         ; Disable querying while we delete.|
     (let ( kill-buffer-query-functions '() )
       (if (get-buffer "*Python*") (kill-buffer "*Python*") )
-      (if (get-buffer "*Jython*") (kill-buffer "*Jython*") ))))
+      (if (get-buffer "*Jython*") (kill-buffer "*Jython*") ))
+    (run-python)
+    (python-shell-switch-to-shell)
+    )
+  )
 
 (defun reboot-nodejs ()
   "Reboot node."
@@ -561,12 +565,16 @@
                               
                               ("p" "Performance" entry (file+headline "~/Dropbox/gtd/gtd.org" "Performance")
                                "* TODO %?\n")
+
+                              ("c" "Correspondance" entry (file+datetree "~/Dropbox/gtd/corresp.org")
+                               "* %U %?")
                               
                               ("s" "Schedule" entry (file+headline "~/Dropbox/gtd/gtd.org" "Schedule")
-                               "* %?\n")
+                               "* TODO %?\n")
                               
                               ("j" "Journal" entry (file+datetree "~/Dropbox/gtd/journal.org")
-                               "* %U %?")))
+                               "* %U %?")
+                              ))
 
 
 (global-set-key (kbd "C-c s") 'ispell)
