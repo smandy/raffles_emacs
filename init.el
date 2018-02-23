@@ -5,18 +5,23 @@
 ;; Raffles laptop Emacs config
 
 ;;; Code:
-
-;; (set-frame-font "Fixed 15")
-;; (set-frame-font "Liberation Mono 14")
-;; (set-frame-font "Ubuntu Mono 14")
-;; (sent-frame-font "DejaVu Sans Mono 16")
-;; (set-frame-font "Hack 20")
+(set-frame-font "Inconsolata 15")
+;; (set-frame-font "Courier 24")
+;; (set-frame-font "Andale Mono 20")
+;; (set-frame-font "Liberation Mono 20")
+;; (set-frame-font "Ubuntu Mono 13")
+;; (set-frame-font "DejaVu Sans Mono 14")
+;; (set-frame-font "Hack 21")
+;; (set-frame-font "Consolas 40")
+;; (set-frame-font "Inconsolata 20")
 ;; ΠπðÐþÐσΣ Ж ж Unicode test!!
-
-;; (Nset-frame-font "Dina 12")
+;;(set-frame-font "Inconsolata 20")
+;; (set-frame-font "Courier New Bold 12")
+;; (set-frame-font "Courier New 20")
+;; (set-frame-font "Dina 12")
 ;; (set-frame-font "Dina 10")
 ;; (set-frame-font "Dina 13")
-
+;; (set-frame-font "Dina 20")
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-12-*-*-*-c-60-iso10646-1" )
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-14-*-*-*-c-80-iso10646-1" )
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1" )
@@ -31,21 +36,20 @@
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1" )
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 
-
 ;;(set-frame-font "Liberation Mono 14")
 
 ;; (setq helm-echo-input-in-header-line nil)
 ;; Nice runing from Mac. (set-fraxme-font "-misc-fiaxed-medium-r-normal--10-*-75-75-c-60-iso8859-7
-;; (set-frame-font "Ubuntu Mono 24")
-;; (set-frame-font "Fixed 12")
+;; (set-frame-font "Ubuntu Mono 13")
+;; (set-frame-font "Misc Fixed 24")
 
 ;;(set-frame-font "-misc-fixed-medium-r-normal--14-*-75-75-c-70-iso8859-5" )
 
 ;; (set-frame-font "-misc-fixed-medium-r-normal--30-*-75-75-c-90-iso8859-8" )
 ;; (set-frame-font "-misc-fixed-medium-r-normal--12-*-75-75-c-90-iso8859-8" )
 ;; (set-frame-font "Misc Fixed 12") 
-
-(set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
+;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
+(set-frame-font "Inconsolata 30")
 (require 'compile)
 (require 'package)
 
@@ -58,8 +62,10 @@
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
 (autoload 'jsx-mode "jsx-mode" "JSX mode" t)
 
+
+
 (eval-after-load "org-present"
-  '(progn
+  '(prognn
      (add-hook 'org-present-mode-hook
                (lambda ()
                  (org-present-big)
@@ -181,6 +187,10 @@
 ;;(require 'flycheck-kotlin)
 ;;(add-hook 'kotlin-mode-hook 'flycheck-mode)o
 
+(add-hook
+ 'd-mode-hook
+ (lambda () 
+   (define-key d-mode-map (kbd "<f9>") 'dfmt-buffer)))
 
 (defun compile-agora-debug ()
   (interactive)
@@ -270,7 +280,7 @@
 
 (require 'dash)
 (require 's)
-(require 'multiple-cursors)
+(require 'multiple-cursors)-
 
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
@@ -288,11 +298,25 @@
 ;;(require 'haskell-process)
 ;;(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 
+;; Set to the name of the file where new notes will be stored
+(setq org-mobile-inbox-for-pull "~/Dropbox/gtd/flagged.org")
+;; Set to <your Dropbox root directory>/MobileOrg.
+(setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
+
 (projectile-mode)
 (helm-projectile-on)
 ;; '(flycheck-clang-language-standard "c++14")
 ;; '(flycheck-gcc-language-standard "c++14")
 
+(setq display-time-world-list '(
+                                ("Australia/Perth" "Perth")
+                                ("Asia/Dubai" "Dubai")
+                                ("Europe/London" "London")
+                                ("Europe/Paris" "Paris")
+                                ("Europe/Berlin" "Berlin")
+                                ("America/New_York" "New York")
+                                ("America/Chicago" "Chicago")
+                                ))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -308,13 +332,14 @@
  '(compilation-message-face (quote default))
  '(custom-safe-themes
    (quote
-    ("7bc31a546e510e6bde482ebca992e293a54cb075a0cbfb384bf2bf5357d4dee3" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
+    ("3d5307e5d6eb221ce17b0c952aa4cf65dbb3fa4a360e12a71e03aab78e0176c5" "7bc31a546e510e6bde482ebca992e293a54cb075a0cbfb384bf2bf5357d4dee3" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
  '(display-time-world-list
    (quote
-    (("America/Chicago" "Chicago")
-     ("America/New_York" "New York")
+    (("America/New_York" "New York")
      ("Europe/London" "London")
-     ("Australia/Perth" "Perth"))))
+     ("Asia/Hong_Kong" "Hong Kong")
+     ("Australia/Perth" "Perth")
+     ("Europe/Dublin" "Dublin"))))
  '(flycheck-c/c++-clang-executable "clang-5.0")
  '(flycheck-clang-args (quote ("-xc++")))
  '(flycheck-clang-language-standard "c++14")
@@ -362,16 +387,18 @@
  '(magit-diff-use-overlays nil)
  '(midnight-mode nil)
  '(nyan-mode t)
- '(org-agenda-files (quote ("~/Dropbox/gtd")))
+ '(org-agenda-files (quote ("/home/andy/Dropbox/gtd")))
+ '(org-confirm-babel-evaluate nil)
  '(org-directory "~/Dropbox/gtd")
  '(org-format-latex-options
    (quote
-    (:foreground default :background default :scale 2.702 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+    (:foreground default :background default :scale 3.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
                  ("begin" "$1" "$" "$$" "\\(" "\\["))))
  '(org-hide-leading-stars t)
+ '(org-log-done (quote time))
  '(package-selected-packages
    (quote
-    (indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nodejs-repl nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
+    (elixir-mode dfmt ubuntu-theme f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
  '(projectile-tags-backend (quote ggtags))
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--simple-prompt --pylab")
@@ -381,7 +408,7 @@
      (test-case-name . twisted\.internet\.test\.test_inotify)
      (test-case-name . twisted\.internet\.test\.test_core))))
  '(show-paren-mode t)
- '(sql-postgres-login-paramsupo
+ '(sql-postgres-login-params
    (quote
     ((user :default "andy")
      server
@@ -396,25 +423,29 @@
   )
 
 (global-set-key [f1]  'wg-switch-to-workgroup)
-(global-set-key [f2]  'ace-jump-mode)
+(global-set-key [f2]  'helm-world-time)
 (global-set-key [f3]  'helm-cscope-find-global-definition)
 (global-set-key [f4]  'magit-status)
 (global-set-key [f6]  'helm-man-woman)
 (global-set-key [f7]  'compile)
 (global-set-key [f8]  'reboot-python)
 (global-set-key [f9]  'py-execute-region)
-;;(global-set-key [f10] 'switch-to-shell)
+
+(global-set-key [f9]  'org-table-recalculate)
+
+;; (global-set-key [f10] 'switch-to-shell)
 (global-set-key [f10] 'clang-format-buffer)
 (global-set-key [f12] 'ace-jump-mode)
 (global-set-key [f1] 'wg-switch-to-workgroup)
 (global-set-key (kbd "C-c o") 'ff-find-other-file)
 (global-set-key (kbd "C-c f") 'find-file-at-point)
-
 (global-set-key (kbd "C-M-g") 'dumb-jump-go)
 
-(nyan-mode)
 
-(message "goo")
+
+
+
+(nyan-mode)
 
 (defun dump-fonts ()
   (interactive)
@@ -644,7 +675,7 @@
 
 (global-set-key (kbd "C-c [") 'square-bracket)
 ;;(global-set-key (kbd "C-c C-p C-p") 'do-list)
-
+1
 (defun parse-epoch-time (s)
   "Parse symbol into an epoch time. Use heuristics to determine if dealing
 with micros, seconds, nanos etc. Display result using 'message' if successful"
@@ -683,7 +714,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                         ("responseType" . 1 )
                         ("side"         . 1 )
                         ("int32"        . 4 ))))
-      (message "%s" (re-search-backward "<message") )
+      (message "%s" (re-search-backward "<message"))
       (beginning-of-line)
       (forward-line)
       (while (not (re-search-forward "</message>" (line-end-position) t) )
@@ -728,20 +759,39 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
    (s-reverse)))
 
 ;; (commify 463766473674326)
-  
+
 (defun parse-epoch-time-at-point ()
   (interactive)
   (parse-epoch-time (thing-at-point 'symbol)))
 
 (global-set-key (kbd "C-c C-p C-t") 'parse-epoch-time-at-point)
 
-;(parse-epoch-time "1482672627.025747002" )
-;(parse-epoch-time "1482672627025.747023" )
-;(parse-epoch-time "1482672627025747.032" )
-;(parse-epoch-time "1482672627025747023"  )
+(setq display-time-world-list '(("America/New_York" "New York")
+                                ("Europe/London" "London")
+                                ("Asia/Hong_Kong" "Hong Kong")
+                                ("Australia/Perth" "Perth")))
+(require 'time)
 
+; (parse-epoch-time "1482672627.025747002" )  
+; (parse-epoch-time "1482672627025.747023" ) 
+; (parse-epoch-time "1482672627025747.032" ) 
+; (parse-epoch-time "1482672627025747023"  ) 
 
-; (setq python-shell-exec-path '( "/home/andy/anaconda3/bin"))
+;; (setq python-shell-exec-path '( "/home/andy/anaconda3/bin"))              ;; (seconds-to-time 1482672627.025747002) 
+;; Execute eother of these progn clauses to switch between python2/3
+
+(if nil
+    (progn
+      (set-variable 'python-shell-interpreter "ipython2")
+      (set-variable 'flycheck-python-pylint-executable "pylint2")
+      (set-variable 'flycheck-python-pyflakes-executable "pyflakes-python2"))
+  )
+
+(if nil
+    (progn (set-variable 'python-shell-interpreter "ipython")
+           (set-variable 'flycheck-python-pylint-executable "pylint")
+           (set-variable 'flycheck-python-pyflakes-executable "pyflakes"))
+  )
 
 (defun daysBetween (s f)
   (let* ((seconds-per-day ( * 24 60 60 ))
@@ -754,14 +804,15 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
          (st (funcall conv s))
          (ft (funcall conv f)))
     (/ (time-to-seconds (time-subtract ft st)) seconds-per-day)))
-;; (daysBetween "1973-05-09" "2017-10-12") 
+;; (daysBetween "1973-05-09" "2018-02-11")
+
+
  
 (eval-after-load 'company
   '(progn
      (define-key company-mode-map (kbd "C-:") 'helm-company)
      (define-key company-mode-map (kbd "M-/") 'company-complete)
      (define-key company-active-map (kbd "C-:") 'helm-company)))
-
 
 (add-to-list 'exec-path "/home/andy/bin:/home/andy/.sdkman/candidates/leiningen/current/bin")
 (add-to-list 'exec-path "/home/andy/.sdkman/candidates/leiningen/current/bin")
@@ -815,10 +866,9 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 		   (c-set-style "llvm.org"))))))
 
 
-     (require 'haskell-interactive-mode)
-     (require 'haskell-process)
-     (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-
+(require 'haskell-interactive-mode)
+(require 'haskell-process)
+(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 
 (defun end-of-sml (a b &rest xs)
   "A Im interactive."

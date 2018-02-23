@@ -13,3 +13,11 @@ df .
 ld -l
 ls -lg
 pwd
+ps a-uxw
+ps -auxw
+pwd
+ls -gl
+curl http://www.pharmacyboardwa.com.au/?n=Main.Register -o foo.csv
+cat foo.csv 
+cat foo.csv >>> #<foo.csv>
+cat foo.csv >>> #<foo2.csv>

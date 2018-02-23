@@ -15,6 +15,10 @@
 
 (setq mc/cmds-to-run-once
       '(
+        c-electric-lt-gt
+        c-electric-paren
+        goto-line
+        mouse-appearance-menu
         mouse-buffer-menu
         mouse-set-region
         ))
