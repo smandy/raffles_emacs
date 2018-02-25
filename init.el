@@ -685,7 +685,7 @@
 
 (global-set-key (kbd "C-c [") 'square-bracket)
 ;;(global-set-key (kbd "C-c C-p C-p") 'do-list)
-1
+
 (defun parse-epoch-time (s)
   "Parse symbol into an epoch time. Use heuristics to determine if dealing
 with micros, seconds, nanos etc. Display result using 'message' if successful"
