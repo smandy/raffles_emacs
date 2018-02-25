@@ -5,14 +5,19 @@
 ;; Raffles laptop Emacs config
 
 ;;; Code:
-(set-frame-font "Inconsolata 15")
+;; Andale mono seems to switch on antialiasing *after* a bitmap font has been chosen
+;; Seems to be stateful. i.e. if you select Tamsyn (bitmapped), then Inconsolata, antialiasing will be off
+;; However go Andale->Inconsolata and all will be well.
+
+;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
+(set-frame-font "Inconsolata 18")
 ;; (set-frame-font "Courier 24")
 ;; (set-frame-font "Andale Mono 20")
 ;; (set-frame-font "Liberation Mono 20")
-;; (set-frame-font "Ubuntu Mono 13")
-;; (set-frame-font "DejaVu Sans Mono 14")
-;; (set-frame-font "Hack 21")
-;; (set-frame-font "Consolas 40")
+;; (set-frame-font "Ubuntu Mono 20")
+;; (set-frame-font "DejaVu Sans Mono 15")
+;; (set-frame-font "Hack 20")
+;; (set-frame-font "Consolas 18")
 ;; (set-frame-font "Inconsolata 20")
 ;; ΠπðÐþÐσΣ Ж ж Unicode test!!
 ;;(set-frame-font "Inconsolata 20")
@@ -38,10 +43,13 @@
 
 ;;(set-frame-font "Liberation Mono 14")
 
-;; (setq helm-echo-input-in-header-line nil)
 ;; Nice runing from Mac. (set-fraxme-font "-misc-fiaxed-medium-r-normal--10-*-75-75-c-60-iso8859-7
-;; (set-frame-font "Ubuntu Mono 13")
-;; (set-frame-font "Misc Fixed 24")
+;; (set-frame-font "Ubuntu Mono 20")
+
+;; (set-frame-font "Misc Fixed 8")
+;; (set-frame-font "Misc Fixed 10")
+;; (set-frame-font "Misc Fixed 11")
+;; (set-frame-font "Misc Fixed 13")
 
 ;;(set-frame-font "-misc-fixed-medium-r-normal--14-*-75-75-c-70-iso8859-5" )
 
@@ -65,7 +73,7 @@
 
 
 (eval-after-load "org-present"
-  '(prognn
+  '(progn
      (add-hook 'org-present-mode-hook
                (lambda ()
                  (org-present-big)
@@ -330,6 +338,7 @@
  '(clang-format-executable "clang-format")
  '(company-clang-arguments nil)
  '(compilation-message-face (quote default))
+ '(custom-enabled-themes (quote (sanityinc-solarized-dark)))
  '(custom-safe-themes
    (quote
     ("3d5307e5d6eb221ce17b0c952aa4cf65dbb3fa4a360e12a71e03aab78e0176c5" "7bc31a546e510e6bde482ebca992e293a54cb075a0cbfb384bf2bf5357d4dee3" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
@@ -350,6 +359,7 @@
  '(helm-M-x-fuzzy-match t)
  '(helm-display-buffer-default-size 100)
  '(helm-locate-project-list (quote ("/home/andy/repos/dev")))
+ '(helm-org-rifle-show-path t)
  '(ibuffer-saved-filter-groups (quote (("mydefs" ("agora+dev" (used-mode . c++-mode))))))
  '(ibuffer-saved-filters
    (quote
@@ -398,7 +408,7 @@
  '(org-log-done (quote time))
  '(package-selected-packages
    (quote
-    (elixir-mode dfmt ubuntu-theme f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
+    (ace-mc helm-org-rifle elixir-mode dfmt ubuntu-theme f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
  '(projectile-tags-backend (quote ggtags))
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--simple-prompt --pylab")
@@ -408,7 +418,7 @@
      (test-case-name . twisted\.internet\.test\.test_inotify)
      (test-case-name . twisted\.internet\.test\.test_core))))
  '(show-paren-mode t)
- '(sql-postgres-login-params
+ '(sql-postgres-login-paramsupo
    (quote
     ((user :default "andy")
      server
@@ -758,7 +768,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
    (s-join "")
    (s-reverse)))
 
-;; (commify 463766473674326)
+;; (commify 463766473674326) "463,766,473,674,326"
 
 (defun parse-epoch-time-at-point ()
   (interactive)
