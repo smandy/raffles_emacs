@@ -21,3 +21,7 @@ curl http://www.pharmacyboardwa.com.au/?n=Main.Register -o foo.csv
 cat foo.csv 
 cat foo.csv >>> #<foo.csv>
 cat foo.csv >>> #<foo2.csv>
+pwd
+cd ~
+ls -gl
+pwd

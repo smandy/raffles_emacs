@@ -2,7 +2,17 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("time_tracking_app"
+(("array.d"
+ (filename . "/usr/include/dlang/dmd/std/array.d")
+ (front-context-string . "// Written in th")
+ (rear-context-string)
+ (position . 1))
+("MobileOrg"
+ (filename . "~/Dropbox/Apps/MobileOrg/")
+ (front-context-string . "checksums.dat\n  ")
+ (rear-context-string . "03 Feb 26 11:35 ")
+ (position . 182))
+("time_tracking_app"
  (filename . "~/fullstack-react-book-r35a-code/fullstack-react-code/time_tracking_app/")
  (front-context-string . "data.json\n  -rw-")
  (rear-context-string . "73 Dec 24 16:01 ")
@@ -113,12 +123,12 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** TODO Get some")
- (rear-context-string . "-10-19 Fri +1y>\n")
- (position . 17735))
+ (filename . "~/Dropbox/gtd/journal.org")
+ (front-context-string . "**** [2018-03-21")
+ (rear-context-string . "ry 2 or 3 mins.\n")
+ (position . 154638))
 ("phobos"
- (filename . "/usr/include/dmd/phobos/std/")
+ (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")
  (rear-context-string . "96 Feb  1 03:35 ")
  (position . 175))

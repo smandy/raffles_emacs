@@ -10,26 +10,28 @@
 ;; However go Andale->Inconsolata and all will be well.
 
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
-(set-frame-font "Inconsolata 18")
-;; (set-frame-font "Courier 24")
-;; (set-frame-font "Andale Mono 20")
-;; (set-frame-font "Liberation Mono 20")
-;; (set-frame-font "Ubuntu Mono 20")
-;; (set-frame-font "DejaVu Sans Mono 15")
-;; (set-frame-font "Hack 20")
-;; (set-frame-font "Consolas 18")
-;; (set-frame-font "Inconsolata 20")
+
+;; (set-frame-font "Meslo LG L 13") 
+;; (set-frame-font "Hack 12")
+;; (set-frame-font "Andale Mono 13")
+;; (set-frame-font "Liberation Mono 13")
+;; (set-frame-font "Ubuntu Mono 13")
+
+;; (set-frame-font "Ubuntu Condensed 20")
+;; (set-frame-font "DejaVu Sans Mono 13")
+;; (set-frame-font "Consolas 14")
+;; (set-frame-font "Inconsolata 20") ba
 ;; ΠπðÐþÐσΣ Ж ж Unicode test!!
-;;(set-frame-font "Inconsolata 20")
-;; (set-frame-font "Courier New Bold 12")
-;; (set-frame-font "Courier New 20")
-;; (set-frame-font "Dina 12")
-;; (set-frame-font "Dina 10")
-;; (set-frame-font "Dina 13")
-;; (set-frame-font "Dina 20")
+;; (set-frame-font "Courier New Bold 50")
+;; (set-frame-font "Courier New 50")
+
+;; (set-frame-font "-unknown-Dina-normal-normal-normal-*-10-*-*-*-c-*-iso10646-1" )
+;; (set-frame-font "-unknown-Dina-normal-normal-normal-*-12-*-*-*-c-*-iso10646-1" )
+;; (set-frame-font "-unknown-Dina-normal-normal-normal-*-13-*-*-*-c-*-iso10646-1" )
+
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-12-*-*-*-c-60-iso10646-1" )
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-14-*-*-*-c-80-iso10646-1" )
-;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1" )
+;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-16-*-*-n*-c-80-iso10646-1" )
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-18-*-*-*-c-100-iso10646-1" )
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-22-*-*-*-c-110-iso10646-1" )
@@ -41,7 +43,7 @@
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1" )
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 
-;;(set-frame-font "Liberation Mono 14")
+;; (set-frame-font "Liberation Mono 14")
 
 ;; Nice runing from Mac. (set-fraxme-font "-misc-fiaxed-medium-r-normal--10-*-75-75-c-60-iso8859-7
 ;; (set-frame-font "Ubuntu Mono 20")
@@ -50,14 +52,14 @@
 ;; (set-frame-font "Misc Fixed 10")
 ;; (set-frame-font "Misc Fixed 11")
 ;; (set-frame-font "Misc Fixed 13")
-
-;;(set-frame-font "-misc-fixed-medium-r-normal--14-*-75-75-c-70-iso8859-5" )
+;; (set-frame-font "Misc Fixed 14")
+;; (set-frame-font "-misc-fixed-medium-r-normal--14-*-75-75-c-70-iso8859-5" )
 
 ;; (set-frame-font "-misc-fixed-medium-r-normal--30-*-75-75-c-90-iso8859-8" )
 ;; (set-frame-font "-misc-fixed-medium-r-normal--12-*-75-75-c-90-iso8859-8" )
 ;; (set-frame-font "Misc Fixed 12") 
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
-(set-frame-font "Inconsolata 30")
+;; (set-frame-font "Inconsolata 18")
 (require 'compile)
 (require 'package)
 
@@ -69,8 +71,6 @@
 
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
 (autoload 'jsx-mode "jsx-mode" "JSX mode" t)
-
-
 
 (eval-after-load "org-present"
   '(progn
@@ -193,7 +193,10 @@
     (compile cmd)))
 
 ;;(require 'flycheck-kotlin)
-;;(add-hook 'kotlin-mode-hook 'flycheck-mode)o
+;;(add-hook 'kotlin-mode-hook 'flycheck-mode)
+
+;; (set-frame-font "Liberation Mono 12")
+;; (set-frame-font "Ubuntu Mono 14")
 
 (add-hook
  'd-mode-hook
@@ -288,7 +291,7 @@
 
 (require 'dash)
 (require 's)
-(require 'multiple-cursors)-
+(require 'multiple-cursors)
 
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
@@ -316,16 +319,6 @@
 ;; '(flycheck-clang-language-standard "c++14")
 ;; '(flycheck-gcc-language-standard "c++14")
 
-(setq display-time-world-list '(
-                                ("Australia/Perth" "Perth")
-                                ("Asia/Dubai" "Dubai")
-                                ("Europe/London" "London")
-                                ("Europe/Paris" "Paris")
-                                ("Europe/Berlin" "Berlin")
-                                ("America/New_York" "New York")
-                                ("America/Chicago" "Chicago")
-                                ))
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -341,14 +334,16 @@
  '(custom-enabled-themes (quote (sanityinc-solarized-dark)))
  '(custom-safe-themes
    (quote
-    ("3d5307e5d6eb221ce17b0c952aa4cf65dbb3fa4a360e12a71e03aab78e0176c5" "7bc31a546e510e6bde482ebca992e293a54cb075a0cbfb384bf2bf5357d4dee3" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
+    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3d5307e5d6eb221ce17b0c952aa4cf65dbb3fa4a360e12a71e03aab78e0176c5" "7bc31a546e510e6bde482ebca992e293a54cb075a0cbfb384bf2bf5357d4dee3" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
  '(display-time-world-list
    (quote
-    (("America/New_York" "New York")
+    (("Australia/Perth" "Perth")
+     ("Asia/Dubai" "Dubai")
      ("Europe/London" "London")
-     ("Asia/Hong_Kong" "Hong Kong")
-     ("Australia/Perth" "Perth")
-     ("Europe/Dublin" "Dublin"))))
+     ("Europe/Paris" "Paris")
+     ("Europe/Berlin" "Berlin")
+     ("America/New_York" "New York")
+     ("America/Chicago" "Chicago"))))
  '(flycheck-c/c++-clang-executable "clang-5.0")
  '(flycheck-clang-args (quote ("-xc++")))
  '(flycheck-clang-language-standard "c++14")
@@ -406,9 +401,10 @@
                  ("begin" "$1" "$" "$$" "\\(" "\\["))))
  '(org-hide-leading-stars t)
  '(org-log-done (quote time))
+ '(org-preview-latex-image-directory "/var/tmp/ltximg/")
  '(package-selected-packages
    (quote
-    (ace-mc helm-org-rifle elixir-mode dfmt ubuntu-theme f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
+    (meson-mode ace-mc helm-org-rifle elixir-mode dfmt ubuntu-theme f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
  '(projectile-tags-backend (quote ggtags))
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--simple-prompt --pylab")
@@ -459,8 +455,7 @@
 
 (defun dump-fonts ()
   (interactive)
-  (let* ( 
-         (bufferName (format "fonts_%s.el" (system-name) ) ) 
+  (let* ((bufferName (format "fonts_%s.el" (system-name) ) ) 
          (fileName (format "%s/%s" (getenv "HOME")  bufferName) ))
     (switch-to-buffer bufferName)
     (erase-buffer)
@@ -755,6 +750,13 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 (global-set-key [f3] 'parse-sbe)
 
+(defun pipe (&rest args) (progn
+                           (message "args=%s" args)
+                           args
+                           ))
+
+(pipe 1 2 3)
+
 (defun commify (s)
   (->>
    s
@@ -768,7 +770,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
    (s-join "")
    (s-reverse)))
 
-;; (commify 463766473674326) "463,766,473,674,326"
+;; (commify 463766473674326)  "463,766,473,674,326" 
 
 (defun parse-epoch-time-at-point ()
   (interactive)
@@ -855,6 +857,9 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                  (define-key js2-mode-map (kbd "C-c C-p") 'nodejs-repl)
                  (define-key js2-mode-map (kbd "C-c C-z") 'nodejs-repl-switch-to-repl)))
 
+
+(require 'ob-python)
+
 ;; Add a cc-mode style for editing LLVM C and C++ code
 (c-add-style "llvm.org"
              '("gnu"
@@ -903,7 +908,8 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 (provide 'init.el)
 ;;; init.el ends here
-
+ 
 
 
 (put 'narrow-to-region 'disabled nil)
+(put 'narrow-to-page 'disabled nil)
