@@ -860,6 +860,12 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 (require 'ob-python)
 
+;; Want to have inline images displayed after executin a block of python code
+(advice-add 'org-babel-execute-src-block :after (lambda (&rest args)
+                                                  (message "Display images %s" (length args))
+                                                  (org-display-inline-images)))
+
+
 ;; Add a cc-mode style for editing LLVM C and C++ code
 (c-add-style "llvm.org"
              '("gnu"
