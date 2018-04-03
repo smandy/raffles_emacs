@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("array.d"
+(("i3config"
+ (filename . "~/.config/i3/config")
+ (front-context-string . "# This file has ")
+ (rear-context-string)
+ (position . 1))
+("array.d"
  (filename . "/usr/include/dlang/dmd/std/array.d")
  (front-context-string . "// Written in th")
  (rear-context-string)
@@ -30,8 +35,8 @@
  (handler . helm-ff-bookmark-jump))
 ("cpp"
  (filename . "~/repos/dev/cpp/")
- (front-context-string . "abbrev\n  -rw-rw-")
- (rear-context-string . "00 May  2 01:52 ")
+ (front-context-string . "abbrev\n  -rw-r--")
+ (rear-context-string . "28 Feb 22 07:26 ")
  (position . 230))
 ("andy@skye"
  (filename . "/scp:andy@skye:/Users/andy/")
@@ -124,9 +129,9 @@
  (position . 1))
 ("org-capture-last-stored"
  (filename . "~/Dropbox/gtd/journal.org")
- (front-context-string . "**** [2018-03-21")
- (rear-context-string . "ry 2 or 3 mins.\n")
- (position . 154638))
+ (front-context-string . "**** [2018-04-02")
+ (rear-context-string . "o be honest :-(\n")
+ (position . 163533))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")
