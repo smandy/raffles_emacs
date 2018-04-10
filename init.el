@@ -13,14 +13,14 @@
 
 ;; (set-frame-font "Meslo LG L 13") 
 ;; (set-frame-font "Hack 11")
-;; (set-frame-font "Andale Mono 20")
+
 ;; (set-frame-font "Liberation Mono 18")
 ;; (set-frame-font "Ubuntu Mono 13")
 
 ;; (set-frame-font "Ubuntu Condensed 13")
 ;; (set-frame-font "DejaVu Sans Mono 13")
 ;; (set-frame-font "Consolas 20")
-;; (set-frame-font "Inconsolata 13") 
+;; (set-frame-font "Inconsolata 20") 
 ;; ΠπðÐþÐσΣ Ж ж Unicode test!!
 ;; (set-frame-font "Courier New Bold 50")
 ;; (set-frame-font "Courier New 50")
@@ -31,12 +31,12 @@
 
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-12-*-*-*-c-60-iso10646-1")
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-14-*-*-*-c-80-iso10646-1")
-;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-16-*-*-n*-c-80-iso10646-1")
+;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1")
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-18-*-*-*-c-100-iso10646-1")
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1")
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-22-*-*-*-c-110-iso10646-1")
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-24-*-*-*-c-120-iso10646-1")
-;; (set-frame-font "-xos4-xos4 Terminus-ormal-normal-normal-*-28-*-*-*-c-140-iso10646-1")
+;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-28-*-*-*-c-140-iso10646-1")
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-32-*-*-*-c-160-iso10646-1")
 
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-15-*-*-*-c-80-iso10646-1")
@@ -45,7 +45,6 @@
 
 ;; (set-frame-font "Liberation Mono 14")
 
-;; Nice runing from Mac. (set-fraxme-font "-misc-fiaxed-medium-r-normal--10-*-75-75-c-60-iso8859-7
 ;; (set-frame-font "Ubuntu Mono 20")
 
 ;; (set-frame-font "Misc Fixed 8")
@@ -59,9 +58,10 @@
 ;; (set-frame-font "-misc-fixed-medium-r-normal--12-*-75-75-c-90-iso8859-8")
 ;; (set-frame-font "Misc Fixed 12") 
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
-;; (set-frame-font "Inconsolata 18")
+;; (set-frame-font "Inconsolata 15")
+;; (set-frame-font "Andale Mono 20")
 
-(set-frame-font "Andale Mono 15")
+(set-frame-font "Andale Mono 12")
 
 ;; Good for coding
 (set-frame-font "Hack 12")
@@ -755,12 +755,6 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 (global-set-key [f3] 'parse-sbe)
 
-(defun pipe (&rest args) (progn
-                           (message "args=%s" args)
-                           args))
-
-(pipe 1 2 3)
-
 (defun commify (s)
   (->>
    s
@@ -800,14 +794,12 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
     (progn
       (set-variable 'python-shell-interpreter "ipython2")
       (set-variable 'flycheck-python-pylint-executable "pylint2")
-      (set-variable 'flycheck-python-pyflakes-executable "pyflakes-python2"))
-  )
+      (set-variable 'flycheck-python-pyflakes-executable "pyflakes-python2")))
 
 (if nil
     (progn (set-variable 'python-shell-interpreter "ipython")
            (set-variable 'flycheck-python-pylint-executable "pylint")
-           (set-variable 'flycheck-python-pyflakes-executable "pyflakes"))
-  )
+           (set-variable 'flycheck-python-pyflakes-executable "pyflakes")))
 
 (defun daysBetween (s f)
   (let* ((seconds-per-day ( * 24 60 60 ))
@@ -922,3 +914,4 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (put 'narrow-to-region 'disabled nil)
 (put 'narrow-to-page 'disabled nil)
 
+(put 'downcase-region 'disabled nil)
