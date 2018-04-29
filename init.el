@@ -506,14 +506,12 @@
   "Reboot python."
   (interactive)
   (save-current-buffer
-                                        ; Disable querying while we delete.|
-    (let ( kill-buffer-query-functions '() )
-      (if (get-buffer "*Python*") (kill-buffer "*Python*") )
-      (if (get-buffer "*Jython*") (kill-buffer "*Jython*") ))
+    ;; Disable querying while we delete.
+    (let (kill-buffer-query-functions '())
+      (if (get-buffer "*Python*") (kill-buffer "*Python*"))
+      (if (get-buffer "*Jython*") (kill-buffer "*Jython*")))
     (run-python)
-    (python-shell-switch-to-shell)
-    )
-  )
+    (python-shell-switch-to-shell)))
 
 (defun reboot-nodejs ()
   "Reboot node."
