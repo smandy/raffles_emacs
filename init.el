@@ -12,7 +12,7 @@
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 
 ;; (set-frame-font "Meslo LG L 13") 
-;; (set-frame-font "Hack 11")
+;; (set-frame-font "Hack 15")
 
 ;; (set-frame-font "Liberation Mono 18")
 ;; (set-frame-font "Ubuntu Mono 13")
@@ -56,15 +56,15 @@
 
 ;; (set-frame-font "-misc-fixed-medium-r-normal--30-*-75-75-c-90-iso8859-8")
 ;; (set-frame-font "-misc-fixed-medium-r-normal--12-*-75-75-c-90-iso8859-8")
-;; (set-frame-font "Misc Fixed 12") 
+;; (set-frame-font "Misc Fixed 12")
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 ;; (set-frame-font "Inconsolata 15")
 ;; (set-frame-font "Andale Mono 20")
 
-(set-frame-font "Andale Mono 12")
+;;(set-frame-font "Andale Mono 12")
 
 ;; Good for coding
-(set-frame-font "Hack 12")
+(set-frame-font "Hack 14")
 (require 'compile)
 (require 'package)
 
@@ -339,7 +339,7 @@
  '(compilation-message-face (quote default))
  '(custom-safe-themes
    (quote
-    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3d5307e5d6eb221ce17b0c952aa4cf65dbb3fa4a360e12a71e03aab78e0176c5" "7bc31a546e510e6bde482ebca992e293a54cb075a0cbfb384bf2bf5357d4dee3" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
+    ("891debfe489c769383717cc7d0020244a8d62ce6f076b2c42dd1465b7c94204d" "242ed4611e9e78142f160e9a54d7e108750e973064cee4505bfcfc22cc7c61b1" "4e21fb654406f11ab2a628c47c1cbe53bab645d32f2c807ee2295436f09103c6" "723e48296d0fc6e030c7306c740c42685d672fd22337bc84392a1cf92064788a" "c5d320f0b5b354b2be511882fc90def1d32ac5d38cccc8c68eab60a62d1621f2" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3d5307e5d6eb221ce17b0c952aa4cf65dbb3fa4a360e12a71e03aab78e0176c5" "7bc31a546e510e6bde482ebca992e293a54cb075a0cbfb384bf2bf5357d4dee3" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
  '(display-time-world-list
    (quote
     (("Australia/Perth" "Perth")
@@ -409,7 +409,7 @@
  '(org-preview-latex-image-directory "/var/tmp/ltximg/")
  '(package-selected-packages
    (quote
-    (aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt ubuntu-theme f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
+    (doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt ubuntu-theme f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
  '(projectile-tags-backend (quote ggtags))
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--simple-prompt --pylab")
@@ -441,7 +441,6 @@
 (global-set-key [f7]  'compile)
 (global-set-key [f8]  'reboot-python)
 (global-set-key [f9]  'py-execute-region)
-
 (global-set-key [f9]  'org-table-recalculate)
 
 ;; (global-set-key [f10] 'switch-to-shell)
@@ -451,10 +450,6 @@
 (global-set-key (kbd "C-c o") 'ff-find-other-file)
 (global-set-key (kbd "C-c f") 'find-file-at-point)
 (global-set-key (kbd "C-M-g") 'dumb-jump-go)
-
-
-
-
 
 (nyan-mode)
 
@@ -592,29 +587,20 @@
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
 
-(setq org-capture-templates '(
-                              ("t" "Todo" entry (file+headline "~/Dropbox/gtd/gtd.org" "Tasks")
+(setq org-capture-templates '(("t" "Todo" entry (file+headline "~/Dropbox/gtd/gtd.org" "Tasks")
                                "* TODO %?")
-                              
                               ("r" "Todo" entry (file+headline "~/Dropbox/gtd/gtd.org" "Tasks")
                                "* TODO %?\n  %i\n  %a")
-                              
                               ("r" "Todo" entry (file+headline "~/Dropbox/gtd/gtd.org" "Tasks")
                                "* TODO %?\n%F")
-                              
                               ("p" "Performance" entry (file+headline "~/Dropbox/gtd/gtd.org" "Performance")
                                "* TODO %?\n")
-
                               ("c" "Correspondance" entry (file+datetree "~/Dropbox/gtd/corresp.org")
                                "* %U %?")
-                              
                               ("s" "Schedule" entry (file+headline "~/Dropbox/gtd/gtd.org" "Schedule")
                                "* TODO %?\n")
-                              
                               ("j" "Journal" entry (file+datetree "~/Dropbox/gtd/journal.org")
-                               "* %U %?")
-                              ))
-
+                               "* %U %?")))
 
 (global-set-key (kbd "C-c s") 'ispell)
 (global-set-key (kbd "C-c r") 'revert-buffer-with-prejudice)
@@ -810,10 +796,8 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
          (st (funcall conv s))
          (ft (funcall conv f)))
     (/ (time-to-seconds (time-subtract ft st)) seconds-per-day)))
-;; (daysBetween "1973-05-09" "2018-02-11")
+;; (daysBetween "1973-05-09" "2018-04-16")
 
-
- 
 (eval-after-load 'company
   '(progn
      (define-key company-mode-map (kbd "C-:") 'helm-company)
@@ -880,7 +864,6 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 		 (progn
 		   (c-set-style "llvm.org"))))))
 
-
 (require 'haskell-interactive-mode)
 (require 'haskell-process)
 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
@@ -889,7 +872,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
   "A Im interactive."
   (interactive)
   (switch-to-buffer "*SML*")
-  (end-of-buffer)) 
+  (end-of-buffer))
 
 ; (advice-add 'sml-prog-proc-load-file :after 'end-of-sml)
 ; (advice-remove 'sml-prog-proc-load-file)
@@ -911,5 +894,4 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  
 (put 'narrow-to-region 'disabled nil)
 (put 'narrow-to-page 'disabled nil)
-
 (put 'downcase-region 'disabled nil)

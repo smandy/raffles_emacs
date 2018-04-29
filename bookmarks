@@ -128,10 +128,10 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/gtd/journal.org")
- (front-context-string . "**** [2018-04-02")
- (rear-context-string . "o be honest :-(\n")
- (position . 163533))
+ (filename . "~/Dropbox/gtd/gtd.org")
+ (front-context-string . "** TODO Coffe wi")
+ (rear-context-string . "2018-05-02 Wed>\n")
+ (position . 21635))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")
