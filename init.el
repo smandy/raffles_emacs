@@ -12,7 +12,7 @@
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 
 ;; (set-frame-font "Meslo LG L 13") 
-;; (set-frame-font "Hack 15")
+;; (set-frame-font "Hack 11")
 
 ;; (set-frame-font "Liberation Mono 18")
 ;; (set-frame-font "Ubuntu Mono 13")
@@ -20,7 +20,7 @@
 ;; (set-frame-font "Ubuntu Condensed 13")
 ;; (set-frame-font "DejaVu Sans Mono 13")
 ;; (set-frame-font "Consolas 20")
-;; (set-frame-font "Inconsolata 20") 
+;; (set-frame-font "Inconsolata 15") 
 ;; ΠπðÐþÐσΣ Ж ж Unicode test!!
 ;; (set-frame-font "Courier New Bold 50")
 ;; (set-frame-font "Courier New 50")
@@ -325,113 +325,7 @@
 ;; '(flycheck-clang-language-standard "c++14")
 ;; '(flycheck-gcc-language-standard "c++14")
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(LaTeX-command "latex -shell-escape")
- '(ansi-color-faces-vector
-   [default bold shadow italic underline bold bold-italic bold])
- '(c-basic-offset 4)
- '(clang-format-executable "clang-format")
- '(company-clang-arguments nil)
- '(compilation-message-face (quote default))
- '(custom-safe-themes
-   (quote
-    ("891debfe489c769383717cc7d0020244a8d62ce6f076b2c42dd1465b7c94204d" "242ed4611e9e78142f160e9a54d7e108750e973064cee4505bfcfc22cc7c61b1" "4e21fb654406f11ab2a628c47c1cbe53bab645d32f2c807ee2295436f09103c6" "723e48296d0fc6e030c7306c740c42685d672fd22337bc84392a1cf92064788a" "c5d320f0b5b354b2be511882fc90def1d32ac5d38cccc8c68eab60a62d1621f2" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3d5307e5d6eb221ce17b0c952aa4cf65dbb3fa4a360e12a71e03aab78e0176c5" "7bc31a546e510e6bde482ebca992e293a54cb075a0cbfb384bf2bf5357d4dee3" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
- '(display-time-world-list
-   (quote
-    (("Australia/Perth" "Perth")
-     ("Asia/Dubai" "Dubai")
-     ("Europe/London" "London")
-     ("Europe/Paris" "Paris")
-     ("Europe/Berlin" "Berlin")
-     ("America/New_York" "New York")
-     ("America/Chicago" "Chicago"))))
- '(flycheck-c/c++-clang-executable "clang-5.0")
- '(flycheck-clang-args (quote ("-xc++")))
- '(flycheck-clang-language-standard "c++14")
- '(gdb-many-windows t)
- '(haskell-process-auto-import-loaded-modules t)
- '(haskell-process-log t)
- '(haskell-process-suggest-remove-import-lines t)
- '(helm-M-x-fuzzy-match t)
- '(helm-display-buffer-default-size 100)
- '(helm-locate-project-list (quote ("/home/andy/repos/dev")))
- '(helm-org-rifle-show-path t)
- '(ibuffer-saved-filter-groups (quote (("mydefs" ("agora+dev" (used-mode . c++-mode))))))
- '(ibuffer-saved-filters
-   (quote
-    (("foo2"
-      ((mode . c++-mode)
-       (or
-        (projectile-files . "/mnt/hdd/andy/repos/dev")
-        (projectile-files . "/mnt/hdd/andy/repos/agora"))))
-     ("foo"
-      ((mode . c++-mode)
-       (or
-        (projectile-files . "/mnt/hdd/andy/repos/dev")
-        (projectile-files . "/mnt/hdd/andy/repos/agora"))))
-     ("~/filters.el"
-      ((mode . c++-mode)
-       (or
-        (projectile-files . "/mnt/hdd/andy/repos/dev")
-        (projectile-files . "/mnt/hdd/andy/repos/agora"))))
-     ("gnus"
-      ((or
-        (mode . message-mode)
-        (mode . mail-mode)
-        (mode . gnus-group-mode)
-        (mode . gnus-summary-mode)
-        (mode . gnus-article-mode))))
-     ("programming"
-      ((or
-        (mode . emacs-lisp-mode)
-        (mode . cperl-mode)
-        (mode . c-mode)
-        (mode . java-mode)
-        (mode . idl-mode)
-        (mode . lisp-mode)))))))
- '(inferior-octave-startup-args (quote ("-i" "--line-editing")))
- '(magit-diff-use-overlays nil)
- '(midnight-mode nil)
- '(nyan-mode t)
- '(org-agenda-files (quote ("/home/andy/Dropbox/gtd")))
- '(org-confirm-babel-evaluate nil)
- '(org-directory "~/Dropbox/gtd")
- '(org-format-latex-options
-   (quote
-    (:foreground default :background default :scale 3.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
-                 ("begin" "$1" "$" "$$" "\\(" "\\["))))
- '(org-hide-leading-stars t)
- '(org-log-done (quote time))
- '(org-preview-latex-image-directory "/var/tmp/ltximg/")
- '(package-selected-packages
-   (quote
-    (doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt ubuntu-theme f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
- '(projectile-tags-backend (quote ggtags))
- '(python-shell-interpreter "ipython")
- '(python-shell-interpreter-args "--simple-prompt --pylab")
- '(safe-local-variable-values
-   (quote
-    ((test-case-name . twisted\.internet\.test\.test_qtreactor)
-     (test-case-name . twisted\.internet\.test\.test_inotify)
-     (test-case-name . twisted\.internet\.test\.test_core))))
- '(show-paren-mode t)
- '(sql-postgres-login-paramsupo
-   (quote
-    ((user :default "andy")
-     server
-     (database :default "andy"))))
- '(tab-width 4)
- '(vc-annotate-background nil)
- '(vc-annotate-very-old-color nil t)
- '(wg-morph-on nil))
-(defun switch-to-org ()
-  (interactive)
-  (switch-to-buffer "gtd.org")
-  )
+
 
 (global-set-key [f1]  'wg-switch-to-workgroup)
 (global-set-key [f2]  'helm-world-time)
@@ -493,7 +387,7 @@
 (require 'color-theme)
 (color-theme-initialize)
 ;;(color-theme-sanityinc-solarized 'dark)
-;;(color-theme-midnight)
+(color-theme-midnight)
 
 (windmove-default-keybindings 'meta)
 
@@ -752,7 +646,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
    (s-join "")
    (s-reverse)))
 
-;; (commify 463766473674326)  "463,766,473,674,326" 
+;; (commify 463766473674326) "463,766,473,674,326"
 
 (defun parse-epoch-time-at-point ()
   (interactive)
@@ -760,10 +654,6 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 (global-set-key (kbd "C-c C-p C-t") 'parse-epoch-time-at-point)
 
-(setq display-time-world-list '(("America/New_York" "New York")
-                                ("Europe/London" "London")
-                                ("Asia/Hong_Kong" "Hong Kong")
-                                ("Australia/Perth" "Perth")))
 (require 'time)
 
 ; (parse-epoch-time "1482672627.025747002" )  
@@ -827,13 +717,13 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
      (define-key js2-mode-map (kbd "C-c C-c") 'nodejs-repl-send-buffer)
      (define-key js2-mode-map [f8] 'reboot-nodejs)
      ))
-     (add-hook 'js2-mode-hook
-               (lambda ()
-                 (define-key js2-mode-map (kbd "C-x C-e") 'nodejs-repl-send-last-expression)
-                 (define-key js2-mode-map (kbd "C-c C-r") 'nodejs-repl-send-region)
-                 (define-key js2-mode-map (kbd "C-c C-l") 'nodejs-repl-load-file)
-                 (define-key js2-mode-map (kbd "C-c C-p") 'nodejs-repl)
-                 (define-key js2-mode-map (kbd "C-c C-z") 'nodejs-repl-switch-to-repl)))
+(add-hook 'js2-mode-hook
+          (lambda ()
+            (define-key js2-mode-map (kbd "C-x C-e") 'nodejs-repl-send-last-expression)
+            (define-key js2-mode-map (kbd "C-c C-r") 'nodejs-repl-send-region)
+            (define-key js2-mode-map (kbd "C-c C-l") 'nodejs-repl-load-file)
+            (define-key js2-mode-map (kbd "C-c C-p") 'nodejs-repl)
+            (define-key js2-mode-map (kbd "C-c C-z") 'nodejs-repl-switch-to-repl)))
 
 
 (require 'ob-python)
@@ -895,3 +785,109 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (put 'narrow-to-region 'disabled nil)
 (put 'narrow-to-page 'disabled nil)
 (put 'downcase-region 'disabled nil)
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(LaTeX-command "latex -shell-escape")
+ '(ansi-color-faces-vector
+   [default bold shadow italic underline bold bold-italic bold])
+ '(c-basic-offset 4)
+ '(clang-format-executable "clang-format")
+ '(company-clang-arguments nil)
+ '(compilation-message-face (quote default))
+ '(custom-safe-themes
+   (quote
+    ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "4597d1e9bbf1db2c11d7cf9a70204fa42ffc603a2ba5d80c504ca07b3e903770" "bbb4a4d39ed6551f887b7a3b4b84d41a3377535ccccf901a3c08c7317fad7008" "aa0a998c0aa672156f19a1e1a3fb212cdc10338fb50063332a0df1646eb5dfea" "5715d3b4b071d33af95e9ded99a450aad674e308abb06442a094652a33507cd2" "53d1bb57dadafbdebb5fbd1a57c2d53d2b4db617f3e0e05849e78a4f78df3a1b" "a866134130e4393c0cad0b4f1a5b0dd580584d9cf921617eee3fd54b6f09ac37" "0598de4cc260b7201120b02d580b8e03bd46e5d5350ed4523b297596a25f7403" "891debfe489c769383717cc7d0020244a8d62ce6f076b2c42dd1465b7c94204d" "242ed4611e9e78142f160e9a54d7e108750e973064cee4505bfcfc22cc7c61b1" "4e21fb654406f11ab2a628c47c1cbe53bab645d32f2c807ee2295436f09103c6" "723e48296d0fc6e030c7306c740c42685d672fd22337bc84392a1cf92064788a" "c5d320f0b5b354b2be511882fc90def1d32ac5d38cccc8c68eab60a62d1621f2" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3d5307e5d6eb221ce17b0c952aa4cf65dbb3fa4a360e12a71e03aab78e0176c5" "7bc31a546e510e6bde482ebca992e293a54cb075a0cbfb384bf2bf5357d4dee3" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
+ '(display-time-world-list
+   (quote
+    (("Australia/Perth" "Perth")
+     ("Asia/Dubai" "Dubai")
+     ("Europe/Munich" "Munich")
+     ("Europe/London" "London")
+     ("Europe/Paris" "Paris")
+     ("Europe/Berlin" "Berlin")
+     ("America/New_York" "New York")
+     ("America/Chicago" "Chicago"))))
+ '(flycheck-c/c++-clang-executable "clang-5.0")
+ '(flycheck-clang-args (quote ("-xc++")))
+ '(flycheck-clang-language-standard "c++14")
+ '(gdb-many-windows t)
+ '(haskell-process-auto-import-loaded-modules t)
+ '(haskell-process-log t)
+ '(haskell-process-suggest-remove-import-lines t)
+ '(helm-M-x-fuzzy-match t)
+ '(helm-display-buffer-default-size 100)
+ '(helm-locate-project-list (quote ("/home/andy/repos/dev")))
+ '(helm-org-rifle-show-path t)
+ '(ibuffer-saved-filter-groups (quote (("mydefs" ("agora+dev" (used-mode . c++-mode))))))
+ '(ibuffer-saved-filters
+   (quote
+    (("foo2"
+      ((mode . c++-mode)
+       (or
+        (projectile-files . "/mnt/hdd/andy/repos/dev")
+        (projectile-files . "/mnt/hdd/andy/repos/agora"))))
+     ("foo"
+      ((mode . c++-mode)
+       (or
+        (projectile-files . "/mnt/hdd/andy/repos/dev")
+        (projectile-files . "/mnt/hdd/andy/repos/agora"))))
+     ("~/filters.el"
+      ((mode . c++-mode)
+       (or
+        (projectile-files . "/mnt/hdd/andy/repos/dev")
+        (projectile-files . "/mnt/hdd/andy/repos/agora"))))
+     ("gnus"
+      ((or
+        (mode . message-mode)
+        (mode . mail-mode)
+        (mode . gnus-group-mode)
+        (mode . gnus-summary-mode)
+        (mode . gnus-article-mode))))
+     ("programming"
+      ((or
+        (mode . emacs-lisp-mode)
+        (mode . cperl-mode)
+        (mode . c-mode)
+        (mode . java-mode)
+        (mode . idl-mode)
+        (mode . lisp-mode)))))))
+ '(inferior-octave-startup-args (quote ("-i" "--line-editing")))
+ '(magit-diff-use-overlays nil)
+ '(midnight-mode nil)
+ '(nyan-mode t)
+ '(org-agenda-files (quote ("/home/andy/Dropbox/gtd")))
+ '(org-confirm-babel-evaluate nil)
+ '(org-directory "~/Dropbox/gtd")
+ '(org-format-latex-options
+   (quote
+    (:foreground default :background default :scale 3.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+                 ("begin" "$1" "$" "$$" "\\(" "\\["))))
+ '(org-hide-leading-stars t)
+ '(org-log-done (quote time))
+ '(org-preview-latex-image-directory "/var/tmp/ltximg/")
+ '(package-selected-packages
+   (quote
+    (ranger thrift doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt ubuntu-theme f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
+ '(projectile-tags-backend (quote ggtags))
+ '(python-shell-interpreter "ipython")
+ '(python-shell-interpreter-args "--simple-prompt --pylab")
+ '(safe-local-variable-values
+   (quote
+    ((test-case-name . twisted\.internet\.test\.test_qtreactor)
+     (test-case-name . twisted\.internet\.test\.test_inotify)
+     (test-case-name . twisted\.internet\.test\.test_core))))
+ '(show-paren-mode t)
+ '(sql-postgres-login-paramsupo
+   (quote
+    ((user :default "andy")
+     server
+     (database :default "andy"))))
+ '(tab-width 4)
+ '(vc-annotate-background nil)
+ '(vc-annotate-very-old-color nil t)
+ '(wg-morph-on nil))
+(put 'scroll-left 'disabled nil)
