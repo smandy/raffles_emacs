@@ -12,10 +12,10 @@
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 
 ;; (set-frame-font "Meslo LG L 13") 
-;; (set-frame-font "Hack 11")
+;; (set-frame-font "Hack 13")
 
 ;; (set-frame-font "Liberation Mono 18")
-;; (set-frame-font "Ubuntu Mono 13")
+;; (set-frame-font "Ubuntu Mono 20")
 
 ;; (set-frame-font "Ubuntu Condensed 13")
 ;; (set-frame-font "DejaVu Sans Mono 13")
@@ -156,6 +156,8 @@
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key [f5] 'helm-resume)
 
+(helm-mode 1)
+
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
 (global-set-key (kbd "C-c C-m C-s" ) 'magit-status)
@@ -179,6 +181,7 @@
  'compilation-error-regexp-alist
  '("^\\([^ \n]+\\)(\\([0-9]+\\)): \\(?:Error\\|.\\|warnin\\(g\\)\\|remar\\(k\\)\\)"
    1 2 nil (3 . 4)))
+
 (defun revert-buffer-with-prejudice ()
   (interactive)
   (revert-buffer 't 't))
@@ -387,7 +390,7 @@
 (require 'color-theme)
 (color-theme-initialize)
 ;;(color-theme-sanityinc-solarized 'dark)
-(color-theme-midnight)
+;;(color-theme-midnight)
 
 (windmove-default-keybindings 'meta)
 
@@ -567,6 +570,7 @@
 (defun parse-epoch-time (s)
   "Parse symbol into an epoch time. Use heuristics to determine if dealing
 with micros, seconds, nanos etc. Display result using 'message' if successful"
+  (require 'dash)
   (let* ((x (float (string-to-number s )))
          (epoch 1970 )
          (secsperday (* 24 60 60))
