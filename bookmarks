@@ -1,4 +1,4 @@
-;;;; Emacs Bookmark Format Version 1 ;;;;
+;;;; Emacs Bookmark Format Version 1 ;;;; -*- coding: utf-8-emacs -*- 
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
@@ -129,9 +129,9 @@
  (position . 1))
 ("org-capture-last-stored"
  (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** TODO Coffe wi")
- (rear-context-string . "2018-05-02 Wed>\n")
- (position . 21635))
+ (front-context-string . "** TODO Shogo\n  ")
+ (rear-context-string . "bf5c0e\n   :END:\n")
+ (position . 22746))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")
