@@ -3,6 +3,7 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        c-electric-colon
         clang-format-buffer
         indent-for-tab-command
         kill-region

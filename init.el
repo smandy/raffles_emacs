@@ -11,7 +11,7 @@
 
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 
-;; (set-frame-font "Meslo LG L 17") 
+;; (set-frame-font "Meslo LG L 14") 
 ;; (set-frame-font "Hack 20")
 
 ;; (set-frame-font "Liberation Mono 18")
@@ -66,7 +66,8 @@
 ;;(set-frame-font "Andale Mono 12")
 
 ;; Good for coding
-(set-frame-font "Hack 14")
+;; (set-frame-font "Hack 12")
+(set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 (require 'compile)
 (require 'package)
 
@@ -351,7 +352,7 @@
 (global-set-key (kbd "C-c f") 'find-file-at-point)
 (global-set-key (kbd "C-M-g") 'dumb-jump-go)
 
-(nyan-mode)
+(nyan-mode 't)
 
 (defun dump-fonts ()
   (interactive)
