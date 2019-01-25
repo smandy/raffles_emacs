@@ -11,21 +11,18 @@
 
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 
-;; (set-frame-font "Meslo LG L 18") 
+;; (set-frame-font "Meslo LG L 20") 
 ;; (set-frame-font "Hack 20")
 ;; (set-frame-font "Andale Mono 20")
-
-;; (set-frame-font "Liberation Mono 18")
+;; (set-frame-font "Liberation Mono 20")
 ;; (set-frame-font "Ubuntu Mono 20")
-
 ;; (set-frame-font "DejaVu Sans Mono 20")
 ;; (set-frame-font "Consolas 20")
-;; (set-frame-font "Inconsolata 20") 
-;; ΠπðÐþÐσΣ Ж ж Unicode test!! Ꝥ
-
+;; (set-frame-font "Inconsolata 20")
 ;; (set-frame-font "Courier New Bold 20")
-;; (set-frame-font "Courier New 50")
+;; (set-frame-font "Courier New 20")
 
+;; ΠπðÐþÐσΣ Ж ж Unicode test!! Ꝥ
 
 ;; (set-frame-font "-unknown-Dina-normal-normal-normal-*-10-*-*-*-c-*-iso10646-1")
 ;; (set-frame-font "-unknown-Dina-normal-normal-normal-*-12-*-*-*-c-*-iso10646-1")
@@ -39,14 +36,13 @@
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-22-*-*-*-c-110-iso10646-1")
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-24-*-*-*-c-120-iso10646-1")
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-28-*-*-*-c-140-iso10646-1")
-;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-32-*-*-*-c-160-iso10646-1")
+;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-32-*-*-*-c-160-iso10646-1")b
 
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-15-*-*-*-c-80-iso10646-1")
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1")
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1")
 
 ;; (set-frame-font "Liberation Mono 14")
-
 ;; (set-frame-font "Ubuntu Mono 20")
 
 ;; (set-frame-font "Misc Fixed 8")
@@ -344,15 +340,35 @@
   (interactive)
   (text-scale-adjust 0) )
 
+
 (global-set-key [f1]  'text-scale-bigger)
 (global-set-key [f2]  'text-scale-smaller)
 (global-set-key [f3]  'text-scale-orig)
 
-(global-set-key [f1]  'wg-switch-to-workgroup)
-(global-set-key [f2]  'helm-world-time)
-(global-set-key [f3]  'helm-cscope-find-global-definition)
+(global-set-key [C-S-triple-mouse-4]  'text-scale-bigger)
+(global-set-key [C-S-triple-mouse-5]  'text-scale-smaller)
+
+(global-set-key [C-triple-mouse-4]  'scroll-up-one)
+(global-set-key [C-triple-mouse-5]  'scroll-down-one)
+
+(defun scroll-up-one ()
+  (interactive)
+  (save-excursion
+    (scroll-up 1)))
+
+(defun scroll-down-one ()
+  (interactive)
+  (save-excursion
+    (scroll-down 1)))
+
+(global-set-key [f5]  'scroll-up-one)
+(global-set-key [f6]  'scroll-down-one)
+
+;; (global-set-key [f1]  'wg-switch-to-workgroup)
+;; (global-set-key [f2]  'helm-world-time)
+;; (global-set-key [f3]  'helm-cscope-find-global-definition)
 (global-set-key [f4]  'magit-status)
-(global-set-key [f6]  'helm-man-woman)
+;;(global-set-key [f6]  'helm-man-woman)
 (global-set-key [f7]  'compile)
 (global-set-key [f8]  'reboot-python)
 (global-set-key [f9]  'py-execute-region)
@@ -361,7 +377,7 @@
 ;; (global-set-key [f10] 'switch-to-shell)
 (global-set-key [f10] 'clang-format-buffer)
 (global-set-key [f12] 'ace-jump-mode)
-(global-set-key [f1] 'wg-switch-to-workgroup)
+;;(global-set-key [f1] 'wg-switch-to-workgroup)
 (global-set-key (kbd "C-c o") 'ff-find-other-file)
 (global-set-key (kbd "C-c f") 'find-file-at-point)
 (global-set-key (kbd "C-M-g") 'dumb-jump-go)
@@ -798,9 +814,9 @@
 
 
 
-(global-set-key [f1]  'wg-switch-to-workgroup)
-(global-set-key [f2]  'helm-world-time)
-(global-set-key [f3]  'helm-cscope-find-global-definition)
+;; (global-set-key [f1]  'wg-switch-to-workgroup)
+;; (global-set-key [f2]  'helm-world-time)
+;;(global-set-key [f3]  'helm-cscope-find-global-definition)
 (global-set-key [f4]  'magit-status)
 (global-set-key [f6]  'helm-man-woman)
 (global-set-key [f7]  'compile)
@@ -811,7 +827,7 @@
 ;; (global-set-key [f10] 'switch-to-shell)
 (global-set-key [f10] 'clang-format-buffer)
 (global-set-key [f12] 'ace-jump-mode)
-(global-set-key [f1] 'wg-switch-to-workgroup)
+;;(global-set-key [f1] 'wg-switch-to-workgroup)
 (global-set-key (kbd "C-c o") 'ff-find-other-file)
 (global-set-key (kbd "C-c f") 'find-file-at-point)
 (global-set-key (kbd "C-M-g") 'dumb-jump-go)
@@ -1176,9 +1192,16 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 (load "auctex.el" nil t t)
 
-;;(define-key octave-mode-map (kbd "C-c C-c") 'octave-send-buffer)
-;;(define-key octave-mode-map (kbd "C-c C-r") 'octave-send-region)
-;;(require 'octave)
+;; (eval-after-load 'lisp-interaction
+;;   (progn
+;;     (message "Adding to lisp interaction mode")
+;;     (define-key lisp-interaction-mode-map (kbd "C-c C-c") 'eval-defun)
+;;     (define-key lisp-mode-map (kbd "C-c C-c") 'eval-defun)
+;;     ))
+(add-hook 'emacs-lisp-mode-hook
+          (lambda ()
+            (define-key emacs-lisp-mode-map (kbd "C-c C-c") 'eval-defun)))
+            
 (eval-after-load 'octave '(progn
                             (define-key octave-mode-map (kbd "C-c C-c") 'octave-send-buffer)
                             (define-key octave-mode-map (kbd "C-c C-r") 'octave-send-region)
@@ -1244,7 +1267,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ;; (load-file "~/.emacs.d/sql-interactive-remove-continuation-prompt.el")
 ;; (require 'sql-interactive-remove-continuation-prompt)
 
-;;(load-theme 'doom-city-lights)
+(load-theme 'doom-vibrant 't)
 
 (defun move-line-up ()
   "Move up the current line."
@@ -1678,7 +1701,6 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (advice-add 'org-babel-execute-src-block :after (lambda (&rest args)
                                                   (message "Display images %s" (length args))
                                                   (org-display-inline-images)))
-
 
 ;; Add a cc-mode style for editing LLVM C and C++ code
 (c-add-style "llvm.org"
