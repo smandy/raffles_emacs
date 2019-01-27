@@ -11,16 +11,21 @@
 
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 
-;; (set-frame-font "Meslo LG L 20") 
-;; (set-frame-font "Hack 20")
-;; (set-frame-font "Andale Mono 20")
-;; (set-frame-font "Liberation Mono 20")
-;; (set-frame-font "Ubuntu Mono 20")
-;; (set-frame-font "DejaVu Sans Mono 20")
-;; (set-frame-font "Consolas 20")
-;; (set-frame-font "Inconsolata 20")
-;; (set-frame-font "Courier New Bold 20")
+;; (set-frame-font "Meslo LG L" 't)
+;; (set-frame-font "Misc Fixed" 't) 
+;; (set-frame-font "Tamsyn" 't)
+;; (set-frame-font "Andale Mono" 't)
+;; (set-frame-font "Hack" 't)
+;; (set-frame-font "Misc Fixed" 't)
+
+;; (set-frame-font "Liberation Mono" 't)
+;; (set-frame-font "Ubuntu Mono" 't)
+;; (set-frame-font "DejaVu Sans Mono" 't)
+;; (set-frame-font "Consolas" 't)
+;; (set-frame-font "Inconsolata" 't)
+;; (set-frame-font "Courier New Bold" 't)
 ;; (set-frame-font "Courier New 20")
+
 
 ;; ΠπðÐþÐσΣ Ж ж Unicode test!! Ꝥ
 
@@ -66,6 +71,7 @@
 (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 (require 'compile)
 (require 'package)
+(package-initialize)
 
 (add-to-list 'package-archives '("melpa"     . "http://melpa.org/packages/"))
 (add-to-list 'auto-mode-alist '("SConscript" . python-mode))
@@ -293,7 +299,7 @@
   (interactive) 
   (revert-buffer nil 't))
 
-(package-initialize)
+
 
 (require 'dash)
 (require 's)
@@ -418,9 +424,6 @@
       (setq the-plist (cddr the-plist)))
     alist))
 
-(require 'package)
-
-(package-initialize)
 (require 'color-theme)
 (color-theme-initialize)
 ;;(color-theme-midnight)
@@ -669,7 +672,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
             (kill-line))
           (forward-line))))))
 
-(global-set-key [f3] 'parse-sbe)
+;;(global-set-key [f3] 'parse-sbe)
 
 (defun commify (s)
   (->>
@@ -753,7 +756,11 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
             (define-key emacs-lisp-mode-map (kbd "C-c C-r") 'eval-region)
             (define-key emacs-lisp-mode-map (kbd "C-c C-c") 'eval-defun)))
 
-
+(require 'cider-mode)
+(add-hook 'cider-mode-hook
+           (lambda ()
+             (define-key cider-mode-map (kbd "C-c C-r") 'cider-eval-region))
+             (define-key cider-mode-map (kbd "C-c C-c") 'cider-eval-defun-at-point))
 
 (eval-after-load 'octave '(progn
                             (define-key octave-mode-map (kbd "C-c C-c") 'octave-send-buffer)
@@ -964,358 +971,4 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (put 'dired-find-alternate-file 'disabled nil)
 (menu-bar-mode 0)
 
-(setq-default indent-tabs-mode nil)
 
-(require 'slime-autoloads)
-(slime-setup '(slime-fancy))
-(require 'ac-slime)
-(add-hook 'slime-mode-hook      'set-up-slime-ac)
-(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
-(eval-after-load "auto-complete"
-  '(add-to-list 'ac-modes 'slime-repl-mode))
-
-(autoload 'js2-mode "js2-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.ice$" . idl-mode))
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-
-(global-set-key (kbd "C-x C-x") 'expand-abbrev)
-
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-
-(eval-after-load "auto-complete"
-  '(add-to-list 'ac-sources 'ac-source-yasnippet))
-(ac-config-default)
-
-;; (eval-after-load "ggtags"
-;;   (progn
-;;     (define-key ggtags-mode-map (kbd "M->") nil)
-;;     (define-key ggtags-mode-map (kbd "M-<") nil)))
-
-(setq inferior-lisp-program "/usr/bin/sbcl")
-
-(require 'org)
-(setq org-default-notes-file (concat org-directory "~/Dropbox/gtd/gtd.org"))
-(define-key global-map "\C-cc" 'org-capture)
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
-
-(setq org-capture-templates '(("t" "Todo" entry (file+headline "~/Dropbox/gtd/gtd.org" "Tasks")
-                               "* TODO %?")
-                              ("r" "Todo" entry (file+headline "~/Dropbox/gtd/gtd.org" "Tasks")
-                               "* TODO %?\n  %i\n  %a")
-                              ("r" "Todo" entry (file+headline "~/Dropbox/gtd/gtd.org" "Tasks")
-                               "* TODO %?\n%F")
-                              ("p" "Performance" entry (file+headline "~/Dropbox/gtd/gtd.org" "Performance")
-                               "* TODO %?\n")
-                              ("c" "Correspondance" entry (file+datetree "~/Dropbox/gtd/corresp.org")
-                               "* %U %?")
-                              ("s" "Schedule" entry (file+headline "~/Dropbox/gtd/gtd.org" "Schedule")
-                               "* TODO %?\n")
-                              ("j" "Journal" entry (file+datetree "~/Dropbox/gtd/journal.org")
-                               "* %U %?")))
-
-(global-set-key (kbd "C-c s") 'ispell)
-(global-set-key (kbd "C-c r") 'revert-buffer-with-prejudice)
-
-(require 'flycheck-pyflakes)
-(add-hook 'python-mode-hook 'flycheck-mode)
-
-(autoload 'pylint "pylint")
-(add-hook 'python-mode-hook 'pylint-add-menu-items)
-(add-hook 'python-mode-hook 'pylint-add-key-bindings)
-
-(require 'semantic)
-
-(setq helm-semantic-fuzzy-match t
-      helm-imenu-fuzzy-match    t)
-
-;; TODO - These two broken I think . Problem with the lambda
-(defun compile-in-buffer (cmd buf)
-  (interactive)
-  (let* ((compilation-buffer-name-function (lambda (x) buf) ) )
-    (compile cmd)))
-
-(defun compile-dev ()
-  (interactive)
-  (compile-in-buffer "cd ~/repos/dev/cpp && scons" "dev"))
-
-(defun compile-asteroids ()
-  (interactive)
-  (compile-in-buffer "cd ~/repos/sdl/asteroids && scons" "asteroids"))
-
-
-(setq helm-dash-common-docsets '("org.libsdl.sdl20" "C++"))
-
-;; (defun square-bracket ()
-;;   (interactive)
-;;   (save-excursion)
-;;   (let* ((start-pos (region-beginning))
-;;          (end-pos (region-end)))
-;;     (goto-char start-pos)
-;;     (insert-char ?\[)
-;;     (goto-char (1+ end-pos) )
-;;     (insert-char ?\])))
-
-;; (defun do-list ()
-;;   (interactive)
-;;   (save-excursion 
-;;     (let* (
-;;            (start-pos (region-beginning))
-;;            (start-line (line-number-at-pos start-pos ))
-;;            (end-line   (line-number-at-pos (region-end))))
-;;       (message (format "%s %s %s" start-pos start-line end-line))
-;;       (goto-char start-pos)
-;;       (message (format "%s %s" end-line (line-number-at-pos)))
-;;       (while (< (line-number-at-pos) end-line)
-;;         (message (format "point is %s end is %s" (line-number-at-pos) end-line))
-;;         (move-beginning-of-line nil)
-;;         (message "boo")
-;;         (insert-char ?\")
-;;         (move-end-of-line nil)
-;;         (insert-char ?\")
-;;         (if (> ( - end-line (line-number-at-pos)  ) 1 )
-;;             (insert-char ?,))
-;;         (next-line 1)
-;;         (message (format "point is %s end is %s" (line-number-at-pos) end-line))
-;;         ))))
-
-(global-set-key (kbd "C-c [") 'square-bracket)
-;;(global-set-key (kbd "C-c C-p C-p") 'do-list)
-
-(defun parse-epoch-time (s)
-  "Parse symbol into an epoch time. Use heuristics to determine if dealing
-with micros, seconds, nanos etc. Display result using 'message' if successful"
-  (require 'dash)
-  (let* ((x (float (string-to-number s )))
-         (epoch 1970 )
-         (secsperday (* 24 60 60))
-         (secsperyear (* 365.25 secsperday))
-         (inrange
-          (lambda (tup)
-            (let* ((prefix (car tup))
-                   (pow    (cdr tup))
-                   (divisor (expt 10 pow))
-                   (secs (/ x divisor))
-                   (year (+ epoch (/ secs secsperyear))))
-              (when (< 1980 year 2060)
-                (cons secs prefix)))))
-         (match (-some inrange '( ("s"  . 0)
-                                  ("ms" . 3)
-                                  ("µs" . 6) 
-                                  ("ns" . 9)))))
-    (if match
-        (let* ((seconds (car match))
-               (prefix  (cdr match))
-               (isofmt  (format-time-string "%Y-%m-%dT%H:%M:%S.%N" (seconds-to-time seconds))))
-          (message (format "%s (%s) -> %s" x prefix isofmt))))))
-
-; (format-time-string "%H:%M:%S" (current-time))
-(defun parse-sbe ()
-  (interactive)
-  (save-excursion
-    (let ((sum 0)
-          (size-alist '(("int64"        . 8 )
-                        ("float"        . 4 )
-                        ("double"       . 8 )
-                        ("orderType"    . 1 )
-                        ("responseType" . 1 )
-                        ("side"         . 1 )
-                        ("int32"        . 4 ))))
-      (message "%s" (re-search-backward "<message"))
-      (beginning-of-line)
-      (forward-line)
-      (while (not (re-search-forward "</message>" (line-end-position) t) )
-        (let* ((current-line (buffer-substring-no-properties (line-beginning-position) (line-end-position)))
-               (match-first (lambda (re errMsg)
-                              (string-match re current-line)
-                              (let ((ret (match-string 1 current-line)))
-                                (unless ret
-                                  (error errMsg))
-                                  ret)))
-               (name (funcall match-first "name=\\\"\\([^\\\"]+\\)\\\"" "Cant find name"))
-               (type (funcall match-first "type=\\\"\\([^\\\"]+\\)\\\"" "Cant fine type"))
-               (size (let ((initSize (assoc type size-alist )))
-                       (unless initSize 
-                         (error (format "Can't find size for type '%s' in -- \n'%s'\n*** Fix 'sizes-alist in parse-sbe ****" type current-line)))
-                       (cdr initSize)))
-               (newSum (+ sum size))
-               (trailing (mod sum size))
-               (misalign (not (zerop trailing)))
-               (status (if misalign "ERR" "OK"))
-               (message (format " <!-- %2d + %2d = %2d %3s %s-->" sum size newSum status trailing)))
-          (setq sum newSum)
-          (search-forward "/>" (line-end-position))
-          (insert message)
-          (when (< (point) (line-end-position))
-            (kill-line))
-          (forward-line))))))
-
-(global-set-key [f3] 'parse-sbe)
-
-(defun commify (s)
-  (->>
-   s
-   (format "%s")
-   (s-reverse)
-   (s-split "")
-   (cdr)
-   (-partition 3)
-   (-interpose '(","))
-   (-flatten)
-   (s-join "")
-   (s-reverse)))
-
-;; (commify 463766473674326) "463,766,473,674,326"
-
-(defun parse-epoch-time-at-point ()
-  (interactive)
-  (parse-epoch-time (thing-at-point 'symbol)))
-
-(global-set-key (kbd "C-c C-p C-t") 'parse-epoch-time-at-point)
-
-(require 'time)
-
-; (parse-epoch-time "1482672627.025747002" )  
-; (parse-epoch-time "1482672627025.747023" ) 
-; (parse-epoch-time "1482672627025747.032" ) 
-; (parse-epoch-time "1482672627025747023"  ) 
-
-;; (setq python-shell-exec-path '( "/home/andy/anaconda3/bin"))              ;; (seconds-to-time 1482672627.025747002) 
-;; Execute eother of these progn clauses to switch between python2/3
-
-(if nil
-    (progn
-      (set-variable 'python-shell-interpreter "ipython2")
-      (set-variable 'flycheck-python-pylint-executable "pylint2")
-      (set-variable 'flycheck-python-pyflakes-executable "pyflakes-python2")))
-
-(if nil
-    (progn (set-variable 'python-shell-interpreter "ipython")
-           (set-variable 'flycheck-python-pylint-executable "pylint")
-           (set-variable 'flycheck-python-pyflakes-executable "pyflakes")))
-
-(defun daysBetween (s f)
-  (let* ((seconds-per-day ( * 24 60 60 ))
-         (conv (lambda (x)
-                 (let ((bits (mapcar 'string-to-int (split-string x "-"))))
-                   (apply 'encode-time (list 0 0 0
-                                             (nth 2 bits)
-                                             (nth 1 bits)
-                                             (nth 0 bits))))))
-         (st (funcall conv s))
-         (ft (funcall conv f)))
-    (/ (time-to-seconds (time-subtract ft st)) seconds-per-day)))
-;; (daysBetween "1973-05-09" "2018-04-16")
-
-(eval-after-load 'company
-  '(progn
-     (define-key company-mode-map (kbd "C-:") 'helm-company)
-     (define-key company-mode-map (kbd "M-/") 'company-complete)
-     (define-key company-active-map (kbd "C-:") 'helm-company)))
-
-(add-to-list 'exec-path "/home/andy/bin:/home/andy/.sdkman/candidates/leiningen/current/bin")
-(add-to-list 'exec-path "/home/andy/.sdkman/candidates/leiningen/current/bin")
-
-(autoload 'utop-minor-mode "utop" "Minor mode for utop" t)
-(add-hook 'tuareg-mode-hook 'utop-minor-mode)
-
-(load "auctex.el" nil t t)
-
-;;(define-key octave-mode-map (kbd "C-c C-c") 'octave-send-buffer)
-;;(define-key octave-mode-map (kbd "C-c C-r") 'octave-send-region)
-;;(require 'octave)
-(eval-after-load 'octave '(progn
-                            (define-key octave-mode-map (kbd "C-c C-c") 'octave-send-buffer)
-                            (define-key octave-mode-map (kbd "C-c C-r") 'octave-send-region)
-                            (define-key octave-mode-map (kbd "C-c C-p") 'run-octave)))
-
-(eval-after-load 'nodejs-repl
-  '(progn
-     (define-key js2-mode-map (kbd "C-c C-r") 'nodejs-repl-send-region)
-     (define-key js2-mode-map (kbd "C-c C-c") 'nodejs-repl-send-buffer)
-     (define-key js2-mode-map [f8] 'reboot-nodejs)))
-(add-hook 'js2-mode-hook
-          (lambda ()
-            (define-key js2-mode-map (kbd "C-x C-e") 'nodejs-repl-send-last-expression)
-            (define-key js2-mode-map (kbd "C-c C-r") 'nodejs-repl-send-region)
-            (define-key js2-mode-map (kbd "C-c C-l") 'nodejs-repl-load-file)
-            (define-key js2-mode-map (kbd "C-c C-p") 'nodejs-repl)
-            (define-key js2-mode-map (kbd "C-c C-z") 'nodejs-repl-switch-to-repl)))
-
-
-(require 'ob-python)
-
-;; Want to have inline images displayed after executin a block of python code
-(advice-add 'org-babel-execute-src-block :after (lambda (&rest args)
-                                                  (message "Display images %s" (length args))
-                                                  (org-display-inline-images)))
-
-;; Add a cc-mode style for editing LLVM C and C++ code
-(c-add-style "llvm.org"
-             '("gnu"
-	       (fill-column . 80)
-	       (c++-indent-level . 4)
-	       (c-basic-offset . 4)
-	       (indent-tabs-mode . nil)
-	       (c-offsets-alist . ((arglist-intro . ++)
-				   (innamespace . 0)
-				   (member-init-intro . ++)))))
-
-;; Files with "llvm" in their names will automatically be set to the
-;; llvm.org coding style.
-(add-hook 'c-mode-common-hook
-	  (function
-	   (lambda nil 
-	     (if (string-match "llvm" buffer-file-name)
-		 (progn
-		   (c-set-style "llvm.org"))))))
-
-(require 'haskell-interactive-mode)
-(require 'haskell-process)
-(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-
-(defun end-of-sml (a b &rest xs)
-  "A Im interactive."
-  (interactive)
-  (switch-to-buffer "*SML*")
-  (end-of-buffer))
-
-; (advice-add 'sml-prog-proc-load-file :after 'end-of-sml)
-; (advice-remove 'sml-prog-proc-load-file)
-
-;; SQL Stuff
-;; (require 'sql)
-;; (load-file "~/.emacs.d/sql-interactive-remove-continuation-prompt.el")
-;; (require 'sql-interactive-remove-continuation-prompt)
-
-(defun move-line-up ()
-  "Move up the current line."
-  (interactive)
-  (transpose-lines 1)
-  (forward-line -2)
-  (indent-according-to-mode))
-
-(defun move-line-down ()
-  "Move down the current line."
-  (interactive)
-  (forward-line 1)
-  (transpose-lines 1)
-  (forward-line -1)
-  (indent-according-to-mode))
-
-(global-set-key [(control shift up)]  'move-line-up)
-(global-set-key [(control shift down)]  'move-line-down)
-
-(provide 'init.el)
-;;; init.el ends here
- 
-(put 'narrow-to-region 'disabled nil)
-(put 'narrow-to-page 'disabled nil)
-(put 'downcase-region 'disabled nil)
-
-(put 'scroll-left 'disabled nil)
-(put 'dired-find-alternate-file 'disabled nil)
