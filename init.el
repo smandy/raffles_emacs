@@ -18,6 +18,8 @@
 ;; (set-frame-font "Hack" 't)
 ;; (set-frame-font "Misc Fixed" 't)
 
+(set-frame-font "Hack 15")
+(set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 
 ;; (set-frame-font "Liberation Mono" 't)
 ;; (set-frame-font "Ubuntu Mono" 't)
@@ -38,7 +40,7 @@
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-14-*-*-*-c-80-iso10646-1")
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1")
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-18-*-*-*-c-100-iso10646-1")
-;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1")
+;; (set-framee-font "-xos4-xos4 Terminus-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1")
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-22-*-*-*-c-110-iso10646-1")
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-24-*-*-*-c-120-iso10646-1")
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-28-*-*-*-c-140-iso10646-1")
@@ -69,7 +71,6 @@
 
 ;; Good for coding
 ;; (set-frame-font "Hack 12")
-(set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 (require 'compile)
 (require 'package)
 (package-initialize)
@@ -82,6 +83,12 @@
 
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
 (autoload 'jsx-mode "jsx-mode" "JSX mode" t)
+
+(add-hook 'org-mode-hook
+          (lambda ()
+            ;;(message "Running your org mode hok")
+            (auto-fill-mode 't)
+            (flyspell-mode 't)))
 
 (eval-after-load "org-present"
   '(progn
