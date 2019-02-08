@@ -678,6 +678,11 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                (isofmt  (format-time-string "%Y-%m-%dT%H:%M:%S.%N" (seconds-to-time seconds))))
           (message (format "%s (%s) -> %s" x prefix isofmt))))))
 
+; (parse-epoch-time "1482672627.025747002" )  "1482672627.025747 (s) -> 2016-12-25T13:30:27.025747060"
+; (parse-epoch-time "1482672627025.747023" ) "1482672627025.747 (ms) -> 2016-12-25T13:30:27.025747060"
+; (parse-epoch-time "1482672627025747.032" ) "1482672627025747.0 (µs) -> 2016-12-25T13:30:27.025747060"
+; (parse-epoch-time "1482672627025747023"  ) "1.482672627025747e+18 (ns) -> 2016-12-25T13:30:27.025747060"
+
 ; (format-time-string "%H:%M:%S" (current-time))
 (defun parse-sbe ()
   (interactive)
@@ -746,10 +751,6 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 (require 'time)
 
-; (parse-epoch-time "1482672627.025747002" )  
-; (parse-epoch-time "1482672627025.747023" ) 
-; (parse-epoch-time "1482672627025747.032" ) 
-; (parse-epoch-time "1482672627025747023"  ) 
 
 ;; (setq python-shell-exec-path '( "/home/andy/anaconda3/bin"))              ;; (seconds-to-time 1482672627.025747002) 
 ;; Execute eother of these progn clauses to switch between python2/3
