@@ -2,7 +2,7 @@
 
 ;;; Commentary:
 
-;; Raffles laptop Emacs config
+;; Ritz laptop Emacs config
 
 ;;; Code:
 ;; Andale mono seems to switch on antialiasing *after* a bitmap font has been chosen
