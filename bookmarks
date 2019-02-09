@@ -129,9 +129,9 @@
  (position . 1))
 ("org-capture-last-stored"
  (filename . "~/Dropbox/gtd/journal.org")
- (front-context-string . "**** [2019-02-07")
- (rear-context-string . "-02-07 Thursday\n")
- (position . 250007))
+ (front-context-string . "**** [2019-02-09")
+ (rear-context-string . "-02-09 Saturday\n")
+ (position . 250292))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")

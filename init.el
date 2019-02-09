@@ -84,6 +84,12 @@
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
 (autoload 'jsx-mode "jsx-mode" "JSX mode" t)
 
+(require 'dash)
+;; (mapcar (lambda (hook) (add-hook hook (lambda ()
+;;                                         (auto-fill-mode 't)
+;;                                         (flyspell-mode 't))))
+;;         (list (org-mode-hook org-capture-mode-hook )))
+
 (add-hook 'org-mode-hook
           (lambda ()
             ;;(message "Running your org mode hok")
@@ -246,10 +252,10 @@
     (setq end (point))
     (python-shell-send-region start end)))
 
-(add-hook
- 'python-mode-hook
- (lambda ()
-   (define-key python-mode-map (kbd "C-M-x") 'python-eval-defun-at-point)))
+;; (add-hook
+;;  'python-mode-hook
+;;  (lambda ()
+;;    (define-key python-mode-map (kbd "C-M-x") 'python-eval-defun-at-point)))
 
 (defun compile-agora-debug ()
   (interactive)
@@ -589,9 +595,9 @@
 (require 'flycheck-pyflakes)
 (add-hook 'python-mode-hook 'flycheck-mode)
 
-(autoload 'pylint "pylint")
-(add-hook 'python-mode-hook 'pylint-add-menu-items)
-(add-hook 'python-mode-hook 'pylint-add-key-bindings)
+;;(autoload 'pylint "pylint")
+;;(add-hook 'python-mode-hook 'pylint-add-menu-items)
+;;(add-hook 'python-mode-hook 'pylint-add-key-bindings)
 
 (require 'semantic)
 
@@ -803,6 +809,11 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
           (lambda ()
             (define-key emacs-lisp-mode-map (kbd "C-c C-r") 'eval-region)
             (define-key emacs-lisp-mode-map (kbd "C-c C-c") 'eval-defun)))
+
+
+(add-hook 'tuareg-mode-hook
+          (lambda ()
+            (define-key tuareg-mode-map (kbd "C-c C-c") 'tuareg-eval-buffer)))
 
 (require 'cider-mode)
 (add-hook 'cider-mode-hook
