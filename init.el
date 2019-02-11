@@ -18,8 +18,9 @@
 ;; (set-frame-font "Hack" 't) 
 ;; (set-frame-font "Misc Fixed" 't)
 
+;;(set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 (set-frame-font "Hack 15")
-(set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
+
 
 ;; (set-frame-font "Liberation Mono" 't)
 ;; (set-frame-font "Ubuntu Mono" 't)
