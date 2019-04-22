@@ -21,15 +21,15 @@
 ;;(set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 (set-frame-font "Hack 15")
 
-
 ;; (set-frame-font "Liberation Mono" 't)
 ;; (set-frame-font "Ubuntu Mono" 't)
+
+;; (set-frame-font "Ubuntu Mono 16")
 ;; (set-frame-font "DejaVu Sans Mono" 't)
 ;; (set-frame-font "Consolas" 't)
 ;; (set-frame-font "Inconsolata" 't)
 ;; (set-frame-font "Courier New Bold" 't)
 ;; (set-frame-font "Courier New 20")
-
 
 ;; ΠπðÐþÐσΣ Ж ж Unicode test!! Ꝥ
 
@@ -67,7 +67,6 @@
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 ;; (set-frame-font "Inconsolata 15")
 ;; (set-frame-font "Andale Mono 20")
-
 ;;(set-frame-font "Andale Mono 12")
 
 ;; Good for coding
@@ -179,7 +178,6 @@
 
 (global-set-key (kbd "C-x b") 'helm-mini)
 (global-set-key (kbd "C-x C-b") 'helm-mini)
-
 (global-set-key (kbd "C-x r b") 'helm-bookmarks)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key [f5] 'helm-resume)
@@ -293,11 +291,9 @@
   (interactive)
   (compile-in-own-buffer "build agora release" "rm -rf ~/agora_release && mkdir -p ~/agora_release && cd ~/agora_release && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=~/agora_release/install -G 'Unix Makefiles' ~/repos/agora && make install"))
 
-(defun compile-gem ()
+(defun compile-gem ()some
   (interactive)
   (compile-in-own-buffer "build gem" "cd ~/repos/gem/cpp && scons"))
-
-
 
 (defun compile-imgui-example ()
   (interactive)
@@ -379,16 +375,15 @@
 
 (defun text-scale-smaller ()
   (interactive)
-  (text-scale-adjust -1) )
+  (text-scale-adjust -1))
 
 (defun text-scale-bigger ()
   (interactive)
-  (text-scale-adjust 1) )
+  (text-scale-adjust 1))
 
 (defun text-scale-orig ()
   (interactive)
-  (text-scale-adjust 0) )
-
+  (text-scale-adjust 0))
 
 (global-set-key [f1]  'text-scale-bigger)
 (global-set-key [f2]  'text-scale-smaller)
@@ -525,6 +520,14 @@
 
 ;;(global-set-key (kbd "C-c C-h C-g C-i" ) 'insert-hg-ignore)
 
+(defun refresh-kanban ()
+  (interactive)
+  (save-excursion
+    (beginning-of-buffer)
+    (org-ctrl-c-ctrl-c)))
+(global-set-key [f7]  'refresh-kanban)
+
+
 (require 'workgroups)
 (setq wg-prefix-key (kbd "C-c w"))
 ;; (setq wg-file "~/wg.el")
@@ -575,20 +578,16 @@
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
 
-(setq org-capture-templates '(("t" "Todo" entry (file+headline "~/Dropbox/gtd/gtd.org" "Tasks")
-                               "* TODO %?")
-                              ("r" "Todo" entry (file+headline "~/Dropbox/gtd/gtd.org" "Tasks")
-                               "* TODO %?\n  %i\n  %a")
-                              ("r" "Todo" entry (file+headline "~/Dropbox/gtd/gtd.org" "Tasks")
-                               "* TODO %?\n%F")
-                              ("p" "Performance" entry (file+headline "~/Dropbox/gtd/gtd.org" "Performance")
-                               "* TODO %?\n")
-                              ("c" "Correspondance" entry (file+datetree "~/Dropbox/gtd/corresp.org")
-                               "* %U %?")
-                              ("s" "Schedule" entry (file+headline "~/Dropbox/gtd/gtd.org" "Schedule")
-                               "* TODO %?\n")
-                              ("j" "Journal" entry (file+datetree "~/Dropbox/gtd/journal.org")
-                               "* %U %?")))
+;; (setq org-capture-templates '(("t" "Todo" entry (file+headline "~/Dropbox/gtd/kanban.org" "Tasks")
+;;                                "* TODO %?")
+;;                               ("r" "Todo" entry (file+headline "~/Dropbox/gtd/kanban.org" "Tasks")
+;;                                "* TODO %?\n  %i\n  %a")
+;;                               ("r" "Todo" entry (file+headline "~/Dropbox/gtd/kanban.org" "Tasks")
+;;                                "* TODO %?\n%F")
+;;                               ("c" "Correspondance" entry (file+datetree "~/Dropbox/gtd/corresp.org")
+;;                                "* %U %?")
+;;                               ("j" "Journal" entry (file+datetree "~/Dropbox/gtd/journal.org")
+;;                                "* %U %?")))
 
 (global-set-key (kbd "C-c s") 'ispell)
 (global-set-key (kbd "C-c r") 'revert-buffer-with-prejudice)
@@ -675,21 +674,20 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                    (year (+ epoch (/ secs secsperyear))))
               (when (< 1980 year 2060)
                 (cons secs prefix)))))
-         (match (-some inrange '( ("s"  . 0)
-                                  ("ms" . 3)
-                                  ("µs" . 6) 
-                                  ("ns" . 9)))))
+         (match (-some inrange '(("s"  . 0)
+                                 ("ms" . 3)
+                                 ("µs" . 6) 
+                                 ("ns" . 9)))))
     (if match
         (let* ((seconds (car match))
                (prefix  (cdr match))
                (isofmt  (format-time-string "%Y-%m-%dT%H:%M:%S.%N" (seconds-to-time seconds))))
           (message (format "%s (%s) -> %s" x prefix isofmt))))))
 
-; (parse-epoch-time "1482672627.025747002" )  "1482672627.025747 (s) -> 2016-12-25T13:30:27.025747060"
-; (parse-epoch-time "1482672627025.747023" ) "1482672627025.747 (ms) -> 2016-12-25T13:30:27.025747060"
-; (parse-epoch-time "1482672627025747.032" ) "1482672627025747.0 (µs) -> 2016-12-25T13:30:27.025747060"
-; (parse-epoch-time "1482672627025747023"  ) "1.482672627025747e+18 (ns) -> 2016-12-25T13:30:27.025747060"
-
+; (parse-epoch-time "1482672627.025747002" ) "woohoo 1482672627.025747 (s) -> 2016-12-25T13:30:27.025747060"
+; (parse-epoch-time "1482672627025.747023" ) "woohoo 1482672627025.747 (ms) -> 2016-12-25T13:30:27.025747060"
+; (parse-epoch-time "1482672627025747.032" ) "woohoo 1482672627025747.0 (µs) -> 2016-12-25T13:30:27.025747060"
+                                        ; (parse-epoch-time "1482672627025747023"  ) "woohoo 1.482672627025747e+18 (ns) -> 2016-12-25T13:30:27.025747060"
 ; (format-time-string "%H:%M:%S" (current-time))
 (defun parse-sbe ()
   (interactive)
@@ -746,8 +744,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
    (s-join "")
    (s-reverse)))
 
-;; (commify 63766473674326)
-
+;; (commify 63766473674326)  "63,766,473,674,326"
 ;; (commify 1234) "234"
 
 (defun parse-epoch-time-at-point ()
@@ -933,6 +930,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(ansi-color-faces-vector
    [default bold shadow italic underline bold bold-italic bold])
  '(c-basic-offset 4)
+ '(case-fold-search t)
  '(clang-format-executable "clang-format")
  '(company-clang-arguments nil)
  '(compilation-message-face (quote default))
@@ -999,6 +997,24 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(midnight-mode nil)
  '(nyan-mode t)
  '(org-agenda-files (quote ("/home/andy/Dropbox/gtd")))
+ '(org-capture-templates
+   (quote
+    (("t" "Todo" entry
+      (file+headline "~/Dropbox/gtd/kanban.org" "Tasks")
+      "* TODO %?" :prepend t)
+     ("r" "Todo" entry
+      (file+headline "~/Dropbox/gtd/gtd.org" "Tasks")
+      "* TODO %?" :prepend t)
+     ("r" "Todo" entry
+      (file+headline "~/Dropbox/gtd/kanban.org" "Tasks")
+      "* TODO %?
+%F" :prepend t)
+     ("c" "Correspondance" entry
+      (file+datetree "~/Dropbox/gtd/corresp.org")
+      "* %U %?")
+     ("j" "Journal" entry
+      (file+datetree "~/Dropbox/gtd/journal.org")
+      "* %U %?"))))
  '(org-confirm-babel-evaluate nil)
  '(org-directory "~/Dropbox/gtd")
  '(org-format-latex-options
@@ -1008,9 +1024,17 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(org-hide-leading-stars t)
  '(org-log-done (quote time))
  '(org-preview-latex-image-directory "/var/tmp/ltximg/")
+ '(org-todo-keyword-faces
+   (quote
+    (("BLOCKED" :foreground "red" :weight bold)
+     ("TODOTODAY" :foreground "yellow" :weight bold)
+     ("INPROGRESS" :foreground "green" :weight bold))))
+ '(org-todo-keywords
+   (quote
+    ((sequence "TODO" "TODOTODAY" "INPROGRESS" "BLOCKED" "DONE"))))
  '(package-selected-packages
    (quote
-    (nhexl-mode dracula-theme slime ob-kotlin amd-mode sed-mode ranger thrift doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt ubuntu-theme f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
+    (org-kanban nhexl-mode dracula-theme slime ob-kotlin amd-mode sed-mode ranger thrift doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt ubuntu-theme f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
  '(projectile-tags-backend (quote ggtags))
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--simple-prompt --pylab")
