@@ -14,7 +14,7 @@
 ;; (set-frame-font "Meslo LG L" 't)
 ;; (set-frame-font "Misc Fixed" 't) 
 ;; (set-frame-font "Tamsyn" 't)
-;; (set-frame-font "Andale Mono" 't)
+;; (set-frame-font "Andale Mono 13")
 ;; (set-frame-font "Hack" 't) 
 ;; (set-frame-font "Misc Fixed" 't)
 
