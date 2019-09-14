@@ -11,6 +11,8 @@
 
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 
+;; (set-frame-font "Bedstead 15")
+
 ;; (set-frame-font "Meslo LG L" 't)
 ;; (set-frame-font "Misc Fixed" 't) 
 ;; (set-frame-font "Tamsyn" 't)
@@ -19,7 +21,8 @@
 ;; (set-frame-font "Misc Fixed" 't)
 
 ;;(set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
-(set-frame-font "Hack 15")
+;;(set-frame-font "Hack 15")
+(set-frame-font "Bedstead Semicondensed 18")
 
 ;; (set-frame-font "Liberation Mono" 't)
 ;; (set-frame-font "Ubuntu Mono" 't)
@@ -120,7 +123,7 @@
                  (org-present-read-write)))))
 
 (defun slurp (x)
-  "Clojure slurp function.  Slurp file X."
+  "Clojure slurp function. Slurp file X."
   (with-temp-buffer
     (insert-file-contents x)
     (buffer-string)))
@@ -161,8 +164,8 @@
   (interactive)
   (gdb "gdb -i=mi -nx -x /home/andy/gdbinit/test_epoll.gdbinit"))
 
-
 (global-set-key (kbd "C-x C-o") 'ff-find-other-file)
+(global-set-key (kbd "C-=") 'undo)
 
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "<menu>") 'helm-M-x)
@@ -464,7 +467,7 @@
 
 (require 'color-theme)
 (color-theme-initialize)
-;;(color-theme-midnight)
+(color-theme-midnight)
 ;;(color-theme-deep-blue)
 
 (windmove-default-keybindings 'meta)
@@ -618,50 +621,13 @@
   (interactive)
   (compile-in-buffer "cd ~/repos/sdl/asteroids && scons" "asteroids"))
 
-
 (setq helm-dash-common-docsets '("org.libsdl.sdl20" "C++"))
-
-;; (defun square-bracket ()
-;;   (interactive)
-;;   (save-excursion)
-;;   (let* ((start-pos (region-beginning))
-;;          (end-pos (region-end)))
-;;     (goto-char start-pos)
-;;     (insert-char ?\[)
-;;     (goto-char (1+ end-pos) )
-;;     (insert-char ?\])))
-
-;; (defun do-list ()
-;;   (interactive)
-;;   (save-excursion 
-;;     (let* (
-;;            (start-pos (region-beginning))
-;;            (start-line (line-number-at-pos start-pos ))
-;;            (end-line   (line-number-at-pos (region-end))))
-;;       (message (format "%s %s %s" start-pos start-line end-line))
-;;       (goto-char start-pos)
-;;       (message (format "%s %s" end-line (line-number-at-pos)))
-;;       (while (< (line-number-at-pos) end-line)
-;;         (message (format "point is %s end is %s" (line-number-at-pos) end-line))
-;;         (move-beginning-of-line nil)
-;;         (message "boo")
-;;         (insert-char ?\")
-;;         (move-end-of-line nil)
-;;         (insert-char ?\")
-;;         (if (> ( - end-line (line-number-at-pos)  ) 1 )
-;;             (insert-char ?,))
-;;         (next-line 1)
-;;         (message (format "point is %s end is %s" (line-number-at-pos) end-line))
-;;         ))))
-
-(global-set-key (kbd "C-c [") 'square-bracket)
-;;(global-set-key (kbd "C-c C-p C-p") 'do-list)
 
 (defun parse-epoch-time (s)
   "Parse symbol into an epoch time. Use heuristics to determine if dealing
 with micros, seconds, nanos etc. Display result using 'message' if successful"
   (require 'dash)
-  (let* ((x (float (string-to-number s )))
+  (let* ((x (float (string-to-number s)))
          (epoch 1970 )
          (secsperday (* 24 60 60))
          (secsperyear (* 365.25 secsperday))
@@ -684,10 +650,10 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                (isofmt  (format-time-string "%Y-%m-%dT%H:%M:%S.%N" (seconds-to-time seconds))))
           (message (format "%s (%s) -> %s" x prefix isofmt))))))
 
-; (parse-epoch-time "1482672627.025747002" ) "woohoo 1482672627.025747 (s) -> 2016-12-25T13:30:27.025747060"
-; (parse-epoch-time "1482672627025.747023" ) "woohoo 1482672627025.747 (ms) -> 2016-12-25T13:30:27.025747060"
-; (parse-epoch-time "1482672627025747.032" ) "woohoo 1482672627025747.0 (µs) -> 2016-12-25T13:30:27.025747060"
-                                        ; (parse-epoch-time "1482672627025747023"  ) "woohoo 1.482672627025747e+18 (ns) -> 2016-12-25T13:30:27.025747060"
+; (parse-epoch-time "1482672627.025747002" ) "1482672627.025747 (s) -> 2016-12-25T13:30:27.025747060"
+; (parse-epoch-time "1482672627025.747023" )"1482672627025.747 (ms) -> 2016-12-25T13:30:27.025747060"
+; (parse-epoch-time "1482672627025747.032" )"1482672627025747.0 (µs) -> 2016-12-25T13:30:27.025747060"
+; (parse-epoch-time "1482672627025747023"  )"1.482672627025747e+18 (ns) -> 2016-12-25T13:30:27.025747060"
 ; (format-time-string "%H:%M:%S" (current-time))
 (defun parse-sbe ()
   (interactive)
@@ -731,6 +697,8 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 ;;(global-set-key [f3] 'parse-sbe)
 
+
+
 (defun commify (s)
   (->>
    s
@@ -744,7 +712,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
    (s-join "")
    (s-reverse)))
 
-;; (commify 63766473674326)  "63,766,473,674,326"
+;; (commify 63766473674326) "63,766,473,674,326"
 ;; (commify 1234) "234"
 
 (defun parse-epoch-time-at-point ()
@@ -755,10 +723,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 (require 'time)
 
-
-;; (setq python-shell-exec-path '( "/home/andy/anaconda3/bin"))              ;; (seconds-to-time 1482672627.025747002) 
-;; Execute eother of these progn clauses to switch between python2/3
-
+;; Execute either of these progn forms to switch between python2/3
 (if nil
     (progn
       (set-variable 'python-shell-interpreter "ipython2")
@@ -773,7 +738,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (defun daysBetween (s f)
   (let* ((seconds-per-day ( * 24 60 60 ))
          (conv (lambda (x)
-                 (let ((bits (mapcar 'string-to-int (split-string x "-"))))
+                 (let ((bits (mapcar 'string-to-number (split-string x "-"))))
                    (apply 'encode-time (list 0 0 0
                                              (nth 2 bits)
                                              (nth 1 bits)
@@ -781,7 +746,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
          (st (funcall conv s))
          (ft (funcall conv f)))
     (/ (time-to-seconds (time-subtract ft st)) seconds-per-day)))
-;; (daysBetween "1973-05-09" "2018-04-16")
+;; (daysBetween "1973-05-09" "2019-07-26")
 
 (eval-after-load 'company
   '(progn
@@ -797,17 +762,17 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 (load "auctex.el" nil t t)
 
-;; (eval-after-load 'lisp-interaction
-;;   (progn
-;;     (message "Adding to lisp interaction mode")
-;;     (define-key lisp-interaction-mode-map (kbd "C-c C-c") 'eval-defun)
-;;     (define-key lisp-mode-map (kbd "C-c C-c") 'eval-defun)
-;;     ))
+(eval-after-load 'lisp-interaction
+  (progn
+    (message "Adding to lisp interaction mode")
+    (define-key lisp-interaction-mode-map (kbd "C-c C-c") 'eval-defun)
+    (define-key lisp-mode-map (kbd "C-c C-c") 'eval-defun)
+    ))
+
 (add-hook 'emacs-lisp-mode-hook
           (lambda ()
             (define-key emacs-lisp-mode-map (kbd "C-c C-r") 'eval-region)
             (define-key emacs-lisp-mode-map (kbd "C-c C-c") 'eval-defun)))
-
 
 (add-hook 'tuareg-mode-hook
           (lambda ()
@@ -824,11 +789,13 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                             (define-key octave-mode-map (kbd "C-c C-r") 'octave-send-region)
                             (define-key octave-mode-map (kbd "C-c C-p") 'run-octave)
                             (define-key octave-mode-map (kbd "<f8>") 'run-octave)))
+
 (eval-after-load 'nodejs-repl
   '(progn
      (define-key js2-mode-map (kbd "C-c C-r") 'nodejs-repl-send-region)
      (define-key js2-mode-map (kbd "C-c C-c") 'nodejs-repl-send-buffer)
      (define-key js2-mode-map [f8] 'reboot-nodejs)))
+
 (add-hook 'js2-mode-hook
           (lambda ()
             (define-key js2-mode-map (kbd "C-x C-e") 'nodejs-repl-send-last-expression)
@@ -837,14 +804,12 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
             (define-key js2-mode-map (kbd "C-c C-p") 'nodejs-repl)
             (define-key js2-mode-map (kbd "C-c C-z") 'nodejs-repl-switch-to-repl)))
 
-
 (require 'ob-python)
 
 ;; Want to have inline images displayed after executin a block of python code
 (advice-add 'org-babel-execute-src-block :after (lambda (&rest args)
                                                   (message "Display images %s" (length args))
                                                   (org-display-inline-images)))
-
 
 ;; Add a cc-mode style for editing LLVM C and C++ code
 (c-add-style "llvm.org"
@@ -883,8 +848,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ;; (require 'sql)
 ;; (load-file "~/.emacs.d/sql-interactive-remove-continuation-prompt.el")
 ;; (require 'sql-interactive-remove-continuation-prompt)
-
-(load-theme 'doom-vibrant 't)
+;;(load-theme 'doom-vibrant 't)
 
 (defun move-line-up ()
   "Move up the current line."
@@ -956,6 +920,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(haskell-process-log t)
  '(haskell-process-suggest-remove-import-lines t)
  '(helm-M-x-fuzzy-match t)
+ '(helm-ag-base-command "rg --vimgrep --no-heading --smart-case")
  '(helm-display-buffer-default-size 100)
  '(helm-locate-project-list (quote ("/home/andy/repos/dev")))
  '(helm-org-rifle-show-path t)
@@ -993,6 +958,8 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
         (mode . idl-mode)
         (mode . lisp-mode)))))))
  '(inferior-octave-startup-args (quote ("-i" "--line-editing")))
+ '(inhibit-startup-screen t)
+ '(initial-buffer-choice "~/rasa.el")
  '(magit-diff-use-overlays nil)
  '(midnight-mode nil)
  '(nyan-mode t)
@@ -1034,13 +1001,14 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
     ((sequence "TODO" "TODOTODAY" "INPROGRESS" "BLOCKED" "DONE"))))
  '(package-selected-packages
    (quote
-    (org-kanban nhexl-mode dracula-theme slime ob-kotlin amd-mode sed-mode ranger thrift doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt ubuntu-theme f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
+    (hy-mode org-kanban nhexl-mode dracula-theme slime ob-kotlin amd-mode sed-mode ranger thrift doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt ubuntu-theme f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
  '(projectile-tags-backend (quote ggtags))
  '(python-shell-interpreter "ipython")
  '(python-shell-interpreter-args "--simple-prompt --pylab")
  '(safe-local-variable-values
    (quote
-    ((test-case-name . twisted\.internet\.test\.test_qtreactor)
+    ((helm-ag-command-option . "-tpy -tcpp -td")
+     (test-case-name . twisted\.internet\.test\.test_qtreactor)
      (test-case-name . twisted\.internet\.test\.test_inotify)
      (test-case-name . twisted\.internet\.test\.test_core))))
  '(send-mail-function (quote smtpmail-send-it))
