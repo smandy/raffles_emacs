@@ -12,6 +12,7 @@
         org-end-of-line
         org-force-self-insert
         org-self-insert-command
+        org-yank
         wdired-finish-edit
         ))
 
