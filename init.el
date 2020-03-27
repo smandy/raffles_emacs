@@ -50,7 +50,7 @@
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-22-*-*-*-c-110-iso10646-1")
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-24-*-*-*-c-120-iso10646-1")
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-28-*-*-*-c-140-iso10646-1")
-;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-32-*-*-*-c-160-iso10646-1")b
+;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-32-*-*-*-c-160-iso10646-1")
 
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-15-*-*-*-c-80-iso10646-1")
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1")
@@ -555,6 +555,8 @@
 
 (tool-bar-mode 0)
 (menu-bar-mode 0)
+(scroll-bar-mode 0)
+ 
 
 (setq-default indent-tabs-mode nil)
 
@@ -666,9 +668,9 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
           (message (format "%s (%s) -> %s" x prefix isofmt))))))
 
 ; (parse-epoch-time "1482672627.025747002" ) "1482672627.025747 (s) -> 2016-12-25T13:30:27.025747060"
-; (parse-epoch-time "1482672627025.747023" )"1482672627025.747 (ms) -> 2016-12-25T13:30:27.025747060"
-; (parse-epoch-time "1482672627025747.032" )"1482672627025747.0 (µs) -> 2016-12-25T13:30:27.025747060"
-; (parse-epoch-time "1482672627025747023"  )"1.482672627025747e+18 (ns) -> 2016-12-25T13:30:27.025747060"
+; (parse-epoch-time "1482672627025.747023" ) "1482672627025.747 (ms) -> 2016-12-25T13:30:27.025747060"
+; (parse-epoch-time "1482672627025747.032" ) "1482672627025747.0 (µs) -> 2016-12-25T13:30:27.025747060"
+; (parse-epoch-time "1482672627025747023"  ) "1.482672627025747e+18 (ns) -> 2016-12-25T13:30:27.025747060"
 ; (format-time-string "%H:%M:%S" (current-time))
 (defun parse-sbe ()
   (interactive)
@@ -713,6 +715,8 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ;;(global-set-key [f3] 'parse-sbe)
 
 
+
+
 ;; TODO - broken ( try 1234 )
 (defun commify (s)
   (->>
@@ -728,7 +732,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
    (s-reverse)))
 
 ;; (commify 63766473674326) "63,766,473,674,326"
-;; (commify 1234) 
+;; (commify 1234)  "234"
 
 (defun parse-epoch-time-at-point ()
   (interactive)
