@@ -143,10 +143,10 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/gtd/kanban.org")
- (front-context-string . "** TODO <2020-01")
- (rear-context-string . "#+END:\n\n* Tasks\n")
- (position . 3909))
+ (filename . "~/Dropbox/gtd/journal.org")
+ (front-context-string . "**** [2020-03-15")
+ (rear-context-string . "20-03-15 Sunday\n")
+ (position . 291202))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")
@@ -163,8 +163,8 @@
  (rear-context-string)
  (position . 1))
 ("andy"
- (filename . "/media/andy/58da8f33-32a6-40e9-90df-c397bce7dcaf/andy/")
- (front-context-string . ".adobe\n  drwxrwx")
- (rear-context-string . "96 Jun 12  2013 ")
- (position . 266))
+ (filename . "/scp:andy@ritz:/home/andy/")
+ (front-context-string . "#temp.py#\n  -rw-")
+ (rear-context-string . "58 Jun 22  2019 ")
+ (position . 861))
 )

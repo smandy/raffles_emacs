@@ -5,9 +5,6 @@
 ;; Ritz laptop Emacs config
 
 ;;; Code:
-;; Andale mono seems to switch on antialiasing *after* a bitmap font has been chosen
-;; Seems to be stateful. i.e. if you select Tamsyn (bitmapped), then Inconsolata, antialiasing will be off
-;; However go Andale->Inconsolata and all will be well.
 
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 
@@ -21,11 +18,11 @@
 ;; (set-frame-font "Misc Fixed" 't)
 
 ;;(set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
-;;(set-frame-font "Hack 15")
+(set-frame-font "Hack 10")
 ;;(set-frame-font "Bedstead Semicondensed 18")
 
 ;;(set-frame-font "-xos4-xos4 Terminus-bold-normal-normal-*-16-*-*-*-c-80-iso10646-1" )
-(set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-18-*-*-*-c-100-iso10646-1" )
+;;(set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-18-*-*-*-c-100-iso10646-1" )
 
 ;;(set-frame-font "Terminus 16")
 
@@ -53,7 +50,7 @@
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-22-*-*-*-c-110-iso10646-1")
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-24-*-*-*-c-120-iso10646-1")
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-28-*-*-*-c-140-iso10646-1")
-;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-32-*-*-*-c-160-iso10646-1")b
+;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-32-*-*-*-c-160-iso10646-1")
 
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-15-*-*-*-c-80-iso10646-1")
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1")
@@ -558,6 +555,8 @@
 
 (tool-bar-mode 0)
 (menu-bar-mode 0)
+(scroll-bar-mode 0)
+ 
 
 (setq-default indent-tabs-mode nil)
 
@@ -669,9 +668,9 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
           (message (format "%s (%s) -> %s" x prefix isofmt))))))
 
 ; (parse-epoch-time "1482672627.025747002" ) "1482672627.025747 (s) -> 2016-12-25T13:30:27.025747060"
-; (parse-epoch-time "1482672627025.747023" )"1482672627025.747 (ms) -> 2016-12-25T13:30:27.025747060"
-; (parse-epoch-time "1482672627025747.032" )"1482672627025747.0 (µs) -> 2016-12-25T13:30:27.025747060"
-; (parse-epoch-time "1482672627025747023"  )"1.482672627025747e+18 (ns) -> 2016-12-25T13:30:27.025747060"
+; (parse-epoch-time "1482672627025.747023" ) "1482672627025.747 (ms) -> 2016-12-25T13:30:27.025747060"
+; (parse-epoch-time "1482672627025747.032" ) "1482672627025747.0 (µs) -> 2016-12-25T13:30:27.025747060"
+; (parse-epoch-time "1482672627025747023"  ) "1.482672627025747e+18 (ns) -> 2016-12-25T13:30:27.025747060"
 ; (format-time-string "%H:%M:%S" (current-time))
 (defun parse-sbe ()
   (interactive)
@@ -716,6 +715,8 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ;;(global-set-key [f3] 'parse-sbe)
 
 
+
+
 ;; TODO - broken ( try 1234 )
 (defun commify (s)
   (->>
@@ -731,7 +732,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
    (s-reverse)))
 
 ;; (commify 63766473674326) "63,766,473,674,326"
-;; (commify 1234) 
+;; (commify 1234)  "234"
 
 (defun parse-epoch-time-at-point ()
   (interactive)
@@ -863,7 +864,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ;; (require 'sql)
 ;; (load-file "~/.emacs.d/sql-interactive-remove-continuation-prompt.el")
 ;; (require 'sql-interactive-remove-continuation-prompt)
-;; (load-theme 'ubuntu 't)
+(load-theme 'deeper-blue 't)
 
 (defun move-line-up ()
   "Move up the current line."
@@ -1015,15 +1016,17 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
    (quote
     (("BLOCKED" :foreground "red" :weight bold)
      ("TODOTODAY" :foreground "yellow" :weight bold)
-     ("INPROGRESS" :foreground "green" :weight bold))))
+     ("INPROGRESS" :foreground "green" :weight bold)
+     ("DONE" :foreground "green" :weight bold)
+     )))
  '(org-todo-keywords
    (quote
-    ((sequence "TODO" "TODOTODAY" "INPROGRESS" "BLOCKED" "DONE"))))
+    ((sequence "TODO" "TODOTODAY" "INPROGRESS" "BLOCKED" "DONE" "NEVER"))))
  '(package-selected-packages
    (quote
     (psgml reason-mode webfeeder olivetti unicode-fonts hy-mode org-kanban nhexl-mode dracula-theme slime ob-kotlin amd-mode sed-mode ranger thrift doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt ubuntu-theme f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
  '(projectile-tags-backend (quote ggtags))
- '(python-shell-interpreter "ipython")
+ '(python-shell-interpreter "ipython3")
  '(python-shell-interpreter-args "--simple-prompt --pylab")
  '(safe-local-variable-values
    (quote
