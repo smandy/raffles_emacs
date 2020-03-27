@@ -863,7 +863,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ;; (require 'sql)
 ;; (load-file "~/.emacs.d/sql-interactive-remove-continuation-prompt.el")
 ;; (require 'sql-interactive-remove-continuation-prompt)
-(load-theme 'ubuntu 't)
+;; (load-theme 'ubuntu 't)
 
 (defun move-line-up ()
   "Move up the current line."
