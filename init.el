@@ -18,7 +18,7 @@
 ;; (set-frame-font "Misc Fixed" 't)
 
 ;;(set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
-(set-frame-font "Hack 10")
+(set-frame-font "Hack 12")
 ;;(set-frame-font "Bedstead Semicondensed 18")
 
 ;;(set-frame-font "-xos4-xos4 Terminus-bold-normal-normal-*-16-*-*-*-c-80-iso10646-1" )
@@ -187,6 +187,8 @@
 (global-set-key (kbd "C-c C-h C-s") 'helm-swoop)
 (global-set-key (kbd "C-c C-h C-l") 'helm-locate)
 (global-set-key (kbd "C-c C-h C-a") 'helm-do-ag)
+(global-set-key (kbd "C-c C-f C-i C-x") 'parse-fix)
+
 
 (global-set-key (kbd "M-g M-f") 'helm-gtags-find-files)
 (global-set-key (kbd "M-g M-t") 'helm-gtags-find-tag)
@@ -615,6 +617,9 @@
 (require 'flycheck-pyflakes)
 (add-hook 'python-mode-hook 'flycheck-mode)
 
+
+
+
 ;;(autoload 'pylint "pylint")
 ;;(add-hook 'python-mode-hook 'pylint-add-menu-items)
 ;;(add-hook 'python-mode-hook 'pylint-add-key-bindings)
@@ -639,6 +644,8 @@
   (compile-in-buffer "cd ~/repos/sdl/asteroids && scons" "asteroids"))
 
 (setq helm-dash-common-docsets '("org.libsdl.sdl20" "C++" "Boost"))
+
+
 
 (defun parse-epoch-time (s)
   "Parse symbol into an epoch time. Use heuristics to determine if dealing
@@ -666,6 +673,8 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                (prefix  (cdr match))
                (isofmt  (format-time-string "%Y-%m-%dT%H:%M:%S.%N" (seconds-to-time seconds))))
           (message (format "%s (%s) -> %s" x prefix isofmt))))))
+
+(global-set-key [f11] 'parse-fix')
 
 ; (parse-epoch-time "1482672627.025747002" ) "1482672627.025747 (s) -> 2016-12-25T13:30:27.025747060"
 ; (parse-epoch-time "1482672627025.747023" ) "1482672627025.747 (ms) -> 2016-12-25T13:30:27.025747060"
@@ -712,6 +721,30 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
             (kill-line))
           (forward-line))))))
 
+
+(load "~/.emacs.d/tags.el")
+
+(defun parse-fix ()
+  (interactive)
+  (let* ((msg (thing-at-point 'line))
+         (parsed (->> msg
+                      (string-match "8=FIX.*")
+                      (substring msg)
+                      (s-split "")
+                      (--map (s-split "=" it))
+                      (--filter (= (length it) 2))
+                      (--map (apply 'cons it))
+                      (-map (-lambda ((tag_value &as tag . value))
+                               (list (gethash tag tags-hash)
+                                     tag
+                                     (--if-let (gethash tag_value enums-hash) (format "%s (%s)" value it) value))))
+                      (--map (apply 'format "%30s : %5s = %-10s" it))
+                      (s-join "\n"))))
+    (switch-to-buffer (generate-new-buffer "FIX"))
+    (insert (format "\n%s\n==========================\n\n%s" msg parsed))))
+
+
+
 ;;(global-set-key [f3] 'parse-sbe)
 
 
@@ -725,14 +758,14 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
    (s-reverse)
    (s-split "")
    (cdr)
-   (-partition 3)
+   (-partition-all 3)
    (-interpose '(","))
    (-flatten)
    (s-join "")
    (s-reverse)))
 
 ;; (commify 63766473674326) "63,766,473,674,326"
-;; (commify 1234)  "234"
+;; (commify 1234)
 
 (defun parse-epoch-time-at-point ()
   (interactive)

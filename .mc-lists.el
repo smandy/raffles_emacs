@@ -21,6 +21,7 @@
         c-electric-lt-gt
         c-electric-paren
         goto-line
+        markdown-outdent-or-delete
         mouse-appearance-menu
         mouse-buffer-menu
         mouse-set-region

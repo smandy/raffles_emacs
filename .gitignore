@@ -29,3 +29,5 @@ image-dired/**
 url/**
 /octave-workspace
 var/**
+ac-comphist.dat
+/projectile-bookmarks.eld
