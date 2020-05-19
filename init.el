@@ -21,8 +21,6 @@
 (set-frame-font "Hack 12")
 ;;(set-frame-font "Bedstead Semicondensed 18")
 
-;;(set-frame-font "-xos4-xos4 Terminus-bold-normal-normal-*-16-*-*-*-c-80-iso10646-1" )
-;;(set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-18-*-*-*-c-100-iso10646-1" )
 
 ;;(set-frame-font "Terminus 16")
 
@@ -747,10 +745,11 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 ;;(global-set-key [f3] 'parse-sbe)
 
+(defun wu (fmt x)
+  (message fmt x)
+  x)
 
-
-
-;; TODO - broken ( try 1234 )
+;; Fixed !!!
 (defun commify (s)
   (->>
    s
@@ -764,6 +763,9 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
    (s-join "")
    (s-reverse)))
 
+(format "%s" 12)
+
+;; (commify 1234) "1,234"
 ;; (commify 63766473674326) "63,766,473,674,326"
 ;; (commify 1234)
 
@@ -808,6 +810,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 (add-to-list 'exec-path "/home/andy/bin:/home/andy/.sdkman/candidates/leiningen/current/bin")
 (add-to-list 'exec-path "/home/andy/.sdkman/candidates/leiningen/current/bin")
+(add-to-list 'exec-path "/home/andy")
 
 (autoload 'utop-minor-mode "utop" "Minor mode for utop" t)
 (add-hook 'tuareg-mode-hook 'utop-minor-mode)
@@ -841,6 +844,13 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                             (define-key octave-mode-map (kbd "C-c C-r") 'octave-send-region)
                             (define-key octave-mode-map (kbd "C-c C-p") 'run-octave)
                             (define-key octave-mode-map (kbd "<f8>") 'run-octave)))
+
+(eval-after-load 'hy-mode '(progn
+                            (define-key hy-mode-map (kbd "C-c C-c") 'hy-shell-eval-buffer)
+                            (define-key hy-mode-map (kbd "C-c C-r") 'hy-shell-eval-region)
+                            (define-key hy-mode-map (kbd "<f8>") 'run-octave)))
+
+
 
 (eval-after-load 'nodejs-repl
   '(progn
@@ -1050,14 +1060,13 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
     (("BLOCKED" :foreground "red" :weight bold)
      ("TODOTODAY" :foreground "yellow" :weight bold)
      ("INPROGRESS" :foreground "green" :weight bold)
-     ("DONE" :foreground "green" :weight bold)
-     )))
+     ("DONE" :foreground "green" :weight bold))))
  '(org-todo-keywords
    (quote
     ((sequence "TODO" "TODOTODAY" "INPROGRESS" "BLOCKED" "DONE" "NEVER"))))
  '(package-selected-packages
    (quote
-    (psgml reason-mode webfeeder olivetti unicode-fonts hy-mode org-kanban nhexl-mode dracula-theme slime ob-kotlin amd-mode sed-mode ranger thrift doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt ubuntu-theme f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
+    (command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti unicode-fonts hy-mode org-kanban nhexl-mode dracula-theme slime ob-kotlin amd-mode sed-mode ranger thrift doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt ubuntu-theme f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
  '(projectile-tags-backend (quote ggtags))
  '(python-shell-interpreter "ipython3")
  '(python-shell-interpreter-args "--simple-prompt --pylab")

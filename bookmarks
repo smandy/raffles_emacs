@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("y"
+(("repos"
+ (filename . "~/repos/")
+ (front-context-string . "2dboy\n  drwxrwxr")
+ (rear-context-string . "96 Oct 30  2016 ")
+ (position . 214))
+("y"
  (filename . "/scp:andy@skye:/Users/andy/Desktop/IMG_5401.JPG")
  (position . 0)
  (image-type . imagemagick)
@@ -144,9 +149,9 @@
  (position . 1))
 ("org-capture-last-stored"
  (filename . "~/Dropbox/gtd/journal.org")
- (front-context-string . "**** [2020-03-15")
- (rear-context-string . "20-03-15 Sunday\n")
- (position . 291202))
+ (front-context-string . "**** [2020-03-30")
+ (rear-context-string . "20-03-30 Monday\n")
+ (position . 299378))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")
