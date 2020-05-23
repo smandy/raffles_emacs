@@ -672,7 +672,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                (isofmt  (format-time-string "%Y-%m-%dT%H:%M:%S.%N" (seconds-to-time seconds))))
           (message (format "%s (%s) -> %s" x prefix isofmt))))))
 
-(global-set-key [f11] 'parse-fix')
+(global-set-key [f11] 'parse-fix)
 
 ; (parse-epoch-time "1482672627.025747002" ) "1482672627.025747 (s) -> 2016-12-25T13:30:27.025747060"
 ; (parse-epoch-time "1482672627025.747023" ) "1482672627025.747 (ms) -> 2016-12-25T13:30:27.025747060"
