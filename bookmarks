@@ -1,8 +1,30 @@
-;;;; Emacs Bookmark Format Version 1 ;;;; -*- coding: utf-8-emacs -*- 
+;;;; Emacs Bookmark Format Version 1 ;;;; -*- coding: utf-8-emacs -*-
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("repos"
+(("Downloads"
+ (filename . "~/Downloads/")
+ (front-context-string . "fitbit_export_20")
+ (rear-context-string . "22 May 19 08:36 ")
+ (position . 132))
+("the voice"
+ (filename . "~/Dropbox/gtd/robbins/Now I am the Voice (1) (1).pdf")
+ (front-context-string . "%PDF-1.4%\342\343\317\323\n")
+ (rear-context-string)
+ (position . 1)
+ (page . 1)
+ (handler . doc-view-bookmark-jump))
+("goldStars.org"
+ (filename . "~/Dropbox/gtd/goldStars.org")
+ (front-context-string . "** Streak Starti")
+ (rear-context-string . "0 Mon> \n* Walks\n")
+ (position . 137))
+("elpa"
+ (filename . "~/.emacs.d/elpa/")
+ (front-context-string . "undo-tree-0.7.5\n")
+ (rear-context-string . "96 Oct  2 13:29 ")
+ (position . 20725))
+("repos"
  (filename . "~/repos/")
  (front-context-string . "2dboy\n  drwxrwxr")
  (rear-context-string . "96 Oct 30  2016 ")
@@ -148,10 +170,10 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/gtd/journal.org")
- (front-context-string . "**** [2020-03-30")
- (rear-context-string . "20-03-30 Monday\n")
- (position . 299378))
+ (filename . "~/Dropbox/gtd/kanban.org")
+ (front-context-string . "** TODO Gulag Ar")
+ (rear-context-string . "#+END:\n\n* Tasks\n")
+ (position . 25945))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")

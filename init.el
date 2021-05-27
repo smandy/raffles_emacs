@@ -16,12 +16,13 @@
 ;; (set-frame-font "Andale Mono 13")
 ;; (set-frame-font "Hack" 't) 
 ;; (set-frame-font "Misc Fixed" 't)
+;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
+(set-frame-font "JetBrains Mono 12")
 
-;;(set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
-(set-frame-font "Hack 12")
+;;(set-frame-font "Hack 12")
 ;;(set-frame-font "Bedstead Semicondensed 18")
 
-
+;; (set-frame-font "Misc Fixed 12")
 ;;(set-frame-font "Terminus 16")
 
 ;; (set-frame-font "Liberation Mono" 't)
@@ -99,6 +100,7 @@
           (lambda ()
             ;;(message "Running your org mode hok")
             (auto-fill-mode 't)
+            (org-superstar-mode 't)
             (flyspell-mode 't)))
 
 ;; Meh copy/paste. Maybe nicer way of reducing boilerplate
@@ -108,7 +110,6 @@
             (auto-fill-mode 't)
             (flyspell-mode 't)))
 
-(message "Woohoo")
 
 (eval-after-load "org-present"
   '(progn
@@ -177,6 +178,24 @@
 
 (global-set-key (kbd "C-x C-o") 'ff-find-other-file)
 (global-set-key (kbd "C-=") 'undo)
+
+(defun insert-white-star ()
+  (interactive)
+  (insert (char-from-name "WHITE STAR")))
+(defun insert-black-star ()
+  (interactive)
+  (insert (char-from-name "BLACK STAR")))
+
+(global-set-key [kp-add] 'insert-black-star)
+(global-set-key [kp-subtract] 'insert-white-star)
+(global-set-key [kp-begin] 'org-sort-entries)
+(global-set-key [kp-left] 'insert-white-star)
+(global-set-key [kp-right] 'insert-white-star)
+
+(global-set-key [kp-subtract] 'insert-white-star)
+
+(global-set-key [XF86AudioPlay] 'insert-white-star)
+
 
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "<menu>") 'helm-M-x)
@@ -307,7 +326,7 @@
   (interactive)
   (compile-in-own-buffer "build agora release" "rm -rf ~/agora_release && mkdir -p ~/agora_release && cd ~/agora_release && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=~/agora_release/install -G 'Unix Makefiles' ~/repos/agora && make install"))
 
-(defun compile-gem ()some
+(defun compile-gem ()
   (interactive)
   (compile-in-own-buffer "build gem" "cd ~/repos/gem/cpp && scons"))
 
@@ -370,10 +389,10 @@
 ;;(global-set-key (kbd "C-s")  'swiper-helm))
 ;;(global-set-key (kbd "C-s")  'isearch-forward)
 
-(require 'workgroups)
-(setq wg-prefix-key (kbd "C-c w"))
-(workgroups-mode)
-(wg-load "~/.emacs.d/wg.el")
+;;(require 'workgroups2)
+;;(setq wg-prefix-key (kbd "C-c w"))
+;;(workgroups-mode 't)
+;;(wg-load "~/.emacs.d/wg.el")
 
 (require 'haskell-interactive-mode)
 (require 'haskell-process)
@@ -547,7 +566,7 @@
 
 
 (require 'workgroups)
-(setq wg-prefix-key (kbd "C-c w"))
+;;(setq wg-prefix-key (kbd "C-c w"))
 ;; (setq wg-file "~/wg.el")
 ;; (workgroups-mode 1)
 ;;(wg-load wg-file)
@@ -614,9 +633,6 @@
 
 (require 'flycheck-pyflakes)
 (add-hook 'python-mode-hook 'flycheck-mode)
-
-
-
 
 ;;(autoload 'pylint "pylint")
 ;;(add-hook 'python-mode-hook 'pylint-add-menu-items)
@@ -765,10 +781,6 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 (format "%s" 12)
 
-;; (commify 1234) "1,234"
-;; (commify 63766473674326) "63,766,473,674,326"
-;; (commify 1234)
-
 (defun parse-epoch-time-at-point ()
   (interactive)
   (parse-epoch-time (thing-at-point 'symbol)))
@@ -873,6 +885,10 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                                                   (message "Display images %s" (length args))
                                                   (org-display-inline-images)))
 
+;; There was a place before time where undo tree didn't exist
+(require 'undo-tree)
+(global-undo-tree-mode)
+
 ;; Add a cc-mode style for editing LLVM C and C++ code
 (c-add-style "llvm.org"
              '("gnu"
@@ -893,6 +909,18 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 		 (progn
 		   (c-set-style "llvm.org"))))))
 
+(require 'dash)
+(defun convert-fitbit-weight-row-to-org ()
+  (interactive)
+  (re-search-forward "\"\\([0-9][0-9]\\)\\-\\([0-9][0-9]\\)\\-\\([0-9][0-9][0-9][0-9]\\)\",\"\\([0-9\\.]+\\)\",")
+  (-let* ( ((day month year weight) (--map (string-to-number (match-string it )) (number-sequence 1 4 )) )
+           ((isofmt) (list (format-time-string "[%Y-%m-%d %a]" (encode-time (list 0 0 0 day month year 0 nil 0 ))))))
+    (beginning-of-line)
+    (kill-line)
+    (insert (format " | # | %s | %.2f | | Aria |" isofmt weight) )
+    (beginning-of-line)
+    (next-line)))
+(global-set-key [kp-up] 'convert-fitbit-weight-row-to-org)
 
 (defun end-of-sml (a b &rest xs)
   "A Im interactive."
@@ -907,7 +935,8 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ;; (require 'sql)
 ;; (load-file "~/.emacs.d/sql-interactive-remove-continuation-prompt.el")
 ;; (require 'sql-interactive-remove-continuation-prompt)
-(load-theme 'deeper-blue 't)
+(load-theme 'manoj-dark 't)
+(load-theme 'sanityinc-tomorrow-blue)
 
 (defun move-line-up ()
   "Move up the current line."
@@ -956,23 +985,21 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(case-fold-search t)
  '(clang-format-executable "clang-format")
  '(company-clang-arguments nil)
- '(compilation-message-face (quote default))
+ '(compilation-message-face 'default)
  '(custom-safe-themes
-   (quote
-    ("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "d8dc153c58354d612b2576fea87fe676a3a5d43bcc71170c62ddde4a1ad9e1fb" "274fa62b00d732d093fc3f120aca1b31a6bb484492f31081c1814a858e25c72e" "013c62a1fcee7c8988c831027b1c38ae215f99722911b69e570f21fc19cb662e" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "4597d1e9bbf1db2c11d7cf9a70204fa42ffc603a2ba5d80c504ca07b3e903770" "bbb4a4d39ed6551f887b7a3b4b84d41a3377535ccccf901a3c08c7317fad7008" "aa0a998c0aa672156f19a1e1a3fb212cdc10338fb50063332a0df1646eb5dfea" "5715d3b4b071d33af95e9ded99a450aad674e308abb06442a094652a33507cd2" "53d1bb57dadafbdebb5fbd1a57c2d53d2b4db617f3e0e05849e78a4f78df3a1b" "a866134130e4393c0cad0b4f1a5b0dd580584d9cf921617eee3fd54b6f09ac37" "0598de4cc260b7201120b02d580b8e03bd46e5d5350ed4523b297596a25f7403" "891debfe489c769383717cc7d0020244a8d62ce6f076b2c42dd1465b7c94204d" "242ed4611e9e78142f160e9a54d7e108750e973064cee4505bfcfc22cc7c61b1" "4e21fb654406f11ab2a628c47c1cbe53bab645d32f2c807ee2295436f09103c6" "723e48296d0fc6e030c7306c740c42685d672fd22337bc84392a1cf92064788a" "c5d320f0b5b354b2be511882fc90def1d32ac5d38cccc8c68eab60a62d1621f2" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3d5307e5d6eb221ce17b0c952aa4cf65dbb3fa4a360e12a71e03aab78e0176c5" "7bc31a546e510e6bde482ebca992e293a54cb075a0cbfb384bf2bf5357d4dee3" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
+   '("2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "f2c35f8562f6a1e5b3f4c543d5ff8f24100fae1da29aeb1864bbc17758f52b70" "51ec7bfa54adf5fff5d466248ea6431097f5a18224788d0bd7eb1257a4f7b773" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "d8dc153c58354d612b2576fea87fe676a3a5d43bcc71170c62ddde4a1ad9e1fb" "274fa62b00d732d093fc3f120aca1b31a6bb484492f31081c1814a858e25c72e" "013c62a1fcee7c8988c831027b1c38ae215f99722911b69e570f21fc19cb662e" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "4597d1e9bbf1db2c11d7cf9a70204fa42ffc603a2ba5d80c504ca07b3e903770" "bbb4a4d39ed6551f887b7a3b4b84d41a3377535ccccf901a3c08c7317fad7008" "aa0a998c0aa672156f19a1e1a3fb212cdc10338fb50063332a0df1646eb5dfea" "5715d3b4b071d33af95e9ded99a450aad674e308abb06442a094652a33507cd2" "53d1bb57dadafbdebb5fbd1a57c2d53d2b4db617f3e0e05849e78a4f78df3a1b" "a866134130e4393c0cad0b4f1a5b0dd580584d9cf921617eee3fd54b6f09ac37" "0598de4cc260b7201120b02d580b8e03bd46e5d5350ed4523b297596a25f7403" "891debfe489c769383717cc7d0020244a8d62ce6f076b2c42dd1465b7c94204d" "242ed4611e9e78142f160e9a54d7e108750e973064cee4505bfcfc22cc7c61b1" "4e21fb654406f11ab2a628c47c1cbe53bab645d32f2c807ee2295436f09103c6" "723e48296d0fc6e030c7306c740c42685d672fd22337bc84392a1cf92064788a" "c5d320f0b5b354b2be511882fc90def1d32ac5d38cccc8c68eab60a62d1621f2" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3d5307e5d6eb221ce17b0c952aa4cf65dbb3fa4a360e12a71e03aab78e0176c5" "7bc31a546e510e6bde482ebca992e293a54cb075a0cbfb384bf2bf5357d4dee3" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default))
  '(debug-on-error t)
  '(display-time-world-list
-   (quote
-    (("Australia/Perth" "Perth")
+   '(("Australia/Perth" "Perth")
      ("Asia/Dubai" "Dubai")
      ("Europe/Munich" "Munich")
      ("Europe/London" "London")
      ("Europe/Paris" "Paris")
      ("Europe/Berlin" "Berlin")
      ("America/New_York" "New York")
-     ("America/Chicago" "Chicago"))))
+     ("America/Chicago" "Chicago")))
  '(flycheck-c/c++-clang-executable "clang-5.0")
- '(flycheck-clang-args (quote ("-xc++")))
+ '(flycheck-clang-args '("-xc++"))
  '(flycheck-clang-language-standard "c++14")
  '(fountain-export-font "Courier New")
  '(fountain-export-include-scene-numbers t)
@@ -984,12 +1011,11 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(helm-M-x-fuzzy-match t)
  '(helm-ag-base-command "rg-wrapper --vimgrep --no-heading --smart-case")
  '(helm-display-buffer-default-size 100)
- '(helm-locate-project-list (quote ("/home/andy/repos/dev")))
+ '(helm-locate-project-list '("/home/andy/repos/dev"))
  '(helm-org-rifle-show-path t)
- '(ibuffer-saved-filter-groups (quote (("mydefs" ("agora+dev" (used-mode . c++-mode))))))
+ '(ibuffer-saved-filter-groups '(("mydefs" ("agora+dev" (used-mode . c++-mode)))))
  '(ibuffer-saved-filters
-   (quote
-    (("foo2"
+   '(("foo2"
       ((mode . c++-mode)
        (or
         (projectile-files . "/mnt/hdd/andy/repos/dev")
@@ -1018,75 +1044,70 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
         (mode . c-mode)
         (mode . java-mode)
         (mode . idl-mode)
-        (mode . lisp-mode)))))))
- '(inferior-octave-startup-args (quote ("-i" "--line-editing")))
+        (mode . lisp-mode))))))
+ '(inferior-octave-startup-args '("-i" "--line-editing"))
  '(inhibit-startup-screen t)
- '(initial-buffer-choice "~/rasa.el")
  '(magit-diff-use-overlays nil)
  '(midnight-mode nil)
  '(nyan-mode t)
  '(org-agenda-files
-   (quote
-    ("/home/andy/Dropbox/gtd/flagged.org" "/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/kanban.org" "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/gtd.org")))
+   '("/home/andy/Dropbox/gtd/flagged.org" "/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/kanban.org" "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/bmcourse.org" "/home/andy/Dropbox/gtd/robbins/business_mastery.org" "/home/andy/Dropbox/gtd/robbins/coaching.org" "/home/andy/Dropbox/gtd/robbins/time_of_your_life.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/robbins/wealth_mastery.org" "/home/andy/Dropbox/gtd/goldStars.org" "/home/andy/Dropbox/gtd/shopping.org" "/home/andy/Dropbox/gtd/gtd.org"))
+ '(org-babel-load-languages '((dot . t) (emacs-lisp . t)))
  '(org-capture-templates
-   (quote
-    (("t" "Todo" entry
+   '(("t" "Todo" entry
       (file+headline "~/Dropbox/gtd/kanban.org" "Tasks")
       "* TODO %?" :prepend t)
      ("r" "Todo" entry
       (file+headline "~/Dropbox/gtd/gtd.org" "Tasks")
       "* TODO %?" :prepend t)
+     ("b" "Todo" entry
+      (file+headline "~/Dropbox/gtd/kanban.org" "Books")
+      "* TODO %?" :prepend t)
+     ("s" "Todo" entry
+      (file+headline "~/Dropbox/gtd/shopping.org" "Stuff")
+      "* TODO %?" :prepend t)
      ("r" "Todo" entry
       (file+headline "~/Dropbox/gtd/kanban.org" "Tasks")
-      "* TODO %?
-%F" :prepend t)
+      "* TODO %? %F" :prepend t)
      ("c" "Correspondance" entry
       (file+datetree "~/Dropbox/gtd/corresp.org")
       "* %U %?")
      ("j" "Journal" entry
       (file+datetree "~/Dropbox/gtd/journal.org")
-      "* %U %?"))))
+      "* %U %?")))
  '(org-confirm-babel-evaluate nil)
  '(org-directory "~/Dropbox/gtd")
  '(org-format-latex-options
-   (quote
-    (:foreground default :background default :scale 3.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
-                 ("begin" "$1" "$" "$$" "\\(" "\\["))))
+   '(:foreground default :background default :scale 3.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+                 ("begin" "$1" "$" "$$" "\\(" "\\[")))
  '(org-hide-leading-stars t)
- '(org-log-done (quote time))
+ '(org-log-done 'time)
+ '(org-lowest-priority 90)
  '(org-preview-latex-image-directory "/var/tmp/ltximg/")
  '(org-todo-keyword-faces
-   (quote
-    (("BLOCKED" :foreground "red" :weight bold)
+   '(("BLOCKED" :foreground "red" :weight bold)
      ("TODOTODAY" :foreground "yellow" :weight bold)
      ("INPROGRESS" :foreground "green" :weight bold)
-     ("DONE" :foreground "green" :weight bold))))
+     ("DONE" :foreground "green" :weight bold)
+     ("MUST" . "(:foreground \"red\" :weight bold)")))
  '(org-todo-keywords
-   (quote
-    ((sequence "TODO" "TODOTODAY" "INPROGRESS" "BLOCKED" "DONE" "NEVER"))))
+   '((sequence "TODO" "TODOTODAY" "INPROGRESS" "BLOCKED" "DONE" "NEVER")))
  '(package-selected-packages
-   (quote
-    (command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti unicode-fonts hy-mode org-kanban nhexl-mode dracula-theme slime ob-kotlin amd-mode sed-mode ranger thrift doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt ubuntu-theme f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game)))
- '(projectile-tags-backend (quote ggtags))
+   '(spacebar org-superstar magit-todos helm-flymake flycheck-rust flymake-rust rust-playground color-theme-sanityinc-tomorrow zenburn-theme undo-tree persp-mode keyfreq command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti unicode-fonts hy-mode org-kanban nhexl-mode dracula-theme slime ob-kotlin amd-mode sed-mode ranger thrift doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt ubuntu-theme f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game))
+ '(projectile-tags-backend 'ggtags)
  '(python-shell-interpreter "ipython3")
  '(python-shell-interpreter-args "--simple-prompt --pylab")
  '(safe-local-variable-values
-   (quote
-    ((helm-ag-command-option . "-tpy -tcpp -td")
+   '((helm-ag-command-option . "-tpy -tcpp -td")
      (test-case-name . twisted\.internet\.test\.test_qtreactor)
      (test-case-name . twisted\.internet\.test\.test_inotify)
-     (test-case-name . twisted\.internet\.test\.test_core))))
- '(send-mail-function (quote smtpmail-send-it))
+     (test-case-name . twisted\.internet\.test\.test_core)))
+ '(send-mail-function 'smtpmail-send-it)
  '(show-paren-mode t)
- '(sql-postgres-login-paramsupo
-   (quote
-    ((user :default "andy")
-     server
-     (database :default "andy"))))
+ '(sql-postgres-login-paramsupo '((user :default "andy") server (database :default "andy")))
  '(tab-width 4)
  '(vc-annotate-background nil)
- '(vc-annotate-very-old-color nil t)
- '(wg-morph-on nil))
+ '(vc-annotate-very-old-color nil t))
 (put 'scroll-left 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
 (menu-bar-mode 0)

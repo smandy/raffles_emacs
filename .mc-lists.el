@@ -5,10 +5,12 @@
       '(
         c-electric-colon
         clang-format-buffer
+        fill-paragraph
         indent-for-tab-command
         kill-region
         org-beginning-of-line
         org-cycle
+        org-delete-char
         org-end-of-line
         org-force-self-insert
         org-self-insert-command
