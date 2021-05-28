@@ -2,7 +2,7 @@
 
 ;;; Commentary:
 
-;; Ritz laptop Emacs config
+;; Ritz/Raffles laptop Emacs config
 
 ;;; Code:
 
