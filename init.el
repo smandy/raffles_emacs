@@ -913,6 +913,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (require 'dash)
 (defun convert-fitbit-weight-row-to-org ()
   (interactive)
+
   (re-search-forward "\"\\([0-9][0-9]\\)\\-\\([0-9][0-9]\\)\\-\\([0-9][0-9][0-9][0-9]\\)\",\"\\([0-9\\.]+\\)\",")
   (-let* ( ((day month year weight) (--map (string-to-number (match-string it )) (number-sequence 1 4 )) )
            ((isofmt) (list (format-time-string "[%Y-%m-%d %a]" (encode-time (list 0 0 0 day month year 0 nil 0 ))))))
@@ -1053,7 +1054,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(midnight-mode nil)
  '(nyan-mode t)
  '(org-agenda-files
-   '("/home/andy/Dropbox/gtd/flagged.org" "/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/kanban.org" "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/bmcourse.org" "/home/andy/Dropbox/gtd/robbins/business_mastery.org" "/home/andy/Dropbox/gtd/robbins/coaching.org" "/home/andy/Dropbox/gtd/robbins/time_of_your_life.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/robbins/wealth_mastery.org" "/home/andy/Dropbox/gtd/goldStars.org" "/home/andy/Dropbox/gtd/shopping.org" "/home/andy/Dropbox/gtd/gtd.org"))
+   '("/home/andy/Dropbox/gtd/flagged.org" "/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/kanban.org" "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/bmcourse.org" "/home/andy/Dropbox/gtd/robbins/business_mastery.org" "/home/andy/Dropbox/gtd/robbins/coaching.org" "/home/andy/Dropbox/gtd/robbins/time_of_your_life.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/robbins/wealth_mastery.org" "/home/andy/Dropbox/gtd/goldStars.org" "/home/andy/Dropbox/gtd/shopping.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/weekly.org"))
  '(org-babel-load-languages '((dot . t) (emacs-lisp . t)))
  '(org-capture-templates
    '(("t" "Todo" entry

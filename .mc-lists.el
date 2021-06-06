@@ -6,6 +6,7 @@
         c-electric-colon
         clang-format-buffer
         fill-paragraph
+        helm-M-x
         indent-for-tab-command
         kill-region
         org-beginning-of-line
