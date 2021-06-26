@@ -103,6 +103,7 @@
           (lambda ()
             (message "Running your org mode hok")
             (auto-fill-mode 't)
+            (org-hide-block-all)
             (org-superstar-mode 't)
             (flyspell-mode 't)))
 ;;(define-key org-mode-map [f8] 'org-kanban/shift) 
@@ -911,15 +912,34 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 		   (c-set-style "llvm.org"))))))
 
 (require 'dash)
+(require 's)
+
+;; Hmmm - the second version is more SIL like but
+;; I think the first one is a lot more readable.
 (defun convert-fitbit-weight-row-to-org ()
   (interactive)
-
-  (re-search-forward "\"\\([0-9][0-9]\\)\\-\\([0-9][0-9]\\)\\-\\([0-9][0-9][0-9][0-9]\\)\",\"\\([0-9\\.]+\\)\",")
-  (-let* ( ((day month year weight) (--map (string-to-number (match-string it )) (number-sequence 1 4 )) )
-           ((isofmt) (list (format-time-string "[%Y-%m-%d %a]" (encode-time (list 0 0 0 day month year 0 nil 0 ))))))
+  (-let* ((line (thing-at-point 'line))
+          (bits (s-split "[,-]" line))
+          ((day month year weight kilos bmi fat) (--map (string-to-number (s-replace "\"" "" it)) bits))
+          ((isofmt) (list (format-time-string "[%Y-%m-%d %a]" (encode-time (list 0 0 0 day month year 0 nil 0 ))))))
     (beginning-of-line)
     (kill-line)
     (insert (format " | # | %s | %.2f | | Aria |" isofmt weight) )
+    (beginning-of-line)
+    (next-line)))
+
+(defun convert-fitbit-weight-row-to-org ()
+  (interactive)
+  (-let* (((day month year weight kilos bmi fat)
+          (s-with (thing-at-point 'line)
+            (s-split "[,-]")
+            (--map (s-with it (s-replace "\"" "") (string-to-number))))))
+    (beginning-of-line)
+    (kill-line)
+    (--> (encode-time (list 0 0 0 day month year 0 nil 0 ))
+      (format-time-string "[%Y-%m-%d %a]" it)
+      (format " | # | %s | %.2f | | Aria |" it weight)
+      (insert it))
     (beginning-of-line)
     (next-line)))
 (global-set-key [kp-up] 'convert-fitbit-weight-row-to-org)
@@ -989,7 +1009,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(company-clang-arguments nil)
  '(compilation-message-face 'default)
  '(custom-safe-themes
-   '("628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "f2c35f8562f6a1e5b3f4c543d5ff8f24100fae1da29aeb1864bbc17758f52b70" "51ec7bfa54adf5fff5d466248ea6431097f5a18224788d0bd7eb1257a4f7b773" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "d8dc153c58354d612b2576fea87fe676a3a5d43bcc71170c62ddde4a1ad9e1fb" "274fa62b00d732d093fc3f120aca1b31a6bb484492f31081c1814a858e25c72e" "013c62a1fcee7c8988c831027b1c38ae215f99722911b69e570f21fc19cb662e" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "4597d1e9bbf1db2c11d7cf9a70204fa42ffc603a2ba5d80c504ca07b3e903770" "bbb4a4d39ed6551f887b7a3b4b84d41a3377535ccccf901a3c08c7317fad7008" "aa0a998c0aa672156f19a1e1a3fb212cdc10338fb50063332a0df1646eb5dfea" "5715d3b4b071d33af95e9ded99a450aad674e308abb06442a094652a33507cd2" "53d1bb57dadafbdebb5fbd1a57c2d53d2b4db617f3e0e05849e78a4f78df3a1b" "a866134130e4393c0cad0b4f1a5b0dd580584d9cf921617eee3fd54b6f09ac37" "0598de4cc260b7201120b02d580b8e03bd46e5d5350ed4523b297596a25f7403" "891debfe489c769383717cc7d0020244a8d62ce6f076b2c42dd1465b7c94204d" "242ed4611e9e78142f160e9a54d7e108750e973064cee4505bfcfc22cc7c61b1" "4e21fb654406f11ab2a628c47c1cbe53bab645d32f2c807ee2295436f09103c6" "723e48296d0fc6e030c7306c740c42685d672fd22337bc84392a1cf92064788a" "c5d320f0b5b354b2be511882fc90def1d32ac5d38cccc8c68eab60a62d1621f2" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3d5307e5d6eb221ce17b0c952aa4cf65dbb3fa4a360e12a71e03aab78e0176c5" "7bc31a546e510e6bde482ebca992e293a54cb075a0cbfb384bf2bf5357d4dee3" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default))
+   '("a7525b7e01bdfbd4f576d1143ea0a27a47d05df39d193edebbbdf3255a0708ad" "e1a0ed433cdd00b77f5ded2a3db6379c1e85226aea7cf0b4f4137fd0fdb80420" "10df1e816601ef972dcb593f7b34cbd5a4215794b65386f6bb2ed9d4a7d3f64e" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "f2c35f8562f6a1e5b3f4c543d5ff8f24100fae1da29aeb1864bbc17758f52b70" "51ec7bfa54adf5fff5d466248ea6431097f5a18224788d0bd7eb1257a4f7b773" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "d8dc153c58354d612b2576fea87fe676a3a5d43bcc71170c62ddde4a1ad9e1fb" "274fa62b00d732d093fc3f120aca1b31a6bb484492f31081c1814a858e25c72e" "013c62a1fcee7c8988c831027b1c38ae215f99722911b69e570f21fc19cb662e" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "4597d1e9bbf1db2c11d7cf9a70204fa42ffc603a2ba5d80c504ca07b3e903770" "bbb4a4d39ed6551f887b7a3b4b84d41a3377535ccccf901a3c08c7317fad7008" "aa0a998c0aa672156f19a1e1a3fb212cdc10338fb50063332a0df1646eb5dfea" "5715d3b4b071d33af95e9ded99a450aad674e308abb06442a094652a33507cd2" "53d1bb57dadafbdebb5fbd1a57c2d53d2b4db617f3e0e05849e78a4f78df3a1b" "a866134130e4393c0cad0b4f1a5b0dd580584d9cf921617eee3fd54b6f09ac37" "0598de4cc260b7201120b02d580b8e03bd46e5d5350ed4523b297596a25f7403" "891debfe489c769383717cc7d0020244a8d62ce6f076b2c42dd1465b7c94204d" "242ed4611e9e78142f160e9a54d7e108750e973064cee4505bfcfc22cc7c61b1" "4e21fb654406f11ab2a628c47c1cbe53bab645d32f2c807ee2295436f09103c6" "723e48296d0fc6e030c7306c740c42685d672fd22337bc84392a1cf92064788a" "c5d320f0b5b354b2be511882fc90def1d32ac5d38cccc8c68eab60a62d1621f2" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3d5307e5d6eb221ce17b0c952aa4cf65dbb3fa4a360e12a71e03aab78e0176c5" "7bc31a546e510e6bde482ebca992e293a54cb075a0cbfb384bf2bf5357d4dee3" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default))
  '(debug-on-error t)
  '(display-time-world-list
    '(("Australia/Perth" "Perth")
@@ -1054,7 +1074,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(midnight-mode nil)
  '(nyan-mode t)
  '(org-agenda-files
-   '("/home/andy/Dropbox/gtd/flagged.org" "/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/kanban.org" "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/bmcourse.org" "/home/andy/Dropbox/gtd/robbins/business_mastery.org" "/home/andy/Dropbox/gtd/robbins/coaching.org" "/home/andy/Dropbox/gtd/robbins/time_of_your_life.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/robbins/wealth_mastery.org" "/home/andy/Dropbox/gtd/goldStars.org" "/home/andy/Dropbox/gtd/shopping.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/weekly.org"))
+   '("/home/andy/Dropbox/gtd/flagged.org" "/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/kanban.org" "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/bmcourse.org" "/home/andy/Dropbox/gtd/robbins/business_mastery.org" "/home/andy/Dropbox/gtd/robbins/coaching.org" "/home/andy/Dropbox/gtd/robbins/time_of_your_life.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/robbins/wealth_mastery.org" "/home/andy/Dropbox/gtd/goldStars.org" "/home/andy/Dropbox/gtd/shopping.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/robbins/weekly.org"))
  '(org-babel-load-languages '((dot . t) (emacs-lisp . t)))
  '(org-capture-templates
    '(("t" "Todo" entry
