@@ -2,7 +2,17 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("robbins"
+(("time_of_your_life.org"
+ (filename . "~/Dropbox/gtd/robbins/time_of_your_life.org")
+ (front-context-string . "* RPM\n** Rapid P")
+ (rear-context-string)
+ (position . 1))
+("ania"
+ (filename . "~/Dropbox/gtd/robbins/ania/")
+ (front-context-string . "rpm.html\n* -rw-r")
+ (rear-context-string . "19 Jun 30 17:52 ")
+ (position . 449))
+("robbins"
  (filename . "~/Dropbox/gtd/robbins/")
  (front-context-string . "5_fundamentals_E")
  (rear-context-string . "96 Mar 22 18:05 ")
@@ -175,10 +185,10 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/gtd/kanban.org")
- (front-context-string . "** TODO Gulag Ar")
- (rear-context-string . "#+END:\n\n* Tasks\n")
- (position . 25945))
+ (filename . "~/Dropbox/gtd/journal.org")
+ (front-context-string . "**** [2021-08-10")
+ (rear-context-string . "ady player two.\n")
+ (position . 453324))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")
