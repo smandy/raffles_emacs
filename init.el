@@ -188,6 +188,10 @@
   (interactive)
   (insert (char-from-name "BLACK STAR")))
 
+(global-set-key [kp-home] 'neuter-tasks)
+
+
+
 (global-set-key [kp-begin] 'org-sort-entries)
 (global-set-key [kp-left] 'calendar)
 (global-set-key [kp-right] 'insert-white-star)
@@ -998,6 +1002,18 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (global-set-key [(control shift up)]  'move-line-up)
 (global-set-key [(control shift down)]  'move-line-down)
 
+(defun add-work-to-agenda-files ()
+  (interactive)
+  (org-store-new-agenda-file-list (add-to-list 'org-agenda-files "/home/andy/Dropbox/gtd/work.org"))
+  (message "work added %s" org-agenda-files))
+(global-set-key [kp-home] 'add-work-to-agenda-files)
+
+(defun remove-work-from-agenda-files ()
+  (interactive)
+  (org-remove-file  "/home/andy/Dropbox/gtd/work.org")a
+  (message "work removed %s" org-agenda-files))
+(global-set-key [kp-prior] 'remove-work-from-agenda-files)
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -1099,7 +1115,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(nyan-mode t)
  '(objed-cursor-color "#C16069")
  '(org-agenda-files
-   '("/home/andy/Dropbox/gtd/flagged.org" "/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/kanban.org" "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/bmcourse.org" "/home/andy/Dropbox/gtd/robbins/business_mastery.org" "/home/andy/Dropbox/gtd/robbins/coaching.org" "/home/andy/Dropbox/gtd/robbins/time_of_your_life.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/robbins/wealth_mastery.org" "/home/andy/Dropbox/gtd/goldStars.org" "/home/andy/Dropbox/gtd/shopping.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/work.org" "/home/andy/Dropbox/gtd/robbins/weekly.org"))
+   '("/home/andy/Dropbox/gtd/flagged.org" "/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/kanban.org" "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/bmcourse.org" "/home/andy/Dropbox/gtd/robbins/business_mastery.org" "/home/andy/Dropbox/gtd/robbins/coaching.org" "/home/andy/Dropbox/gtd/robbins/time_of_your_life.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/robbins/wealth_mastery.org" "/home/andy/Dropbox/gtd/goldStars.org" "/home/andy/Dropbox/gtd/shopping.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/robbins/weekly.org"))
  '(org-babel-load-languages '((dot . t) (emacs-lisp . t)))
  '(org-capture-templates
    '(("t" "Todo" entry
