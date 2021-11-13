@@ -10,10 +10,13 @@
         indent-for-tab-command
         kill-region
         org-beginning-of-line
+        org-ctrl-c-minus
         org-cycle
         org-delete-char
         org-end-of-line
         org-force-self-insert
+        org-kill-line
+        org-metaup
         org-self-insert-command
         org-yank
         wdired-finish-edit

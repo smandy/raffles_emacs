@@ -101,7 +101,7 @@
 
 (add-hook 'org-mode-hook
           (lambda ()
-            (message "Running your org mode hok")
+            (message "Running your org mode hook")
             (auto-fill-mode 't)
             (org-hide-block-all)
             (org-superstar-mode 't)
@@ -427,6 +427,9 @@
 (defun text-scale-bigger ()
   (interactive)
   (text-scale-adjust 1))
+
+(global-set-key [XF86AudioPrev] 'text-scale-smaller)
+(global-set-key [XF86AudioNext] 'text-scale-bigger)
 
 (defun text-scale-orig ()
   (interactive)
@@ -831,7 +834,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
          (st (funcall conv s))
          (ft (funcall conv f)))
     (/ (time-to-seconds (time-subtract ft st)) seconds-per-day)))
-;; (daysBetween "1973-05-09" "2019-07-26")
+;; (daysBetween "1973-05-09" "2021-09-01") 17647.0
 
 (eval-after-load 'company
   '(progn
@@ -1002,15 +1005,17 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (global-set-key [(control shift up)]  'move-line-up)
 (global-set-key [(control shift down)]  'move-line-down)
 
+(setq work-agenda-file "/home/andy/Dropbox/gtd/work.org")
+
 (defun add-work-to-agenda-files ()
   (interactive)
-  (org-store-new-agenda-file-list (add-to-list 'org-agenda-files "/home/andy/Dropbox/gtd/work.org"))
+  (org-store-new-agenda-file-list (add-to-list 'org-agenda-files work-agenda-file))
   (message "work added %s" org-agenda-files))
 (global-set-key [kp-home] 'add-work-to-agenda-files)
 
 (defun remove-work-from-agenda-files ()
   (interactive)
-  (org-remove-file  "/home/andy/Dropbox/gtd/work.org")a
+  (org-remove-file work-agenda-file)
   (message "work removed %s" org-agenda-files))
 (global-set-key [kp-prior] 'remove-work-from-agenda-files)
 
@@ -1115,7 +1120,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(nyan-mode t)
  '(objed-cursor-color "#C16069")
  '(org-agenda-files
-   '("/home/andy/Dropbox/gtd/flagged.org" "/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/kanban.org" "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/bmcourse.org" "/home/andy/Dropbox/gtd/robbins/business_mastery.org" "/home/andy/Dropbox/gtd/robbins/coaching.org" "/home/andy/Dropbox/gtd/robbins/time_of_your_life.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/robbins/wealth_mastery.org" "/home/andy/Dropbox/gtd/goldStars.org" "/home/andy/Dropbox/gtd/shopping.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/robbins/weekly.org"))
+   '("/home/andy/Dropbox/gtd/work.org" "/home/andy/Dropbox/gtd/flagged.org" "/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/kanban.org" "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/goldStars.org" "/home/andy/Dropbox/gtd/_shopping.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/robbins/weekly.org" "/home/andy/Dropbox/gtd/robbins/ania/ania.org"))
  '(org-babel-load-languages '((dot . t) (emacs-lisp . t)))
  '(org-capture-templates
    '(("t" "Todo" entry
@@ -1129,7 +1134,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
       "* TODO %?" :prepend t)
      ("a" "Agenda" entry
       (file+headline "~/Dropbox/gtd/gtd.org" "Schedule")
-      "* %?" :prepend t)
+      "* TODO %?" :prepend t)
      ("s" "Shopping" entry
       (file+headline "~/Dropbox/gtd/shopping.org" "Stuff")
       "* TODO %?" :prepend t)
@@ -1153,7 +1158,9 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(org-preview-latex-image-directory "/var/tmp/ltximg/")
  '(org-todo-keyword-faces
    '(("BLOCKED" :foreground "red" :weight bold)
+     ("FAILED" :foreground "red" :weight bold)
      ("TODOTODAY" :foreground "yellow" :weight bold)
+     ("PENDING" :foreground "orange" :weight bold)
      ("INPROGRESS" :foreground "green" :weight bold)
      ("DONE" :foreground "green" :weight bold)
      ("MUST" . "(:foreground \"red\" :weight bold)")))
