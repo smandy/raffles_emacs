@@ -1,0 +1,100 @@
+MASTER YOUR IDE
+IntelliJ IDEA
+
+
+CREATE AND EDIT
+Show Context Actions	Alt+Enter
+Basic Code Completion	Alt+/
+Smart Code Completion	Ctrl+Shift+Space
+Type Name Completion	Ctrl+Alt+Space
+Complete Statement	Ctrl+Shift+Enter
+Parameter Information	Alt+Shift+P
+Quick Definition	Ctrl+Shift+I
+
+
+Find Action…Esc, X
+Build Project	Ctrl+F9
+Open a Tool Window	Alt+[0-9]
+Rebuild	Ctrl+Shift+F9
+Reload All from Disk	Ctrl+Alt+Y
+Run context configuratin    Ctrl+Shift+F10
+Quick Switch Scheme…	Ctrl+`
+Run/Debug Selected Configuration	Alt+Shift+F10 / Alt+Shift+F10
+Settings...	Ctrl+Alt+S
+
+Project Structure…	Ctrl+Alt+Shift+S
+Run/Debug Current Configuration	Shift+F10 / Shift+F9
+Jump to Source	F4
+Step Over	F8
+Step Into	F7
+Smart Step Into	Shift+F7
+Step Out	Shift+F8
+Jump to Navigation Bar	Alt+Home
+Jump to Last Tool Window	F12
+Quick/External Documentation	Ctrl+Q / Shift+F1
+
+
+Hide Active Tool Windows	Shift+Esc
+Hide All Tool Windows	Ctrl+Shift+F12
+Generate Code	Alt+Insert
+Run to Cursor	Alt+F9
+Override/Implement Members  Ctrl+I
+Go to Next Editor Tab	Alt+Right / Alt+Left
+Go to Previous Editor Tab	Alt+Right
+Force Run to Cursor	Ctrl+Alt+F9
+Surround With…	Ctrl+Alt+T
+Go to Editor (from a Tool Window)	Esc, Esc
+Show Execution Point	Alt+F10
+Close Active Tab	Ctrl+Shift+F4
+Close Active Window	Ctrl+F4
+Evaluate Expression…	Alt+F8
+Comment with Line Comment	Alt+; / Ctrl+Shift+/
+Comment with Line/Block Comment Alt+; / Ctrl+Shift+/
+
+Extend/Shrink Selection
+Ctrl+Alt+W /
+Ctrl+Shift+W
+Context InfoAlt+Q
+Optimize ImportsCtrl+Alt+O
+Auto-Indent LinesCtrl+Alt+I
+Cut/Copy/PasteShift+Delete / Ctrl+Insert
+/ Shift+Insert
+Copy Document Path
+Ctrl+Shift+C
+FIND EVERYTHING
+StopCtrl+F2
+Search EverywhereDouble ShiftStop Background Processes…Ctrl+Shift+F2
+Find/ReplaceCtrl+Alt+S / Alt+Shift+5Resume ProgramF9
+Find/Replace in PathCtrl+Shift+F /
+Ctrl+Shift+RToggle Line BreakpointCtrl+F8
+Toggle Temporary Line BreakpointCtrl+Alt+Shift+F8
+Next/Previous OccurenceF3 / Shift+F3Edit breakpointCtrl+Shift+F8
+Next Occurrence of the Word at
+CaretCtrl+F3View Breakpoints…Ctrl+Shift+F8
+Paste from Clipboard HistoryAlt+YGo to ClassAlt+Shift+GREFACTOR AND CLEAN UPDuplicate Current Line or SelectionMeta+DGo to File MemberCtrl+F12Refactor This…Ctrl+Alt+Shift+T
+Join/Split LineCtrl+Shift+J / Ctrl+OGo to FileCtrl+X, Ctrl+FCopy…F5
+Shift+EnterGo to SymbolCtrl+Alt+Shift+NMove…F6
+Toggle CaseCtrl+Shift+UNAVIGATE FROM SYMBOLSRename…Shift+F6
+Expand/Collapse Code BlockCtrl+NumPad + /
+Ctrl+NumPad -Go to Declaration or UsagesCtrl+Alt+GChange Signature…Ctrl+F6
+Go to Type DeclarationCtrl+Shift+BInline…Ctrl+Alt+N
+Go to Super MethodCtrl+UExtract MethodCtrl+Alt+M
+Find Usages / Find Usages in FileAlt+F7 / Ctrl+F7Introduce VariableCtrl+Alt+V
+ANALYZE AND EXPLOREHighlight Usages in FileCtrl+Shift+F7Introduce ConstantCtrl+Alt+C
+Show Error DescriptionCtrl+F1Show UsagesCtrl+Alt+F7Introduce ParameterCtrl+Alt+P
+Next/Previous Highlighted ErrorF2 / Shift+F2NAVIGATE IN CONTEXTRun Inspection by Name…Ctrl+Alt+Shift+ISelect In…Alt+F1Type HierarchyCtrl+HLast Edit LocationCtrl+Shift+BackMethod HierarchyCtrl+Shift+HNavigate Back/ForwardCtrl+Alt+Left /
+Ctrl+Alt+RightCall HierarchyCtrl+Alt+HGo to Previous/Next methodAlt+Up / Alt+DownGo to Line:Column…Alt+GGo to Code Block End/StartCtrl+] / Ctrl+[Add to FavoritesAlt+Shift+FToggle BookmarkF11Toggle Bookmark with MnemonicCtrl+F11
+Start New Line
+Expand/Collapse All
+Save All
+Ctrl+NumPad + /
+Ctrl+NumPad -
+Ctrl+X, Ctrl+S
+VERSION CONTROL
+VCS OperationsAlt+`
+Commit…Ctrl+K
+Update ProjectCtrl+T
+Recent ChangesAlt+Shift+CRollback…Ctrl+Alt+ZGo to Numbered BookmarkCtrl+[0-9]
+Push…Ctrl+Shift+KShow Line Bookmarks...Shift+F11
+Next/Previous ChangeCtrl+Alt+Shift+Down /
+Ctrl+Alt+Shift+Up
