@@ -13,13 +13,13 @@
 ;; (set-frame-font "Meslo LG L" 't)
 ;; (set-frame-font "Misc Fixed" 't) 
 ;; (set-frame-font "Tamsyn" 't)
-;; (set-frame-font "Andale Mono 13")
+;; (set-frame-font "Andale Mono 20")
 ;; (set-frame-font "Hack" 't) 
 ;; (set-frame-font "Misc Fixed" 't)
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 ;;(set-frame-font "JetBrains Mono 12")
 
-(set-frame-font "Terminus 12")
+(set-frame-font "Terminus 14")
 
 ;;(set-frame-font "Hack 12")
 ;;(set-frame-font "Bedstead Semicondensed 18")
@@ -28,7 +28,7 @@
 ;;(set-frame-font "Terminus 16")
 
 ;; (set-frame-font "Liberation Mono" 't)
-;; (set-frame-font "Ubuntu Mono" 't)
+;; (set-frame-font "Ubuntu Mono 16" 't)
 
 ;; (set-frame-font "Ubuntu Mono 16")
 ;; (set-frame-font "DejaVu Sans Mono" 't)
@@ -100,17 +100,34 @@
 ;;                                         (flyspell-mode 't))))
 ;;         (list (org-mode-hook org-capture-mode-hook )))
 
-;;(eval-after-load "org"
-;;   '(define-key org-mode-map [remap org-kill-line] nil))
+
+(defun kill-capture-buffer-after-anki-push ()
+  (interactive)
+  (save-excursion
+  (anki-editor-push-notes)
+  ;;(message "Buffer is %s" (buffer-name))
+  (if (s-starts-with-p "CAPTURE-" (buffer-name) )
+      (progn
+        ;;(message "Deleting!")
+        ;;(flush-lines)
+        (kill-current-buffer)
+        )
+    ;;(message "No match? %s"  (buffer-name))
+  )))
+
+;; (eval-after-load "org"
+;;   '(define-key org-mode-map (kbd "<f9>") 'kill-capture-buffer-after-anki-push))
+;;(define-key org-mode-map (kbd "<f9>") 'anki-editor-push-tree)
 
 (add-hook 'org-mode-hook
           (lambda ()
             (message "Running your org mode hook")
             (auto-fill-mode 't)
             (org-hide-block-all)
+            (anki-editor-mode 't)
             (org-superstar-mode 't)
+            (define-key org-mode-map (kbd "<f9>") 'kill-capture-buffer-after-anki-push)
             (flyspell-mode 't)))
-;;(define-key org-mode-map [f8] 'org-kanban/shift) 
 
 ;; Meh copy/paste. Maybe nicer way of reducing boilerplate
 (add-hook 'org-capture-mode-hook
@@ -118,6 +135,12 @@
             ;;(message "Running your org mode hok")
             (auto-fill-mode 't)
             (flyspell-mode 't)))
+
+;; (add-hook 'org-capture-after-finalize-hook
+;;           (lambda ()
+;;             (set-buffer org-my-anki-file)
+;;             (anki-editor-push-notes)
+;;             ))
 
 
 (eval-after-load "org-present"
@@ -227,6 +250,8 @@
 (global-set-key [f5] 'helm-resume)
 
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+(define-key global-map (kbd "C-;") 'ace-jump-mode)
+
 
 (global-set-key (kbd "C-c C-m C-s" ) 'magit-status)
 ;; For d
@@ -363,7 +388,7 @@
 
 ;;(x-get-selection) 
 
-;; (global-set-key (kbd "C-c p")  'find-file-in-clipboard)
+(global-set-key (kbd "C-c p")  'find-file-in-clipboard)
 
 ;;(global-undo-tree-mode (kbd "C-c p"))
 
@@ -681,6 +706,13 @@
 
 (setq helm-dash-common-docsets '("org.libsdl.sdl20" "C++" "Boost"))
 
+(defun new-scratch  ()
+  (interactive)
+  (switch-to-buffer (generate-new-buffer "*scratch*")))
+
+(global-set-key [kp-begin] 'new-scratch)
+                    
+
 
 (defun paste-to-temp-buffer ()
   (interactive)
@@ -906,6 +938,8 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
             (define-key js2-mode-map (kbd "C-c C-z") 'nodejs-repl-switch-to-repl)))
 
 (require 'ob-python)
+(require 'ob-octave)
+(require 'ob-scala)
 
 ;; Want to have inline images displayed after executin a block of python code
 (advice-add 'org-babel-execute-src-block :after (lambda (&rest args)
@@ -1039,6 +1073,29 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (put 'narrow-to-page 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
+;; Maybe don't need this
+(setq org-my-anki-file "~/anki.org")
+
+;;(add-to-list 'org-capture-templates
+;;             '("a" "Anki basic"
+;;               entry
+;;               (file+headline org-my-anki-file "Dispatch Shelf")
+;;               "* %<%H:%M>\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: main\n:END:\n** Front\n%?\n** Back\n%x\n"))
+
+
+;; (add-to-list 'org-capture-templates
+;;              '("A" "Anki basic"
+;;                entry
+;;                (file+headline org-my-anki-file "Dispatch Shelf")
+;;                "* %<%H:%M>\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: main\n:END:\n** Front\n%?\n** Back\n"))
+;; (add-to-list 'org-capture-templates
+;;              '("A" "Anki cloze"
+;;                entry
+;;                (file+headline org-my-anki-file "Dispatch Shelf")
+;;                "* %<%H:%M>   %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Mega\n:END:\n** Text\n%x\n** Extra\n"))
+
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -1052,7 +1109,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(clang-format-executable "clang-format")
  '(company-clang-arguments nil)
  '(compilation-message-face 'default)
- '(custom-enabled-themes '(sanityinc-tomorrow-blue tron-legacy))
+ '(custom-enabled-themes '(tron-legacy))
  '(custom-safe-themes
    '("e79672e00657fb6950f67d1e560ca9b4881282eb0c772e2e7ee7a15ec7bb36a0" "f4a8885fd1cad56c4e67dc32796d5bd1c3defadde5a1981af08e7f40046ab79b" "edf6cc813aa6c4bc0a22b2f051624b861c20144016b0c1cf3046935807cbe4e6" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "57e3f215bef8784157991c4957965aa31bac935aca011b29d7d8e113a652b693" "cf9414f229f6df728eb2a5a9420d760673cca404fee9910551caf9c91cff3bfa" "1eee77e76b9cd3a2791dcee51ccb39002ccd830f2539be3aec3859c1bccf0112" "d1443dd6612780bf037e703b6ebd936bcd5f2a93821558052b30231b2e1e1168" "0be5c1a44e0a877aa9cedae800c438d09efe12bbc7cbc7f787d43c5b8e7eb0db" "a7525b7e01bdfbd4f576d1143ea0a27a47d05df39d193edebbbdf3255a0708ad" "e1a0ed433cdd00b77f5ded2a3db6379c1e85226aea7cf0b4f4137fd0fdb80420" "10df1e816601ef972dcb593f7b34cbd5a4215794b65386f6bb2ed9d4a7d3f64e" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "f2c35f8562f6a1e5b3f4c543d5ff8f24100fae1da29aeb1864bbc17758f52b70" "51ec7bfa54adf5fff5d466248ea6431097f5a18224788d0bd7eb1257a4f7b773" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "d8dc153c58354d612b2576fea87fe676a3a5d43bcc71170c62ddde4a1ad9e1fb" "274fa62b00d732d093fc3f120aca1b31a6bb484492f31081c1814a858e25c72e" "013c62a1fcee7c8988c831027b1c38ae215f99722911b69e570f21fc19cb662e" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "4597d1e9bbf1db2c11d7cf9a70204fa42ffc603a2ba5d80c504ca07b3e903770" "bbb4a4d39ed6551f887b7a3b4b84d41a3377535ccccf901a3c08c7317fad7008" "aa0a998c0aa672156f19a1e1a3fb212cdc10338fb50063332a0df1646eb5dfea" "5715d3b4b071d33af95e9ded99a450aad674e308abb06442a094652a33507cd2" "53d1bb57dadafbdebb5fbd1a57c2d53d2b4db617f3e0e05849e78a4f78df3a1b" "a866134130e4393c0cad0b4f1a5b0dd580584d9cf921617eee3fd54b6f09ac37" "0598de4cc260b7201120b02d580b8e03bd46e5d5350ed4523b297596a25f7403" "891debfe489c769383717cc7d0020244a8d62ce6f076b2c42dd1465b7c94204d" "242ed4611e9e78142f160e9a54d7e108750e973064cee4505bfcfc22cc7c61b1" "4e21fb654406f11ab2a628c47c1cbe53bab645d32f2c807ee2295436f09103c6" "723e48296d0fc6e030c7306c740c42685d672fd22337bc84392a1cf92064788a" "c5d320f0b5b354b2be511882fc90def1d32ac5d38cccc8c68eab60a62d1621f2" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3d5307e5d6eb221ce17b0c952aa4cf65dbb3fa4a360e12a71e03aab78e0176c5" "7bc31a546e510e6bde482ebca992e293a54cb075a0cbfb384bf2bf5357d4dee3" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default))
  '(debug-on-error t)
@@ -1132,12 +1189,23 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(nyan-mode t)
  '(objed-cursor-color "#C16069")
  '(org-agenda-files
-   '("/home/andy/Dropbox/gtd/flagged.org" "/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/kanban.org" "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/goldStars.org" "/home/andy/Dropbox/gtd/_shopping.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/robbins/weekly.org" "/home/andy/Dropbox/gtd/robbins/ania/ania.org"))
+   '("/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/kanban.org" "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/goldStars.org" "/home/andy/Dropbox/gtd/_shopping.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/robbins/weekly.org" "/home/andy/Dropbox/gtd/robbins/ania/ania.org"))
  '(org-babel-load-languages '((dot . t) (emacs-lisp . t)))
  '(org-capture-templates
    '(("t" "Todo" entry
       (file+headline "~/Dropbox/gtd/kanban.org" "Tasks")
       "* TODO %?" :prepend t)
+     ("A" "Anki basic" entry
+      (file+headline org-my-anki-file "Dispatch Shelf")
+      "* %<%H:%M>
+:PROPERTIES:
+:ANKI_NOTE_TYPE: Basic
+:ANKI_DECK: main
+:END:
+** Front
+%?
+** Back
+")
      ("r" "Tasks" entry
       (file+headline "~/Dropbox/gtd/gtd.org" "Tasks")
       "* TODO %?" :prepend t)
@@ -1181,7 +1249,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(org-twbs-todo-kwd-class-done "label label-success")
  '(org-twbs-todo-kwd-class-undone "label label-warning")
  '(package-selected-packages
-   '(org-anki anki-mode chess weyland-yutani-theme afternoon-theme tron-legacy-theme ox-twbs undo-tree arduino-mode command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti unicode-fonts hy-mode org-kanban nhexl-mode dracula-theme slime ob-kotlin amd-mode sed-mode ranger thrift doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt ubuntu-theme f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game))
+   '(org-superstar anki-editor key-chord git-timemachine org-anki anki-mode chess weyland-yutani-theme afternoon-theme tron-legacy-theme ox-twbs undo-tree arduino-mode command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti unicode-fonts hy-mode org-kanban nhexl-mode dracula-theme slime ob-kotlin amd-mode sed-mode ranger thrift doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt ubuntu-theme f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter rjsx-mode org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode wrap-region multiple-cursors ag helm-projectile dumb-jump helm-cscope ein elpy swift3-mode yaml-mode workgroups web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex skewer-mode scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode magit less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-dash helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game))
  '(pdf-view-midnight-colors (cons "#eceff4" "#323334"))
  '(projectile4-tags-backend 'ggtags)
  '(python-shell-interpreter "ipython3")

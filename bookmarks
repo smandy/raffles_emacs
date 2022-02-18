@@ -2,7 +2,22 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("addAnkiCard.restclient"
+(("150"
+ (filename . "~/Dropbox/gtd/")
+ (front-context-string . "robbins\n  -rw-r-")
+ (rear-context-string . "96 Jan 20 21:39 ")
+ (position . 2183))
+("2022-jobjunt"
+ (filename . "~/Dropbox/gtd/gtd.org")
+ (front-context-string . "*** 2022\n\n    |-")
+ (rear-context-string . " Matt @ Fourier\n")
+ (position . 333380))
+("work.org"
+ (filename . "~/Dropbox/gtd/work.org")
+ (front-context-string . "#+LAST_MOBILE_CH")
+ (rear-context-string)
+ (position . 1))
+("addAnkiCard.restclient"
  (filename . "~/Dropbox/gtd/addAnkiCard.restclient")
  (front-context-string . "# Add a note - t")
  (rear-context-string)
@@ -190,10 +205,10 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/gtd/kanban.org")
- (front-context-string . "** TODO Make an ")
- (rear-context-string . "\n#+END:\n* Tasks\n")
- (position . 97569))
+ (filename . "~/anki.org")
+ (front-context-string . "** 22:46\n   :PRO")
+ (rear-context-string . "Back\n    Woohoo\n")
+ (position . 579))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")
