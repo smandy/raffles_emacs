@@ -4,6 +4,7 @@
 (setq mc/cmds-to-run-for-all
       '(
         c-electric-colon
+        c-electric-slash
         clang-format-buffer
         fill-paragraph
         helm-M-x

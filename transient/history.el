@@ -1,4 +1,6 @@
-((magit-branch nil)
+((magit-blame
+  ("-w"))
+ (magit-branch nil)
  (magit-commit nil)
  (magit-gitignore nil)
  (magit-log
@@ -7,4 +9,5 @@
  (magit-pull nil)
  (magit-push
   ("--force-with-lease"))
- (magit-rebase nil))
+ (magit-rebase nil
+               ("--autostash")))

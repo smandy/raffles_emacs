@@ -2,7 +2,27 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("150"
+(("upw4.org"
+ (filename . "~/Dropbox/gtd/robbins/upw4.org")
+ (front-context-string . "\n****** Emotiona")
+ (rear-context-string . "ly\n\n***** Values")
+ (position . 15777))
+("SCo"
+ (filename . "~/repos/openpiv-c--qt/openpiv/core/log.h")
+ (front-context-string . "\n\n            //")
+ (rear-context-string . "              };")
+ (position . 3021))
+("cpp_sconstruct"
+ (filename . "~/repos/dev/cpp/SConstruct")
+ (front-context-string . "import os\n\nlsb_r")
+ (rear-context-string)
+ (position . 1))
+("ania.org"
+ (filename . "~/Dropbox/gtd/robbins/ania/ania.org")
+ (front-context-string . "NING ==========\n")
+ (rear-context-string . "ST BLOCK OF TRAI")
+ (position . 52366))
+("150"
  (filename . "~/Dropbox/gtd/")
  (front-context-string . "robbins\n  -rw-r-")
  (rear-context-string . "96 Jan 20 21:39 ")
@@ -113,7 +133,7 @@
 ("cpp"
  (filename . "~/repos/dev/cpp/")
  (front-context-string . "abbrev\n  -rw-r--")
- (rear-context-string . "28 Feb 22 07:26 ")
+ (rear-context-string . "16 May 24 10:22 ")
  (position . 230))
 ("andy@skye"
  (filename . "/scp:andy@skye:/Users/andy/")
@@ -205,10 +225,10 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/anki.org")
- (front-context-string . "** 22:46\n   :PRO")
- (rear-context-string . "Back\n    Woohoo\n")
- (position . 579))
+ (filename . "~/Dropbox/gtd/kanban.org")
+ (front-context-string . "** TODO The Tale")
+ (rear-context-string . "\n#+END:\n* Tasks\n")
+ (position . 121996))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")
