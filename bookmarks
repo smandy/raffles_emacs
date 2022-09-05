@@ -225,10 +225,10 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/gtd/kanban.org")
- (front-context-string . "** TODO The Tale")
- (rear-context-string . "\n#+END:\n* Tasks\n")
- (position . 121996))
+ (filename . "~/Dropbox/gtd/gtd.org")
+ (front-context-string . "** TODO <2022-08")
+ (rear-context-string . "--|\n\n* Schedule\n")
+ (position . 3870))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")
