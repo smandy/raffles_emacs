@@ -42,6 +42,7 @@
 ;;(set-frame-font "Terminus 16")
 
 ;; (set-frame-font "Liberation Mono" 't)
+;; (set-frame-font "Liberation Mono 12" 't)
 ;; (set-frame-font "Ubuntu Mono 16" 't)
 
 ;; (set-frame-font "Ubuntu Mono 16")
@@ -313,7 +314,7 @@
 ;; For node.js
 (add-to-list 'compilation-error-regexp-alist
              '("^.*at.*(\\(.*\\):\\([0-9]+\\):.*"
-               1 2 ) )
+               1 2 ) )1
 ;; (setq compilation-error-regexp-alist (cdr compilation-error-regexp-alist))
 
 (add-to-list
@@ -1243,7 +1244,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(nyan-mode t)
  '(objed-cursor-color "#C16069")
  '(org-agenda-files
-   '("/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/kanban.org" "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/goldStars.org" "/home/andy/Dropbox/gtd/_shopping.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/robbins/weekly.org" "/home/andy/Dropbox/gtd/robbins/ania/ania.org"))
+   '("/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/kanban.org" "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/_shopping.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/robbins/weekly.org" "/home/andy/Dropbox/gtd/robbins/ania/ania.org"))
  '(org-babel-load-languages '((dot . t) (emacs-lisp . t) (C . t)))
  '(org-capture-templates
    '(("t" "Todo" entry

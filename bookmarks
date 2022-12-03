@@ -225,10 +225,10 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/gtd/journal.org")
- (front-context-string . "**** [2022-10-22")
- (rear-context-string . "in the stomach.\n")
- (position . 617248))
+ (filename . "~/Dropbox/gtd/kanban.org")
+ (front-context-string . "** TODO Alexis C")
+ (rear-context-string . "\n#+END:\n* Tasks\n")
+ (position . 121996))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")

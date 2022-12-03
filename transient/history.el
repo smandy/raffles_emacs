@@ -2,6 +2,7 @@
   ("-w"))
  (magit-branch nil)
  (magit-commit nil)
+ (magit-ediff nil)
  (magit-gitignore nil)
  (magit-log
   ("-n256" "--graph" "--decorate"))
@@ -10,4 +11,5 @@
  (magit-push
   ("--force-with-lease"))
  (magit-rebase nil
-               ("--autostash")))
+               ("--autostash"))
+ (magit-run nil))
