@@ -3,6 +3,7 @@
  (magit-branch nil)
  (magit-commit nil)
  (magit-ediff nil)
+ (magit-fetch nil)
  (magit-gitignore nil)
  (magit-log
   ("-n256" "--graph" "--decorate"))

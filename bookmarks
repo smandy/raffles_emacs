@@ -2,7 +2,54 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("upw4.org"
+(("bitty"
+ (filename . "~/repos/drewritchie/the_lagrange.org")
+ (front-context-string . "uld hobble home ")
+ (rear-context-string . "), instead he wo")
+ (position . 8492))
+("boop"
+ (filename . "~/repos/drewritchie/the_lagrange.org")
+ (front-context-string . "\n\n\n    \n\n** TODO")
+ (rear-context-string . "nsmitting.\n\n    ")
+ (position . 31358))
+("the_lagrange.org"
+ (filename . "~/repos/drewritchie/the_lagrange.org")
+ (front-context-string . "enses etc. burea")
+ (rear-context-string . "tial pains / lic")
+ (position . 17786))
+("anki_import.csv"
+ (filename . "~/Dropbox/anki_import.csv")
+ (front-context-string)
+ (rear-context-string)
+ (position . 1))
+("i3_Cheat_Sheet.pdf"
+ (filename . "~/Dropbox/i3_Cheat_Sheet.pdf")
+ (front-context-string . "%PDF-1.5\n%\277\367\242\376\n3")
+ (rear-context-string)
+ (position . 1)
+ (page . 1)
+ (handler . doc-view-bookmark-jump))
+("todo_duck_installation.org"
+ (filename . "~/Dropbox/todo_duck_installation.org")
+ (front-context-string . "  https://www.os")
+ (rear-context-string . "clocks in i3bar\n")
+ (position . 1009))
+("dwd.org"
+ (filename . "~/Dropbox/gtd/robbins/dwd/dwd.org")
+ (front-context-string . "Day 3\n** <2022-1")
+ (rear-context-string . "ervous system\n* ")
+ (position . 8230))
+("drewritchie"
+ (filename . "~/repos/drewritchie/")
+ (front-context-string . "..\n  -rw-r--r-- ")
+ (rear-context-string . "58 Dec  4 13:57 ")
+ (position . 173))
+("todo.org"
+ (filename . "~/todo.org")
+ (front-context-string . "* DONE Get i3bar")
+ (rear-context-string . "Few things use\n\n")
+ (position . 562))
+("upw4.org"
  (filename . "~/Dropbox/gtd/robbins/upw4.org")
  (front-context-string . "\n****** Emotiona")
  (rear-context-string . "ly\n\n***** Values")
@@ -225,10 +272,10 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/gtd/kanban.org")
- (front-context-string . "** TODO Alexis C")
- (rear-context-string . "\n#+END:\n* Tasks\n")
- (position . 121996))
+ (filename . "~/Dropbox/gtd/journal.org")
+ (front-context-string . "**** [2022-12-20")
+ (rear-context-string . "of application.\n")
+ (position . 660526))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")
