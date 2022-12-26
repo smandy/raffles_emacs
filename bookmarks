@@ -2,7 +2,22 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("bitty"
+(("org-refile-last-stored"
+ (filename . "~/Dropbox/gtd/gtd.org")
+ (front-context-string . "** DONE Jim Kwik")
+ (rear-context-string . "f66b4e\n   :END:\n")
+ (position . 187414))
+("count_words"
+ (filename . "~/Dropbox/drewritchie/the_lagrange.org")
+ (front-context-string . "#+BEGIN_SRC elis")
+ (rear-context-string . " 0:39\n   :END:\n\n")
+ (position . 226))
+("heathrow"
+ (filename . "~/Dropbox/drewritchie/the_lagrange.org")
+ (front-context-string . "   unhackable et")
+ (rear-context-string . "urity, private,\n")
+ (position . 29730))
+("bitty"
  (filename . "~/repos/drewritchie/the_lagrange.org")
  (front-context-string . "uld hobble home ")
  (rear-context-string . "), instead he wo")
@@ -13,7 +28,7 @@
  (rear-context-string . "nsmitting.\n\n    ")
  (position . 31358))
 ("the_lagrange.org"
- (filename . "~/repos/drewritchie/the_lagrange.org")
+ (filename . "~/Dropbox/drewritchie/")
  (front-context-string . "enses etc. burea")
  (rear-context-string . "tial pains / lic")
  (position . 17786))
@@ -273,9 +288,9 @@
  (position . 1))
 ("org-capture-last-stored"
  (filename . "~/Dropbox/gtd/journal.org")
- (front-context-string . "**** [2022-12-20")
- (rear-context-string . "of application.\n")
- (position . 660526))
+ (front-context-string . "**** [2022-12-24")
+ (rear-context-string . "e of the girls.\n")
+ (position . 671909))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")

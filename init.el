@@ -2,7 +2,7 @@
 
 ;;; Commentary:
 
-;; Ritz/Raffles laptop Emacs config
+;; Ritz/Raffles/Duck laptop Emacs config
 
 ;;; Code:
 
@@ -32,6 +32,11 @@
 
 (global-set-key (kbd "C-<return>") 'yas-expand)
 (global-set-key (kbd "M-4") 'ispell-word)
+(global-set-key (kbd "M-o") 'ace-window)
+
+;;(global-set-key (kbd "M-p") 'ace-jump-buffer)
+(global-set-key (kbd "M-p") 'frog-jump-buffer)
+
 
 ;;(set-frame-font "Terminus 12")
 
@@ -550,6 +555,7 @@
 ;; (global-set-key [f2]  'helm-world-time)
 ;; (global-set-key [f3]  'helm-cscope-find-global-definition)
 (global-set-key [f4]  'magit-status)
+(global-set-key [f5] 'google-this)
 ;;(global-set-key [f6]  'helm-man-woman)
 (global-set-key [f7]  'compile)
 (global-set-key [f8]  'reboot-python)
@@ -558,13 +564,18 @@
 
 ;; (global-set-key [f10] 'switch-to-shell)
 (global-set-key [f10] 'clang-format-buffer)
-(global-set-key [f12] 'ace-jump-mode)
+(global-set-key [f12] 'avy-goto-char)
 
-(global-set-key (kbd "M-SPC") 'ace-jump-mode)
+
+;;(global-set-key (kbd "M-SPC") 'ace-jump-mode)
+(global-set-key (kbd "M-SPC") 'avy-goto-char)
 ;;(global-set-key [f1] 'wg-switch-to-workgroup)
 (global-set-key (kbd "C-c o") 'ff-find-other-file)
 (global-set-key (kbd "C-c f") 'find-file-at-point)
 (global-set-key (kbd "C-M-g") 'dumb-jump-go)
+
+
+
 
 (nyan-mode 't)
 
@@ -852,6 +863,31 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 
 (load "~/.emacs.d/tags.el")
+
+
+(global-set-key  [f7] 'get-tag-counts)
+
+(defun get-tag-counts ()
+   (interactive)
+  (let ((all-tags '()))
+    (org-map-entries
+     (lambda ()
+       ;;(message "Woot %s" (s-trim (pp-to-string (org-heading-components))))
+       (let ((tag-string (car (last (org-heading-components)))))
+         ;;(message "Tag string %s" tag-string)
+         (when tag-string   
+           (setq all-tags
+                 (append all-tags (split-string tag-string ":" t)))))))
+    ;;(message "Woot")
+    (let* ((pairs (cl-loop for tag in (-uniq all-tags) collect (cons tag (cl-count tag all-tags :test 'string=))))
+          (pairs2 (-sort (lambda (a b) (> (cdr a) (cdr b))) pairs )))
+      (switch-to-buffer-other-window (generate-new-buffer "TAG COUNTS"))
+         (cl-loop for pair in pairs2 
+                  do (insert (format "%4d : %s\n" (cdr pair) (car pair) ))))))
+
+
+;;(switch-to-buffer-other-window
+
 
 (defun parse-fix ()
   (interactive)
@@ -1166,6 +1202,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(LaTeX-command "latex -shell-escape")
+ '(ace-isearch-function 'avy-goto-char)
  '(ansi-color-faces-vector
    [default bold shadow italic underline bold bold-italic bold])
  '(browse-url-browser-function 'browse-url-firefox)
@@ -1185,7 +1222,9 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(flycheck-clang-language-standard "c++14")
  '(fountain-export-font "Courier New")
  '(fountain-export-include-scene-numbers t)
+ '(frog-jump-buffer-max-buffers 24)
  '(gdb-many-windows t)
+ '(global-ace-isearch-mode t)
  '(global-company-mode t)
  '(haskell-process-auto-import-loaded-modules t)
  '(haskell-process-log t)
@@ -1240,7 +1279,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
    '("png" "jpeg" "jpg" "gif" "tiff" "tif" "xbm" "xpm" "pbm" "pgm" "ppm" "pnm" "svg" "pdf"))
  '(inferior-octave-startup-args '("-i" "--line-editing"))
  '(inhibit-startup-screen t)
- '(ispell-program-name "/usr/bin/hunspell") ;; NB - duck specific. Make this conditional somehow
+ '(ispell-program-name "/usr/bin/hunspell")
  '(jdee-db-active-breakpoint-face-colors (cons "#000000" "#80A0C2"))
  '(jdee-db-requested-breakpoint-face-colors (cons "#000000" "#A2BF8A"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#000000" "#3f3f3f"))
@@ -1307,8 +1346,9 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
    '((sequence "TODO" "TODOTODAY" "INPROGRESS" "BLOCKED" "DONE" "NEVER")))
  '(org-twbs-todo-kwd-class-done "label label-success")
  '(org-twbs-todo-kwd-class-undone "label label-warning")
+ '(org-use-tag-inheritance nil)
  '(package-selected-packages
-   '(swift-mode ada-mode yasnippet-classic-snippets yasnippet-snippets helm-dash magit helm-rg color-theme-sanityinc-tomorrow org-superstar anki-editor key-chord git-timemachine org-anki anki-mode chess weyland-yutani-theme afternoon-theme tron-legacy-theme ox-twbs undo-tree arduino-mode command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti hy-mode org-kanban dracula-theme slime ob-kotlin amd-mode sed-mode ranger doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode multiple-cursors ag helm-projectile projectile dumb-jump helm-cscope ein elpy yaml-mode web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game))
+   '(ace-isearch frog-jump-buffer ace-jump-buffer ztree anki-connect ace-window swift-mode ada-mode yasnippet-classic-snippets yasnippet-snippets helm-dash magit helm-rg color-theme-sanityinc-tomorrow org-superstar anki-editor key-chord git-timemachine org-anki anki-mode chess weyland-yutani-theme afternoon-theme tron-legacy-theme ox-twbs undo-tree arduino-mode command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti hy-mode org-kanban dracula-theme slime ob-kotlin amd-mode sed-mode ranger doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode multiple-cursors ag helm-projectile projectile dumb-jump helm-cscope ein elpy yaml-mode web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game))
  '(pdf-view-midnight-colors (cons "#eceff4" "#323334"))
  '(projectile4-tags-backend 'ggtags)
  '(python-shell-interpreter "ipython3")
