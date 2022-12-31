@@ -866,7 +866,30 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 
 (global-set-key  [f7] 'get-tag-counts)
+(global-set-key  [f7] 'get-tag-counts2)
 
+(defun get-tag-counts2 ()
+  (interactive)
+  (let ((all-tags (make-hash-table :test 'equal)))
+    (org-map-entries
+     (lambda ()
+       (let* ((tag-string (car (last (org-heading-components))))
+              (tag-string (if tag-string  tag-string ""))
+              (bits (s-split  ":" tag-string))
+              (bits (-remove 's-blank-str? bits)))
+         (-each bits (lambda (x) (puthash x (1+ (gethash x all-tags 0)) all-tags))))))
+     ;;(message "hash is %s" all-tags)
+     (let* ((all-pairs (list))
+            (ign (maphash (lambda (x y) (push (cons x y) all-pairs)) all-tags))
+            (all-pairs (-sort (lambda (x y) (> (cdr x) (cdr y))) all-pairs))
+            (ign (message "Pairs is %s" (length sorted))))
+       (switch-to-buffer-other-window (generate-new-buffer "TAG COUNTS"))
+       (-each all-pairs (lambda (x) (insert (format "%20s : %3d\n" (car x) (cdr x)))))
+     )))
+         
+    
+
+;; Maybe redo with 'S' and 'Dash' at some point? Meh not urgent.
 (defun get-tag-counts ()
    (interactive)
   (let ((all-tags '()))
@@ -884,9 +907,6 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
       (switch-to-buffer-other-window (generate-new-buffer "TAG COUNTS"))
          (cl-loop for pair in pairs2 
                   do (insert (format "%4d : %s\n" (cdr pair) (car pair) ))))))
-
-
-;;(switch-to-buffer-other-window
 
 
 (defun parse-fix ()
@@ -907,8 +927,6 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                       (s-join "\n"))))
     (switch-to-buffer (generate-new-buffer "FIX"))
     (insert (format "\n%s\n==========================\n\n%s" msg parsed))))
-
-
 
 ;;(global-set-key [f3] 'parse-sbe)
 
@@ -1157,7 +1175,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(frog-menu-actions-face ((t nil))))
 
 (provide 'init.el)
 ;;; init.el ends here
@@ -1287,11 +1305,14 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(nyan-mode t)
  '(objed-cursor-color "#C16069")
  '(org-agenda-files
-   '("/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/kanban.org" "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/_shopping.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/robbins/weekly.org" "/home/andy/Dropbox/gtd/robbins/ania/ania.org"))
+   '("/home/andy/Dropbox/gtd/robbins/business_mastery/bmcourse.org" "/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/kanban.org" "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/_shopping.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/robbins/weekly.org" "/home/andy/Dropbox/gtd/robbins/ania/ania.org"))
  '(org-babel-load-languages '((dot . t) (emacs-lisp . t) (C . t)))
  '(org-capture-templates
    '(("t" "Todo" entry
-      (file+headline "~/Dropbox/gtd/kanban.org" "Tasks")
+      (file+headline "~/Dropbox/gtd/gtd.org" "TODOs")
+      "* TODO %?" :prepend t)
+     ("m" "Meditations" entry
+      (file+headline "~/Dropbox/gtd/gtd.org" "Meditations")
       "* TODO %?" :prepend t)
      ("A" "Anki basic" entry
       (file+headline org-my-anki-file "Dispatch Shelf")
@@ -1304,24 +1325,12 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 %?
 ** Back
 " :kill-buffer 't)
-     ("r" "Tasks" entry
-      (file+headline "~/Dropbox/gtd/gtd.org" "Tasks")
-      "* TODO %?" :prepend t)
-     ("b" "Kanban" entry
-      (file+headline "~/Dropbox/gtd/kanban.org" "Books")
-      "* TODO %?" :prepend t)
      ("a" "Agenda" entry
       (file+headline "~/Dropbox/gtd/gtd.org" "Schedule")
-      "* TODO %?" :prepend t)
+      "* TODO %?")
      ("s" "Shopping" entry
-      (file+headline "~/Dropbox/gtd/shopping.org" "Stuff")
+      (file+headline "~/Dropbox/gtd/_shopping.org" "Stuff")
       "* TODO %?" :prepend t)
-     ("r" "Todo" entry
-      (file+headline "~/Dropbox/gtd/kanban.org" "Tasks")
-      "* TODO %? %F" :prepend t)
-     ("c" "Correspondance" entry
-      (file+datetree "~/Dropbox/gtd/corresp.org")
-      "* %U %?")
      ("j" "Journal" entry
       (file+datetree "~/Dropbox/gtd/journal.org")
       "* %U %?")))
@@ -1361,6 +1370,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
      (test-case-name . twisted\.internet\.test\.test_inotify)
      (test-case-name . twisted\.internet\.test\.test_core)))
  '(send-mail-function 'smtpmail-send-it)
+ '(sentence-end "\\. ")
  '(show-paren-mode t)
  '(sql-postgres-login-paramsupo '((user :default "andy") server (database :default "andy")))
  '(tab-width 4)

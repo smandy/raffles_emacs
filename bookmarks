@@ -2,11 +2,18 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("org-refile-last-stored"
+(("(org) Motion"
+ (front-context-string . "\n2.4 Motion\n====")
+ (rear-context-string . "ument structure\n")
+ (position . 45808)
+ (filename . "/home/andy/.emacs.d/elpa/org-20170622/org")
+ (info-node . "Motion")
+ (handler . Info-bookmark-jump))
+("org-refile-last-stored"
  (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** DONE Jim Kwik")
- (rear-context-string . "f66b4e\n   :END:\n")
- (position . 187414))
+ (front-context-string . "** Information R")
+ (rear-context-string . "------+-------|\n")
+ (position . 232093))
 ("count_words"
  (filename . "~/Dropbox/drewritchie/the_lagrange.org")
  (front-context-string . "#+BEGIN_SRC elis")
@@ -287,10 +294,10 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/gtd/journal.org")
- (front-context-string . "**** [2022-12-24")
- (rear-context-string . "e of the girls.\n")
- (position . 671909))
+ (filename . "~/Dropbox/gtd/gtd.org")
+ (front-context-string . "** TODO I can't ")
+ (rear-context-string . "dynasty\n* TODOs\n")
+ (position . 13177))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")
