@@ -15,6 +15,16 @@
 
 (global-set-key [f9] 'switch-to-gtd-org)
 
+
+;; Duck fonts
+
+(set-frame-font "-1ASC-Liberation Mono-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1" )
+(set-frame-font "-ADBO-Source Code Pro-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1" )
+(set-frame-font "-MS  -Calibri-normal-normal-normal-*-*-*-*-*-*-0-iso10646-1" )
+(set-frame-font "-MS  -Consolas-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1" )
+(set-frame-font "Consolas 12")
+(set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1" )
+
 ;; (set-frame-font "Bedstead 15")
 
 ;; (set-frame-font "Meslo LG L" 't)
@@ -24,7 +34,7 @@
 ;; (set-frame-font "Tamsyn" 't)
 
 ;; (set-frame-font "Tamsyn 12" 't)
-;; (set-frame-font "Andale Mono 14")
+;; (set-frame-font "Andale Mono 12")
 ;; (set-frame-font "Hack" 't) 
 ;; (set-frame-font "Misc Fixed" 't)
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
