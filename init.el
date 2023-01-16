@@ -8,14 +8,23 @@
 
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 
+
+(defun switch-to-gtd-org ()
+  (interactive)
+  (switch-to-buffer (find-file "/home/andy/Dropbox/gtd/gtd.org")))
+
+(global-set-key [f9] 'switch-to-gtd-org)
+
 ;; (set-frame-font "Bedstead 15")
 
 ;; (set-frame-font "Meslo LG L" 't)
-;; (set-frame-font "Misc Fixed" 't) 
+;; (set-frame-font "Misc Fixed" 't)
+
+;; (set-frame-font "Fixed 14" 't)
 ;; (set-frame-font "Tamsyn" 't)
 
 ;; (set-frame-font "Tamsyn 12" 't)
-;; (set-frame-font "Andale Mono 12")
+;; (set-frame-font "Andale Mono 14")
 ;; (set-frame-font "Hack" 't) 
 ;; (set-frame-font "Misc Fixed" 't)
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
@@ -204,6 +213,8 @@
                  (org-remove-inline-images)
                  (org-present-show-cursor)
                  (org-present-read-write)))))
+
+(require 'org-inlinetask)
 
 (defun slurp (x)
   "Clojure slurp function. Slurp file X."
@@ -560,7 +571,8 @@
 (global-set-key [f7]  'compile)
 (global-set-key [f8]  'reboot-python)
 (global-set-key [f9]  'py-execute-region)
-(global-set-key [f9]  'org-table-recalculate)
+(global-set-key [f9]  'anki-mode-menu)
+;;(global-set-key [f10] 'clang-format-buffer)
 
 ;; (global-set-key [f10] 'switch-to-shell)
 (global-set-key [f10] 'clang-format-buffer)
@@ -865,30 +877,29 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (load "~/.emacs.d/tags.el")
 
 
-(global-set-key  [f7] 'get-tag-counts)
+;;(global-set-key  [f7] 'get-tag-counts)
 (global-set-key  [f7] 'get-tag-counts2)
 
 (defun get-tag-counts2 ()
+  "Reimplementation in a more functional style. Not sure if I succeeded"
   (interactive)
   (let ((all-tags (make-hash-table :test 'equal)))
     (org-map-entries
      (lambda ()
        (let* ((tag-string (car (last (org-heading-components))))
               (tag-string (if tag-string  tag-string ""))
-              (bits (s-split  ":" tag-string))
-              (bits (-remove 's-blank-str? bits)))
+              (bits (->> tag-string
+                         (s-split  ":")
+                         (-remove 's-blank-str?))))
          (-each bits (lambda (x) (puthash x (1+ (gethash x all-tags 0)) all-tags))))))
      ;;(message "hash is %s" all-tags)
      (let* ((all-pairs (list))
             (ign (maphash (lambda (x y) (push (cons x y) all-pairs)) all-tags))
-            (all-pairs (-sort (lambda (x y) (> (cdr x) (cdr y))) all-pairs))
-            (ign (message "Pairs is %s" (length sorted))))
+            (all-pairs (-sort (lambda (x y) (> (cdr x) (cdr y))) all-pairs)) )
+            ;;(ign (message "Pairs is %s" (length sorted))))
        (switch-to-buffer-other-window (generate-new-buffer "TAG COUNTS"))
-       (-each all-pairs (lambda (x) (insert (format "%20s : %3d\n" (car x) (cdr x)))))
-     )))
+       (-each all-pairs (lambda (x) (insert (format "%20s : %3d\n" (car x) (cdr x))))))))
          
-    
-
 ;; Maybe redo with 'S' and 'Dash' at some point? Meh not urgent.
 (defun get-tag-counts ()
    (interactive)
@@ -982,7 +993,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
          (st (funcall conv s))
          (ft (funcall conv f)))
     (/ (time-to-seconds (time-subtract ft st)) seconds-per-day)))
-;; (daysBetween "1973-05-09" "2021-09-01") 17647.0
+;; (daysBetween "1973-05-09" "2023-01-14") 18147.0
 
 (eval-after-load 'company
   '(progn
@@ -1101,9 +1112,9 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (defun convert-fitbit-weight-row-to-org ()
   (interactive)
   (-let* (((day month year weight kilos bmi fat)
-          (s-with (thing-at-point 'line)
-            (s-split "[,-]")
-            (--map (s-with it (s-replace "\"" "") (string-to-number))))))
+           (s-with (thing-at-point 'line)
+             (s-split "[,-]")
+             (--map (s-with it (s-replace "\"" "") (string-to-number))))))
     (beginning-of-line)
     (kill-line)
     (--> (encode-time (list 0 0 0 day month year 0 nil 0 ))
@@ -1158,6 +1169,18 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 (setq work-agenda-file "/home/andy/Dropbox/gtd/work.org")
 
+;; "/home/andy/Dropbox/gtd/kanban.org" - removed - reinstate in necessary
+(defun agenda-schedule ()
+  (interactive)
+  (org-store-new-agenda-file-list '("/home/andy/Dropbox/gtd/robbins/dwd/dwd.org" "/home/andy/Dropbox/gtd/robbins/business_mastery/bmcourse.org" "/home/andy/Dropbox/gtd/journal.org"  "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/_shopping.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/robbins/weekly.org" "/home/andy/Dropbox/gtd/robbins/ania/ania.org"
+
+                                    )))
+
+
+(defun agenda-lagrange ()
+  (interactive)
+  (org-store-new-agenda-file-list '("/home/andy/Dropbox/drewritchie/the_lagrange.org")))
+
 (defun add-work-to-agenda-files ()
   (interactive)
   (org-store-new-agenda-file-list (add-to-list 'org-agenda-files work-agenda-file))
@@ -1211,7 +1234,10 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
    ;;(message "Danger %s" x )
    (if (< 1 x) "danger!!" ""))
 
-
+;; https://stackoverflow.com/questions/51006855/open-mp4-files-from-orgmode
+(require 'openwith)
+(openwith-mode t)
+(setq openwith-associations '(("\\.mp4\\'" "vlc" (file))))
 
 
 (custom-set-variables
@@ -1304,8 +1330,13 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(midnight-mode nil)
  '(nyan-mode t)
  '(objed-cursor-color "#C16069")
+ '(org-agenda-custom-commands
+   '(("i" . "Inline")
+     ("il" . "Inline2")
+     ("il" tags-todo "+LEVEL=15+TODO=\"TODO\"|+LEVEL=15+TODO=\"DONE\"" nil)
+     ("im" tags-todo "+morning" nil)))
  '(org-agenda-files
-   '("/home/andy/Dropbox/gtd/robbins/business_mastery/bmcourse.org" "/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/kanban.org" "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/_shopping.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/robbins/weekly.org" "/home/andy/Dropbox/gtd/robbins/ania/ania.org"))
+   '("/home/andy/Dropbox/gtd/robbins/dwd/dwd.org" "/home/andy/Dropbox/gtd/robbins/business_mastery/bmcourse.org" "/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/_shopping.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/robbins/weekly.org" "/home/andy/Dropbox/gtd/robbins/ania/ania.org"))
  '(org-babel-load-languages '((dot . t) (emacs-lisp . t) (C . t)))
  '(org-capture-templates
    '(("t" "Todo" entry
@@ -1313,7 +1344,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
       "* TODO %?" :prepend t)
      ("m" "Meditations" entry
       (file+headline "~/Dropbox/gtd/gtd.org" "Meditations")
-      "* TODO %?" :prepend t)
+      "* %?" :prepend t)
      ("A" "Anki basic" entry
       (file+headline org-my-anki-file "Dispatch Shelf")
       "* %<%H:%M>
@@ -1325,10 +1356,10 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 %?
 ** Back
 " :kill-buffer 't)
-     ("a" "Agenda" entry
+     ("s" "Schedule" entry
       (file+headline "~/Dropbox/gtd/gtd.org" "Schedule")
       "* TODO %?")
-     ("s" "Shopping" entry
+     ("p" "Shopping" entry
       (file+headline "~/Dropbox/gtd/_shopping.org" "Stuff")
       "* TODO %?" :prepend t)
      ("j" "Journal" entry
@@ -1355,9 +1386,9 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
    '((sequence "TODO" "TODOTODAY" "INPROGRESS" "BLOCKED" "DONE" "NEVER")))
  '(org-twbs-todo-kwd-class-done "label label-success")
  '(org-twbs-todo-kwd-class-undone "label label-warning")
- '(org-use-tag-inheritance nil)
+ '(org-use-tag-inheritance '("wifidetails" "astronomy"))
  '(package-selected-packages
-   '(ace-isearch frog-jump-buffer ace-jump-buffer ztree anki-connect ace-window swift-mode ada-mode yasnippet-classic-snippets yasnippet-snippets helm-dash magit helm-rg color-theme-sanityinc-tomorrow org-superstar anki-editor key-chord git-timemachine org-anki anki-mode chess weyland-yutani-theme afternoon-theme tron-legacy-theme ox-twbs undo-tree arduino-mode command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti hy-mode org-kanban dracula-theme slime ob-kotlin amd-mode sed-mode ranger doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode multiple-cursors ag helm-projectile projectile dumb-jump helm-cscope ein elpy yaml-mode web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game))
+   '(openwith helm-org-ql org-latex-impatient org-drill ace-isearch frog-jump-buffer ace-jump-buffer ztree anki-connect ace-window swift-mode ada-mode yasnippet-classic-snippets yasnippet-snippets helm-dash magit helm-rg color-theme-sanityinc-tomorrow org-superstar anki-editor key-chord git-timemachine org-anki anki-mode chess weyland-yutani-theme afternoon-theme tron-legacy-theme ox-twbs undo-tree arduino-mode command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti hy-mode org-kanban dracula-theme slime ob-kotlin amd-mode sed-mode ranger doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode multiple-cursors ag helm-projectile projectile dumb-jump helm-cscope ein elpy yaml-mode web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game))
  '(pdf-view-midnight-colors (cons "#eceff4" "#323334"))
  '(projectile4-tags-backend 'ggtags)
  '(python-shell-interpreter "ipython3")

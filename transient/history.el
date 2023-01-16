@@ -15,4 +15,5 @@
   ("--force-with-lease"))
  (magit-rebase nil
                ("--autostash"))
- (magit-run nil))
+ (magit-run nil)
+ (magit-stash nil))

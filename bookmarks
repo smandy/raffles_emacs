@@ -2,7 +2,29 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("(org) Motion"
+(("anki.org"
+ (filename . "~/anki.org")
+ (front-context-string . "*** Front\n BZZZ\n")
+ (rear-context-string . "242052\n   :END:\n")
+ (position . 504))
+("disc.png"
+ (filename . "~/Dropbox/gtd/robbins/ania/ania.org")
+ (front-context-string . "\n**** Mischievou")
+ (rear-context-string . "** Power virtues")
+ (position . 74388))
+("i3statusconfig"
+ (filename . "~/.config/i3status/config")
+ (front-context-string . "# i3status confi")
+ (rear-context-string)
+ (position . 1))
+("(org) Matching tags and properties"
+ (front-context-string . "\n10.3.3 Matching")
+ (rear-context-string . "in agenda views\n")
+ (position . 327668)
+ (filename . "/home/andy/.emacs.d/elpa/org-20170622/org")
+ (info-node . "Matching tags and properties")
+ (handler . Info-bookmark-jump))
+("(org) Motion"
  (front-context-string . "\n2.4 Motion\n====")
  (rear-context-string . "ument structure\n")
  (position . 45808)
@@ -11,9 +33,9 @@
  (handler . Info-bookmark-jump))
 ("org-refile-last-stored"
  (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** Information R")
- (rear-context-string . "------+-------|\n")
- (position . 232093))
+ (front-context-string . "** TODO Getting ")
+ (rear-context-string . "growth:reading:\n")
+ (position . 400552))
 ("count_words"
  (filename . "~/Dropbox/drewritchie/the_lagrange.org")
  (front-context-string . "#+BEGIN_SRC elis")
@@ -294,10 +316,10 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** TODO I can't ")
- (rear-context-string . "dynasty\n* TODOs\n")
- (position . 13177))
+ (filename . "~/anki.org")
+ (front-context-string . "** 11:11\n   :PRO")
+ (rear-context-string . "10\n*** Back\n100\n")
+ (position . 1060))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")
