@@ -2,7 +2,22 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("anki.org"
+(("stoicism"
+ (filename . "~/Dropbox/gtd/gtd.org")
+ (front-context-string . "sm              ")
+ (rear-context-string . "517198C\n* Stoici")
+ (position . 259903))
+("org-capture-last-stored-marker"
+ (filename . "~/Dropbox/gtd/gtd.org")
+ (front-context-string . "** TODO Extropy.")
+ (rear-context-string . "opinion is yes.\n")
+ (position . 808596))
+("Triune_brain.png"
+ (filename . "~/Dropbox/Triune_brain.png")
+ (position . 0)
+ (image-type . png)
+ (handler . image-bookmark-jump))
+("anki.org"
  (filename . "~/anki.org")
  (front-context-string . "*** Front\n BZZZ\n")
  (rear-context-string . "242052\n   :END:\n")
@@ -33,9 +48,9 @@
  (handler . Info-bookmark-jump))
 ("org-refile-last-stored"
  (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** TODO Getting ")
- (rear-context-string . "growth:reading:\n")
- (position . 400552))
+ (front-context-string . "** <2023-02-28 T")
+ (rear-context-string . "***** Spiderman\n")
+ (position . 311878))
 ("count_words"
  (filename . "~/Dropbox/drewritchie/the_lagrange.org")
  (front-context-string . "#+BEGIN_SRC elis")
@@ -316,10 +331,10 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/anki.org")
- (front-context-string . "** 11:11\n   :PRO")
- (rear-context-string . "10\n*** Back\n100\n")
- (position . 1060))
+ (filename . "~/Dropbox/gtd/journal.org")
+ (front-context-string . "**** [2023-03-10")
+ (rear-context-string . "23-03-10 Friday\n")
+ (position . 739432))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")

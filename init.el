@@ -20,10 +20,10 @@
 
 (set-frame-font "-1ASC-Liberation Mono-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1" )
 (set-frame-font "-ADBO-Source Code Pro-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1" )
-(set-frame-font "-MS  -Calibri-normal-normal-normal-*-*-*-*-*-*-0-iso10646-1" )
-(set-frame-font "-MS  -Consolas-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1" )
-(set-frame-font "Consolas 12")
+(set-frame-font "Consolas 14")
+(set-frame-font "Liberation Mono 13")
 (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1" )
+(set-frame-font "-MS  -Consolas-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1" )
 
 ;; (set-frame-font "Bedstead 15")
 
@@ -635,10 +635,6 @@
       (setq the-plist (cddr the-plist)))
     alist))
 
-;;(require 'color-theme)
-;;(color-theme-initialize)
-;;(color-theme-midnight)
-;;(color-theme-deep-blue)
 
 ;;(windmove-default-keybindings 'meta)
 
@@ -838,10 +834,10 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 (global-set-key [f11] 'parse-fix)
 
-; (parse-epoch-time "1482672627.025747002" ) "1482672627.025747 (s) -> 2016-12-25T13:30:27.025747060"
-; (parse-epoch-time "1482672627025.747023" ) "1482672627025.747 (ms) -> 2016-12-25T13:30:27.025747060"
-; (parse-epoch-time "1482672627025747.032" ) "1482672627025747.0 (µs) -> 2016-12-25T13:30:27.025747060"
-; (parse-epoch-time "1482672627025747023"  ) "1.482672627025747e+18 (ns) -> 2016-12-25T13:30:27.025747060"
+; (parse-epoch-time "1482672627.025747002" ) "1482672627.025747 (s) -> 2016-12-25T21:30:27.025747060"
+; (parse-epoch-time "1482672627025.747023" ) "1482672627025.747 (ms) -> 2016-12-25T21:30:27.025747060"
+; (parse-epoch-time "1482672627025747.032" ) "1482672627025747.0 (µs) -> 2016-12-25T21:30:27.025747060"
+; (parse-epoch-time "1482672627025747023"  ) "1.482672627025747e+18 (ns) -> 2016-12-25T21:30:27.025747060"
 ; (format-time-string "%H:%M:%S" (current-time))
 (defun parse-sbe ()
   (interactive)
@@ -896,6 +892,30 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
   (let ((all-tags (make-hash-table :test 'equal)))
     (org-map-entries
      (lambda ()
+       ;;(message "ohc woot %s" (org-heading-components))
+       (--> (org-heading-components)
+            (message "woot %s" it)
+            (last it)
+            (car it)
+            (message "boop")
+            (if it it "")
+            (s-split  ":" it)
+            (-remove 's-blank-str? it)
+            (-each it (lambda (x) (puthash x (1+ (gethash x all-tags 0)) all-tags))))))
+     ;;(message "hash is %s" all-tags)
+     (let* ((all-pairs (list))
+            (ign (maphash (lambda (x y) (push (cons x y) all-pairs)) all-tags))
+            (all-pairs (-sort (lambda (x y) (> (cdr x) (cdr y))) all-pairs)))
+            ;;(ign (message "Pairs is %s" (length sorted))))
+       (switch-to-buffer-other-window (generate-new-buffer "TAG COUNTS"))
+       (-each all-pairs (lambda (x) (insert (format "%20s : %3d\n" (car x) (cdr x))))))))
+
+(defun get-tag-counts2 ()
+  "Reimplementation in a more functional style. Not sure if I succeeded"
+  (interactive)
+  (let ((all-tags (make-hash-table :test 'equal)))
+    (org-map-entries
+     (lambda ()
        (let* ((tag-string (car (last (org-heading-components))))
               (tag-string (if tag-string  tag-string ""))
               (bits (->> tag-string
@@ -905,7 +925,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
      ;;(message "hash is %s" all-tags)
      (let* ((all-pairs (list))
             (ign (maphash (lambda (x y) (push (cons x y) all-pairs)) all-tags))
-            (all-pairs (-sort (lambda (x y) (> (cdr x) (cdr y))) all-pairs)) )
+            (all-pairs (-sort (lambda (x y) (> (cdr x) (cdr y))) all-pairs)))
             ;;(ign (message "Pairs is %s" (length sorted))))
        (switch-to-buffer-other-window (generate-new-buffer "TAG COUNTS"))
        (-each all-pairs (lambda (x) (insert (format "%20s : %3d\n" (car x) (cdr x))))))))
@@ -969,6 +989,9 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
    (-flatten)
    (s-join "")
    (s-reverse)))
+
+
+(commify 1234567)  
 
 (format "%s" 12) 
 
@@ -1152,9 +1175,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ;; SQL Stuff
 ;; (load-file "~/.emacs.d/sql-interactive-remove-continuation-prompt.el")
 ;; (require 'sql-interactive-remove-continuation-prompt)
-;;(load-theme 'manoj-dark 't)
-;;(load-theme 'sanityinc-tomorrow-blue)
-;;(load-theme 'tron-legacy t)
+
 
 (defun move-line-up ()
   "Move up the current line."
@@ -1238,6 +1259,15 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ;;                (file+headline org-my-anki-file "Dispatch Shelf")
 ;;                "* %<%H:%M>   %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Mega\n:END:\n** Text\n%x\n** Extra\n"))
 
+(defun nthroot (n k )
+  "Calculate the kth root of n"
+  (expt k (/ (log n k) k )) )
+
+;; (nthroot 81 4 ) 3.0000000000000004
+;; (nthroot 9 2 ) 3.0
+;; (nthroot 144 2) 12.0
+;; (nthroot 100 2) 9.999999999999998
+;;(nthroot 1000 3) 9.999999999999998
 
 (defun as/danger  (x)
   "Warning function"
