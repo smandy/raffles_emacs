@@ -2,7 +2,37 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("stoicism"
+(("mam"
+ (filename . "~/Dropbox/gtd/gtd.org")
+ (front-context-string . "** Mam\n*** [2022")
+ (rear-context-string . "D:\n* Federation\n")
+ (position . 751452))
+("detox"
+ (filename . "~/Dropbox/gtd/gtd.org")
+ (front-context-string . "** Detox schedul")
+ (rear-context-string . "ed extra costs!\n")
+ (position . 177304))
+("contacts"
+ (filename . "~/Dropbox/gtd/gtd.org")
+ (front-context-string . "* Contacts      ")
+ (rear-context-string . "D |  NEVER DONE\n")
+ (position . 282))
+("pwd"
+ (filename . "~/Dropbox/gtd/gtd.org")
+ (front-context-string . "* PWD\n** openai/")
+ (rear-context-string . "1-10 Tue 08:24]\n")
+ (position . 42041))
+("weekly_plans"
+ (filename . "~/Dropbox/gtd/gtd.org")
+ (front-context-string . "* Plans ( Weekly")
+ (rear-context-string . "plan\n*** Shower\n")
+ (position . 3782))
+("daily_plans"
+ (filename . "~/Dropbox/gtd/gtd.org")
+ (front-context-string . "* Plans (Daily) ")
+ (rear-context-string . "the check sent!\n")
+ (position . 4728))
+("stoicism"
  (filename . "~/Dropbox/gtd/gtd.org")
  (front-context-string . "sm              ")
  (rear-context-string . "517198C\n* Stoici")
@@ -48,9 +78,9 @@
  (handler . Info-bookmark-jump))
 ("org-refile-last-stored"
  (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** <2023-02-28 T")
- (rear-context-string . "***** Spiderman\n")
- (position . 311878))
+ (front-context-string . "** zeebop\n* Work")
+ (rear-context-string . "* bananahammock\n")
+ (position . 607438))
 ("count_words"
  (filename . "~/Dropbox/drewritchie/the_lagrange.org")
  (front-context-string . "#+BEGIN_SRC elis")
@@ -72,10 +102,10 @@
  (rear-context-string . "nsmitting.\n\n    ")
  (position . 31358))
 ("the_lagrange.org"
- (filename . "~/Dropbox/drewritchie/")
- (front-context-string . "enses etc. burea")
- (rear-context-string . "tial pains / lic")
- (position . 17786))
+ (filename . "~/Dropbox/drewritchie/the_lagrange.org")
+ (front-context-string . "pters\n  :LOGBOOK")
+ (rear-context-string . "|\n #+END: \n* Cha")
+ (position . 4815))
 ("anki_import.csv"
  (filename . "~/Dropbox/anki_import.csv")
  (front-context-string)
@@ -331,10 +361,10 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/gtd/journal.org")
- (front-context-string . "**** [2023-03-10")
- (rear-context-string . "23-03-10 Friday\n")
- (position . 739432))
+ (filename . "~/Dropbox/gtd/gtd.org")
+ (front-context-string . "** TODO AMT8 Edi")
+ (rear-context-string . "* TODOs\n* TODOs\n")
+ (position . 36335))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")
