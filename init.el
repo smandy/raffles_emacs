@@ -601,6 +601,8 @@
 
 (nyan-mode 't)
 
+(setq bufferName "woot")
+
 (defun dump-fonts ()
   (interactive) 
   (let* ((bufferName (format "fonts_%s.el" (system-name) ) ) 
@@ -1288,6 +1290,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(browse-url-firefox-program "firedragon")
  '(c-basic-offset 4)
  '(case-fold-search t)
+ '(chess-images-separate-frame nil)
  '(clang-format-executable "clang-format")
  '(company-clang-arguments nil)
  '(compilation-message-face 'default)

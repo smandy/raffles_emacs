@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("mam"
+(("jobs"
+ (filename . "~/Dropbox/gtd/gtd.org")
+ (front-context-string . "* 2023 Jobs     ")
+ (rear-context-string . "3c6a69dbe\n:END:\n")
+ (position . 960705))
+("mam"
  (filename . "~/Dropbox/gtd/gtd.org")
  (front-context-string . "** Mam\n*** [2022")
  (rear-context-string . "D:\n* Federation\n")
@@ -362,9 +367,9 @@
  (position . 1))
 ("org-capture-last-stored"
  (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** TODO AMT8 Edi")
- (rear-context-string . "* TODOs\n* TODOs\n")
- (position . 36335))
+ (front-context-string . "** TODO <2023-03")
+ (rear-context-string . "o shore street?\n")
+ (position . 152072))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")
