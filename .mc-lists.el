@@ -3,9 +3,13 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        beginning-of-buffer
+        c-electric-brace
         c-electric-colon
+        c-electric-semi&comma
         c-electric-slash
         clang-format-buffer
+        end-of-buffer
         fill-paragraph
         helm-M-x
         indent-for-tab-command
@@ -21,6 +25,7 @@
         org-self-insert-command
         org-yank
         wdired-finish-edit
+        yas-abort-snippet
         ))
 
 (setq mc/cmds-to-run-once

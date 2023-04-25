@@ -4,6 +4,7 @@
  (magit-commit nil)
  (magit-diff
   ("--no-ext-diff" "--stat"))
+ (magit-dispatch nil)
  (magit-ediff nil)
  (magit-fetch nil)
  (magit-gitignore nil)
@@ -12,8 +13,12 @@
  (magit-merge nil)
  (magit-pull nil)
  (magit-push
-  ("--force-with-lease"))
- (magit-rebase nil
-               ("--autostash"))
+  ("--force-with-lease")
+  nil)
+ (magit-rebase
+  ("--autostash")
+  nil)
+ (magit-remote
+  ("-f"))
  (magit-run nil)
  (magit-stash nil))
