@@ -83,9 +83,9 @@
  (handler . Info-bookmark-jump))
 ("org-refile-last-stored"
  (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** PENDING Conne")
- (rear-context-string . "23543fc8a\n:END:\n")
- (position . 955916))
+ (front-context-string . "** Compound inte")
+ (rear-context-string . "tty_printers.py\n")
+ (position . 899849))
 ("count_words"
  (filename . "~/Dropbox/drewritchie/the_lagrange.org")
  (front-context-string . "#+BEGIN_SRC elis")
@@ -366,10 +366,10 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/gtd/journal.org")
- (front-context-string . "**** [2023-04-20")
- (rear-context-string . "-04-20 Thursday\n")
- (position . 770170))
+ (filename . "~/Dropbox/gtd/gtd.org")
+ (front-context-string . "* TODO EDF insta")
+ (rear-context-string . "ation / smoking\n")
+ (position . 1012721))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")

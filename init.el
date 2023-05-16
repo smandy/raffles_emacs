@@ -25,6 +25,7 @@
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1" )
 (set-frame-font "-MS  -Consolas-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1" )
 
+
 ;; (set-frame-font "Bedstead 15")
 
 ;; (set-frame-font "Meslo LG L" 't)
@@ -117,7 +118,8 @@
 ;;(set-frame-font "Andale Mono 12")
 
 ;; Good for coding
-;; (set-frame-font "Hack 14")
+(set-frame-font "Hack 12")
+
 (require 'compile)
 ;;(require 'package)
 (package-initialize)
@@ -923,13 +925,15 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 
 ;;(global-set-key  [f7] 'get-tag-counts)
-(global-set-key  [f7] 'get-tag-counts2)
+(global-set-key  [f7] 'get-tag-counts)
+(global-set-key  [f8] 'get-heading-counts)
 
 
-(defun get-tag-counts2 ()
+(defun get-tag-counts ()
   "Reimplementation in a more functional style. Not sure if I succeeded"
   (interactive)
-  (let ((all-tags (make-hash-table :test 'equal)))
+  (let ((buffer-name "TAG COUNTS")
+        (all-tags (make-hash-table :test 'equal)))
     (org-map-entries
      (lambda ()
        (let* ((tag-string (car (last (org-heading-components))))
@@ -941,12 +945,45 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
      ;;(message "hash is %s" all-tags)
      (let* ((all-pairs (list))
             (ign (maphash (lambda (x y) (push (cons x y) all-pairs)) all-tags))
-            (all-pairs (-sort (lambda (x y) (> (cdr x) (cdr y))) all-pairs)))
+            (all-pairs (-sort (lambda (x y) (> (cdr x) (cdr y))) all-pairs))
+            )
             ;;(ign (message "Pairs is %s" (length sorted))))
-       (switch-to-buffer-other-window (generate-new-buffer "TAG COUNTS"))
-       (-each all-pairs (lambda (x) (insert (format "%20s : %3d\n" (car x) (cdr x))))))))
-         
+      (if (get-buffer buffer-name)
+          (kill-buffer buffer-name))
+       (switch-to-buffer-other-window (generate-new-buffer buffer-name))
+       (-each all-pairs (lambda (x) (insert (format "%20s : %3d\n" (car x) (cdr x)))))
+       (beginning-of-buffer))))
 
+
+(defun get-heading-counts ()
+  "Reimplementation in a more functional style. Not sure if I succeeded"
+  (interactive)
+  (let ((buffer-name "HEADING COLLISION COUNTS")
+        (all-headings (make-hash-table :test 'equal))
+        (top-level-headings (make-hash-table :test 'equal))
+        )
+    (org-map-entries
+     (lambda ()
+       (let* ((heading (nth 4  (org-heading-components)))
+              (level (nth 0  (org-heading-components)))
+              )
+         (puthash heading (1+ (gethash heading all-headings 0)) all-headings)
+         (if (= level 1)
+             (puthash heading (1+ (gethash heading top-level-headings 0)) top-level-headings)))))
+    (let* ((all-pairs (list))
+           (ign (maphash (lambda (x y) (push (cons x y) all-pairs)) all-headings))
+           (all-pairs (-sort (lambda (x y) (> (cdr x) (cdr y))) all-pairs))
+           (all-pairs2 (-filter (lambda (pair)
+                                  ;;(message "key is %s -> %s" (car pair) (gethash (car pair) top-level-headings))
+                                  (> (gethash (car pair) top-level-headings 0 ) 1))
+                                all-pairs))
+           )
+      (if (get-buffer buffer-name)
+          (kill-buffer buffer-name))
+      (switch-to-buffer-other-window (generate-new-buffer buffer-name))
+      (insert (format "%s collisions\n\n" (length all-pairs2)))
+      (-each all-pairs2 (lambda (x) (insert (format "%20s : %3d\n" (car x) (cdr x)))))
+      (beginning-of-buffer))))
 
 (defun parse-fix ()
   (interactive)
@@ -965,7 +1002,8 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                       (--map (apply 'format "%30s : %5s = %-10s" it))
                       (s-join "\n"))))
     (switch-to-buffer (generate-new-buffer "FIX"))
-    (insert (format "\n%s\n==========================\n\n%s" msg parsed))))
+    (insert (format "\n%s\n==========================\n\n%s" msg parsed))
+    (beginning-of-buffer)))
 
 ;;(global-set-key [f3] 'parse-sbe)
 
@@ -1024,7 +1062,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
          (st (funcall conv s))
          (ft (funcall conv f)))
     (/ (time-to-seconds (time-subtract ft st)) seconds-per-day)))
-;; (daysBetween "1973-05-09" "2023-01-14") 18147.0
+;; (daysBetween "1973-05-09" "2023-05-16") 18269.0
 
 (eval-after-load 'company
   '(progn
@@ -1278,6 +1316,9 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (setq openwith-associations '(("\\.mp4\\'" "vlc" (file))))
 
 
+;; Agenda files old    '("/home/andy/Dropbox/gtd/robbins/dwd/dwd.org" "/home/andy/Dropbox/gtd/robbins/business_mastery/bmcourse.org" "/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/_shopping.org" "/home/andy/Dropbox/gtd/robbins/weekly.org" "/home/andy/Dropbox/gtd/robbins/ania/ania.org")
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -1377,7 +1418,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
      ("il" tags-todo "+LEVEL=15+TODO=\"TODO\"|+LEVEL=15+TODO=\"DONE\"" nil)
      ("im" tags-todo "+morning" nil)))
  '(org-agenda-files
-   '("/home/andy/Dropbox/gtd/robbins/dwd/dwd.org" "/home/andy/Dropbox/gtd/robbins/business_mastery/bmcourse.org" "/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/_shopping.org" "/home/andy/Dropbox/gtd/robbins/weekly.org" "/home/andy/Dropbox/gtd/robbins/ania/ania.org"))
+   '("/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/robbins/weekly.org" "/home/andy/Dropbox/gtd/robbins/ania/ania.org"))
  '(org-babel-load-languages '((dot . t) (emacs-lisp . t) (C . t)))
  '(org-capture-templates
    '(("t" "Todo" entry
@@ -1411,9 +1452,11 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(org-format-latex-options
    '(:foreground default :background default :scale 3.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
                  ("begin" "$1" "$" "$$" "\\(" "\\[")))
+ '(org-goto-max-level 10)
  '(org-hide-leading-stars t)
  '(org-log-done 'time)
  '(org-lowest-priority 90)
+ '(org-outline-path-complete-in-steps nil)
  '(org-preview-latex-image-directory "/var/tmp/ltximg/")
  '(org-refile-targets '((org-agenda-files :maxlevel . 10)))
  '(org-todo-keyword-faces
@@ -1430,7 +1473,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(org-twbs-todo-kwd-class-undone "label label-warning")
  '(org-use-tag-inheritance '("wifidetails" "astronomy"))
  '(package-selected-packages
-   '(geiser-guile worf openwith helm-org-ql org-latex-impatient org-drill ace-isearch frog-jump-buffer ace-jump-buffer ztree anki-connect ace-window swift-mode ada-mode yasnippet-classic-snippets yasnippet-snippets helm-dash magit helm-rg color-theme-sanityinc-tomorrow org-superstar anki-editor key-chord git-timemachine org-anki anki-mode chess weyland-yutani-theme afternoon-theme tron-legacy-theme ox-twbs undo-tree arduino-mode command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti hy-mode org-kanban dracula-theme slime ob-kotlin amd-mode sed-mode ranger doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode multiple-cursors ag helm-projectile projectile dumb-jump helm-cscope ein elpy yaml-mode web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game))
+   '(rg "rg" geiser-guile worf openwith helm-org-ql org-latex-impatient org-drill ace-isearch frog-jump-buffer ace-jump-buffer ztree anki-connect ace-window swift-mode ada-mode yasnippet-classic-snippets yasnippet-snippets helm-dash magit color-theme-sanityinc-tomorrow org-superstar anki-editor key-chord git-timemachine org-anki anki-mode chess weyland-yutani-theme afternoon-theme tron-legacy-theme ox-twbs undo-tree arduino-mode command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti hy-mode org-kanban dracula-theme slime ob-kotlin amd-mode sed-mode ranger doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode multiple-cursors ag helm-projectile projectile dumb-jump helm-cscope ein elpy yaml-mode web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game))
  '(pdf-view-midnight-colors (cons "#eceff4" "#323334"))
  '(projectile4-tags-backend 'ggtags)
  '(python-shell-interpreter "ipython3")
@@ -1457,7 +1500,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
      ("America/New_York" "New York")
      ("America/Chicago" "Chicago"))))
 (put 'scroll-left 'disabled nil)
-(put 'dired-find-alternate-file 'disabled nil)
+(put 'dired-find-aorlternate-file 'disabled nil)
 (menu-bar-mode 0)
 
 
