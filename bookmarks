@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("jobs"
+(("today"
+ (filename . "~/Dropbox/gtd/gtd.org")
+ (front-context-string . "*** TODO [4/11] ")
+ (rear-context-string . ":plans:\n** Days\n")
+ (position . 34173))
+("jobs"
  (filename . "~/Dropbox/gtd/gtd.org")
  (front-context-string . "* 2023 Jobs     ")
  (rear-context-string . "3c6a69dbe\n:END:\n")
@@ -83,9 +88,9 @@
  (handler . Info-bookmark-jump))
 ("org-refile-last-stored"
  (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** Compound inte")
- (rear-context-string . "tty_printers.py\n")
- (position . 899849))
+ (front-context-string . "** [2023-05-16 T")
+ (rear-context-string . "   :ai:pytorch:\n")
+ (position . 831359))
 ("count_words"
  (filename . "~/Dropbox/drewritchie/the_lagrange.org")
  (front-context-string . "#+BEGIN_SRC elis")
@@ -366,10 +371,10 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "* TODO EDF insta")
- (rear-context-string . "ation / smoking\n")
- (position . 1012721))
+ (filename . "~/Dropbox/gtd/journal.org")
+ (front-context-string . "**** [2023-05-17")
+ (rear-context-string . "want to go for.\n")
+ (position . 785853))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")

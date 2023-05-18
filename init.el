@@ -1439,8 +1439,8 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ** Back
 " :kill-buffer 't)
      ("s" "Schedule" entry
-      (file+headline "~/Dropbox/gtd/gtd.org" "Schedule")
-      "* TODO %?")
+      (file+olp "~/Dropbox/gtd/gtd.org" "Schedule" "Items")
+      "* TODO %?"  :prepend 't)
      ("p" "Shopping" entry
       (file+headline "~/Dropbox/gtd/_shopping.org" "Stuff")
       "* TODO %?" :prepend t)
@@ -1466,7 +1466,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
      ("PENDING" :foreground "orange" :weight bold)
      ("INPROGRESS" :foreground "orange" :weight bold)
      ("DONE" :foreground "green" :weight bold)
-     ("MUST" . "(:foreground \"red\" :weight bold)")))
+     ("MUST" :foreground "red" :weight bold) ) )
  '(org-todo-keywords
    '((sequence "TODO" "TODOTODAY" "INPROGRESS" "BLOCKED" "DONE" "NEVER")))
  '(org-twbs-todo-kwd-class-done "label label-success")
