@@ -8,13 +8,14 @@
 
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 
-
 (defun switch-to-gtd-org ()
   (interactive)
   (switch-to-buffer (find-file "/home/andy/Dropbox/gtd/gtd.org")))
 
 (global-set-key [f9] 'switch-to-gtd-org)
 
+
+(require 'cc-mode)
 
 ;; Duck fonts
 
@@ -316,6 +317,7 @@
 (global-set-key (kbd "C-c C-h C-a") 'helm-do-ag)
 (global-set-key (kbd "C-c C-f C-i C-x") 'parse-fix)
 
+(global-set-key (kbd "C-c C-s C-o") 'switch-to-gtd-org)
 
 (global-set-key (kbd "M-g M-f") 'helm-gtags-find-files)
 (global-set-key (kbd "M-g M-t") 'helm-gtags-find-tag)
@@ -583,9 +585,19 @@
 (global-set-key [f4]  'magit-status)
 (global-set-key [f5] 'google-this)
 ;;(global-set-key [f6]  'helm-man-woman)
-(global-set-key [f7]  'compile)
-(global-set-key [f8]  'reboot-python)
-(global-set-key [f9]  'py-execute-region)
+
+
+(define-key c-mode-base-map (kbd "<f7>")  'compile)
+;;(define-key cpp-mode-map (kbd "<f7>")  'compile)
+
+
+(require 'python)
+;; (global-set-key [f8]  'reboot-python)
+(define-key python-mode-map (kbd "<f8>")  'reboot-python)
+
+;;(global-set-key [f9]  'py-execute-region)
+(define-key python-mode-map (kbd "<f9>") 'py-execute-region)
+
 (global-set-key [f9]  'anki-mode-menu)
 ;;(global-set-key [f10] 'clang-format-buffer)
 
@@ -873,7 +885,6 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                (isofmt  (format-time-string "%Y-%m-%dT%H:%M:%S.%N" (seconds-to-time seconds))))
           (message (format "%s (%s) -> %s" x prefix isofmt))))))
 
-(global-set-key [f11] 'parse-fix)
 
 ; (parse-epoch-time "1482672627.025747002" ) "1482672627.025747 (s) -> 2016-12-25T13:30:27.025747060"
 ; (parse-epoch-time "1482672627025.747023" ) "1482672627025.747 (ms) -> 2016-12-25T21:30:27.025747060"
@@ -925,9 +936,6 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 
 ;;(global-set-key  [f7] 'get-tag-counts)
-(global-set-key  [f7] 'get-tag-counts)
-(global-set-key  [f8] 'get-heading-counts)
-
 
 (defun get-tag-counts ()
   "Reimplementation in a more functional style. Not sure if I succeeded"
@@ -953,6 +961,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
        (switch-to-buffer-other-window (generate-new-buffer buffer-name))
        (-each all-pairs (lambda (x) (insert (format "%20s : %3d\n" (car x) (cdr x)))))
        (beginning-of-buffer))))
+(define-key org-mode-map  (kbd "<f7>") 'get-tag-counts)
 
 
 (defun get-heading-counts ()
@@ -984,6 +993,8 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
       (insert (format "%s collisions\n\n" (length all-pairs2)))
       (-each all-pairs2 (lambda (x) (insert (format "%20s : %3d\n" (car x) (cdr x)))))
       (beginning-of-buffer))))
+(define-key org-mode-map  (kbd "<f8>") 'get-heading-counts)
+
 
 (defun parse-fix ()
   (interactive)
@@ -998,12 +1009,14 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                       (-map (-lambda ((tag_value &as tag . value))
                                (list (gethash tag tags-hash)
                                      tag
-                                     (--if-let (gethash tag_value enums-hash) (format "%s (%s)" value it) value))))
+                                     (--if-let (gethash tggtag_value enums-hash) (format "%s (%s)" value it) value))))
                       (--map (apply 'format "%30s : %5s = %-10s" it))
                       (s-join "\n"))))
     (switch-to-buffer (generate-new-buffer "FIX"))
     (insert (format "\n%s\n==========================\n\n%s" msg parsed))
     (beginning-of-buffer)))
+(global-set-key [f11] 'parse-fix)
+
 
 ;;(global-set-key [f3] 'parse-sbe)
 
@@ -1027,7 +1040,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
    (s-reverse)))
 
 
-(commify 1234567)  
+(commify 1234567)   "1,234,567"
 
 (format "%s" 12) 
 
@@ -1338,7 +1351,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(compilation-message-face 'default)
  '(custom-enabled-themes '(tron-legacy))
  '(custom-safe-themes
-   '("234dbb732ef054b109a9e5ee5b499632c63cc24f7c2383a849815dacc1727cb6" "c2aeb1bd4aa80f1e4f95746bda040aafb78b1808de07d340007ba898efa484f5" "1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf" "745d03d647c4b118f671c49214420639cb3af7152e81f132478ed1c649d4597d" "1704976a1797342a1b4ea7a75bdbb3be1569f4619134341bd5a4c1cfb16abad4" "79586dc4eb374231af28bbc36ba0880ed8e270249b07f814b0e6555bdcb71fab" "fee7287586b17efbfda432f05539b58e86e059e78006ce9237b8732fde991b4c" "6c98bc9f39e8f8fd6da5b9c74a624cbb3782b4be8abae8fd84cbc43053d7c175" "f0f5bfda176875f70299b2a3a07e778f23b8af81defe3bc40babd0a85f88d411" "4b0e826f58b39e2ce2829fab8ca999bcdc076dec35187bf4e9a4b938cb5771dc" "e79672e00657fb6950f67d1e560ca9b4881282eb0c772e2e7ee7a15ec7bb36a0" "f4a8885fd1cad56c4e67dc32796d5bd1c3defadde5a1981af08e7f40046ab79b" "edf6cc813aa6c4bc0a22b2f051624b861c20144016b0c1cf3046935807cbe4e6" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "57e3f215bef8784157991c4957965aa31bac935aca011b29d7d8e113a652b693" "cf9414f229f6df728eb2a5a9420d760673cca404fee9910551caf9c91cff3bfa" "1eee77e76b9cd3a2791dcee51ccb39002ccd830f2539be3aec3859c1bccf0112" "d1443dd6612780bf037e703b6ebd936bcd5f2a93821558052b30231b2e1e1168" "0be5c1a44e0a877aa9cedae800c438d09efe12bbc7cbc7f787d43c5b8e7eb0db" "a7525b7e01bdfbd4f576d1143ea0a27a47d05df39d193edebbbdf3255a0708ad" "e1a0ed433cdd00b77f5ded2a3db6379c1e85226aea7cf0b4f4137fd0fdb80420" "10df1e816601ef972dcb593f7b34cbd5a4215794b65386f6bb2ed9d4a7d3f64e" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "f2c35f8562f6a1e5b3f4c543d5ff8f24100fae1da29aeb1864bbc17758f52b70" "51ec7bfa54adf5fff5d466248ea6431097f5a18224788d0bd7eb1257a4f7b773" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "d8dc153c58354d612b2576fea87fe676a3a5d43bcc71170c62ddde4a1ad9e1fb" "274fa62b00d732d093fc3f120aca1b31a6bb484492f31081c1814a858e25c72e" "013c62a1fcee7c8988c831027b1c38ae215f99722911b69e570f21fc19cb662e" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "4597d1e9bbf1db2c11d7cf9a70204fa42ffc603a2ba5d80c504ca07b3e903770" "bbb4a4d39ed6551f887b7a3b4b84d41a3377535ccccf901a3c08c7317fad7008" "aa0a998c0aa672156f19a1e1a3fb212cdc10338fb50063332a0df1646eb5dfea" "5715d3b4b071d33af95e9ded99a450aad674e308abb06442a094652a33507cd2" "53d1bb57dadafbdebb5fbd1a57c2d53d2b4db617f3e0e05849e78a4f78df3a1b" "a866134130e4393c0cad0b4f1a5b0dd580584d9cf921617eee3fd54b6f09ac37" "0598de4cc260b7201120b02d580b8e03bd46e5d5350ed4523b297596a25f7403" "891debfe489c769383717cc7d0020244a8d62ce6f076b2c42dd1465b7c94204d" "242ed4611e9e78142f160e9a54d7e108750e973064cee4505bfcfc22cc7c61b1" "4e21fb654406f11ab2a628c47c1cbe53bab645d32f2c807ee2295436f09103c6" "723e48296d0fc6e030c7306c740c42685d672fd22337bc84392a1cf92064788a" "c5d320f0b5b354b2be511882fc90def1d32ac5d38cccc8c68eab60a62d1621f2" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3d5307e5d6eb221ce17b0c952aa4cf65dbb3fa4a360e12a71e03aab78e0176c5" "7bc31a546e510e6bde482ebca992e293a54cb075a0cbfb384bf2bf5357d4dee3" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default))
+   '("97db542a8a1731ef44b60bc97406c1eb7ed4528b0d7296997cbb53969df852d6" "6c531d6c3dbc344045af7829a3a20a09929e6c41d7a7278963f7d3215139f6a7" "d268b67e0935b9ebc427cad88ded41e875abfcc27abd409726a92e55459e0d01" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "234dbb732ef054b109a9e5ee5b499632c63cc24f7c2383a849815dacc1727cb6" "c2aeb1bd4aa80f1e4f95746bda040aafb78b1808de07d340007ba898efa484f5" "1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf" "745d03d647c4b118f671c49214420639cb3af7152e81f132478ed1c649d4597d" "1704976a1797342a1b4ea7a75bdbb3be1569f4619134341bd5a4c1cfb16abad4" "79586dc4eb374231af28bbc36ba0880ed8e270249b07f814b0e6555bdcb71fab" "fee7287586b17efbfda432f05539b58e86e059e78006ce9237b8732fde991b4c" "6c98bc9f39e8f8fd6da5b9c74a624cbb3782b4be8abae8fd84cbc43053d7c175" "f0f5bfda176875f70299b2a3a07e778f23b8af81defe3bc40babd0a85f88d411" "4b0e826f58b39e2ce2829fab8ca999bcdc076dec35187bf4e9a4b938cb5771dc" "e79672e00657fb6950f67d1e560ca9b4881282eb0c772e2e7ee7a15ec7bb36a0" "f4a8885fd1cad56c4e67dc32796d5bd1c3defadde5a1981af08e7f40046ab79b" "edf6cc813aa6c4bc0a22b2f051624b861c20144016b0c1cf3046935807cbe4e6" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "57e3f215bef8784157991c4957965aa31bac935aca011b29d7d8e113a652b693" "cf9414f229f6df728eb2a5a9420d760673cca404fee9910551caf9c91cff3bfa" "1eee77e76b9cd3a2791dcee51ccb39002ccd830f2539be3aec3859c1bccf0112" "d1443dd6612780bf037e703b6ebd936bcd5f2a93821558052b30231b2e1e1168" "0be5c1a44e0a877aa9cedae800c438d09efe12bbc7cbc7f787d43c5b8e7eb0db" "a7525b7e01bdfbd4f576d1143ea0a27a47d05df39d193edebbbdf3255a0708ad" "e1a0ed433cdd00b77f5ded2a3db6379c1e85226aea7cf0b4f4137fd0fdb80420" "10df1e816601ef972dcb593f7b34cbd5a4215794b65386f6bb2ed9d4a7d3f64e" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "f2c35f8562f6a1e5b3f4c543d5ff8f24100fae1da29aeb1864bbc17758f52b70" "51ec7bfa54adf5fff5d466248ea6431097f5a18224788d0bd7eb1257a4f7b773" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "d8dc153c58354d612b2576fea87fe676a3a5d43bcc71170c62ddde4a1ad9e1fb" "274fa62b00d732d093fc3f120aca1b31a6bb484492f31081c1814a858e25c72e" "013c62a1fcee7c8988c831027b1c38ae215f99722911b69e570f21fc19cb662e" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "4597d1e9bbf1db2c11d7cf9a70204fa42ffc603a2ba5d80c504ca07b3e903770" "bbb4a4d39ed6551f887b7a3b4b84d41a3377535ccccf901a3c08c7317fad7008" "aa0a998c0aa672156f19a1e1a3fb212cdc10338fb50063332a0df1646eb5dfea" "5715d3b4b071d33af95e9ded99a450aad674e308abb06442a094652a33507cd2" "53d1bb57dadafbdebb5fbd1a57c2d53d2b4db617f3e0e05849e78a4f78df3a1b" "a866134130e4393c0cad0b4f1a5b0dd580584d9cf921617eee3fd54b6f09ac37" "0598de4cc260b7201120b02d580b8e03bd46e5d5350ed4523b297596a25f7403" "891debfe489c769383717cc7d0020244a8d62ce6f076b2c42dd1465b7c94204d" "242ed4611e9e78142f160e9a54d7e108750e973064cee4505bfcfc22cc7c61b1" "4e21fb654406f11ab2a628c47c1cbe53bab645d32f2c807ee2295436f09103c6" "723e48296d0fc6e030c7306c740c42685d672fd22337bc84392a1cf92064788a" "c5d320f0b5b354b2be511882fc90def1d32ac5d38cccc8c68eab60a62d1621f2" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "3d5307e5d6eb221ce17b0c952aa4cf65dbb3fa4a360e12a71e03aab78e0176c5" "7bc31a546e510e6bde482ebca992e293a54cb075a0cbfb384bf2bf5357d4dee3" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default))
  '(dash-docs-enable-debugging nil)
  '(debug-on-error t)
  '(exwm-floating-border-color "#181818")
@@ -1439,8 +1452,8 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ** Back
 " :kill-buffer 't)
      ("s" "Schedule" entry
-      (file+olp "~/Dropbox/gtd/gtd.org" "Schedule" "Items")
-      "* TODO %?"  :prepend 't)
+      (file+olp "~/Dropbox/gtd/gtd.org" "Schedule")
+      "* TODO %?" :prepend 't)
      ("p" "Shopping" entry
       (file+headline "~/Dropbox/gtd/_shopping.org" "Stuff")
       "* TODO %?" :prepend t)
@@ -1466,7 +1479,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
      ("PENDING" :foreground "orange" :weight bold)
      ("INPROGRESS" :foreground "orange" :weight bold)
      ("DONE" :foreground "green" :weight bold)
-     ("MUST" :foreground "red" :weight bold) ) )
+     ("MUST" :foreground "red" :weight bold)))
  '(org-todo-keywords
    '((sequence "TODO" "TODOTODAY" "INPROGRESS" "BLOCKED" "DONE" "NEVER")))
  '(org-twbs-todo-kwd-class-done "label label-success")
