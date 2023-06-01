@@ -1279,7 +1279,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(frog-menu-actions-face ((t nil)))
- '(frog-menu-posframe-background-face ((t (:background "blue")))))
+ '(frog-menu-posframe-background-face ((t (:background "navy")))))
 
 (provide 'init.el)
 ;;; init.el ends here
