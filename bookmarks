@@ -88,9 +88,9 @@
  (handler . Info-bookmark-jump))
 ("org-refile-last-stored"
  (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** The book that")
- (rear-context-string . "edia from phone\n")
- (position . 924109))
+ (front-context-string . "** Wordplay     ")
+ (rear-context-string . "g fucking game.\n")
+ (position . 195318))
 ("count_words"
  (filename . "~/Dropbox/drewritchie/the_lagrange.org")
  (front-context-string . "#+BEGIN_SRC elis")
@@ -371,10 +371,10 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** TODO <2023-06")
- (rear-context-string . "ile\n\n* Schedule\n")
- (position . 344))
+ (filename . "~/Dropbox/gtd/journal.org")
+ (front-context-string . "**** [2023-06-25")
+ (rear-context-string . "23-06-25 Sunday\n")
+ (position . 789969))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")

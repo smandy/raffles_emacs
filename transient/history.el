@@ -13,7 +13,8 @@
  (magit-merge nil)
  (magit-pull nil)
  (magit-push
-  ("--force-with-lease"))
+  ("--force-with-lease")
+  nil)
  (magit-rebase
   ("--autostash")
   nil)
