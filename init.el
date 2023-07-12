@@ -6,7 +6,7 @@
 
 ;;; Code:
 
- (set-frame-font "Andale Mono 12")
+ (set-frame-font "Andale Mono 20")
 
 
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
@@ -1029,7 +1029,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                       (-map (-lambda ((tag_value &as tag . value))
                                (list (gethash tag tags-hash)
                                      tag
-                                     (--if-let (gethash tggtag_value enums-hash) (format "%s (%s)" value it) value))))
+                                     (--if-let (gethash tag_value enums-hash) (format "%s (%s)" value it) value))))
                       (--map (apply 'format "%30s : %5s = %-10s" it))
                       (s-join "\n"))))
     (switch-to-buffer (generate-new-buffer "FIX"))
