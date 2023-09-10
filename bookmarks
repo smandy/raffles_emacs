@@ -371,10 +371,11 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/gtd/journal.org")
- (front-context-string . "**** [2023-06-25")
- (rear-context-string . "23-06-25 Sunday\n")
- (position . 789969))
+ (filename . "~/Dropbox/gtd/gtd.org")
+ (front-context-string . "** TODO https://")
+ (rear-context-string . " 09:44]\n* TODOs\n")
+ (position . 21855)
+ (last-modified 25845 52433 680370 710000))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")

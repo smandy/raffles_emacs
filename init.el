@@ -6,7 +6,7 @@
 
 ;;; Code:
 
- (set-frame-font "Andale Mono 20")
+ (set-frame-font "Andale Mono 12")
 
 
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
@@ -17,6 +17,14 @@
 
 (global-set-key [f9] 'switch-to-gtd-org)
 
+(defun as/do-nothing (&rest args)
+  (interactive)
+  (message "Doing nothing with %s" args)
+  )
+
+(global-set-key [touchscreen-end] 'as/do-nothing)
+(global-set-key [touchscreen-begin] 'as/do-nothing)
+(global-set-key [touchscreen-update] 'as/do-nothing)
 
 (require 'cc-mode)
 
@@ -49,7 +57,7 @@
 ;; (set-frame-font "Tamsyn 12" 't)
 ;; (set-frame-font "Andale Mono 12")
 ;; (set-frame-font "Hack" 't) 
-;; (set-frame-font "Misc Fixed" 't)
+;; (set-frame-font "Misc" 't)
 
 ;; (set-frame-font "Fixed 14" 't)
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
@@ -599,6 +607,11 @@
 
 
 (define-key c-mode-base-map (kbd "<f7>")  'compile)
+
+;;(define-key c-mode-base-map (kbd "<f7>")  'compile)
+
+;; For scons
+(define-key python-mode-map (kbd "<f7>")  'compile)
 ;;(define-key cpp-mode-map (kbd "<f7>")  'compile)
 
 
@@ -1538,8 +1551,5 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (put 'scroll-left 'disabled nil)
 (put 'dired-find-aorlternate-file 'disabled nil)
 (menu-bar-mode 0)
-
-
-
 
 (put 'erase-buffer 'disabled nil)
