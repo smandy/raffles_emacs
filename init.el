@@ -1,3 +1,4 @@
+
 ;;; init.el --- Andy's emacs config
 
 ;;; Commentary:
@@ -610,9 +611,6 @@
 
 ;;(define-key c-mode-base-map (kbd "<f7>")  'compile)
 
-;; For scons
-(define-key python-mode-map (kbd "<f7>")  'compile)
-;;(define-key cpp-mode-map (kbd "<f7>")  'compile)
 
 
 (require 'python)
@@ -621,6 +619,11 @@
 
 ;;(global-set-key [f9]  'py-execute-region)
 (define-key python-mode-map (kbd "<f9>") 'py-execute-region)
+
+;; For scons
+(define-key python-mode-map (kbd "<f7>")  'compile)
+;;(define-key cpp-mode-map (kbd "<f7>")  'compile)
+
 
 (global-set-key [f9]  'anki-mode-menu)
 ;;(global-set-key [f10] 'clang-format-buffer)
@@ -842,8 +845,17 @@ the * TODO [#A] items with latest dates go to the top."
 (global-set-key (kbd "C-c s") 'ispell)
 (global-set-key (kbd "C-c r") 'revert-buffer-with-prejudice)
 
-(require 'flycheck-pyflakes)
-(add-hook 'python-mode-hook 'flycheck-mode)
+;(require 'flycheck-pyflakes)
+;(add-hook 'python-mode-hook 'flycheck-mode)
+
+
+;;(require 'flycheck-pych
+;;(require 'flycheck-py
+
+(global-flycheck-mode 1)
+(with-eval-after-load 'flycheck
+  (add-hook 'flycheck-mode-hook #'flycheck-pycheckers-setup))
+
 
 ;;(autoload 'pylint "pylint")
 ;;(add-hook 'python-mode-hook 'pylint-add-menu-items)
@@ -1000,9 +1012,11 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
      (lambda ()
        (let* ((heading (nth 4  (org-heading-components)))
               (level (nth 0  (org-heading-components)))
+              ;;(urg (message "Heading is %s" heading))
               )
          (puthash heading (1+ (gethash heading all-headings 0)) all-headings)
          (if (= level 1)
+         ;; (if 't
              (puthash heading (1+ (gethash heading top-level-headings 0)) top-level-headings)))))
     (let* ((all-pairs (list))
            (ign (maphash (lambda (x y) (push (cons x y) all-pairs)) all-headings))
@@ -1391,6 +1405,8 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(flycheck-c/c++-clang-executable "clang-5.0")
  '(flycheck-clang-args '("-xc++"))
  '(flycheck-clang-language-standard "c++14")
+ '(flycheck-pycheckers-checkers '(pylint flake8 pyflakes mypy3))
+ '(flycheck-python-mypy-executable "/home/andy/help/bin/mypy")
  '(fountain-export-font "Courier New")
  '(fountain-export-include-scene-numbers t)
  '(frog-jump-buffer-max-buffers 24)
@@ -1472,21 +1488,12 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
      ("i" "Inbox" entry
       (file+headline "~/Dropbox/gtd/gtd.org" "Inbox")
       "* %?" :prepend nil)
-     
      ("m" "Meditations" entry
       (file+headline "~/Dropbox/gtd/gtd.org" "Meditations")
       "* %?" :prepend t)
      ("A" "Anki basic" entry
       (file+headline org-my-anki-file "Dispatch Shelf")
-      "* %<%H:%M>
-:PROPERTIES:
-:ANKI_NOTE_TYPE: Basic
-:ANKI_DECK: main
-:END:
-** Front
-%?
-** Back
-" :kill-buffer 't)
+      "* %<%H:%M>\12:PROPERTIES:\12:ANKI_NOTE_TYPE: Basic\12:ANKI_DECK: main\12:END:\12** Front\12%?\12** Back\12" :kill-buffer 't)
      ("s" "Schedule" entry
       (file+olp "~/Dropbox/gtd/gtd.org" "Schedule")
       "* TODO %?" :prepend 't)
@@ -1522,7 +1529,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(org-twbs-todo-kwd-class-undone "label label-warning")
  '(org-use-tag-inheritance '("wifidetails" "astronomy"))
  '(package-selected-packages
-   '(forest-blue-theme impatient-mode rg "rg" geiser-guile worf openwith helm-org-ql org-latex-impatient org-drill ace-isearch frog-jump-buffer ace-jump-buffer ztree anki-connect ace-window swift-mode ada-mode yasnippet-classic-snippets yasnippet-snippets helm-dash magit color-theme-sanityinc-tomorrow org-superstar anki-editor key-chord git-timemachine org-anki anki-mode chess weyland-yutani-theme afternoon-theme tron-legacy-theme ox-twbs undo-tree arduino-mode command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti hy-mode org-kanban dracula-theme slime ob-kotlin amd-mode sed-mode ranger doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode multiple-cursors ag helm-projectile projectile dumb-jump helm-cscope ein elpy yaml-mode web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game))
+   '(flycheck-mypy forest-blue-theme impatient-mode rg "rg" geiser-guile worf openwith helm-org-ql org-latex-impatient org-drill ace-isearch frog-jump-buffer ace-jump-buffer ztree anki-connect ace-window swift-mode ada-mode yasnippet-classic-snippets yasnippet-snippets helm-dash magit color-theme-sanityinc-tomorrow org-superstar anki-editor key-chord git-timemachine org-anki anki-mode chess weyland-yutani-theme afternoon-theme tron-legacy-theme ox-twbs undo-tree arduino-mode command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti hy-mode org-kanban dracula-theme slime ob-kotlin amd-mode sed-mode ranger doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode multiple-cursors ag helm-projectile projectile dumb-jump helm-cscope ein elpy yaml-mode web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game))
  '(pdf-view-midnight-colors (cons "#eceff4" "#323334"))
  '(projectile4-tags-backend 'ggtags)
  '(python-shell-interpreter "ipython3")
@@ -1531,9 +1538,9 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
    ["#323334" "#C16069" "#A2BF8A" "#ECCC87" "#80A0C2" "#B58DAE" "#86C0D1" "#eceff4"])
  '(safe-local-variable-values
    '((helm-ag-command-option . "-tpy -tcpp -td")
-     (test-case-name . twisted\.internet\.test\.test_qtreactor)
-     (test-case-name . twisted\.internet\.test\.test_inotify)
-     (test-case-name . twisted\.internet\.test\.test_core)))
+     (test-case-name . twisted.internet.test.test_qtreactor)
+     (test-case-name . twisted.internet.test.test_inotify)
+     (test-case-name . twisted.internet.test.test_core)))
  '(send-mail-function 'smtpmail-send-it)
  '(sentence-end "\\. ")
  '(show-paren-mode t)
