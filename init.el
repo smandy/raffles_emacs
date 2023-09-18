@@ -7,7 +7,7 @@
 
 ;;; Code:
 
- (set-frame-font "Andale Mono 12")
+(set-frame-font "Andale Mono 12")
 
 
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
