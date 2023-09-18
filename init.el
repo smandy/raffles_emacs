@@ -643,8 +643,6 @@
 
 (nyan-mode 't)
 
-(setq bufferName "woot")
-
 (defun dump-fonts ()
   (interactive) 
   (let* ((bufferName (format "fonts_%s.el" (system-name) ) ) 
