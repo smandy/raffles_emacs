@@ -850,7 +850,7 @@ the * TODO [#A] items with latest dates go to the top."
 ;;(require 'flycheck-pych
 ;;(require 'flycheck-py
 
-(global-flycheck-mode 1)
+;; (global-flycheck-mode 1) - This was recommended but will hijack org timestamps!
 (with-eval-after-load 'flycheck
   (add-hook 'flycheck-mode-hook #'flycheck-pycheckers-setup))
 
