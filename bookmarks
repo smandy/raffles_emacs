@@ -88,9 +88,10 @@
  (handler . Info-bookmark-jump))
 ("org-refile-last-stored"
  (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** Wordplay     ")
- (rear-context-string . "g fucking game.\n")
- (position . 195318))
+ (front-context-string . "** ITVx Movies J")
+ (rear-context-string . "erent behaviour\n")
+ (position . 1422)
+ (last-modified 25930 5590 852676 513000))
 ("count_words"
  (filename . "~/Dropbox/drewritchie/the_lagrange.org")
  (front-context-string . "#+BEGIN_SRC elis")

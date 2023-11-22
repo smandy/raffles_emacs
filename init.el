@@ -680,6 +680,12 @@ the * TODO [#A] items with latest dates go to the top."
    (interactive)
    (org-sort-multi ?o ?p ?T))
 
+(defun org-sort-time ()
+   "Sort children of node by todo status and by priority and by date, so 
+the * TODO [#A] items with latest dates go to the top."
+   (interactive)
+   (org-sort-multi ?T))
+
 ;; Speed of light calculations
 (setq as/tera 1e12)
 (setq as/nanometer 1e-9)
@@ -975,7 +981,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (defun get-tag-counts ()
   "Reimplementation in a more functional style. Not sure if I succeeded"
   (interactive)
-  (let ((buffer-name "TAG COUNTS")
+  (let ((buffer-name (format "TAG COUNTS for %s" (buffer-name)))
         (all-tags (make-hash-table :test 'equal)))
     (org-map-entries
      (lambda ()
@@ -1477,7 +1483,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
      ("il" tags-todo "+LEVEL=15+TODO=\"TODO\"|+LEVEL=15+TODO=\"DONE\"" nil)
      ("im" tags-todo "+morning" nil)))
  '(org-agenda-files
-   '("/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/robbins/weekly.org" "/home/andy/Dropbox/gtd/robbins/ania/ania.org"))
+   '("/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/robbins/weekly.org" "/home/andy/Dropbox/gtd/robbins/ania/ania.org"))
  '(org-babel-load-languages '((dot . t) (emacs-lisp . t) (C . t)))
  '(org-capture-templates
    '(("t" "Todo" entry

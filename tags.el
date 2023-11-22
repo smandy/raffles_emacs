@@ -1,4 +1,4 @@
-(setq tags-hash #s(hash-table test equal size 100 data ("1" "Account"
+(setq tags-hash #s(hash-table test equal size 1000 data ("1" "Account"
                                                         "159" "AccruedInterestAmt"
                                                         "158" "AccruedInterestRate"
                                                         "334" "Adjustment"

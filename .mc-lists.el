@@ -14,6 +14,7 @@
         helm-M-x
         indent-for-tab-command
         kill-region
+        magit-status
         org-beginning-of-line
         org-ctrl-c-minus
         org-cycle
@@ -33,6 +34,7 @@
         c-electric-lt-gt
         c-electric-paren
         goto-line
+        magit-status
         markdown-outdent-or-delete
         mouse-appearance-menu
         mouse-buffer-menu
