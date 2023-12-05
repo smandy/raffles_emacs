@@ -1,7 +1,8 @@
 ((magit-blame
   ("-w"))
  (magit-branch nil)
- (magit-commit nil)
+ (magit-commit nil
+               ("--all"))
  (magit-diff
   ("--no-ext-diff" "--stat"))
  (magit-dispatch nil)
@@ -12,8 +13,8 @@
   ("-n256" "--graph" "--decorate"))
  (magit-merge nil)
  (magit-pull nil)
- (magit-push
-  ("--force-with-lease"))
+ (magit-push nil
+             ("--force-with-lease"))
  (magit-rebase
   ("--autostash")
   nil)

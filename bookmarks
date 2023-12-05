@@ -88,10 +88,10 @@
  (handler . Info-bookmark-jump))
 ("org-refile-last-stored"
  (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** ITVx Movies J")
- (rear-context-string . "erent behaviour\n")
- (position . 1422)
- (last-modified 25930 5590 852676 513000))
+ (front-context-string . "*** TODO Look in")
+ (rear-context-string . "mon + Sodabread\n")
+ (position . 368565)
+ (last-modified 25958 5508 336947 977000))
 ("count_words"
  (filename . "~/Dropbox/drewritchie/the_lagrange.org")
  (front-context-string . "#+BEGIN_SRC elis")
@@ -372,11 +372,11 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/gtd/journal.org")
- (front-context-string . "**** [2023-09-17")
- (rear-context-string . "23-09-17 Sunday\n")
- (position . 799108)
- (last-modified 25863 9630 326543 991000))
+ (filename . "~/Dropbox/gtd/gtd.org")
+ (front-context-string . "** TODO Look int")
+ (rear-context-string . "Install\n* TODOs\n")
+ (position . 17957)
+ (last-modified 25958 5412 303044 240000))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")
