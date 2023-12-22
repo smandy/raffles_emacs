@@ -88,10 +88,10 @@
  (handler . Info-bookmark-jump))
 ("org-refile-last-stored"
  (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "*** TODO Look in")
- (rear-context-string . "mon + Sodabread\n")
- (position . 368565)
- (last-modified 25958 5508 336947 977000))
+ (front-context-string . "** Strip BOM fro")
+ (rear-context-string . "timate-edition\n\n")
+ (position . 934720)
+ (last-modified 25970 17887 707520 729000))
 ("count_words"
  (filename . "~/Dropbox/drewritchie/the_lagrange.org")
  (front-context-string . "#+BEGIN_SRC elis")
@@ -372,11 +372,11 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** TODO Look int")
- (rear-context-string . "Install\n* TODOs\n")
- (position . 17957)
- (last-modified 25958 5412 303044 240000))
+ (filename . "~/Dropbox/gtd/journal.org")
+ (front-context-string . "**** [2023-12-09")
+ (rear-context-string . "nfirm the appt.\n")
+ (position . 824539)
+ (last-modified 25972 39330 938838 996000))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")
