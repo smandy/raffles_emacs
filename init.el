@@ -1178,6 +1178,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
     (beginning-of-buffer)))
 (global-set-key [f11] 'parse-fix)
 
+;; 8=FIX.4.29=16335=D34=97249=TESTBUY352=20190206-16:25:10.40356=TESTSELL311=14163685067084226997921=238=10040=154=155=AAPL60=20190206-16:25:08.968207=TO6000=TEST123410=106"
 
 ;;(global-set-key [f3] 'parse-sbe)
 
