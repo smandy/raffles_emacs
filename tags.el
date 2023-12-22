@@ -402,7 +402,9 @@
                                                         "105" "WaveNo"
                                                         "410" "WtAverageLiquidity"
                                                         "213" "XmlData"
-                                                        "212" "XmlDataLen")))
+                                                        "212" "XmlDataLen"
+                                                        "6000" "DiscretionUsedSw"
+                                                        )))
 
 (setq enums-hash #s(hash-table test equal size 100 data (
                                                          ( "35" . "0")  "Heartbeat"
