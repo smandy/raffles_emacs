@@ -88,10 +88,10 @@
  (handler . Info-bookmark-jump))
 ("org-refile-last-stored"
  (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** Strip BOM fro")
- (rear-context-string . "timate-edition\n\n")
- (position . 934720)
- (last-modified 25970 17887 707520 729000))
+ (front-context-string . "*** Audrey Wifi\n")
+ (rear-context-string . "   pavucontrol\n\n")
+ (position . 959686)
+ (last-modified 25992 3602 990723 856000))
 ("count_words"
  (filename . "~/Dropbox/drewritchie/the_lagrange.org")
  (front-context-string . "#+BEGIN_SRC elis")
@@ -373,10 +373,10 @@
  (position . 1))
 ("org-capture-last-stored"
  (filename . "~/Dropbox/gtd/journal.org")
- (front-context-string . "**** [2023-12-09")
- (rear-context-string . "nfirm the appt.\n")
- (position . 824539)
- (last-modified 25972 39330 938838 996000))
+ (front-context-string . "**** [2023-12-25")
+ (rear-context-string . "23-12-25 Monday\n")
+ (position . 830735)
+ (last-modified 25993 5965 506501 883000))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")
