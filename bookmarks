@@ -2,56 +2,36 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("today"
+(("journal"
+ (filename . "~/Dropbox/gtd/journal.org")
+ (front-context-string . "*** 2024-01-25 T")
+ (rear-context-string . "Back still sore\n")
+ (position . 848162)
+ (last-modified 26034 64107 51482 142000))
+("bigsquarekotlin"
+ (filename . "~/repos/bigsquarekotlin/")
+ (front-context-string . "app\n  drwxr-xr-x")
+ (rear-context-string . "48 Jan 20 19:36 ")
+ (position . 171)
+ (last-modified 26034 29881 474629 791000))
+("org-refile-last-stored"
  (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "*** TODO [4/11] ")
- (rear-context-string . ":plans:\n** Days\n")
- (position . 34173))
-("jobs"
+ (front-context-string . "** MidJourney 6 ")
+ (rear-context-string . "\n**** Website \n\n")
+ (position . 866328)
+ (last-modified 26034 25976 506825 634000))
+("org-capture-last-stored"
  (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "* 2023 Jobs     ")
- (rear-context-string . "3c6a69dbe\n:END:\n")
- (position . 960705))
-("mam"
- (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** Mam\n*** [2022")
- (rear-context-string . "D:\n* Federation\n")
- (position . 751452))
-("detox"
- (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** Detox schedul")
- (rear-context-string . "ed extra costs!\n")
- (position . 177304))
-("contacts"
- (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "* Contacts      ")
- (rear-context-string . "D |  NEVER DONE\n")
- (position . 282))
-("pwd"
- (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "* PWD\n** openai/")
- (rear-context-string . "1-10 Tue 08:24]\n")
- (position . 42041))
-("weekly_plans"
- (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "* Plans ( Weekly")
- (rear-context-string . "plan\n*** Shower\n")
- (position . 3782))
-("daily_plans"
- (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "* Plans (Daily) ")
- (rear-context-string . "the check sent!\n")
- (position . 4728))
-("stoicism"
- (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "sm              ")
- (rear-context-string . "517198C\n* Stoici")
- (position . 259903))
-("org-capture-last-stored-marker"
- (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** TODO Extropy.")
- (rear-context-string . "opinion is yes.\n")
- (position . 808596))
+ (front-context-string . "** TODO <2024-01")
+ (rear-context-string . "ays:\n* Schedule\n")
+ (position . 41994)
+ (last-modified 26034 40544 71968 314000))
+("gtd.org"
+ (filename . "~/repos/gtd/gtd.org")
+ (front-context-string . "#+STARTUP : late")
+ (rear-context-string)
+ (position . 1)
+ (last-modified 26034 18203 612395 749000))
 ("Triune_brain.png"
  (filename . "~/Dropbox/Triune_brain.png")
  (position . 0)
@@ -62,11 +42,6 @@
  (front-context-string . "*** Front\n BZZZ\n")
  (rear-context-string . "242052\n   :END:\n")
  (position . 504))
-("disc.png"
- (filename . "~/Dropbox/gtd/robbins/ania/ania.org")
- (front-context-string . "\n**** Mischievou")
- (rear-context-string . "** Power virtues")
- (position . 74388))
 ("i3statusconfig"
  (filename . "~/.config/i3status/config")
  (front-context-string . "# i3status confi")
@@ -86,12 +61,6 @@
  (filename . "/home/andy/.emacs.d/elpa/org-20170622/org")
  (info-node . "Motion")
  (handler . Info-bookmark-jump))
-("org-refile-last-stored"
- (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "*** Audrey Wifi\n")
- (rear-context-string . "   pavucontrol\n\n")
- (position . 959686)
- (last-modified 25992 3602 990723 856000))
 ("count_words"
  (filename . "~/Dropbox/drewritchie/the_lagrange.org")
  (front-context-string . "#+BEGIN_SRC elis")
@@ -134,11 +103,6 @@
  (front-context-string . "  https://www.os")
  (rear-context-string . "clocks in i3bar\n")
  (position . 1009))
-("dwd.org"
- (filename . "~/Dropbox/gtd/robbins/dwd/dwd.org")
- (front-context-string . "Day 3\n** <2022-1")
- (rear-context-string . "ervous system\n* ")
- (position . 8230))
 ("drewritchie"
  (filename . "~/repos/drewritchie/")
  (front-context-string . "..\n  -rw-r--r-- ")
@@ -149,11 +113,6 @@
  (front-context-string . "* DONE Get i3bar")
  (rear-context-string . "Few things use\n\n")
  (position . 562))
-("upw4.org"
- (filename . "~/Dropbox/gtd/robbins/upw4.org")
- (front-context-string . "\n****** Emotiona")
- (rear-context-string . "ly\n\n***** Values")
- (position . 15777))
 ("SCo"
  (filename . "~/repos/openpiv-c--qt/openpiv/core/log.h")
  (front-context-string . "\n\n            //")
@@ -164,63 +123,11 @@
  (front-context-string . "import os\n\nlsb_r")
  (rear-context-string)
  (position . 1))
-("ania.org"
- (filename . "~/Dropbox/gtd/robbins/ania/ania.org")
- (front-context-string . "NING ==========\n")
- (rear-context-string . "ST BLOCK OF TRAI")
- (position . 52366))
-("150"
- (filename . "~/Dropbox/gtd/")
- (front-context-string . "robbins\n  -rw-r-")
- (rear-context-string . "96 Jan 20 21:39 ")
- (position . 2183))
-("2022-jobjunt"
- (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "*** 2022\n\n    |-")
- (rear-context-string . " Matt @ Fourier\n")
- (position . 333380))
-("work.org"
- (filename . "~/Dropbox/gtd/work.org")
- (front-context-string . "#+LAST_MOBILE_CH")
- (rear-context-string)
- (position . 1))
-("addAnkiCard.restclient"
- (filename . "~/Dropbox/gtd/addAnkiCard.restclient")
- (front-context-string . "# Add a note - t")
- (rear-context-string)
- (position . 1))
-("time_of_your_life.org"
- (filename . "~/Dropbox/gtd/robbins/time_of_your_life.org")
- (front-context-string . "* RPM\n** Rapid P")
- (rear-context-string)
- (position . 1))
-("ania"
- (filename . "~/Dropbox/gtd/robbins/ania/")
- (front-context-string . "rpm.html\n* -rw-r")
- (rear-context-string . "19 Jun 30 17:52 ")
- (position . 449))
-("robbins"
- (filename . "~/Dropbox/gtd/robbins/")
- (front-context-string . "5_fundamentals_E")
- (rear-context-string . "96 Mar 22 18:05 ")
- (position . 236))
 ("Downloads"
  (filename . "~/Downloads/")
  (front-context-string . "fitbit_export_20")
  (rear-context-string . "22 May 19 08:36 ")
  (position . 132))
-("the voice"
- (filename . "~/Dropbox/gtd/robbins/Now I am the Voice (1) (1).pdf")
- (front-context-string . "%PDF-1.4%\342\343\317\323\n")
- (rear-context-string)
- (position . 1)
- (page . 1)
- (handler . doc-view-bookmark-jump))
-("goldStars.org"
- (filename . "~/Dropbox/gtd/goldStars.org")
- (front-context-string . "** Streak Starti")
- (rear-context-string . "0 Mon> \n* Walks\n")
- (position . 137))
 ("elpa"
  (filename . "~/.emacs.d/elpa/")
  (front-context-string . "undo-tree-0.7.5\n")
@@ -236,16 +143,6 @@
  (position . 0)
  (image-type . imagemagick)
  (handler . image-bookmark-jump))
-("flagged.org"
- (filename . "~/Dropbox/gtd/flagged.org")
- (front-context-string . "* 0414605622\n[20")
- (rear-context-string)
- (position . 1))
-("kanban"
- (filename . "~/Dropbox/gtd/kanban.org")
- (front-context-string . "* Tasks\n#+BEGIN:")
- (rear-context-string)
- (position . 1))
 ("i3config"
  (filename . "~/.config/i3/config")
  (front-context-string . "# This file has ")
@@ -297,11 +194,6 @@
  (front-context-string . ".DS_Store\n  drwx")
  (rear-context-string . "48 Jul 14  2015 ")
  (position . 216))
-("journal.org"
- (filename . "~/Dropbox/gtd/journal.org")
- (front-context-string . "*** 2016-10-18 T")
- (rear-context-string . "    years time.\n")
- (position . 61974))
 ("snippets_mode"
  (filename . "/mnt/hdd/andy/.emacs.d/elpa/yasnippet-20151227.1550/snippets/c++-mode/")
  (front-context-string . "assert\n  -rw-r--")
@@ -371,22 +263,11 @@
  (front-context-string . "  /scp:andy@skye")
  (rear-context-string)
  (position . 1))
-("org-capture-last-stored"
- (filename . "~/Dropbox/gtd/journal.org")
- (front-context-string . "**** [2023-12-25")
- (rear-context-string . "23-12-25 Monday\n")
- (position . 830735)
- (last-modified 25993 5965 506501 883000))
 ("phobos"
  (filename . "/usr/include/dlang/dmd")
  (front-context-string . "..\n  -rw-r--r-- ")
  (rear-context-string . "96 Feb  1 03:35 ")
  (position . 175))
-("gtd.org"
- (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "* Oz\n** Flight\n\n")
- (rear-context-string)
- (position . 1))
 ("init.el"
  (filename . "~/.emacs.d/init.el")
  (front-context-string . ";;; init.el --- ")

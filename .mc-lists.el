@@ -39,4 +39,5 @@
         mouse-appearance-menu
         mouse-buffer-menu
         mouse-set-region
+        wdired--self-insert
         ))

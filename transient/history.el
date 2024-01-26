@@ -1,4 +1,5 @@
-((magit-blame
+((magit-bisect nil)
+ (magit-blame
   ("-w"))
  (magit-branch nil)
  (magit-commit nil
@@ -7,7 +8,8 @@
   ("--no-ext-diff" "--stat"))
  (magit-dispatch nil)
  (magit-ediff nil)
- (magit-fetch nil)
+ (magit-fetch
+  ("--tags"))
  (magit-gitignore nil)
  (magit-log
   ("-n256" "--graph" "--decorate"))
@@ -21,4 +23,5 @@
  (magit-remote
   ("-f"))
  (magit-run nil)
- (magit-stash nil))
+ (magit-stash nil)
+ (magit-tag nil))

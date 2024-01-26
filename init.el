@@ -7,7 +7,8 @@
 
 ;;; Code:
 
-(set-frame-font "Andale Mono 12")
+;;(set-frame-font "Andale Mono 12")
+(set-frame-font "Liberation Mono 12")
 
 
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
@@ -605,6 +606,7 @@ the * TODO [#A] items with latest dates go to the top."
    (interactive)
    (org-sort-multi ?o ?p ?T))
 
+
 (defun org-sort-time ()
    "Sort children of node by todo status and by priority and by date, so 
 the * TODO [#A] items with latest dates go to the top."
@@ -856,7 +858,10 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ; (parse-epoch-time "1482672627025747.032" ) "1482672627025747.0 (µs) -> 2016-12-25T13:30:27.025747060"
 ; (parse-epoch-time "1482672627025747023"  ) "1.482672627025747e+18 (ns) -> 2016-12-25T13:30:27.025747060"
 
-; (format-time-string "%H:%M:%S" (current-time)) "15:42:10"
+                                        ; (format-time-string "%H:%M:%S" (current-time)) "15:42:10"
+
+
+; (current-time) (26029 42033 943610 315000)
 (defun parse-sbe ()
   (interactive)
   (save-excursion
@@ -930,6 +935,13 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
        (-each all-pairs (lambda (x) (insert (format "%20s : %3d\n" (car x) (cdr x)))))
        (beginning-of-buffer))))
 (define-key org-mode-map  (kbd "<f7>") 'get-tag-counts)
+
+
+(defun my-outline-path ()
+  (interactive)
+  (message (s-join " > " (org-get-outline-path))))
+
+(define-key org-mode-map  (kbd "<f10>") 'my-outline-path)
 
 
 (defun get-heading-counts ()
@@ -1322,7 +1334,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(Ansi-color-faces-vector
    [default bold shadow italic underline bold bold-italic bold])
  '(LaTeX-command "latex -shell-escape")
- '(browse-url-browser-function 'browse-url-firefox)
+ '(browse-url-browser-function 'browse-url-chrome)
  '(browse-url-firefox-program "firedragon")
  '(c-basic-offset 4)
  '(case-fold-search t)
@@ -1418,25 +1430,27 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(org-babel-load-languages '((dot . t) (emacs-lisp . t) (C . t)))
  '(org-capture-templates
    '(("t" "Todo" entry
-      (file+headline "~/Dropbox/gtd/gtd.org" "TODOs")
+      (file+headline "~/repos/gtd/gtd.org" "TODOs")
       "* TODO %?" :prepend t)
+		 ("c" "Phone Call" entry (file+olp "~/repos/gtd/gtd.org" "Federation" "Calls")
+		   "* %U %?" :prepend t)
      ("i" "Inbox" entry
-      (file+headline "~/Dropbox/gtd/gtd.org" "Inbox")
+      (file+headline "~/repos/gtd/gtd.org" "Inbox")
       "* %?" :prepend nil)
      ("m" "Meditations" entry
-      (file+headline "~/Dropbox/gtd/gtd.org" "Meditations")
+      (file+headline "~/repos/gtd/gtd.org" "Meditations")
       "* %?" :prepend t)
      ("A" "Anki basic" entry
       (file+headline org-my-anki-file "Dispatch Shelf")
       "* %<%H:%M>\12:PROPERTIES:\12:ANKI_NOTE_TYPE: Basic\12:ANKI_DECK: main\12:END:\12** Front\12%?\12** Back\12" :kill-buffer 't)
      ("s" "Schedule" entry
-      (file+olp "~/Dropbox/gtd/gtd.org" "Schedule")
+      (file+olp "~/repos/gtd/gtd.org" "Schedule")
       "* TODO %?" :prepend 't)
      ("p" "Shopping" entry
-      (file+headline "~/Dropbox/gtd/_shopping.org" "Stuff")
+      (file+headline "~/repos/gtd/_shopping.org" "Stuff")
       "* TODO %?" :prepend t)
      ("j" "Journal" entry
-      (file+datetree "~/Dropbox/gtd/journal.org")
+      (file+datetree "~/repos/gtd/journal.org")
       "* %U %?")))
  '(org-confirm-babel-evaluate nil)
  '(org-directory "~/Dropbox/gtd")
