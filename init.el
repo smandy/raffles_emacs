@@ -26,7 +26,7 @@
 
 (defun switch-to-gtd-org ()
   (interactive)
-  (switch-to-buffer (find-file "/home/andy/Dropbox/gtd/gtd.org")))
+  (switch-to-buffer (find-file "/home/andy/repos/gtd/gtd.org")))
 
 (global-set-key [f9] 'switch-to-gtd-org)
 
@@ -766,23 +766,12 @@ the * TODO [#A] items with latest dates go to the top."
 (setq inferior-lisp-program "/usr/bin/sbcl")
 
 (require 'org)
-(setq org-default-notes-file (concat org-directory "~/Dropbox/gtd/gtd.org"))
+(setq org-default-notes-file (concat org-directory "~/repos/gtd/gtd.org"))
 (define-key global-map "\C-cc" 'org-capture)
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
-
-;; (setq org-capture-templates '(("t" "Todo" entry (file+headline "~/Dropbox/gtd/kanban.org" "Tasks")
-;;                                "* TODO %?")
-;;                               ("r" "Todo" entry (file+headline "~/Dropbox/gtd/kanban.org" "Tasks")
-;;                                "* TODO %?\n  %i\n  %a")
-;;                               ("r" "Todo" entry (file+headline "~/Dropbox/gtd/kanban.org" "Tasks")
-;;                                "* TODO %?\n%F")
-;;                               ("c" "Correspondance" entry (file+datetree "~/Dropbox/gtd/corresp.org")
-;;                                "* %U %?")
-;;                               ("j" "Journal" entry (file+datetree "~/Dropbox/gtd/journal.org")
-;;                                "* %U %?")))
 
 (global-set-key (kbd "C-c s") 'ispell)
 (global-set-key (kbd "C-c r") 'revert-buffer-with-prejudice)
@@ -1256,7 +1245,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ;; "/home/andy/Dropbox/gtd/kanban.org" - removed - reinstate in necessary
 (defun agenda-schedule ()
   (interactive)
-  (org-store-new-agenda-file-list '("/home/andy/Dropbox/gtd/robbins/dwd/dwd.org" "/home/andy/Dropbox/gtd/robbins/business_mastery/bmcourse.org" "/home/andy/Dropbox/gtd/journal.org"  "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/_shopping.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/robbins/weekly.org" "/home/andy/Dropbox/gtd/robbins/ania/ania.org"
+  (org-store-new-agenda-file-list '("/home/andy/repos/gtd/robbins/dwd/dwd.org" "/home/andy/repos/gtd/robbins/business_mastery/bmcourse.org" "/home/andy/repos/gtd/journal.org"  "/home/andy/repos/gtd/sym_contract_notes_from_fiona.org" "/home/andy/repos/gtd/robbins/upw.org" "/home/andy/repos/gtd/_shopping.org" "/home/andy/repos/gtd/gtd.org" "/home/andy/repos/gtd/robbins/weekly.org" "/home/andy/repos/gtd/robbins/ania/ania.org"
 
                                     )))
 
@@ -1437,14 +1426,15 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
      ("il" tags-todo "+LEVEL=15+TODO=\"TODO\"|+LEVEL=15+TODO=\"DONE\"" nil)
      ("im" tags-todo "+morning" nil)))
  '(org-agenda-files
-   '("/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/robbins/weekly.org" "/home/andy/Dropbox/gtd/robbins/ania/ania.org"))
+   '("/home/andy/repos/gtd/robbins/dwd/dwd.org" "/home/andy/repos/gtd/robbins/business_mastery/bmcourse.org" "/home/andy/repos/gtd/journal.org" "/home/andy/repos/gtd/sym_contract_notes_from_fiona.org" "/home/andy/repos/gtd/robbins/upw.org" "/home/andy/repos/gtd/_shopping.org" "/home/andy/repos/gtd/gtd.org" "/home/andy/repos/gtd/robbins/weekly.org" "/home/andy/repos/gtd/robbins/ania/ania.org"))
  '(org-babel-load-languages '((dot . t) (emacs-lisp . t) (C . t)))
  '(org-capture-templates
    '(("t" "Todo" entry
       (file+headline "~/repos/gtd/gtd.org" "TODOs")
       "* TODO %?" :prepend t)
-		 ("c" "Phone Call" entry (file+olp "~/repos/gtd/gtd.org" "Federation" "Calls")
-		   "* %U %?" :prepend t)
+     ("c" "Phone Call" entry
+      (file+olp "~/repos/gtd/gtd.org" "Federation" "Calls")
+      "* %U %?" :prepend t)
      ("i" "Inbox" entry
       (file+headline "~/repos/gtd/gtd.org" "Inbox")
       "* %?" :prepend nil)

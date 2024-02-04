@@ -20,18 +20,12 @@
  (rear-context-string . "48 Jan 20 19:36 ")
  (position . 171)
  (last-modified 26034 29881 474629 791000))
-("org-refile-last-stored"
- (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** MidJourney 6 ")
- (rear-context-string . "\n**** Website \n\n")
- (position . 866328)
- (last-modified 26034 25976 506825 634000))
 ("org-capture-last-stored"
  (filename . "~/repos/gtd/gtd.org")
- (front-context-string . "** Unabomber Man")
- (rear-context-string . "--------------|\n")
- (position . 38256)
- (last-modified 26036 47154 852103 874000))
+ (front-context-string . "** TODO <2024-02")
+ (rear-context-string . "ays:\n* Schedule\n")
+ (position . 43501)
+ (last-modified 26047 39246 524868 22000))
 ("gtd.org"
  (filename . "~/repos/gtd/gtd.org")
  (front-context-string . "#+STARTUP : late")
