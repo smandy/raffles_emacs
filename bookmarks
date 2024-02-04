@@ -2,7 +2,13 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("journal"
+(("unabomber_manifesto.org"
+ (filename . "~/Dropbox/unabomber_manifesto.org")
+ (front-context-string . "AUTONOMY\n\n42. Au")
+ (rear-context-string . "te activities.\n\n")
+ (position . 31179)
+ (last-modified 26036 48364 257548 536000))
+("journal"
  (filename . "~/Dropbox/gtd/journal.org")
  (front-context-string . "*** 2024-01-25 T")
  (rear-context-string . "Back still sore\n")
@@ -21,11 +27,11 @@
  (position . 866328)
  (last-modified 26034 25976 506825 634000))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/gtd/gtd.org")
- (front-context-string . "** TODO <2024-01")
- (rear-context-string . "ays:\n* Schedule\n")
- (position . 41994)
- (last-modified 26034 40544 71968 314000))
+ (filename . "~/repos/gtd/gtd.org")
+ (front-context-string . "** Unabomber Man")
+ (rear-context-string . "--------------|\n")
+ (position . 38256)
+ (last-modified 26036 47154 852103 874000))
 ("gtd.org"
  (filename . "~/repos/gtd/gtd.org")
  (front-context-string . "#+STARTUP : late")

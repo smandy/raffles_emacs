@@ -10,6 +10,17 @@
 ;;(set-frame-font "Andale Mono 12")
 (set-frame-font "Liberation Mono 12")
 
+(defun kaz ()
+  "Tidy up the kazinsky manifesto"
+  (interactive)
+  (search-forward-regexp "^[0-9]+\. ")
+  (let (
+        (c (current-column))
+        )
+    (beginning-of-line)
+    (forward-line)
+    (insert (s-repeat " " c))))
+
 
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 
