@@ -2,30 +2,30 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("unabomber_manifesto.org"
+(("org-refile-last-stored"
+ (filename . "~/repos/gtd/gtd.org")
+ (front-context-string . "*** Manic Street")
+ (rear-context-string . "ou've given us\n\n")
+ (position . 1133858)
+ (last-modified 26049 64790 242109 460000))
+("org-capture-last-stored"
+ (filename . "~/repos/gtd/journal.org")
+ (front-context-string . "**** [2024-02-06")
+ (rear-context-string . " going for you.\n")
+ (position . 858785)
+ (last-modified 26049 63030 546951 524000))
+("unabomber_manifesto.org"
  (filename . "~/Dropbox/unabomber_manifesto.org")
  (front-context-string . "AUTONOMY\n\n42. Au")
  (rear-context-string . "te activities.\n\n")
  (position . 31179)
  (last-modified 26036 48364 257548 536000))
-("journal"
- (filename . "~/Dropbox/gtd/journal.org")
- (front-context-string . "*** 2024-01-25 T")
- (rear-context-string . "Back still sore\n")
- (position . 848162)
- (last-modified 26034 64107 51482 142000))
 ("bigsquarekotlin"
  (filename . "~/repos/bigsquarekotlin/")
  (front-context-string . "app\n  drwxr-xr-x")
  (rear-context-string . "48 Jan 20 19:36 ")
  (position . 171)
  (last-modified 26034 29881 474629 791000))
-("org-capture-last-stored"
- (filename . "~/repos/gtd/gtd.org")
- (front-context-string . "** TODO <2024-02")
- (rear-context-string . "ays:\n* Schedule\n")
- (position . 43501)
- (last-modified 26047 39246 524868 22000))
 ("gtd.org"
  (filename . "~/repos/gtd/gtd.org")
  (front-context-string . "#+STARTUP : late")
@@ -153,11 +153,6 @@
  (front-context-string . "// Written in th")
  (rear-context-string)
  (position . 1))
-("MobileOrg"
- (filename . "~/Dropbox/Apps/MobileOrg/")
- (front-context-string . "checksums.dat\n  ")
- (rear-context-string . "03 Feb 26 11:35 ")
- (position . 182))
 ("time_tracking_app"
  (filename . "~/fullstack-react-book-r35a-code/fullstack-react-code/time_tracking_app/")
  (front-context-string . "data.json\n  -rw-")

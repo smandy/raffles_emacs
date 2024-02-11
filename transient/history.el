@@ -8,8 +8,8 @@
   ("--no-ext-diff" "--stat"))
  (magit-dispatch nil)
  (magit-ediff nil)
- (magit-fetch
-  ("--tags"))
+ (magit-fetch nil
+              ("--tags"))
  (magit-gitignore nil)
  (magit-log
   ("-n256" "--graph" "--decorate"))
