@@ -1436,11 +1436,11 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
       (file+headline "~/repos/gtd/gtd.org" "TODOs")
       "* TODO %?" :prepend t)
      ("c" "Phone Call" entry
-      (file+olp "~/repos/gtd/gtd.org" "Federation" "Calls")
+      (file+olp "~/repos/gtd/gtd.org" "Calls")
       "* %U %?" :prepend t)
      ("i" "Inbox" entry
       (file+headline "~/repos/gtd/gtd.org" "Inbox")
-      "* %?" :prepend nil)
+      "* %U %?" :prepend t)
      ("m" "Meditations" entry
       (file+headline "~/repos/gtd/gtd.org" "Meditations")
       "* %?" :prepend t)
