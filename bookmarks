@@ -2,18 +2,24 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("org-refile-last-stored"
+(("org-capture-last-stored-marker"
  (filename . "~/repos/gtd/gtd.org")
- (front-context-string . "*** Manic Street")
- (rear-context-string . "ou've given us\n\n")
- (position . 1133858)
- (last-modified 26049 64790 242109 460000))
+ (front-context-string . "** Bash Executab")
+ (rear-context-string . "******** +REST+\n")
+ (position . 1099929)
+ (last-modified 26051 17474 445240 766000))
+("org-refile-last-stored"
+ (filename . "~/repos/gtd/gtd.org")
+ (front-context-string . "** Loco opening ")
+ (rear-context-string . "--------------|\n")
+ (position . 209971)
+ (last-modified 26072 13835 34992 277000))
 ("org-capture-last-stored"
  (filename . "~/repos/gtd/journal.org")
- (front-context-string . "**** [2024-02-06")
- (rear-context-string . " going for you.\n")
- (position . 858785)
- (last-modified 26049 63030 546951 524000))
+ (front-context-string . "**** [2024-02-25")
+ (rear-context-string . "24-02-25 Sunday\n")
+ (position . 863451)
+ (last-modified 26074 35152 600022 199000))
 ("unabomber_manifesto.org"
  (filename . "~/Dropbox/unabomber_manifesto.org")
  (front-context-string . "AUTONOMY\n\n42. Au")

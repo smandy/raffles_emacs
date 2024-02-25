@@ -380,11 +380,17 @@
    (define-key d-mode-map (kbd "<f9>") 'dfmt-buffer)))
 
 (add-hook
- 'julia-mode-hook
+ 'clojure-mode-hook
  (lambda ()
-   (define-key julia-mode-map (kbd "<f8>") 'reboot-julia)
-   (define-key julia-mode-map (kbd "C-c C-c") 'julia-repl-send-buffer)
-   (define-key julia-mode-map (kbd "C-c C-r") 'julia-repl-send-region-or-line) ))
+   (define-key clojure-mode-map (kbd "C-h f") 'cider-doc)))
+
+
+(add-hook
+  'julia-mode-hook
+  (lambda ()
+    (define-key julia-mode-map (kbd "<f8>") 'reboot-julia)
+    (define-key julia-mode-map (kbd "C-c C-c") 'julia-repl-send-buffer)
+    (define-key julia-mode-map (kbd "C-c C-r") 'julia-repl-send-region-or-line) ))
 
 (defun python-eval-defun-at-point ()
   (interactive)
@@ -597,7 +603,7 @@
 
 
 (defun org-sort-multi (&rest sort-types)
-   "Sort successively by a list of criteria, in descending order of 
+  "Sort successively by a list of criteria, in descending order of 
 importance.
 For example, sort first by TODO status, then by priority, then by date, 
 then alphabetically, case-sensitive.
@@ -606,25 +612,27 @@ BOOL is whether or not to sort case-sensitively, and CHAR is one of the
 characters defined in ``org-sort-entries-or-items''.
 So, the example above could be accomplished with:
   (org-sort-multi ?o ?p ?t (t . ?a))"
-   (interactive)
-   (mapc #'(lambda (sort-type)
-             (when (characterp sort-type) (setq sort-type (cons nil 
-sort-type)))
-             (org-sort-entries (car sort-type) (cdr sort-type)))
-         (reverse sort-types)))
+  (interactive)
+  (mapc #'(lambda (sort-type)
+            (when (characterp sort-type) (setq sort-type (cons nil 
+							       sort-type)))
+            (org-sort-entries (car sort-type) (cdr sort-type)))
+        (reverse sort-types)))
 
 (defun org-sort-custom ()
-   "Sort children of node by todo status and by priority and by date, so 
+  "Sort children of node by todo status and by priority and by date, so 
 the * TODO [#A] items with latest dates go to the top."
-   (interactive)
-   (org-sort-multi ?o ?p ?T))
+  (interactive)
+  (org-sort-multi ?o ?p ?T))
 
+
+(message "Bap")
 
 (defun org-sort-time ()
-   "Sort children of node by todo status and by priority and by date, so 
+  "Sort children of node by todo status and by priority and by date, so 
 the * TODO [#A] items with latest dates go to the top."
-   (interactive)
-   (org-sort-multi ?T))
+  (interactive)
+  (org-sort-multi ?T))
 
 ;; Speed of light calculations
 (setq as/tera 1e12)
@@ -690,13 +698,13 @@ the * TODO [#A] items with latest dates go to the top."
     (let (kill-buffer-query-functions '())
       (if (get-buffer "*nodejs*")
           (kill-buffer "*nodejs*")))))
-    
-  ;;   (sit-for 1)
-  ;;   (nodejs-repl-switch-to-repl)))
 
-  ;; (save-current-buffer
-  ;;   (sit-for 1)
-  ;;   (nodejs-repl-send-buffer)))
+;;   (sit-for 1)
+;;   (nodejs-repl-switch-to-repl)))
+
+;; (save-current-buffer
+;;   (sit-for 1)
+;;   (nodejs-repl-send-buffer)))
 
 (defun temp ()
   (interactive)
@@ -733,7 +741,7 @@ the * TODO [#A] items with latest dates go to the top."
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
- 
+
 
 (setq-default indent-tabs-mode nil)
 
@@ -820,7 +828,7 @@ the * TODO [#A] items with latest dates go to the top."
   (switch-to-buffer (generate-new-buffer "*scratch*")))
 
 (global-set-key [kp-begin] 'new-scratch)
-                    
+
 (defun paste-to-temp-buffer ()
   (interactive)
   (switch-to-buffer (generate-new-buffer "temp"))
@@ -854,16 +862,17 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                (isofmt  (format-time-string "%Y-%m-%dT%H:%M:%S.%N" (seconds-to-time seconds))))
           (message (format "%s (%s) -> %s" x prefix isofmt))))))
 
-; (parse-epoch-time "1703273132.631212") "1703273132.631212 (s) -> 2023-12-22T19:25:32.631211996"
-; (parse-epoch-time "1482672627.025747002" ) "1482672627.025747 (s) -> 2016-12-25T13:30:27.025747060"
-; (parse-epoch-time "1482672627025.747023" ) "1482672627025.747 (ms) -> 2016-12-25T13:30:27.025747060"
-; (parse-epoch-time "1482672627025747.032" ) "1482672627025747.0 (µs) -> 2016-12-25T13:30:27.025747060"
-; (parse-epoch-time "1482672627025747023"  ) "1.482672627025747e+18 (ns) -> 2016-12-25T13:30:27.025747060"
-
-                                        ; (format-time-string "%H:%M:%S" (current-time)) "15:42:10"
 
 
-; (current-time) (26029 42033 943610 315000)
+
+					; (parse-epoch-time "1482672627" ) "1482672627.0 (s) -> 2016-12-25T13:30:27.000000000"
+					; (parse-epoch-time "1482672627.025747002" ) "1482672627.025747 (s) -> 2016-12-25T13:30:27.025747060"
+					; (parse-epoch-time "1482672627025.747023" ) "1482672627025.747 (ms) -> 2016-12-25T13:30:27.025747060"
+					; (parse-epoch-time "1482672627025747.032" ) "1482672627025747.0 (µs) -> 2016-12-25T13:30:27.025747060"
+					; (parse-epoch-time "1482672627025747023"  ) "1.482672627025747e+18 (ns) -> 2016-12-25T13:30:27.025747060"
+
+
+					; (current-time) (26029 42033 943610 315000)
 (defun parse-sbe ()
   (interactive)
   (save-excursion
@@ -885,7 +894,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                               (let ((ret (match-string 1 current-line)))
                                 (unless ret
                                   (error errMsg))
-                                  ret)))
+                                ret)))
                (name (funcall match-first "name=\\\"\\([^\\\"]+\\)\\\"" "Cant find name"))
                (type (funcall match-first "type=\\\"\\([^\\\"]+\\)\\\"" "Cant fine type"))
                (size (let ((initSize (assoc type size-alist )))
@@ -925,17 +934,17 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                          (-remove 's-blank-str?))))
          (setq count (1+ count))
          (-each bits (lambda (x) (puthash x (1+ (gethash x all-tags 0)) all-tags))))))
-     ;;(message "hash is %s" all-tags)
-     (let* ((all-pairs (list))
-            (ign (maphash (lambda (x y) (push (cons x y) all-pairs)) all-tags))
-            (all-pairs (-sort (lambda (x y) (> (cdr x) (cdr y))) all-pairs)))
-            ;;(ign (message "Pairs is %s" (length sorted))))
-       (if (get-buffer buffer-name)
-           (kill-buffer buffer-name))
-       (switch-to-buffer-other-window (generate-new-buffer buffer-name))
-       (insert (format "%s headings\n\n" count))
-       (-each all-pairs (lambda (x) (insert (format "%20s : %3d\n" (car x) (cdr x)))))
-       (beginning-of-buffer))))
+    ;;(message "hash is %s" all-tags)
+    (let* ((all-pairs (list))
+           (ign (maphash (lambda (x y) (push (cons x y) all-pairs)) all-tags))
+           (all-pairs (-sort (lambda (x y) (> (cdr x) (cdr y))) all-pairs)))
+      ;;(ign (message "Pairs is %s" (length sorted))))
+      (if (get-buffer buffer-name)
+          (kill-buffer buffer-name))
+      (switch-to-buffer-other-window (generate-new-buffer buffer-name))
+      (insert (format "%s headings\n\n" count))
+      (-each all-pairs (lambda (x) (insert (format "%20s : %3d\n" (car x) (cdr x)))))
+      (beginning-of-buffer))))
 (define-key org-mode-map  (kbd "<f7>") 'get-tag-counts)
 
 
@@ -963,7 +972,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
          (setq count (1+ count))
          (puthash heading (1+ (gethash heading all-headings 0)) all-headings)
          (if (= level 1)
-         ;; (if 't
+             ;; (if 't
              (puthash heading (1+ (gethash heading top-level-headings 0)) top-level-headings)))))
     (let* ((all-pairs (list))
            (ign (maphash (lambda (x y) (push (cons x y) all-pairs)) all-headings))
@@ -986,24 +995,27 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
   (org-sort-custom)
   (org-cycle))
 
+
+
 (define-key org-mode-map  (kbd "<f8>") 'get-heading-counts)
 (define-key org-mode-map  (kbd "<f10>") 'my-org-sort-custom)
 
 
 (defun parse-fix ()
+  "Parse a fix message at point, display result in a 'FIX' buffer"
   (interactive)
   (let* ((msg (thing-at-point 'line))
          (parsed (->> msg
-                      (string-match "8=FIX.*")
-                      (substring msg)
-                      (s-split "")
-                      (--map (s-split "=" it))
-                      (--filter (= (length it) 2))
-                      (--map (apply 'cons it))
+                      (string-match "8=FIX.*")   ;; Duh
+                      (substring msg)   ;; Duhgain
+                      (s-split "") ;; Duh
+                      (--map (s-split "=" it))  ;; Split into pairs
+                      (--filter (= (length it) 2))   ;; reject non-pair pairs
+                      (--map (apply 'cons it))   ;; turn into cons cells for convenience (list a b ) -> (a . b)
                       (-map (-lambda ((tag_value &as tag . value))
-                               (list (gethash tag tags-hash)
-                                     tag
-                                     (--if-let (gethash tag_value enums-hash) (format "%s (%s)" value it) value))))
+                              (list (gethash tag tags-hash)
+                                    tag
+                                    (--if-let (gethash tag_value enums-hash) (format "%s (%s)" value it) value))))
                       (--map (apply 'format "%20s : %4s = %-10s" it))
                       (s-join "\n")))
          (my_buffer_name "FIX"))
@@ -1108,9 +1120,9 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 (require 'cider-mode)
 (add-hook 'cider-mode-hook
-           (lambda ()
-             (define-key cider-mode-map (kbd "C-c C-r") 'cider-eval-region))
-             (define-key cider-mode-map (kbd "C-c C-c") 'cider-eval-defun-at-point))
+          (lambda ()
+            (define-key cider-mode-map (kbd "C-c C-r") 'cider-eval-region))
+          (define-key cider-mode-map (kbd "C-c C-c") 'cider-eval-defun-at-point))
 
 (eval-after-load 'octave '(progn
                             (define-key octave-mode-map (kbd "C-c C-c") 'octave-send-buffer)
@@ -1119,9 +1131,9 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                             (define-key octave-mode-map (kbd "<f8>") 'run-octave)))
 
 (eval-after-load 'hy-mode '(progn
-                            (define-key hy-mode-map (kbd "C-c C-c") 'hy-shell-eval-buffer)
-                            (define-key hy-mode-map (kbd "C-c C-r") 'hy-shell-eval-region)
-                            (define-key hy-mode-map (kbd "<f8>") 'run-octave)))
+                             (define-key hy-mode-map (kbd "C-c C-c") 'hy-shell-eval-buffer)
+                             (define-key hy-mode-map (kbd "C-c C-r") 'hy-shell-eval-region)
+                             (define-key hy-mode-map (kbd "<f8>") 'run-octave)))
 
 
 
@@ -1193,14 +1205,14 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
   (interactive)
   (-let* (((day month year weight kilos bmi fat)
            (s-with (thing-at-point 'line)
-             (s-split "[,-]")
-             (--map (s-with it (s-replace "\"" "") (string-to-number))))))
+		   (s-split "[,-]")
+		   (--map (s-with it (s-replace "\"" "") (string-to-number))))))
     (beginning-of-line)
     (kill-line)
     (--> (encode-time (list 0 0 0 day month year 0 nil 0 ))
-      (format-time-string "[%Y-%m-%d %a]" it)
-      (format " | # | %s | %.2f | | | Aria |" it weight)
-      (insert it))
+	 (format-time-string "[%Y-%m-%d %a]" it)
+	 (format " | # | %s | %.2f | | | Aria |" it weight)
+	 (insert it))
     (beginning-of-line)
     (next-line)))
 (global-set-key [kp-up] 'convert-fitbit-weight-row-to-org)
@@ -1215,8 +1227,8 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
   (switch-to-buffer "*SML*")
   (end-of-buffer))
 
-; (advice-add 'sml-prog-proc-load-file :after 'end-of-sml)
-; (advice-remove 'sml-prog-proc-load-file)
+					; (advice-add 'sml-prog-proc-load-file :after 'end-of-sml)
+					; (advice-remove 'sml-prog-proc-load-file)
 
 ;; (require 'sql)
 ;; SQL Stuff
@@ -1279,7 +1291,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 (provide 'init.el)
 ;;; init.el ends here
- 
+
 (put 'narrow-to-region 'disabled nil)
 (put 'narrow-to-page 'disabled nil)
 (put 'downcase-region 'disabled nil)
@@ -1317,8 +1329,8 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 (defun as/danger  (x)
   "Warning function"
-   ;;(message "Danger %s" x )
-   (if (< 1 x) "danger!!" ""))
+  ;;(message "Danger %s" x )
+  (if (< 1 x) "danger!!" ""))
 
 ;; https://stackoverflow.com/questions/51006855/open-mp4-files-from-orgmode
 (require 'openwith)
@@ -1469,15 +1481,16 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(org-preview-latex-image-directory "/var/tmp/ltximg/")
  '(org-refile-targets '((org-agenda-files :maxlevel . 10)))
  '(org-todo-keyword-faces
-   '(("BLOCKED" :foreground "red" :weight bold)
-     ("FAILED" :foreground "red" :weight bold)
+   '(("BLKD" :foreground "red" :weight bold)
+     ("FAIL" :foreground "red" :weight bold)
      ("TODOTODAY" :foreground "yellow" :weight bold)
-     ("PENDING" :foreground "orange" :weight bold)
-     ("INPROGRESS" :foreground "orange" :weight bold)
+     ("PNDG" :foreground "orange" :weight bold)
+     ("PROG" :foreground "orange" :weight bold)
      ("DONE" :foreground "green" :weight bold)
+     ("NEVR" :foreground "dark gray" :weight bold)
      ("MUST" :foreground "red" :weight bold)))
  '(org-todo-keywords
-   '((sequence "TODO" "TODOTODAY" "INPROGRESS" "BLOCKED" "DONE" "NEVER")))
+   '((sequence "TODO" "TODOTODAY" "PROG" "BLKD" "DONE" "NEVR")))
  '(org-twbs-todo-kwd-class-done "label label-success")
  '(org-twbs-todo-kwd-class-undone "label label-warning")
  '(org-use-tag-inheritance '("wifidetails" "astronomy"))
