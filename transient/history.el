@@ -3,21 +3,20 @@
   ("-w"))
  (magit-branch nil)
  (magit-commit nil
-	       ("--all"))
+               ("--all"))
  (magit-diff
   ("--no-ext-diff" "--stat"))
  (magit-dispatch nil)
  (magit-ediff nil)
  (magit-fetch nil
-	      ("--tags"))
+              ("--tags"))
  (magit-gitignore nil)
  (magit-log
   ("-n256" "--graph" "--decorate"))
  (magit-merge nil)
  (magit-pull nil)
  (magit-push
-  ("--force-with-lease")
-  nil)
+  ("--force-with-lease"))
  (magit-rebase
   ("--autostash")
   nil)

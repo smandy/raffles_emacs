@@ -626,8 +626,6 @@ the * TODO [#A] items with latest dates go to the top."
   (org-sort-multi ?o ?p ?T))
 
 
-(message "Bap")
-
 (defun org-sort-time ()
   "Sort children of node by todo status and by priority and by date, so 
 the * TODO [#A] items with latest dates go to the top."
