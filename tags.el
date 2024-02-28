@@ -1,4 +1,4 @@
-(setq tags-hash #s(hash-table test equal size 1000 data ("1" "Account"
+(setq tags-hash #s(hash-table test equal size 512 data ("1" "Account"
                                                         "159" "AccruedInterestAmt"
                                                         "158" "AccruedInterestRate"
                                                         "334" "Adjustment"
@@ -406,7 +406,7 @@
                                                         "6000" "DiscretionUsedSw"
                                                         )))
 
-(setq enums-hash #s(hash-table test equal size 100 data (
+(setq enums-hash #s(hash-table test equal size 1024 data (
                                                          ( "35" . "0")  "Heartbeat"
                                                          ( "35" . "1")  "Test Request"
                                                          ( "35" . "2")  "Resend Request"
