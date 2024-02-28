@@ -862,15 +862,14 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 
 
+;; (parse-epoch-time "1482672627" )
+;; (parse-epoch-time "1482672627.025747002" )
+;; (parse-epoch-time "1482672627025.747023" )
+;; (parse-epoch-time "1482672627025747.032" )
+;; (parse-epoch-time "1482672627025747023"  )
+;; (current-time) (26029 42033 943610 315000)
 
-					; (parse-epoch-time "1482672627" ) "1482672627.0 (s) -> 2016-12-25T13:30:27.000000000"
-					; (parse-epoch-time "1482672627.025747002" ) "1482672627.025747 (s) -> 2016-12-25T13:30:27.025747060"
-					; (parse-epoch-time "1482672627025.747023" ) "1482672627025.747 (ms) -> 2016-12-25T13:30:27.025747060"
-					; (parse-epoch-time "1482672627025747.032" ) "1482672627025747.0 (µs) -> 2016-12-25T13:30:27.025747060"
-					; (parse-epoch-time "1482672627025747023"  ) "1.482672627025747e+18 (ns) -> 2016-12-25T13:30:27.025747060"
 
-
-					; (current-time) (26029 42033 943610 315000)
 (defun parse-sbe ()
   (interactive)
   (save-excursion
