@@ -15,13 +15,14 @@
   ("-n256" "--graph" "--decorate"))
  (magit-merge nil)
  (magit-pull nil)
- (magit-push
-  ("--force-with-lease"))
+ (magit-push nil
+             ("--force-with-lease"))
  (magit-rebase
   ("--autostash")
   nil)
  (magit-remote
   ("-f"))
+ (magit-reset nil)
  (magit-run nil)
  (magit-stash nil)
  (magit-tag nil))

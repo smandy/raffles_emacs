@@ -39,5 +39,6 @@
         mouse-appearance-menu
         mouse-buffer-menu
         mouse-set-region
+        org-goto-calendar
         wdired--self-insert
         ))

@@ -2,7 +2,13 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("org-capture-last-stored-marker"
+(("journal.org"
+ (filename . "~/repos/gtd/journal.org")
+ (front-context-string . "*** 2024-03-23 S")
+ (rear-context-string . "he pharmacy :-)\n")
+ (position . 883417)
+ (last-modified 26110 40320 177183 613000))
+("org-capture-last-stored-marker"
  (filename . "~/repos/gtd/gtd.org")
  (front-context-string . "** TODO Alfred W")
  (rear-context-string . "p in complexity\n")
@@ -10,16 +16,16 @@
  (last-modified 26076 61427 954468 679000))
 ("org-refile-last-stored"
  (filename . "~/repos/gtd/gtd.org")
- (front-context-string . "** [2024-02-25 S")
- (rear-context-string . "olvay Coference\n")
- (position . 895624)
- (last-modified 26077 23929 484054 506000))
+ (front-context-string . "** [2024-03-28 T")
+ (rear-context-string . "        :games:\n")
+ (position . 55025)
+ (last-modified 26135 11437 149365 914000))
 ("org-capture-last-stored"
- (filename . "~/repos/gtd/gtd.org")
- (front-context-string . "** [2024-02-27 T")
- (rear-context-string . "odous]\n\n* Inbox\n")
- (position . 311)
- (last-modified 26077 40746 795745 639000))
+ (filename . "~/repos/gtd/journal.org")
+ (front-context-string . "**** [2024-04-12")
+ (rear-context-string . "24-04-12 Friday\n")
+ (position . 901687)
+ (last-modified 26137 46068 151114 36000))
 ("unabomber_manifesto.org"
  (filename . "~/Dropbox/unabomber_manifesto.org")
  (front-context-string . "AUTONOMY\n\n42. Au")

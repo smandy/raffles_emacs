@@ -24,6 +24,7 @@
 
 (require 'calfw-org)
 
+;; Clojure-like results when evaluating lisp
 (require 'eros)
 (eros-mode 1)
 
@@ -61,7 +62,7 @@
 ;; (set-frame-font "-1ASC-Liberation Mono-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1" )
 ;; (set-frame-font "-ADBO-Source Code Pro-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1" )
 ;; (set-frame-font "Consolas 14")
-;; (set-frame-font "Liberation Mono 13")
+;; (set-frame-font "Liberation Mono 8")
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1" )
 ;; (set-frame-font "-MS  -Consolas-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1" )
 
@@ -629,6 +630,13 @@ the * TODO [#A] items with latest dates go to the top."
   (org-sort-multi ?o ?p ?T))
 
 
+(defun org-sort-schedule ()
+  "Sort children of node by todo status and by priority and by date, so 
+the * TODO [#A] items with latest dates go to the top."
+  (interactive)
+  (org-sort-multi ?T))
+
+
 (defun org-sort-time ()
   "Sort children of node by todo status and by priority and by date, so 
 the * TODO [#A] items with latest dates go to the top."
@@ -863,12 +871,16 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                (isofmt  (format-time-string "%Y-%m-%dT%H:%M:%S.%N" (seconds-to-time seconds))))
           (message (format "%s (%s) -> %s" x prefix isofmt))))))
 
+(defun parse-epoch-time-at-point ()
+  (interactive)
+  (parse-epoch-time (thing-at-point 'symbol)))
+(global-set-key (kbd "C-c C-p C-t") 'parse-epoch-time-at-point)
 
-;; (parse-epoch-time "1482672627" ) 
-;; (parse-epoch-time "1482672627.025747002" )
-;; (parse-epoch-time "1482672627025.747023" )
-;; (parse-epoch-time "1482672627025747.032" )
-;; (parse-epoch-time "1482672627025747023"  )
+;; (parse-epoch-time "1482672627" ) "1482672627.0 (s) -> 2016-12-25T13:30:27.000000000"
+;; (parse-epoch-time "1482672627.025747002" ) "1482672627.025747 (s) -> 2016-12-25T13:30:27.025747060"
+;; (parse-epoch-time "1482672627025.747023" ) "1482672627025.747 (ms) -> 2016-12-25T13:30:27.025747060"
+;; (parse-epoch-time "1482672627025747.032" ) "1482672627025747.0 (µs) -> 2016-12-25T13:30:27.025747060"
+;; (parse-epoch-time "1482672627025747023"  ) "1.482672627025747e+18 (ns) -> 2016-12-25T13:30:27.025747060"
 
 
 ;; Experiment - ( rough) capture timestamps with current-time in emacs
@@ -960,10 +972,11 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
       (if (get-buffer buffer-name)
           (kill-buffer buffer-name))
       (switch-to-buffer-other-window (generate-new-buffer buffer-name))
-      (insert (format "%s headings\n\n" count))
+      (insert (format "%s tags\n\n" count))
       (-each all-pairs (lambda (x) (insert (format "%20s : %3d\n" (car x) (cdr x)))))
       (beginning-of-buffer))))
 (define-key org-mode-map  (kbd "<f7>") 'get-tag-counts)
+(define-key org-mode-map  (kbd "<f9>") 'org-display-outline-path)
 
 
 (defun my-outline-path ()
@@ -1018,7 +1031,6 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (define-key org-mode-map  (kbd "<f8>") 'get-heading-counts)
 (define-key org-mode-map  (kbd "<f10>") 'my-org-sort-custom)
 
-
 (defun parse-fix ()
   "Parse a fix message at point, display result in a 'FIX' buffer"
   (interactive)
@@ -1031,8 +1043,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                       (--filter (= (length it) 2))   ;; reject non-pair pairs
                       (--map (apply 'cons it))   ;; turn into cons cells for convenience (list a b ) -> (a . b)
                       (-map (-lambda ((tag_value &as tag . value))
-                              (list (gethash tag tags-hash)
-                                    tag
+                              (list (gethash tag tags-hash) tag
                                     (--if-let (gethash tag_value enums-hash) (format "%s (%s)" value it) value))))
                       (--map (apply 'format "%20s : %4s = %-10s" it))
                       (s-join "\n")))
@@ -1068,18 +1079,6 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
    (s-reverse)))
 
 
-(commify 1234567)   "1,234,567"
-
-(format "%s" 12) 
-
-(defun parse-epoch-time-at-point ()
-  (interactive)
-  (parse-epoch-time (thing-at-point 'symbol)))
-
-(global-set-key (kbd "C-c C-p C-t") 'parse-epoch-time-at-point)
-
-(require 'time)
-
 ;; Execute either of these progn forms to switch between python2/3
 (if nil
     (progn
@@ -1114,6 +1113,8 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (add-to-list 'exec-path "/home/andy/bin:/home/andy/.sdkman/candidates/leiningen/current/bin")
 (add-to-list 'exec-path "/home/andy/.sdkman/candidates/leiningen/current/bin")
 (add-to-list 'exec-path "/home/andy")
+(add-to-list 'exec-path "/home/andy/.pyenv/shims")
+
 
 (autoload 'utop-minor-mode "utop" "Minor mode for utop" t)
 (add-hook 'tuareg-mode-hook 'utop-minor-mode)
@@ -1355,7 +1356,10 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (openwith-mode t)
 (setq openwith-associations '(("\\.mp4\\'" "vlc" (file))))
 
-
+;; Crypt stuff.
+(require 'org-crypt)
+(org-crypt-use-before-save-magic)
+(setq org-tags-exclude-from-inheritance '("crypt"))
 ;; Agenda files old    '("/home/andy/Dropbox/gtd/robbins/dwd/dwd.org" "/home/andy/Dropbox/gtd/robbins/business_mastery/bmcourse.org" "/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/_shopping.org" "/home/andy/Dropbox/gtd/robbins/weekly.org" "/home/andy/Dropbox/gtd/robbins/ania/ania.org")
 
 
@@ -1371,6 +1375,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(browse-url-firefox-program "firedragon")
  '(c-basic-offset 4)
  '(case-fold-search t)
+ '(cfw:display-calendar-holidays nil)
  '(chess-images-separate-frame nil)
  '(clang-format-executable "clang-format")
  '(company-clang-arguments nil)
@@ -1459,7 +1464,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
      ("il" tags-todo "+LEVEL=15+TODO=\"TODO\"|+LEVEL=15+TODO=\"DONE\"" nil)
      ("im" tags-todo "+morning" nil)))
  '(org-agenda-files
-   '("/home/andy/repos/gtd/journal.org" "/home/andy/repos/gtd/gtd.org"))
+   '("/home/andy/repos/gtd/gtd.org" "/home/andy/repos/gtd/journal.org"))
  '(org-babel-load-languages '((dot . t) (emacs-lisp . t) (C . t)))
  '(org-capture-templates
    '(("t" "Todo" entry
@@ -1487,6 +1492,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
       (file+datetree "~/repos/gtd/journal.org")
       "* %U %?")))
  '(org-confirm-babel-evaluate nil)
+ '(org-crypt-disable-auto-save t)
  '(org-directory "~/Dropbox/gtd")
  '(org-format-latex-options
    '(:foreground default :background default :scale 3.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
