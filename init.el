@@ -1359,6 +1359,10 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ;; Crypt stuff.
 (require 'org-crypt)
 (org-crypt-use-before-save-magic)
+
+;; FIX ME!
+;;(setq org-crypt-tag-matcher "_crypt")
+
 (setq org-tags-exclude-from-inheritance '("crypt"))
 ;; Agenda files old    '("/home/andy/Dropbox/gtd/robbins/dwd/dwd.org" "/home/andy/Dropbox/gtd/robbins/business_mastery/bmcourse.org" "/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/_shopping.org" "/home/andy/Dropbox/gtd/robbins/weekly.org" "/home/andy/Dropbox/gtd/robbins/ania/ania.org")
 
@@ -1493,6 +1497,8 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
       "* %U %?")))
  '(org-confirm-babel-evaluate nil)
  '(org-crypt-disable-auto-save t)
+ '(org-crypt-key "andyrsmith@gmail.com")
+ '(org-crypt-tag-matcher "crypt")
  '(org-directory "~/Dropbox/gtd")
  '(org-format-latex-options
    '(:foreground default :background default :scale 3.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers

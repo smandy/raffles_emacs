@@ -1,4 +1,4 @@
-;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
+;;;; Emacs Bookmark Format Version 1;;;; -*- coding: no-conversion; mode: lisp-data -*-
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
@@ -16,16 +16,16 @@
  (last-modified 26076 61427 954468 679000))
 ("org-refile-last-stored"
  (filename . "~/repos/gtd/gtd.org")
- (front-context-string . "** [2024-03-28 T")
- (rear-context-string . "        :games:\n")
- (position . 55025)
- (last-modified 26135 11437 149365 914000))
+ (front-context-string . "*** French      ")
+ (rear-context-string . "NE Cardrona bus\n")
+ (position . 272986)
+ (last-modified 26137 50820 382481 900000))
 ("org-capture-last-stored"
- (filename . "~/repos/gtd/journal.org")
- (front-context-string . "**** [2024-04-12")
- (rear-context-string . "24-04-12 Friday\n")
- (position . 901687)
- (last-modified 26137 46068 151114 36000))
+ (filename . "~/repos/gtd/gtd.org")
+ (front-context-string . "** [2024-04-15 M")
+ (rear-context-string . "R DONE\n\n* Inbox\n")
+ (position . 278)
+ (last-modified 26140 44769 228995 555000))
 ("unabomber_manifesto.org"
  (filename . "~/Dropbox/unabomber_manifesto.org")
  (front-context-string . "AUTONOMY\n\n42. Au")
