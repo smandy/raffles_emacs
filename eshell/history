@@ -25,3 +25,13 @@ pwd
 cd ~
 ls -gl
 pwd
+ps -auxw | grep pgp
+ps -auxw | grep gpg
+kill -9 77510
+kill -9 669211
+ps -auxw | grep gpg
+sudo kill -9 77518
+sudo kill -9 669221
+ps -auxw | grep gpg
+kill -9 677948
+ps -auxw | grep gpg
