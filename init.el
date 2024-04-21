@@ -58,7 +58,7 @@
 
 ;; (set-frame-font "-1ASC-Liberation Mono-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1" )
 ;; (set-frame-font "-ADBO-Source Code Pro-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1" )
-;; (set-frame-font "Consolas 14")
+;; (set-frame-font "Consolas 18")
 ;; (set-frame-font "Liberation Mono 8")
 ;; (set-frame-font "-xos4-xos4 Terminus-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1" )
 ;; (set-frame-font "-MS  -Consolas-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1" )
@@ -853,38 +853,38 @@ the * TODO [#A] items with latest dates go to the top."
 with micros, seconds, nanos etc. Display result using 'message' if successful"
   (require 'dash)
   (let* ((x (float (string-to-number s)))
-         (epoch 1970 )
-         (secsperday (* 24 60 60))
-         (secsperyear (* 365.25 secsperday))
-         (inrange
-          (lambda (tup)
-            (let* ((prefix (car tup))
-                   (pow    (cdr tup))
-                   (divisor (expt 10 pow))
-                   (secs (/ x divisor))
-                   (year (+ epoch (/ secs secsperyear))))
-              (when (< 1980 year 2060)
-                (cons secs prefix)))))
-         (match (-some inrange '(("s"  . 0)
-                                 ("ms" . 3)
-                                 ("µs" . 6) 
-                                 ("ns" . 9)))))
-    (if match
-        (let* ((seconds (car match))
-               (prefix  (cdr match))
-               (isofmt  (format-time-string "%Y-%m-%dT%H:%M:%S.%N" (seconds-to-time seconds))))
-          (message (format "%s (%s) -> %s" x prefix isofmt))))))
+         (unix-epoch-year 1970 )
+         (seconds-per-day (* 24 60 60))
+         (seconds-per-year (* 365.25 seconds-per-day))
+         (is-in-range-p
+          (-lambda ((handy-prefix . tenth-power))
+            (let* ((divisor (expt 10 tenth-power))
+                   (seconds-since-unix-epoch (/ x divisor))
+                   (maybe-year? (+ unix-epoch-year (/ seconds-since-unix-epoch seconds-per-year))))
+              (when (< 1980 maybe-year? 2060)
+                (cons seconds-since-unix-epoch handy-prefix)))))
+         (success (-some is-in-range-p '(("s"  . 0)
+                                         ("ms" . 3)
+                                         ("µs" . 6) 
+                                         ("ns" . 9)))))
+    (-if-let ((seconds-since-unix-epoch . handy-prefix) success)
+        (message (format "%s (%s) -> %s" x
+                         handy-prefix
+                         (format-time-string "%Y-%m-%dT%H:%M:%S.%N"
+                                             (seconds-to-time seconds-since-unix-epoch)))))))
+
+
 
 (defun parse-epoch-time-at-point ()
   (interactive)
   (parse-epoch-time (thing-at-point 'symbol)))
 (global-set-key (kbd "C-c C-p C-t") 'parse-epoch-time-at-point)
 
-;; (parse-epoch-time "1482672627" ) "1482672627.0 (s) -> 2016-12-25T13:30:27.000000000"
-;; (parse-epoch-time "1482672627.025747002" ) "1482672627.025747 (s) -> 2016-12-25T13:30:27.025747060"
-;; (parse-epoch-time "1482672627025.747023" ) "1482672627025.747 (ms) -> 2016-12-25T13:30:27.025747060"
-;; (parse-epoch-time "1482672627025747.032" ) "1482672627025747.0 (µs) -> 2016-12-25T13:30:27.025747060"
-;; (parse-epoch-time "1482672627025747023"  ) "1.482672627025747e+18 (ns) -> 2016-12-25T13:30:27.025747060"
+;; (parse-epoch-time "1482672627" )        
+;; (parse-epoch-time "1482672627.025747002" )"1482672627.025747 (s) -> 2016-12-25T13:30:27.025747060"
+;; (parse-epoch-time "1482672627025.747023" )"1482672627025.747 (ms) -> 2016-12-25T13:30:27.025747060"
+;; (parse-epoch-time "1482672627025747.032" )"1482672627025747.0 (µs) -> 2016-12-25T13:30:27.025747060"
+;; (parse-epoch-time "1482672627025747023"  )"1.482672627025747e+18 (ns) -> 2016-12-25T13:30:27.025747060"
 
 
 ;; Experiment - ( rough) capture timestamps with current-time in emacs
@@ -1040,15 +1040,16 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
   (interactive)
   (let* ((msg (thing-at-point 'line))
          (parsed (->> msg
-                      (string-match "8=FIX.*")   ;; Duh
-                      (substring msg)   ;; Duhgain
-                      (s-split "") ;; Duh
+                      (string-match "8=FIX.*")
+                      (substring msg)
+                      (s-split "")
                       (--map (s-split "=" it))  ;; Split into pairs
                       (--filter (= (length it) 2))   ;; reject non-pair pairs
                       (--map (apply 'cons it))   ;; turn into cons cells for convenience (list a b ) -> (a . b)
                       (-map (-lambda ((tag_value &as tag . value))
                               (list (gethash tag tags-hash) tag
                                     (--if-let (gethash tag_value enums-hash) (format "%s (%s)" value it) value))))
+                      ;; (-map (-lambda (x) (message "%s" x) x))
                       (--map (apply 'format "%20s : %4s = %-10s" it))
                       (s-join "\n")))
          (my_buffer_name "FIX"))
@@ -1057,6 +1058,8 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
     (switch-to-buffer (generate-new-buffer my_buffer_name))
     (insert (format "\n%s\n==========================\n\n%s" msg parsed))
     (beginning-of-buffer)))
+
+
 (global-set-key [f11] 'parse-fix)
 
 ;; 8=FIX.4.29=16335=D34=97249=TESTBUY352=20190206-16:25:10.40356=TESTSELL311=14163685067084226997921=238=10040=154=155=AAPL60=20190206-16:25:08.968207=TO6000=TEST123410=106"  
@@ -1517,7 +1520,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(org-todo-keyword-faces
    '(("BLKD" :foreground "red" :weight bold)
      ("FAIL" :foreground "red" :weight bold)
-     ("TODOTODAY" :foreground "yellow" :weight bold)
+     ("TDAY" :foreground "yellow" :weight bold)
      ("PNDG" :foreground "orange" :weight bold)
      ("PROG" :foreground "orange" :weight bold)
      ("DONE" :foreground "green" :weight bold)
