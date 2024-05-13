@@ -68,7 +68,7 @@
 
 ;; (set-frame-font "Meslo LG L" 't)
 
-;; (set-frame-font "Fixed 20" 't)
+;; (set-frame-font "Fixed 18" 't)
 
 ;; (set-frame-font "Andale Mono 12")
 ;; (set-frame-font "Hack" 't) 
@@ -853,38 +853,37 @@ the * TODO [#A] items with latest dates go to the top."
 with micros, seconds, nanos etc. Display result using 'message' if successful"
   (require 'dash)
   (let* ((x (float (string-to-number s)))
-         (unix-epoch-year 1970 )
+         (unix-epoch-year 1970)
          (seconds-per-day (* 24 60 60))
          (seconds-per-year (* 365.25 seconds-per-day))
-         (is-in-range-p
-          (-lambda ((handy-prefix . tenth-power))
-            (let* ((divisor (expt 10 tenth-power))
-                   (seconds-since-unix-epoch (/ x divisor))
-                   (maybe-year? (+ unix-epoch-year (/ seconds-since-unix-epoch seconds-per-year))))
-              (when (< 1980 maybe-year? 2060)
-                (cons seconds-since-unix-epoch handy-prefix)))))
-         (success (-some is-in-range-p '(("s"  . 0)
+         (is-in-range? (-lambda ((handy-prefix . tenth-power))
+                         (let* ((divisor (expt 10 tenth-power))
+                                (seconds-since-unix-epoch (/ x divisor))
+                                (maybe-year? (+ unix-epoch-year
+                                                (/ seconds-since-unix-epoch seconds-per-year))))
+                           (when (< 1980 maybe-year? 2060)
+                             (cons seconds-since-unix-epoch handy-prefix)))))
+         (success? (-some is-in-range? '(("s"  . 0)
                                          ("ms" . 3)
                                          ("µs" . 6) 
                                          ("ns" . 9)))))
-    (-if-let ((seconds-since-unix-epoch . handy-prefix) success)
+    (-if-let ((seconds-since-unix-epoch . handy-prefix) success?)
         (message (format "%s (%s) -> %s" x
                          handy-prefix
-                         (format-time-string "%Y-%m-%dT%H:%M:%S.%N"
-                                             (seconds-to-time seconds-since-unix-epoch)))))))
-
-
+                         (format-time-string
+                          "%Y-%m-%dT%H:%M:%S.%N"
+                          (seconds-to-time seconds-since-unix-epoch)))))))
 
 (defun parse-epoch-time-at-point ()
   (interactive)
   (parse-epoch-time (thing-at-point 'symbol)))
 (global-set-key (kbd "C-c C-p C-t") 'parse-epoch-time-at-point)
 
-;; (parse-epoch-time "1482672627" )        
-;; (parse-epoch-time "1482672627.025747002" )"1482672627.025747 (s) -> 2016-12-25T13:30:27.025747060"
-;; (parse-epoch-time "1482672627025.747023" )"1482672627025.747 (ms) -> 2016-12-25T13:30:27.025747060"
-;; (parse-epoch-time "1482672627025747.032" )"1482672627025747.0 (µs) -> 2016-12-25T13:30:27.025747060"
-;; (parse-epoch-time "1482672627025747023"  )"1.482672627025747e+18 (ns) -> 2016-12-25T13:30:27.025747060"
+;; (parse-epoch-time "1482672627") 
+;; (parse-epoch-time "1482672627.025747002")
+;; (parse-epoch-time "1482672627025.747023")
+;; (parse-epoch-time "1482672627025747.032")
+;; (parse-epoch-time "1482672627025747023")
 
 
 ;; Experiment - ( rough) capture timestamps with current-time in emacs
@@ -1532,7 +1531,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(org-twbs-todo-kwd-class-undone "label label-warning")
  '(org-use-tag-inheritance '("wifidetails" "astronomy"))
  '(package-selected-packages
-   '(compat magit-gerrit eros axe helm-rg flycheck-mypy forest-blue-theme impatient-mode rg "rg" geiser-guile worf openwith helm-org-ql org-latex-impatient org-drill ace-isearch frog-jump-buffer ace-jump-buffer ztree anki-connect ace-window swift-mode ada-mode yasnippet-classic-snippets yasnippet-snippets helm-dash magit color-theme-sanityinc-tomorrow org-superstar anki-editor key-chord git-timemachine org-anki anki-mode chess weyland-yutani-theme afternoon-theme tron-legacy-theme ox-twbs undo-tree arduino-mode command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti hy-mode org-kanban dracula-theme slime ob-kotlin amd-mode sed-mode ranger doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode multiple-cursors ag helm-projectile projectile dumb-jump helm-cscope ein elpy yaml-mode web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game))
+   '(geiser-racket compat magit-gerrit eros axe helm-rg flycheck-mypy forest-blue-theme impatient-mode rg "rg" geiser-guile worf openwith helm-org-ql org-latex-impatient org-drill ace-isearch frog-jump-buffer ace-jump-buffer ztree anki-connect ace-window swift-mode ada-mode yasnippet-classic-snippets yasnippet-snippets helm-dash magit color-theme-sanityinc-tomorrow org-superstar anki-editor key-chord git-timemachine org-anki anki-mode chess weyland-yutani-theme afternoon-theme tron-legacy-theme ox-twbs undo-tree arduino-mode command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti hy-mode org-kanban dracula-theme slime ob-kotlin amd-mode sed-mode ranger doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode multiple-cursors ag helm-projectile projectile dumb-jump helm-cscope ein elpy yaml-mode web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game))
  '(pdf-view-midnight-colors (cons "#eceff4" "#323334"))
  '(projectile4-tags-backend 'ggtags)
  '(python-shell-interpreter "ipython3")
