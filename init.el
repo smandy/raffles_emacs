@@ -14,16 +14,10 @@
   "Tidy up the kazinsky manifesto"
   (interactive)
   (search-forward-regexp "^[0-9]+\. ")
-  (let (
-        (c (current-column))
-        )
+  (let ((c (current-column)))
     (beginning-of-line)
     (forward-line)
     (insert (s-repeat " " c))))
-
-
-
-
 
 ;; (set-frame-font "-Misc-Misc Tamsyn-normal-normal-normal-*-20-*-*-*-c-100-iso10646-1" )
 
@@ -46,11 +40,10 @@
 
 (require 'cc-mode)
 
-
-  (defun markdown-html (buffer)
-    (princ (with-current-buffer buffer
-      (format "<!DOCTYPE html><html><title>Impatient Markdown</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://ndossougbe.github.io/strapdown/dist/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
-           (current-buffer)))
+(defun markdown-html (buffer)
+  (princ (with-current-buffer buffer
+           (format "<!DOCTYPE html><html><title>Impatient Markdown</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://ndossougbe.github.io/strapdown/dist/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
+         (current-buffer)))
 
 
 
@@ -412,7 +405,9 @@
 (add-hook
 'python-mode-hook
  (lambda ()
-(define-key python-mode-map (kbd "C-M-x") 'python-eval-defun-at-point)))
+   (define-key python-mode-map (kbd "C-M-x") 'python-eval-defun-at-point)
+   (pyenv-mode)
+   ))
 
 (defun compile-agora-debug ()
   (interactive)
@@ -905,6 +900,39 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 ;; ( - 1710215080 1710215086.2924154) -6.292415380477905
 
+(defun get-git-root ()
+  (interactive)
+  (string-trim (shell-command-to-string "git rev-parse --show-toplevel")))
+    
+(defun add-slice ()
+  (interactive)
+  (let* ((root (get-git-root))
+         (slice (format "%s/python" root))
+         (path ( --if-let (getenv "PYTHONPATH")
+                   (format "%s:%s" it slice)
+                 slice)) )
+    (->> path
+         (s-split ":" path)
+         (-distinct bits)
+         (s-join ":" bits)
+         (setenv "PYTHONPATH" path) )
+    (message "new path is %s" (getenv "PYTHONPATH"))))
+
+(defun remove-slice ()
+  (interactive)
+  (let* (
+        (slice (format "%s/python" (get-git-root)))
+        (path (--if-let (getenv "PYTHONPATH") (format "%s:%s" it slice) (slice)))
+        )
+    (->> path
+         (s-split ":")
+         (-distinct)
+         (remove slice)
+         (s-join ":")
+         (setenv "PYTHONPATH")
+         ) 
+    (message "new path is %s" (getenv "PYTHONPATH"))))
+
 
 (defun parse-sbe ()
   (interactive)
@@ -1116,7 +1144,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
      (define-key company-mode-map (kbd "M-/") 'company-complete)
      (define-key company-active-map (kbd "C-:") 'helm-company)))
 
-(add-to-list 'exec-path "/home/andy/bin:/home/andy/.sdkman/candidates/leiningen/current/bin")
+(add-to-list 'exec-path "/home/andy/bin")
 (add-to-list 'exec-path "/home/andy/.sdkman/candidates/leiningen/current/bin")
 (add-to-list 'exec-path "/home/andy")
 (add-to-list 'exec-path "/home/andy/.pyenv/shims")
@@ -1531,7 +1559,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(org-twbs-todo-kwd-class-undone "label label-warning")
  '(org-use-tag-inheritance '("wifidetails" "astronomy"))
  '(package-selected-packages
-   '(geiser-racket compat magit-gerrit eros axe helm-rg flycheck-mypy forest-blue-theme impatient-mode rg "rg" geiser-guile worf openwith helm-org-ql org-latex-impatient org-drill ace-isearch frog-jump-buffer ace-jump-buffer ztree anki-connect ace-window swift-mode ada-mode yasnippet-classic-snippets yasnippet-snippets helm-dash magit color-theme-sanityinc-tomorrow org-superstar anki-editor key-chord git-timemachine org-anki anki-mode chess weyland-yutani-theme afternoon-theme tron-legacy-theme ox-twbs undo-tree arduino-mode command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti hy-mode org-kanban dracula-theme slime ob-kotlin amd-mode sed-mode ranger doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode multiple-cursors ag helm-projectile projectile dumb-jump helm-cscope ein elpy yaml-mode web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game))
+   '(pyenv-mode geiser-racket compat magit-gerrit eros axe helm-rg flycheck-mypy forest-blue-theme impatient-mode rg "rg" geiser-guile worf openwith helm-org-ql org-latex-impatient org-drill ace-isearch frog-jump-buffer ace-jump-buffer ztree anki-connect ace-window swift-mode ada-mode yasnippet-classic-snippets yasnippet-snippets helm-dash magit color-theme-sanityinc-tomorrow org-superstar anki-editor key-chord git-timemachine org-anki anki-mode chess weyland-yutani-theme afternoon-theme tron-legacy-theme ox-twbs undo-tree arduino-mode command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti hy-mode org-kanban dracula-theme slime ob-kotlin amd-mode sed-mode ranger doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode multiple-cursors ag helm-projectile projectile dumb-jump helm-cscope ein elpy yaml-mode web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game))
  '(pdf-view-midnight-colors (cons "#eceff4" "#323334"))
  '(projectile4-tags-backend 'ggtags)
  '(python-shell-interpreter "ipython3")
