@@ -876,10 +876,9 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 ;; (parse-epoch-time "1482672627") 
 ;; (parse-epoch-time "1482672627.025747002")
-;; (parse-epoch-time "1482672627025.747023")
-;; (parse-epoch-time "1482672627025747.032")
+;; (parse-epoch-time "1482672627025.747023") 
+;; (parse-epoch-time "1482672627025747.032") 
 ;; (parse-epoch-time "1482672627025747023")
-
 
 ;; Experiment - ( rough) capture timestamps with current-time in emacs
 ;; and time.time() in python. Reverse engineer the time value in python
@@ -903,36 +902,32 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (defun get-git-root ()
   (interactive)
   (string-trim (shell-command-to-string "git rev-parse --show-toplevel")))
+
+;; (get-git-root) 
     
 (defun add-slice ()
   (interactive)
-  (let* ((root (get-git-root))
-         (slice (format "%s/python" root))
-         (path ( --if-let (getenv "PYTHONPATH")
-                   (format "%s:%s" it slice)
-                 slice)) )
-    (->> path
-         (s-split ":" path)
-         (-distinct bits)
-         (s-join ":" bits)
-         (setenv "PYTHONPATH" path) )
-    (message "new path is %s" (getenv "PYTHONPATH"))))
-
+  (let* ((slice (format "%s/python" (get-git-root))
+         (path (->>
+                (--if-let (getenv "PYTHONPATH") (format "%s:%s" it slice) slice) 
+                (s-split ":")
+                (-distinct)
+                (s-join ":")))))
+    (message "new path is %s" path)
+    (setenv "PYTHONPATH" path)))
+    
 (defun remove-slice ()
   (interactive)
   (let* (
         (slice (format "%s/python" (get-git-root)))
-        (path (--if-let (getenv "PYTHONPATH") (format "%s:%s" it slice) (slice)))
-        )
-    (->> path
-         (s-split ":")
-         (-distinct)
-         (remove slice)
-         (s-join ":")
-         (setenv "PYTHONPATH")
-         ) 
-    (message "new path is %s" (getenv "PYTHONPATH"))))
-
+        (path (->>
+               (--if-let (getenv "PYTHONPATH") (format "%s:%s" it slice) (slice))
+               (s-split ":")
+               (-distinct)
+               (remove slice)
+               (s-join ":"))))
+    (message "new path is %s" path)
+    (setenv "PYTHONPATH" path)))
 
 (defun parse-sbe ()
   (interactive)
