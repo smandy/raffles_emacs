@@ -12,4 +12,5 @@
  (magit-push nil
              ("--force-with-lease"))
  (magit-rebase nil)
- (magit-run nil))
+ (magit-run nil)
+ (magit-tag nil))
