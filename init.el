@@ -563,6 +563,78 @@
 
 
 
+(defun format-bus-itinerary ()
+  "Convert bus itinerary text to Org mode table format."
+  (interactive)
+  (let ((itinerary (buffer-string)))
+    (with-output-to-temp-buffer "itinerary.org"
+      (princ "* Bus Itinerary\n\n")
+      (princ "| Departure Time | Bus Number | From                      | Towards     | Duration      | Arrival Time | Stops |\n")
+      (princ "|----------------+------------+---------------------------+-------------+---------------+--------------+-------|\n")
+      (with-temp-buffer
+        (insert itinerary)
+        (goto-char (point-min))
+        (while (re-search-forward "\\([0-9:]+\\)[ \n]+\\([0-9X]+\\)[ \n]+\\([^\n]+\\)[ \n]+towards \\([^\n]+\\)\\([0-9]+mins\\|\\([0-9]+hr [0-9]+mins\\)\\)[ \n]+\\([^\n]+\\)[ \n]*\\(?:Show \\([0-9]+\\) stops\\)?" nil t)
+          (let ((time (match-string 1))
+                (bus-number (match-string 2))
+                (from (match-string 3))
+                (towards (match-string 4))
+                (duration (match-string 5))
+                (arrival-time (match-string 7))
+                (stops (or (match-string 8) "")))
+            (princ (format "| %s | %s | %s | %s | %s | %s | %s |\n"
+                           time bus-number from towards duration arrival-time stops))))))))
+
+(defun make-results-buffer (my_buffer_name)
+  (if (get-buffer my_buffer_name)
+      (kill-buffer my_buffer_name))
+  (switch-to-buffer (generate-new-buffer my_buffer_name)))
+
+
+
+(defun temp-bus ()
+  "Convert bus itinerary text to Org mode table format."
+  (interactive)
+  (let* (
+         (itinerary (buffer-string))
+         (ret (s-match-strings-all (concat "\\([0-9][0-9]:[0-9][0-9]\\)[ \n]+\\([0-9X]+\\)[ \n]+\\([^\n]+\\)[ \n]+towards "
+                                           "\\([^\n0-9]+\\)\\([0-9]?[0-9]mins\\|\\([0-9]+hr [0-9]?[0-9]mins\\)\\)[ \n]+\\([^\n]+\\)[ \n]*"
+                                           "\\(?:Show \\([0-9]+\\) stops\\)?")
+                                   itinerary))
+         (make-org (-lambda (x) (format "|%s|\n" (s-join "|" x))))
+         (ret (-map 'cdr ret))
+         (tmp (message "ret=[%s]" ret))
+         (headings (s-split " " "Dep Bus Src Dest Time Time2 Arr Stops"))
+         (killlist '("Time2" "Stops"))
+         (kill-indices (--map (-elem-index it headings) killlist))
+         (tmp (message "killindices=[%s]" kill-indices))
+         (drop (-lambda (x) (-remove-at-indices kill-indices x)))
+         (headings    (funcall drop headings))
+         (strHeading  (funcall make-org headings))
+         (header-line (funcall make-org (--map (s-repeat 10 "-" ) headings)))
+         (ret (--map (funcall drop it) ret))
+         (str-bits (--map (funcall make-org it) ret))
+         (bufname (buffer-name))
+         )
+    ;;(s-join "\n" ret)
+    (make-results-buffer (format "BUS_%s" bufname))
+    (org-mode)
+    (insert header-line)
+    (insert strHeading)
+    (insert header-line)
+    (insert (s-join "" str-bits))
+    (insert header-line)
+    (insert "\n\n")
+    ;; (insert (format "strbits=%s\nstrHeading=%s\nret1=%s" str-bits strHeading ret1))
+    (beginning-of-buffer)
+    (org-cycle)
+  ))
+
+
+(global-set-key (kbd "C-c f") 'format-bus-itinerary)
+(global-set-key (kbd "C-c f") 'format-bus-itinerary)
+
+
 (require 'python)
 ;; (global-set-key [f8]  'reboot-python)
 (define-key python-mode-map (kbd "<f8>")  'reboot-python)
