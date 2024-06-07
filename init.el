@@ -591,6 +591,12 @@
   (switch-to-buffer (generate-new-buffer my_buffer_name)))
 
 
+;;(require 's)
+;;(setq splitcr (-partial 's-split "\n"))
+
+
+;;(funcall splitcr "foo\nbar")
+
 
 (defun temp-bus ()
   "Convert bus itinerary text to Org mode table format."
@@ -843,12 +849,12 @@ the * TODO [#A] items with latest dates go to the top."
 
 (global-set-key (kbd "C-x C-x") 'expand-abbrev)
 
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+;;(require 'auto-complete-config)
+;;(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 
-(eval-after-load "auto-complete"
-  '(add-to-list 'ac-sources 'ac-source-yasnippet))
-(ac-config-default)
+;;(eval-after-load "auto-complete"
+;;  '(add-to-list 'ac-sources 'ac-source-yasnippet))
+;;(ac-config-default)
 
 ;; (eval-after-load "ggtags"
 ;;   (progn
@@ -973,6 +979,16 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 ;; ( - 1710215080 1710215086.2924154) -6.292415380477905
 
+(require 'dash)
+
+(defun purge-undo-trees ()
+  (interactive)
+  (let* ((gitroot (get-git-root))
+         (ret (shell-command-to-string (format "find %s -name '*~undo-tree~'" gitroot)))
+         (files (s-split "\n" ret)))
+    (-each files (-lambda (fn)
+                   (f-delete fn)
+                   (message "%s deleted" fn)))))
 (defun get-git-root ()
   (interactive)
   (string-trim (shell-command-to-string "git rev-parse --show-toplevel")))

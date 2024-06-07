@@ -2,7 +2,13 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("journal.org"
+(("commonpython"
+ (filename . "~/repos/aurora/code/common/src/main/python/")
+ (front-context-string . "..\n  -rw-r--r-- ")
+ (rear-context-string . "12 Jun  7 16:12 ")
+ (position . 146)
+ (last-modified 26211 9260 431308 407000))
+("journal.org"
  (filename . "~/repos/gtd/journal.org")
  (front-context-string . "*** 2024-03-23 S")
  (rear-context-string . "he pharmacy :-)\n")
@@ -16,16 +22,16 @@
  (last-modified 26076 61427 954468 679000))
 ("org-refile-last-stored"
  (filename . "~/repos/gtd/gtd.org")
- (front-context-string . "** [2024-05-22 W")
- (rear-context-string . "Fri 17:31] vnpy\n")
- (position . 102723)
- (last-modified 26201 46381 977777 744000))
+ (front-context-string . "** TODO [2024-05")
+ (rear-context-string . "ay in New York.\n")
+ (position . 155563)
+ (last-modified 26210 4423 557314 744000))
 ("org-capture-last-stored"
- (filename . "~/repos/gtd/journal.org")
- (front-context-string . "**** [2024-06-02")
- (rear-context-string . "24-06-02 Sunday\n")
- (position . 929968)
- (last-modified 26204 31154 639759 619000))
+ (filename . "~/repos/gtd/gtd.org")
+ (front-context-string . "** [2024-06-07 F")
+ (rear-context-string . "oc:nil\n\n* Inbox\n")
+ (position . 285)
+ (last-modified 26211 382 823770 779000))
 ("unabomber_manifesto.org"
  (filename . "~/Dropbox/unabomber_manifesto.org")
  (front-context-string . "AUTONOMY\n\n42. Au")
