@@ -986,12 +986,21 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
   (let* ((gitroot (get-git-root))
          (ret (shell-command-to-string (format "find %s -name '*~undo-tree~'" gitroot)))
          (files (s-split "\n" ret)))
+    (message "files is [%s]" files)
     (-each files (-lambda (fn)
+                   (message "deleting " fn)
                    (f-delete fn)
-                   (message "%s deleted" fn)))))
+                   ))))
+
 (defun get-git-root ()
   (interactive)
-  (string-trim (shell-command-to-string "git rev-parse --show-toplevel")))
+  (let (
+        (dd (expand-file-name default-directory))
+        (ret (string-trim (shell-command-to-string
+                           ("git rev-parse --show-toplevel")))))
+    (message "default dir is %s" dd)
+    ret
+  ))
 
 ;; (get-git-root) 
 
@@ -1001,29 +1010,32 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
   (s-join " " arg)
   )
 
-
-(defun add-slice ()
+(defun common-aurora-python-dir ()
+  (format "%s/code/common/src/main/python" (get-git-root)))
+  
+(defun add-aurora-pythonpath ()
   (interactive)
-  (let* ((slice (format "%s/python" (get-git-root)))
+  (let* ((new-dir (common-aurora-python-dir))
          (path (->>
-                (--if-let (getenv "PYTHONPATH") (format "%s:%s" it slice) slice) 
+                (--if-let (getenv "PYTHONPATH") (format "%s:%s" it new-dir) new-dir) 
                 (s-split ":")
                 (-distinct)
                 (s-join ":"))) ) 
-    (message "new path is %s" path)
-    (setenv "PYTHONPATH" path) ) )
+    (message "New PYTHONPATH is %s" path)
+    (setenv "PYTHONPATH" path)))
+;; (setenv "PYTHONPATH" "")
     
-(defun remove-slice ()
+(defun remove-aurora-pythonpath ()
   (interactive)
   (let* (
-        (slice (format "%s/python" (get-git-root)))
+        (old-dir (common-aurora-python-dir))
         (path (->>
-               (--if-let (getenv "PYTHONPATH") (format "%s:%s" it slice) (slice))
+               (--if-let (getenv "PYTHONPATH") (format "%s:%s" it old-dir) (old-dir))
                (s-split ":")
                (-distinct)
-               (remove slice)
+               (remove old-dir)
                (s-join ":"))))
-    (message "new path is %s" path)
+    (message "New PYTHONPATH is %s" path)
     (setenv "PYTHONPATH" path)))
 
 (defun parse-sbe ()
