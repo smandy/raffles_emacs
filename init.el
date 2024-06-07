@@ -992,6 +992,8 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                    (f-delete fn)
                    ))))
 
+
+
 (defun get-git-root ()
   (interactive)
   (let (
@@ -1003,40 +1005,44 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
   ))
 
 ;; (get-git-root) 
-
-
 (defun peek-flycheck (arg)
   (message "args are %s" arg)
-  (s-join " " arg)
-  )
+  (s-join " " arg))
 
 (defun common-aurora-python-dir ()
   (format "%s/code/common/src/main/python" (get-git-root)))
-  
+
+(defun add-to-path (orig addee)
+  (->> (--if-let orig (format "%s:%s" it addee) addee) 
+       (s-split ":")
+       (-distinct)
+       (s-join ":")))
+
+(setq p "foo:bar:baz")
+(setq p (add-to-path p "gaz!"))
+
+(defun remove-from-path (orig removee)
+  (->> (--if-let orig (format "%s:%s" it removee) removee)
+       (s-split ":")
+       (-distinct)
+       (remove removee)
+       (s-join ":")))
+
 (defun add-aurora-pythonpath ()
   (interactive)
-  (let* ((new-dir (common-aurora-python-dir))
-         (path (->>
-                (--if-let (getenv "PYTHONPATH") (format "%s:%s" it new-dir) new-dir) 
-                (s-split ":")
-                (-distinct)
-                (s-join ":"))) ) 
-    (message "New PYTHONPATH is %s" path)
-    (setenv "PYTHONPATH" path)))
-;; (setenv "PYTHONPATH" "")
+  (let* ((env-var "PYTHONPATH")
+         (new-dir (common-aurora-python-dir))
+         (new-path (add-to-path (getenv env-var) new-dir)))
+    (message "New %s is %s" env-var path)
+    (setenv env-var path)))
     
 (defun remove-aurora-pythonpath ()
   (interactive)
-  (let* (
-        (old-dir (common-aurora-python-dir))
-        (path (->>
-               (--if-let (getenv "PYTHONPATH") (format "%s:%s" it old-dir) (old-dir))
-               (s-split ":")
-               (-distinct)
-               (remove old-dir)
-               (s-join ":"))))
-    (message "New PYTHONPATH is %s" path)
-    (setenv "PYTHONPATH" path)))
+  (let* ((env-var "PYTHONPATH")
+         (old-dir (common-aurora-python-dir))
+         (path (remove-from-path (getenv env-var old-dir))) )
+    (message "New %s is %s" env-var path)
+    (setenv env-var path)))
 
 (defun parse-sbe ()
   (interactive)
