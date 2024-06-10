@@ -29,7 +29,7 @@
 
 (defun as/do-nothing (&rest args)
   (interactive)
-  ;;(message "Doing nothing with %s %s" args (format-time-string "%H:%M:%S.%3N" (current-time)) )
+  ;;(message "Doing nothing with %s %s" args (format-time- "%H:%M:%S.%3N" (current-time)) )
 
   (message "Doing nothing with %s" args)
   )
@@ -279,6 +279,12 @@
   "Debug the discovery app."
   (interactive)
   (gdb "gdb -i=mi -nx -x /home/andy/discovery.gdbinit"))
+
+
+(defun debug-guilistener ()
+  "Debug the discovery app."
+  (interactive)
+  (gdb "gdb -i=mi -nx guilistener -x /home/andy/repos/aurora/code/tickserver/src/main/cpp/.gdbinit"))
 
 
 (global-set-key (kbd "C-x C-o") 'ff-find-other-file)
@@ -556,34 +562,17 @@
 (global-set-key [f5] 'google-this)
 ;;(global-set-key [f6]  'helm-man-woman)
 
-
 (define-key c-mode-base-map (kbd "<f7>")  'compile)
 
-;;(define-key c-mode-base-map (kbd "<f7>")  'compile)
+(define-key dired-mode-map (kbd "<f7>")  'compile)
 
-
-
-(defun format-bus-itinerary ()
-  "Convert bus itinerary text to Org mode table format."
+(defun bus-from-clipboard ()
   (interactive)
-  (let ((itinerary (buffer-string)))
-    (with-output-to-temp-buffer "itinerary.org"
-      (princ "* Bus Itinerary\n\n")
-      (princ "| Departure Time | Bus Number | From                      | Towards     | Duration      | Arrival Time | Stops |\n")
-      (princ "|----------------+------------+---------------------------+-------------+---------------+--------------+-------|\n")
-      (with-temp-buffer
-        (insert itinerary)
-        (goto-char (point-min))
-        (while (re-search-forward "\\([0-9:]+\\)[ \n]+\\([0-9X]+\\)[ \n]+\\([^\n]+\\)[ \n]+towards \\([^\n]+\\)\\([0-9]+mins\\|\\([0-9]+hr [0-9]+mins\\)\\)[ \n]+\\([^\n]+\\)[ \n]*\\(?:Show \\([0-9]+\\) stops\\)?" nil t)
-          (let ((time (match-string 1))
-                (bus-number (match-string 2))
-                (from (match-string 3))
-                (towards (match-string 4))
-                (duration (match-string 5))
-                (arrival-time (match-string 7))
-                (stops (or (match-string 8) "")))
-            (princ (format "| %s | %s | %s | %s | %s | %s | %s |\n"
-                           time bus-number from towards duration arrival-time stops))))))))
+  (temp-bus (x-get-selection 'CLIPBOARD) "CLIPBOARD"))
+
+(defun bus-from-buffer ()
+  (interactive)
+  (temp-bus (buffer-string) (buffer-name)))
 
 (defun make-results-buffer (my_buffer_name)
   (if (get-buffer my_buffer_name)
@@ -591,20 +580,12 @@
   (switch-to-buffer (generate-new-buffer my_buffer_name)))
 
 
-;;(require 's)
-;;(setq splitcr (-partial 's-split "\n"))
-
-
-;;(funcall splitcr "foo\nbar")
-
-
-(defun temp-bus ()
+(defun temp-bus (itinerary name)
   "Convert bus itinerary text to Org mode table format."
   (interactive)
-  (let* (
-         (itinerary (buffer-string))
-         (ret (s-match-strings-all (concat "\\([0-9][0-9]:[0-9][0-9]\\)[ \n]+\\([0-9X]+\\)[ \n]+\\([^\n]+\\)[ \n]+towards "
-                                           "\\([^\n0-9]+\\)\\([0-9]?[0-9]mins\\|\\([0-9]+hr [0-9]?[0-9]mins\\)\\)[ \n]+\\([^\n]+\\)[ \n]*"
+  (let* ((ret (s-match-strings-all (concat "\\([0-9][0-9]:[0-9][0-9]\\)[ \n]+\\([0-9X]+\\)[ \n]+\\([^\n]+\\)[ \n]+towards "
+                                           "\\([^\n0-9]+\\)\\([0-9]?[0-9]mins\\|\\([0-9]+hr "
+                                           "[0-9]?[0-9]mins\\)\\)[ \n]+\\([^\n]+\\)[ \n]*"
                                            "\\(?:Show \\([0-9]+\\) stops\\)?")
                                    itinerary))
          (make-org (-lambda (x) (format "|%s|\n" (s-join "|" x))))
@@ -613,17 +594,16 @@
          (headings (s-split " " "Dep Bus Src Dest Time Time2 Arr Stops"))
          (killlist '("Time2" "Stops"))
          (kill-indices (--map (-elem-index it headings) killlist))
-         (tmp (message "killindices=[%s]" kill-indices))
+         ;; (tmp (message "killindices=[%s]" kill-indices))
          (drop (-lambda (x) (-remove-at-indices kill-indices x)))
          (headings    (funcall drop headings))
          (strHeading  (funcall make-org headings))
          (header-line (funcall make-org (--map (s-repeat 10 "-" ) headings)))
          (ret (--map (funcall drop it) ret))
          (str-bits (--map (funcall make-org it) ret))
-         (bufname (buffer-name))
-         )
+         (bufname (buffer-name)))
     ;;(s-join "\n" ret)
-    (make-results-buffer (format "BUS_%s" bufname))
+    (make-results-buffer (format "BUS_%s" name))
     (org-mode)
     (insert header-line)
     (insert strHeading)
@@ -999,7 +979,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
   (let (
         (dd (expand-file-name default-directory))
         (ret (string-trim (shell-command-to-string
-                           ("git rev-parse --show-toplevel")))))
+                           "git rev-parse --show-toplevel"))) )
     (message "default dir is %s" dd)
     ret
   ))
@@ -1012,14 +992,21 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (defun common-aurora-python-dir ()
   (format "%s/code/common/src/main/python" (get-git-root)))
 
+(defun find-aurora ()
+  (let* (
+         (candidates (shell-command-to-string "locate --regex aurora$"))
+         )
+    candidates
+    ) )
+
+(find-aurora)
+
 (defun add-to-path (orig addee)
   (->> (--if-let orig (format "%s:%s" it addee) addee) 
        (s-split ":")
        (-distinct)
        (s-join ":")))
 
-(setq p "foo:bar:baz")
-(setq p (add-to-path p "gaz!"))
 
 (defun remove-from-path (orig removee)
   (->> (--if-let orig (format "%s:%s" it removee) removee)
@@ -1028,14 +1015,22 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
        (remove removee)
        (s-join ":")))
 
+(setq p "foo:bar:baz:banana")
+(setq p (add-to-path p "gaz!"))
+(setq p (remove-from-path p "baz"))
+
 (defun add-aurora-pythonpath ()
   (interactive)
   (let* ((env-var "PYTHONPATH")
          (new-dir (common-aurora-python-dir))
          (new-path (add-to-path (getenv env-var) new-dir)))
-    (message "New %s is %s" env-var path)
-    (setenv env-var path)))
-    
+    (message "New %s is %s" env-var new-path)
+    (setenv env-var new-path)
+    (setenv "AURORA_ROOT"  (get-git-root))
+    ))
+
+;; (getenv "AURORA_ROOT")
+
 (defun remove-aurora-pythonpath ()
   (interactive)
   (let* ((env-var "PYTHONPATH")
@@ -1188,8 +1183,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                                     (--if-let (gethash tag_value enums-hash) (format "%s (%s)" value it) value))))
                       ;; (-map (-lambda (x) (message "%s" x) x))
                       (--map (apply 'format "%20s : %4s = %-10s" it))
-                      (s-join "\n")))
-         )
+                      (s-join "\n"))))
     (make-results-buffer "FIX")
     (insert (format "\n%s\n==========================\n\n%s" msg parsed))
     (beginning-of-buffer)))

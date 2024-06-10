@@ -12,5 +12,6 @@
  (magit-push nil
              ("--force-with-lease"))
  (magit-rebase nil)
+ (magit-remote.<remote>.*url "git@github.com:smandy/aurora.git" "git@github.com:smandy/zenith.git")
  (magit-run nil)
  (magit-tag nil))
