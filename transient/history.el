@@ -1,4 +1,17 @@
-((magit-blame
+((emoji--command-Emoji nil)
+ (emoji--command-Emoji\ >\ Animals\ &\ Nature nil)
+ (emoji--command-Emoji\ >\ Animals\ &\ Nature\ >\ animal nil)
+ (emoji--command-Emoji\ >\ Animals\ &\ Nature\ >\ animal\ >\ mammal nil)
+ (emoji--command-Emoji\ >\ Flags nil)
+ (emoji--command-Emoji\ >\ Flags\ >\ flag nil)
+ (emoji--command-Emoji\ >\ Flags\ >\ subdivision-flag nil)
+ (emoji--command-Emoji\ >\ Smileys nil)
+ (emoji--command-Emoji\ >\ Smileys\ >\ glasses nil)
+ (emoji--command-Emoji\ >\ Smileys\ >\ negative nil)
+ (emoji--command-Emoji\ >\ Smileys\ >\ neutral-skeptical nil)
+ (emoji--command-Emoji\ >\ Smileys\ >\ smiling nil)
+ (emoji--command-Emoji\ >\ Smileys\ >\ unwell nil)
+ (magit-blame
   ("-w"))
  (magit-branch nil)
  (magit-commit nil)

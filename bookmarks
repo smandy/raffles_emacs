@@ -28,10 +28,10 @@
  (last-modified 26210 4423 557314 744000))
 ("org-capture-last-stored"
  (filename . "~/repos/gtd/gtd.org")
- (front-context-string . "** [2024-06-07 F")
+ (front-context-string . "** [2024-06-17 M")
  (rear-context-string . "oc:nil\n\n* Inbox\n")
  (position . 285)
- (last-modified 26211 382 823770 779000))
+ (last-modified 26224 43599 539829 936000))
 ("unabomber_manifesto.org"
  (filename . "~/Dropbox/unabomber_manifesto.org")
  (front-context-string . "AUTONOMY\n\n42. Au")

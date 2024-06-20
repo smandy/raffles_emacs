@@ -31,7 +31,7 @@
   (interactive)
   ;;(message "Doing nothing with %s %s" args (format-time- "%H:%M:%S.%3N" (current-time)) )
 
-  (message "Doing nothing with %s" args)
+  ;;(message "Doing nothing with %s" args)
   )
 
 (global-set-key [touchscreen-end] 'as/do-nothing)
@@ -442,14 +442,6 @@
   (interactive)
   (compile-in-own-buffer "build box2d debug" "rm -rf ~/box2d_debug && mkdir -p ~/box2d_debug && cd ~/box2d_debug && cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=~/agora_debug/install -G 'Unix Makefiles' ~/repos/Box2D && make VERBOSE=1"))
 
-;;(x-get-selection) 
-
-;;(global-set-key (kbd "C-c p")  'find-file-in-clipboard)
-
-;;(global-undo-tree-mode (kbd "C-c p"))
-
-;; (define-key global-map (kbd "C-c p") nil)
-
 (defun copy-file-name-to-clipboard ()
   "Copy the current buffer file name to the clipboard."
   (interactive)
@@ -466,12 +458,6 @@
   (interactive) 
   (revert-buffer nil 't))
 
-
-;; (setq helm-autoresize-max-height 0)
-;; (setq helm-autoresize-min-height 20)
-;; (helm-autoresize-mode 1)
-;; (helm-mode 1)
-
 (require 'dash)
 (require 's)
 (require 'multiple-cursors)
@@ -482,14 +468,6 @@
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-
-;;(global-set-key (kbd "C-s")  'swiper-helm))
-;;(global-set-key (kbd "C-s")  'isearch-forward)
-
-;;(require 'workgroups2)
-;;(setq wg-prefix-key (kbd "C-c w"))
-;;(workgroups-mode 't)
-;;(wg-load "~/.emacs.d/wg.el")
 
 (require 'haskell-interactive-mode)
 (require 'haskell-process)
@@ -508,8 +486,6 @@
 (projectile-mode +1)
 
 (helm-projectile-on)
-;; '(flycheck-clang-language-standard "c++14")
-;; '(flycheck-gcc-language-standard "c++14")
 
 (setq helm-autoresize-max-height 0)
 (setq helm-autoresize-min-height 20)
@@ -613,8 +589,7 @@
     (insert "\n\n")
     ;; (insert (format "strbits=%s\nstrHeading=%s\nret1=%s" str-bits strHeading ret1))
     (beginning-of-buffer)
-    (org-cycle)
-  ))
+    (org-cycle)))
 
 
 (global-set-key (kbd "C-c f") 'format-bus-itinerary)
@@ -829,18 +804,6 @@ the * TODO [#A] items with latest dates go to the top."
 
 (global-set-key (kbd "C-x C-x") 'expand-abbrev)
 
-;;(require 'auto-complete-config)
-;;(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-
-;;(eval-after-load "auto-complete"
-;;  '(add-to-list 'ac-sources 'ac-source-yasnippet))
-;;(ac-config-default)
-
-;; (eval-after-load "ggtags"
-;;   (progn
-;;     (define-key ggtags-mode-map (kbd "M->") nil)
-;;     (define-key ggtags-mode-map (kbd "M-<") nil)))
-
 (setq inferior-lisp-program "/usr/bin/sbcl")
 
 (require 'org)
@@ -854,21 +817,8 @@ the * TODO [#A] items with latest dates go to the top."
 (global-set-key (kbd "C-c s") 'ispell)
 (global-set-key (kbd "C-c r") 'revert-buffer-with-prejudice)
 
-;(require 'flycheck-pyflakes)
-;(add-hook 'python-mode-hook 'flycheck-mode)
-
-
-;;(require 'flycheck-pych
-;;(require 'flycheck-py
-
-;; (global-flycheck-mode 1) - This was recommended but will hijack org timestamps!
 (with-eval-after-load 'flycheck
   (add-hook 'flycheck-mode-hook #'flycheck-pycheckers-setup))
-
-
-;;(autoload 'pylint "pylint")
-;;(add-hook 'python-mode-hook 'pylint-add-menu-items)
-;;(add-hook 'python-mode-hook 'pylint-add-key-bindings)
 
 (require 'semantic)
 
@@ -916,7 +866,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                                 (seconds-since-unix-epoch (/ x divisor))
                                 (maybe-year? (+ unix-epoch-year
                                                 (/ seconds-since-unix-epoch seconds-per-year))))
-                           (when (< 1980 maybe-year? 2060)
+                           (when (< 1980 maybe-year2? 2060)
                              (cons seconds-since-unix-epoch handy-prefix)))))
          (success? (-some is-in-range? '(("s"  . 0)
                                          ("ms" . 3)
@@ -936,7 +886,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 ;; (parse-epoch-time "1482672627") 
 ;; (parse-epoch-time "1482672627.025747002") 
-;; (parse-epoch-time "1482672627025.747023") 
+;; (parse-epoch-time "1482672627025.747023")  
 ;; (parse-epoch-time "1482672627025747.032")  
 ;; (parse-epoch-time "1482672627025747023") 
 
@@ -1162,10 +1112,10 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
   (org-sort-custom)
   (org-cycle))
 
-
-
 (define-key org-mode-map  (kbd "<f8>") 'get-heading-counts)
 (define-key org-mode-map  (kbd "<f10>") 'my-org-sort-custom)
+
+
 
 (defun parse-fix ()
   "Parse a fix message at point, display result in a 'FIX' buffer"
@@ -1173,7 +1123,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
   (let* ((msg (thing-at-point 'line))
          (parsed (->> msg
                       (string-match "8=FIX.*")
-                      (substring msg)
+                      (substring msg )
                       (s-split "")
                       (--map (s-split "=" it))  ;; Split into pairs
                       (--filter (= (length it) 2))   ;; reject non-pair pairs
@@ -1187,7 +1137,6 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
     (make-results-buffer "FIX")
     (insert (format "\n%s\n==========================\n\n%s" msg parsed))
     (beginning-of-buffer)))
-
 
 (global-set-key [f11] 'parse-fix)
 
@@ -1374,22 +1323,11 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 (global-set-key [kp-down] 'helm-org-rifle-occur-current-buffer)
 
-
-
 (defun end-of-sml (a b &rest xs)
   "A Im interactive."
   (interactive)
   (switch-to-buffer "*SML*")
   (end-of-buffer))
-
-					; (advice-add 'sml-prog-proc-load-file :after 'end-of-sml)
-					; (advice-remove 'sml-prog-proc-load-file)
-
-;; (require 'sql)
-;; SQL Stuff
-;; (load-file "~/.emacs.d/sql-interactive-remove-continuation-prompt.el")
-;; (require 'sql-interactive-remove-continuation-prompt)
-
 
 (defun move-line-up ()
   "Move up the current line."
@@ -1414,7 +1352,6 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 (setq work-agenda-file "/home/andy/Dropbox/gtd/work.org")
 
-;; "/home/andy/Dropbox/gtd/kanban.org" - removed - reinstate in necessary
 (defun agenda-schedule ()
   (interactive)
   (org-store-new-agenda-file-list '("/home/andy/repos/gtd/journal.org" "/home/andy/repos/gtd/gtd.org" "/home/andy/repos/gtd/robbins/ania/ania.org")))
@@ -1454,24 +1391,6 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ;; Maybe don't need this
 (setq org-my-anki-file "~/anki.org")
 
-;;(add-to-list 'org-capture-templates
-;;             '("a" "Anki basic"
-;;               entry
-;;               (file+headline org-my-anki-file "Dispatch Shelf")
-;;               "* %<%H:%M>\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: main\n:END:\n** Front\n%?\n** Back\n%x\n"))
-
-
-;; (add-to-list 'org-capture-templates
-;;              '("A" "Anki basic"
-;;                entry
-;;                (file+headline org-my-anki-file "Dispatch Shelf")
-;;                "* %<%H:%M>\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: main\n:END:\n** Front\n%?\n** Back\n"))
-;; (add-to-list 'org-capture-templates
-;;              '("A" "Anki cloze"
-;;                entry
-;;                (file+headline org-my-anki-file "Dispatch Shelf")
-;;                "* %<%H:%M>   %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Mega\n:END:\n** Text\n%x\n** Extra\n"))
-
 (defun nthroot (n k )
   "Calculate the kth root of n"
   (expt k (/ (log n k) k )) )
@@ -1500,8 +1419,6 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ;;(setq org-crypt-tag-matcher "_crypt")
 
 (setq org-tags-exclude-from-inheritance '("crypt"))
-;; Agenda files old    '("/home/andy/Dropbox/gtd/robbins/dwd/dwd.org" "/home/andy/Dropbox/gtd/robbins/business_mastery/bmcourse.org" "/home/andy/Dropbox/gtd/journal.org" "/home/andy/Dropbox/gtd/sym_contract_notes_from_fiona.org" "/home/andy/Dropbox/gtd/robbins/upw.org" "/home/andy/Dropbox/gtd/gtd.org" "/home/andy/Dropbox/gtd/_shopping.org" "/home/andy/Dropbox/gtd/robbins/weekly.org" "/home/andy/Dropbox/gtd/robbins/ania/ania.org")
-
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -1663,7 +1580,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(org-twbs-todo-kwd-class-undone "label label-warning")
  '(org-use-tag-inheritance '("wifidetails" "astronomy"))
  '(package-selected-packages
-   '(flycheck-clangcheck pyenv-mode geiser-racket compat magit-gerrit eros axe helm-rg flycheck-mypy forest-blue-theme impatient-mode rg "rg" geiser-guile worf openwith helm-org-ql org-latex-impatient org-drill ace-isearch frog-jump-buffer ace-jump-buffer ztree anki-connect ace-window swift-mode ada-mode yasnippet-classic-snippets yasnippet-snippets helm-dash magit color-theme-sanityinc-tomorrow org-superstar anki-editor key-chord git-timemachine org-anki anki-mode chess weyland-yutani-theme afternoon-theme tron-legacy-theme ox-twbs undo-tree arduino-mode command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti hy-mode org-kanban dracula-theme slime ob-kotlin amd-mode sed-mode ranger doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode multiple-cursors ag helm-projectile projectile dumb-jump helm-cscope ein elpy yaml-mode web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game))
+   '(lsp-ui helm-lsp lsp-mode flycheck-clangcheck pyenv-mode geiser-racket compat magit-gerrit eros axe helm-rg flycheck-mypy forest-blue-theme impatient-mode rg "rg" geiser-guile worf openwith helm-org-ql org-latex-impatient org-drill ace-isearch frog-jump-buffer ace-jump-buffer ztree anki-connect ace-window swift-mode ada-mode yasnippet-classic-snippets yasnippet-snippets helm-dash magit color-theme-sanityinc-tomorrow org-superstar anki-editor key-chord git-timemachine org-anki anki-mode chess weyland-yutani-theme afternoon-theme tron-legacy-theme ox-twbs undo-tree arduino-mode command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti hy-mode org-kanban dracula-theme slime ob-kotlin amd-mode sed-mode ranger doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode multiple-cursors ag helm-projectile projectile dumb-jump helm-cscope ein elpy yaml-mode web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game))
  '(pdf-view-midnight-colors (cons "#eceff4" "#323334"))
  '(projectile4-tags-backend 'ggtags)
  '(python-shell-interpreter "ipython3")
@@ -1678,6 +1595,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(send-mail-function 'smtpmail-send-it)
  '(sentence-end "\\. ")
  '(show-paren-mode t)
+ '(sql-postgres-login-params '((user :default "andy") server (database :default "andy")))
  '(sql-postgres-login-paramsupo '((user :default "andy") server (database :default "andy")))
  '(tab-width 2)
  '(world-clock-list

@@ -35,3 +35,30 @@ sudo kill -9 669221
 ps -auxw | grep gpg
 kill -9 677948
 ps -auxw | grep gpg
+pwd
+./abbrev 
+cd ~/repos/
+git clone git@github.com:smandy/EventProcessor.git
+cd EventProcessor/
+ls -lg
+cmake .
+ls -lg
+make
+ls -lg
+cd apps/
+l s-lg
+ls -lg
+cd EventProcessorApp/
+ls -lg
+./EventProcessorApp 
+make 
+make 
+./EventProcessorApp 
+ls -lg
+which convart
+which convert 
+convert aurora.png -resize 50% aurora2.png
+pwd
+ls -lg
+convert aurora2.png -flip aurora3.png
+convert aurora2.png -flop aurora3.png
