@@ -20,17 +20,3 @@
 ;; This is a comment
 
 (apply (list 'square 2)) 4
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -2,7 +2,49 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("commonpython"
+(("imgui"
+ (filename . "~/repos/aurora/deps/imgui/")
+ (front-context-string . "..\n  drwxr-xr-x ")
+ (rear-context-string . "80 Jun 10 20:21 ")
+ (position . 131)
+ (last-modified 26231 60349 165459 975000))
+("aurora"
+ (filename . "~/repos/aurora/deps/implot/")
+ (front-context-string . "README.md\n  -rw-")
+ (rear-context-string . "24 Jun  7 13:50 ")
+ (position . 632)
+ (last-modified 26230 43461 398827 225000))
+("implot"
+ (filename . "~/repos/aurora/deps/implot/")
+ (front-context-string . "implot.cpp\n  -rw")
+ (rear-context-string . "92 Jun 20 17:02 ")
+ (position . 283)
+ (last-modified 26230 41321 171578 936000))
+("deps"
+ (filename . "~/repos/aurora/code/implotExperiments/src/main/cpp/SConstruct")
+ (front-context-string . "ot\"\nIMPLOT_DEMO_")
+ (rear-context-string . "{ROOT}/deps/impl")
+ (position . 262)
+ (last-modified 26230 41309 591612 317000))
+("implotExperiments"
+ (filename . "~/repos/aurora/code/implotExperiments/src/main/cpp/")
+ (front-context-string . "SConstruct\n  -rw")
+ (rear-context-string . "66 Jun 22 09:54 ")
+ (position . 664)
+ (last-modified 26230 41269 752177 314000))
+("imguiExperiments"
+ (filename . "~/repos/aurora/code/imguiExperiments/")
+ (front-context-string . "SConstruct\n  -rw")
+ (rear-context-string . "36 Jun 19 02:47 ")
+ (position . 672)
+ (last-modified 26228 10609 700942 678000))
+("imguiDockingExperiments"
+ (filename . "~/repos/aurora/code/imguiDockingExperiments/")
+ (front-context-string)
+ (rear-context-string . "37 Jun 19 00:15 ")
+ (position . 365)
+ (last-modified 26228 10089 472527 591000))
+("commonpython"
  (filename . "~/repos/aurora/code/common/src/main/python/")
  (front-context-string . "..\n  -rw-r--r-- ")
  (rear-context-string . "12 Jun  7 16:12 ")
@@ -16,22 +58,22 @@
  (last-modified 26110 40320 177183 613000))
 ("org-capture-last-stored-marker"
  (filename . "~/repos/gtd/gtd.org")
- (front-context-string . "** TODO Alfred W")
- (rear-context-string . "p in complexity\n")
- (position . 10063)
- (last-modified 26076 61427 954468 679000))
+ (front-context-string . "** TODO <2024-06")
+ (rear-context-string . "s into lockdown\n")
+ (position . 294702)
+ (last-modified 26232 38140 474921 631000))
 ("org-refile-last-stored"
  (filename . "~/repos/gtd/gtd.org")
- (front-context-string . "** TODO [2024-05")
- (rear-context-string . "ay in New York.\n")
- (position . 155563)
- (last-modified 26210 4423 557314 744000))
+ (front-context-string . "** TODO <2024-06")
+ (rear-context-string . "s into lockdown\n")
+ (position . 294702)
+ (last-modified 26232 38140 465847 251000))
 ("org-capture-last-stored"
- (filename . "~/repos/gtd/gtd.org")
- (front-context-string . "** [2024-06-17 M")
- (rear-context-string . "oc:nil\n\n* Inbox\n")
- (position . 285)
- (last-modified 26224 43599 539829 936000))
+ (filename . "~/repos/gtd/journal.org")
+ (front-context-string . "**** [2024-06-25")
+ (rear-context-string . "ocks basically.\n")
+ (position . 937829)
+ (last-modified 26235 852 412526 951000))
 ("unabomber_manifesto.org"
  (filename . "~/Dropbox/unabomber_manifesto.org")
  (front-context-string . "AUTONOMY\n\n42. Au")

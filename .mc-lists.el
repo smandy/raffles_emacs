@@ -34,6 +34,7 @@
         c-electric-lt-gt
         c-electric-paren
         goto-line
+        lsp-ui-doc--handle-mouse-movement
         magit-status
         markdown-outdent-or-delete
         mouse-appearance-menu

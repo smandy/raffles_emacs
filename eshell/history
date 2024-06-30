@@ -62,3 +62,5 @@ pwd
 ls -lg
 convert aurora2.png -flip aurora3.png
 convert aurora2.png -flop aurora3.png
+pwd
+ls -gl
