@@ -165,6 +165,24 @@
 (eros-mode 1)
 
 
+(defun clang-format-save-hook-for-this-buffer ()
+  "Create a buffer local save hook."
+  (add-hook 'before-save-hook
+            (lambda ()
+              (when (locate-dominating-file "." ".clang-format")
+                (clang-format-buffer))
+              ;; Continue to save.
+              nil)
+            nil
+            ;; Buffer local hook.
+            t))
+
+;; Run this for each mode you want to use the hook.
+(add-hook 'c-mode-hook (lambda () (clang-format-save-hook-for-this-buffer)))
+(add-hook 'c++-mode-hook (lambda () (clang-format-save-hook-for-this-buffer)))
+(add-hook 'glsl-mode-hook (lambda () (clang-format-save-hook-for-this-buffer)))
+
+
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
 (add-to-list 'auto-mode-alist '("\\.restclient\\'" . restclient-mode))
 
@@ -285,12 +303,10 @@
   (interactive)
   (gdb "gdb -i=mi -nx -x /home/andy/discovery.gdbinit"))
 
-
 (defun debug-guilistener ()
   "Debug the discovery app."
   (interactive)
   (gdb "gdb -i=mi -nx guilistener -x /home/andy/repos/aurora/code/tickserver/src/main/cpp/.gdbinit"))
-
 
 (global-set-key (kbd "C-x C-o") 'ff-find-other-file)
 (global-set-key (kbd "C-=") 'undo)
@@ -902,10 +918,11 @@ the * TODO [#A] items with latest dates go to the top."
   "Parse symbol into an epoch time. Use heuristics to determine if dealing
 with micros, seconds, nanos etc. Display result using 'message' if successful"
   (require 'dash)
-  (let* ((x (float (string-to-number s)))
-         (unix-epoch-year 1970)
-         (seconds-per-day (* 24 60 60))
-         (seconds-per-year (* 365.25 seconds-per-day))
+  (cond ((stringp s)
+        (let* ((x (float (string-to-number s)))  ;; Non number parses to zero
+               (unix-epoch-year 1970)
+               (seconds-per-day (* 24 60 60))
+               (seconds-per-year (* 365.25 seconds-per-day))
          (is-in-range? (-lambda ((handy-prefix . tenth-power))
                          (let* ((divisor (expt 10 tenth-power))
                                 (seconds-since-unix-epoch (/ x divisor))
@@ -922,14 +939,14 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                          handy-prefix
                          (format-time-string
                           "%Y-%m-%dT%H:%M:%S.%N"
-                          (seconds-to-time seconds-since-unix-epoch)))))))
+                          (seconds-to-time seconds-since-unix-epoch)))))))))
 
 (defun parse-epoch-time-at-point ()
   (interactive)
   (parse-epoch-time (thing-at-point 'symbol)))
 (global-set-key (kbd "C-c C-p C-t") 'parse-epoch-time-at-point)
 
-;; (parse-epoch-time "1482672627") 
+;; (parse-epoch-time "1482672627")  
 ;; (parse-epoch-time "1482672627.025747002") 
 ;; (parse-epoch-time "1482672627025.747023")  
 ;; (parse-epoch-time "1482672627025747.032")  
@@ -1466,6 +1483,61 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 (setq org-tags-exclude-from-inheritance '("crypt"))
 
+
+
+
+
+;; Define a variable to store the last symbol
+(defvar my-last-hovered-symbol nil)
+
+;; Stuff I got from chatgpt
+
+;; Define the custom hover function
+;; (defun my-hover-function ()
+;;   "Custom function to be called when hovering over a symbol."
+;;   (let ((symbol (thing-at-point 'symbol)))
+;;     (when (and symbol (not (equal symbol my-last-hovered-symbol)))
+;;       (setq my-last-hovered-symbol symbol)
+;;       (message "Hovered over symbol: %s" symbol))))
+
+;; Function to run `my-hover-function` on idle
+;; (defun my-hover-idle-function ()
+;;   "Run `my-hover-function` if Emacs is idle."
+;;   (when (not (input-pending-p))  ; Check if there's no pending input
+;;     (my-hover-function)))
+
+;; ;; Enable the hover function by setting up an idle timer
+;; (defun enable-my-hover-function ()
+;;   "Enable custom hover function."
+;;   (interactive)
+;;   (run-with-idle-timer 5.0 t 'my-hover-idle-function)
+;;   )
+
+
+(defun my-epoch-parser-idle-function ()
+  "Run `my-hover-function` if Emacs is idle."
+  (when (not (input-pending-p))  ; Check if there's no pending input
+    (parse-epoch-time-at-point)))
+
+
+(run-with-idle-timer 2.0 t 'my-epoch-parser-idle-function)
+
+;; Add the hover function to programming modes
+;;(add-hook 'prog-mode-hook 'enable-my-hover-function)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -1634,7 +1706,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(org-twbs-todo-kwd-class-undone "label label-warning")
  '(org-use-tag-inheritance '("wifidetails" "astronomy"))
  '(package-selected-packages
-   '(magit-todos lsp-treemacs lsp-ui helm-lsp lsp-mode flycheck-clangcheck pyenv-mode geiser-racket compat magit-gerrit eros axe helm-rg flycheck-mypy forest-blue-theme impatient-mode rg "rg" geiser-guile worf openwith helm-org-ql org-latex-impatient org-drill ace-isearch frog-jump-buffer ace-jump-buffer ztree anki-connect ace-window swift-mode ada-mode yasnippet-classic-snippets yasnippet-snippets helm-dash magit color-theme-sanityinc-tomorrow org-superstar anki-editor key-chord git-timemachine org-anki anki-mode chess weyland-yutani-theme afternoon-theme tron-legacy-theme ox-twbs undo-tree arduino-mode command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti hy-mode org-kanban dracula-theme slime ob-kotlin amd-mode sed-mode ranger doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode multiple-cursors ag helm-projectile projectile dumb-jump helm-cscope ein elpy yaml-mode web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game))
+   '(clang-format+ magit-todos lsp-treemacs lsp-ui helm-lsp lsp-mode flycheck-clangcheck pyenv-mode geiser-racket compat magit-gerrit eros axe helm-rg flycheck-mypy forest-blue-theme impatient-mode rg "rg" geiser-guile worf openwith helm-org-ql org-latex-impatient org-drill ace-isearch frog-jump-buffer ace-jump-buffer ztree anki-connect ace-window swift-mode ada-mode yasnippet-classic-snippets yasnippet-snippets helm-dash magit color-theme-sanityinc-tomorrow org-superstar anki-editor key-chord git-timemachine org-anki anki-mode chess weyland-yutani-theme afternoon-theme tron-legacy-theme ox-twbs undo-tree arduino-mode command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti hy-mode org-kanban dracula-theme slime ob-kotlin amd-mode sed-mode ranger doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode multiple-cursors ag helm-projectile projectile dumb-jump helm-cscope ein elpy yaml-mode web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game))
  '(pdf-view-midnight-colors (cons "#eceff4" "#323334"))
  '(projectile-globally-ignored-files '("TAGS" "urg"))
  '(projectile-indexing-method 'hybrid)
