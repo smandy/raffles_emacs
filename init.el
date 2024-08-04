@@ -8,7 +8,33 @@
 ;;; Code:
 
 ;;(set-frame-font "Andale Mono 12")
-(set-frame-font "Liberation Mono 14")
+(set-frame-font "Liberation Mono 12")
+
+
+(defun valid-perudo-bid-p (current-bid new-bid)
+  "Determine if the NEW-BID is valid given the CURRENT-BID in Perudo.
+CURRENT-BID and NEW-BID are cons cells where the car is the quantity and the cdr is the face value."
+  (let ((current-quantity (car current-bid))
+        (current-face (cdr current-bid))
+        (new-quantity (car new-bid))
+        (new-face (cdr new-bid)))
+    (cond
+     ;; If the new face value is greater than the current face value, the bid is valid.
+     ((> new-face current-face) t)
+     ;; If the new face value is the same, the quantity must be greater.
+     ((and (= new-face current-face) (> new-quantity current-quantity)) t)
+     ;; If the new face value is less, the quantity must be greater.
+     ((< new-face current-face) (> new-quantity current-quantity))
+     ;; Otherwise, the bid is not valid.
+     (t nil))))
+
+;; Example usage:
+(let ((current-bid (cons 6 6))
+      (new-bid (cons 7 2)))
+  (if (valid-perudo-bid-p current-bid new-bid)
+      (message "The bid %s is valid." new-bid)
+    (message "The bid %s is not valid." new-bid)))
+
 
 (defun kaz ()
   "Tidy up the kazinsky manifesto"
@@ -62,6 +88,7 @@
 ;; (set-frame-font "Meslo LG L" 't)
 
 ;; (set-frame-font "Fixed 18" 't)
+;; (set-frame-font "Fixed 20" 't)
 
 ;; (set-frame-font "Andale Mono 12")
 ;; (set-frame-font "Hack" 't) 
@@ -919,32 +946,63 @@ the * TODO [#A] items with latest dates go to the top."
 with micros, seconds, nanos etc. Display result using 'message' if successful"
   (require 'dash)
   (cond ((stringp s)
-        (let* ((x (float (string-to-number s)))  ;; Non number parses to zero
+        (let* ((x (float (string-to-number s))) ;; Non number parses to zero
                (unix-epoch-year 1970)
                (seconds-per-day (* 24 60 60))
                (seconds-per-year (* 365.25 seconds-per-day))
-         (is-in-range? (-lambda ((handy-prefix . tenth-power))
-                         (let* ((divisor (expt 10 tenth-power))
-                                (seconds-since-unix-epoch (/ x divisor))
-                                (maybe-year? (+ unix-epoch-year
-                                                (/ seconds-since-unix-epoch seconds-per-year))))
-                           (when (< 1980 maybe-year? 2060)
-                             (cons seconds-since-unix-epoch handy-prefix)))))
-         (success? (-some is-in-range? '(("s"  . 0)
-                                         ("ms" . 3)
-                                         ("µs" . 6) 
-                                         ("ns" . 9)))))
-    (-if-let ((seconds-since-unix-epoch . handy-prefix) success?)
-        (message (format "%s (%s) -> %s" x
-                         handy-prefix
-                         (format-time-string
-                          "%Y-%m-%dT%H:%M:%S.%N"
-                          (seconds-to-time seconds-since-unix-epoch)))))))))
+               (is-in-range? (-lambda ((handy-prefix . tenth-power))
+                               (let* ((divisor (expt 10 tenth-power))
+                                      (seconds-since-unix-epoch (/ x divisor))
+                                      (maybe-year? (+ unix-epoch-year
+                                                      (/ seconds-since-unix-epoch seconds-per-year))))
+                                 (when (< 1980 maybe-year? 2100)
+                                   (cons seconds-since-unix-epoch handy-prefix)))))
+               (success? (-some is-in-range? '(("s"  . 0)
+                                               ("ms" . 3)
+                                               ("µs" . 6) 
+                                               ("ns" . 9)))))
+          (-if-let ((seconds-since-unix-epoch . handy-prefix) success?)
+              (message (format "%s (%s) -> %s" x
+                               handy-prefix
+                               (format-time-string
+                                "%Y-%m-%dT%H:%M:%S.%N"
+                                (seconds-to-time seconds-since-unix-epoch)))))))))
 
 (defun parse-epoch-time-at-point ()
   (interactive)
   (parse-epoch-time (thing-at-point 'symbol)))
 (global-set-key (kbd "C-c C-p C-t") 'parse-epoch-time-at-point)
+
+
+(defun int-limits ()
+  "Print the maximum and minimum values for 32-bit signed and unsigned integers."
+  (let ((signed-max (1- (expt 2 31)))
+        (signed-min (- (expt 2 31)))
+        (unsigned-max (1- (expt 2 32)))
+        (unsigned-min 0))
+
+   (format "\n;; 64-bit Signed Integer Range: %s to %s\n;; 64-bit Unsigned Integer Range: %s to %s" signed-min signed-max unsigned-min unsigned-max)))
+
+
+(defun int64-limits ()
+  "Print the maximum and minimum values for 64-bit signed and unsigned integers."
+  (let ((signed-max (1- (expt 2 63)))
+        (signed-min (- (expt 2 63)))
+        (unsigned-max (1- (expt 2 64)))
+        (unsigned-min 0))
+    (format ";;\n;; 64-bit Signed Integer Range: %s to %s\n;; 64-bit Unsigned Integer Range: %s to %s" signed-min signed-max unsigned-min unsigned-max)))
+
+;; (int64-limits) 
+
+;; (int-limits)
+
+;; (/ (1- (expt 2 63)) (expt 10 0)) 9223372036854775807
+
+;; (num-to-words  1482672627) 
+;; (num-to-words  1482672627.025747002)
+;; (num-to-words  1482672627025.747023)  
+;; (num-to-words  1482672627025747.032)  
+;; (num-to-words  1482672627025747023) 
 
 ;; (parse-epoch-time "1482672627") 
 ;; (parse-epoch-time "1482672627.025747002")
@@ -957,7 +1015,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ;; Six seconds apart - think that's how long it took me :-)
 
 ;;In [76]: time.time()
-;;Out[76]: 1710215086.2924154
+;;Out[76]: 1710215086.2924154t
 
 ;;(current-time) (26095 53160 665501 998000)
 
@@ -1519,23 +1577,66 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
     (parse-epoch-time-at-point)))
 
 
-(run-with-idle-timer 2.0 t 'my-epoch-parser-idle-function)
+(run-with-idle-timer 1.0 t 'my-epoch-parser-idle-function)
 
 ;; Add the hover function to programming modes
 ;;(add-hook 'prog-mode-hook 'enable-my-hover-function)
 
 
 
+(require 'cl-lib)
 
+(defun num-to-words (num)
+  "Convert a number to its English words representation."
+  (let ((ones '("zero" "one" "two" "three" "four" "five" "six" "seven" "eight" "nine"))
+        (teens '("ten" "eleven" "twelve" "thirteen" "fourteen" "fifteen" "sixteen" "seventeen" "eighteen" "nineteen"))
+        (tens '("" "" "twenty" "thirty" "forty" "fifty" "sixty" "seventy" "eighty" "ninety"))
+        (thousands '("" "thousand" "million" "billion" "trillion")))
+    (cl-labels ((convert-hundreds (num)
+                 (cond
+                  ((< num 10) (nth num ones))
+                  ((< num 20) (nth (- num 10) teens))
+                  ((< num 100)
+                   (let ((ten-word (nth (/ num 10) tens))
+                         (one-word (nth (% num 10) ones)))
+                     (if (= (% num 10) 0)
+                         ten-word
+                       (concat ten-word "-" one-word))))
+                  ((< num 1000)
+                   (let ((hundred-word (concat (nth (/ num 100) ones) " hundred"))
+                         (remainder (% num 100)))
+                     (if (= remainder 0)
+                         hundred-word
+                       (concat hundred-word " and " (convert-hundreds remainder))))))))
+      (if (= num 0)
+          "zero"
+        (let ((result ""))
+          (dotimes (i (length thousands))
+            (let ((unit-value (expt 1000 i)))
+              (when (>= num unit-value)
+                (let ((current-part (convert-hundreds (% (/ num unit-value) 1000))))
+                  (setq result (concat current-part
+                                       (if (not (string= current-part ""))
+                                           (concat " " (nth i thousands))
+                                         "")
+                                       (if (not (string= result ""))
+                                           (concat ", " result)
+                                         "")))))))
+          result)))))
 
-
-
-
-
-
-
-
-
+;; Examples of usage:
+;; (num-to-words 0)         ;; "zero"
+;; (num-to-words 7)         ;; "seven"
+;; (num-to-words 11)        ;; "eleven"
+;; (num-to-words 23)        ;; "twenty-three"
+;; (num-to-words 85)        ;; "eighty-five"
+;; (num-to-words 100)       ;; "one hundred"
+;; (num-to-words 115)       ;; "one hundred and fifteen"
+;; (num-to-words 342)       ;; "three hundred and forty-two"
+;; (num-to-words 1000)      ;; "one thousand"
+;; (num-to-words 1500)      ;; "one thousand, five hundred"
+;; (num-to-words 1234567)   ;; "one million, two hundred and thirty-four thousand, five hundred and sixty-seven"
+;; (num-to-words 1000000000) ;; "one billion"
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -1698,6 +1799,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
      ("PROG" :foreground "orange" :weight bold)
      ("DONE" :foreground "green" :weight bold)
      ("NEVR" :foreground "dark gray" :weight bold)
+     ("" :foreground "dark gray" :weight bold)
      ("MUST" :foreground "red" :weight bold)))
  '(org-todo-keywords
    '((sequence "TODO" "TODOTODAY" "PROG" "BLKD" "DONE" "NEVR")))
@@ -1705,7 +1807,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(org-twbs-todo-kwd-class-undone "label label-warning")
  '(org-use-tag-inheritance '("wifidetails" "astronomy"))
  '(package-selected-packages
-   '(elisp-format clang-format+ magit-todos lsp-treemacs lsp-ui helm-lsp lsp-mode flycheck-clangcheck pyenv-mode geiser-racket compat magit-gerrit eros axe helm-rg flycheck-mypy forest-blue-theme impatient-mode rg "rg" geiser-guile worf openwith helm-org-ql org-latex-impatient org-drill ace-isearch frog-jump-buffer ace-jump-buffer ztree anki-connect ace-window swift-mode ada-mode yasnippet-classic-snippets yasnippet-snippets helm-dash magit color-theme-sanityinc-tomorrow org-superstar anki-editor key-chord git-timemachine org-anki anki-mode chess weyland-yutani-theme afternoon-theme tron-legacy-theme ox-twbs undo-tree arduino-mode command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti hy-mode org-kanban dracula-theme slime ob-kotlin amd-mode sed-mode ranger doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode multiple-cursors ag helm-projectile projectile dumb-jump helm-cscope ein elpy yaml-mode web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game))
+   '(hide-mode-line elisp-format clang-format+ magit-todos lsp-treemacs lsp-ui helm-lsp lsp-mode flycheck-clangcheck pyenv-mode geiser-racket compat magit-gerrit eros axe helm-rg flycheck-mypy forest-blue-theme impatient-mode rg "rg" geiser-guile worf openwith helm-org-ql org-latex-impatient org-drill ace-isearch frog-jump-buffer ace-jump-buffer ztree anki-connect ace-window swift-mode ada-mode yasnippet-classic-snippets yasnippet-snippets helm-dash magit color-theme-sanityinc-tomorrow org-superstar anki-editor key-chord git-timemachine org-anki anki-mode chess weyland-yutani-theme afternoon-theme tron-legacy-theme ox-twbs undo-tree arduino-mode command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti hy-mode org-kanban dracula-theme slime ob-kotlin amd-mode sed-mode ranger doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode multiple-cursors ag helm-projectile projectile dumb-jump helm-cscope ein elpy yaml-mode web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game))
  '(pdf-view-midnight-colors (cons "#eceff4" "#323334"))
  '(projectile-globally-ignored-files '("TAGS" "urg"))
  '(projectile-indexing-method 'hybrid)
