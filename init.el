@@ -1068,15 +1068,17 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
   (unless (= (length x) 2) (error "No single result"))
   x )
 
+(require 'shadchen)
 (defun find-aurora ()
-  (--> (shell-command-to-string "locate --regex aurora2/.git$")
+  (--> (shell-command-to-string "locate --regex aurora/.git$")
        (s-trim it)
        (s-split "\n" it)
        (-filter #'f-dir? it)
        (-remove #'s-blank? it)
        (match it
-         ( (list x) x ))))
-
+         ( (list x) x )
+         ( _ (error "No match for filtered results '%s'" it))
+  )))
 
 ; (setq foo '("woot")) }
 ; (setq foo '("woot" "toot")) }
@@ -1085,7 +1087,6 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ; (match foo }
 ;   ((list x) x) }
 ;   ) }
-   
 ;; (--map (s-split "\n" it) it)
 ;; (-map (lambda (x) (format "%s/.git" x) it)
 ;; (progn (message "%s" it) it)
