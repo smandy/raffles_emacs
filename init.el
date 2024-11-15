@@ -11,6 +11,143 @@
 (set-frame-font "Liberation Mono 12")
 
 
+(defadvice org-archive-subtree (around fix-hierarchy activate)
+  (let* ((fix-archive-p (and (not current-prefix-arg)
+                             (not (use-region-p))))
+         (afile (org-extract-archive-file (org-get-local-archive-location)))
+         (buffer (or (find-buffer-visiting afile) (find-file-noselect afile))))
+    ad-do-it
+    (when fix-archive-p
+      (with-current-buffer buffer
+        (goto-char (point-max))
+        (while (org-up-heading-safe))
+        (let* ((olpath (org-entry-get (point) "ARCHIVE_OLPATH"))
+               (path (and olpath (split-string olpath "/")))
+               (level 1)
+               tree-text)
+          (when olpath
+            (org-mark-subtree)
+            (setq tree-text (buffer-substring (region-beginning) (region-end)))
+            (let (this-command) (org-cut-subtree))
+            (goto-char (point-min))
+            (save-restriction
+              (widen)
+              (-each path
+                (lambda (heading)
+                  (if (re-search-forward
+                       (rx-to-string
+                        `(: bol (repeat ,level "*") (1+ " ") ,heading)) nil t)
+                      (org-narrow-to-subtree)
+                    (goto-char (point-max))
+                    (unless (looking-at "^")
+                      (insert "\n"))
+                    (insert (make-string level ?*)
+                            " "
+                            heading
+                            "\n"))
+                  (cl-incf level)))
+              (widen)
+              (org-end-of-subtree t t)
+              (org-paste-subtree level tree-text))))))))
+
+
+(defun num-to-words (n)
+  "Convert a number N to its English words representation up to 999 trillion."
+  (let* ((ones '("zero" "one" "two" "three" "four" "five" "six" "seven" "eight" "nine"))
+         (teens '("ten" "eleven" "twelve" "thirteen" "fourteen" "fifteen"
+                  "sixteen" "seventeen" "eighteen" "nineteen"))
+         (tens '("" "" "twenty" "thirty" "forty" "fifty" "sixty" "seventy" "eighty" "ninety"))
+         (scales '("" "thousand" "million" "billion" "trillion"))
+         
+         ;; Function to convert numbers less than 1000
+         (convert-hundreds (lambda (num)
+                             (let* ((hundreds (if (>= num 100)
+                                                  (concat (nth (/ num 100) ones) " hundred") ""))
+                                    (remainder (% num 100))
+                                    (tens-and-ones (cond ((and (>= remainder 10) (< remainder 20))
+                                                          (nth (- remainder 10) teens))
+                                                         ((>= remainder 20)
+                                                          (concat (nth (/ remainder 10) tens)
+                                                                  (if (> (% remainder 10) 0)
+                                                                      (concat "-" (nth (% remainder 10) ones)))))
+                                                         ((> remainder 0)
+                                                          (nth remainder ones)))))
+                               (string-join (remove nil (list hundreds tens-and-ones)) " "))))
+
+         ;; Split number into groups of thousands
+         (groups (let ((res '()))
+                   (while (> n 0)
+                     (push (% n 1000) res)
+                     (setq n (/ n 1000)))
+                   res)))
+    
+    ;; Build final result by converting each group
+    (string-join
+     (remove nil
+             (cl-loop for i from 0 to (1- (length groups))
+                      for group = (nth i groups)
+                      for scale = (nth i scales)
+                      for part = (if (zerop group) nil
+                                   (concat (funcall convert-hundreds group) 
+                                           (if (not (string= scale "")) (concat " " scale))))
+                      collect part))
+     " ")))
+
+
+
+(defun num-to-words (n)
+  "Convert a number N to its English words representation up to 999 trillion."
+  (let* ((ones '("zero" "one" "two" "three" "four" "five" "six" "seven" "eight" "nine"))
+         (teens '("ten" "eleven" "twelve" "thirteen" "fourteen" "fifteen"
+                  "sixteen" "seventeen" "eighteen" "nineteen"))
+         (tens '("" "" "twenty" "thirty" "forty" "fifty" "sixty" "seventy" "eighty" "ninety"))
+         (scales '("" "thousand" "million" "billion" "trillion"))
+         
+         ;; Function to convert numbers less than 1000
+         (convert-hundreds (lambda (num)
+                             (let* ((hundreds (if (>= num 100)
+                                                  (concat (nth (/ num 100) ones) " hundred") ""))
+                                    (remainder (% num 100))
+                                    (tens-and-ones (cond ((and (>= remainder 10) (< remainder 20))
+                                                          (nth (- remainder 10) teens))
+                                                         ((>= remainder 20)
+                                                          (concat (nth (/ remainder 10) tens)
+                                                                  (if (> (% remainder 10) 0)
+                                                                      (concat "-" (nth (% remainder 10) ones)))))
+                                                         ((> remainder 0)
+                                                          (nth remainder ones)))))
+                               (string-join (remove nil (list hundreds tens-and-ones)) " "))))
+
+         ;; Split number into groups of thousands
+         (groups (let ((res '()))
+                   (while (> n 0)
+                     (push (% n 1000) res)
+                     (setq n (/ n 1000)))
+                   res)))
+    
+    ;; Build final result by converting each group
+    (string-join
+     (remove nil
+             (cl-loop for i from 0 to (1- (length groups))
+                      for group = (nth i groups)
+                      for scale = (nth i scales)
+                      for part = (if (zerop group) nil
+                                   (concat (funcall convert-hundreds group) 
+                                           (if (not (string= scale "")) (concat " " scale))))
+                      collect part))
+     " ")))
+
+;; Example usage:
+(num-to-words (* 25 250000)) ; => "six million two hundred fifty thousand"
+(num-to-words 123456789012)  ; => "one hundred twenty-three billion four hundred fifty-six million seven hundred eighty-nine thousand twelve"
+(num-to-words 1002003)       ; => "one million two thousand three"
+(num-to-words 900000000000)  ; => "nine hundred billion"
+(num-to-words 0)             ; => "zero"
+(num-to-words 1000000000000) ; => "one trillion"
+
+
+
+
 (defun valid-perudo-bid-p (current-bid new-bid)
   "Determine if the NEW-BID is valid given the CURRENT-BID in Perudo.
 CURRENT-BID and NEW-BID are cons cells where the car is the quantity and the cdr is the face value."
@@ -32,8 +169,8 @@ CURRENT-BID and NEW-BID are cons cells where the car is the quantity and the cdr
 (let ((current-bid (cons 6 6))
       (new-bid (cons 7 2)))
   (if (valid-perudo-bid-p current-bid new-bid)
-      (message "The bid %s is valid." new-bid)
-    (message "The bid %s is not valid." new-bid)))
+      (message "The bid %s is valid when current bid is %s" new-bid current-bid)
+    (message "The bid %s is not valid if %s is current bid" new-bid current-bid )))
 
 
 (defun kaz ()
@@ -53,11 +190,14 @@ CURRENT-BID and NEW-BID are cons cells where the car is the quantity and the cdr
 
 (global-set-key [f9] 'switch-to-gtd-org)
 
+(global-set-key [f12] 'org-archive-subtree)
+
+
+
 (defun as/do-nothing (&rest args)
   (interactive)
-  ;;(message "Doing nothing with %s %s" args (format-time- "%H:%M:%S.%3N" (current-time)) )
-
-  ;;(message "Doing nothing with %s" args)
+  (message "Doing nothing with %s %s" args (format-time- "%H:%M:%S.%3N" (current-time)) )
+  (message "Doing nothing with %s" args)
   )
 
 (global-set-key [touchscreen-end] 'as/do-nothing)
@@ -216,31 +356,6 @@ CURRENT-BID and NEW-BID are cons cells where the car is the quantity and the cdr
 (autoload 'jsx-mode "jsx-mode" "JSX mode" t)
 
 (require 'dash)
-;; (mapcar (lambda (hook) (add-hook hook (lambda ()
-;;                                         (auto-fill-mode 't)
-;;                                         (flyspell-mode 't))))
-;;         (list (org-mode-hook org-capture-mode-hook )))
-
-
-;; (defun kill-capture-buffer-after-anki-push ()
-;;   (interactive)
-;;   (save-excursion
-;;   (anki-editor-push-notes)
-;;   ;;(message "Buffer is %s" (buffer-name))
-;;   (if (and (s-starts-with-p "CAPTURE-" (buffer-name) )
-;;             (s-contains "anki" (buffer-name)))
-;;       (progn
-;;         ;;(message "Deleting!")
-;;         ;;(flush-lines)
-;;         (kill-current-buffer)
-;;         )
-;;     ;;(message "No match? %s"  (buffer-name))
-;;   )))
-
-;; (eval-after-load "org"
-;;   '(define-key org-mode-map (kbd "<f9>") 'kill-capture-buffer-after-anki-push))
-;;(define-key org-mode-map (kbd "<f9>") 'anki-editor-push-tree)
-
 
 (add-hook 'magit-mode-hook
           (lambda ()
@@ -273,29 +388,6 @@ CURRENT-BID and NEW-BID are cons cells where the car is the quantity and the cdr
     (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
 
 (add-hook 'org-after-todo-statistics-hook #'org-summary-todo)
-
-;; (require 'f)
-
-;; Anki stuff - couldn't get it to work.
-
-;; (defun my-anki-finalizer ()
-;;   (interactive)
-;;             (with-temp-buffer
-;;               (insert-file-contents org-my-anki-file)
-;;               (message "Buffer is %s" (buffer-string))
-;;               (mark-whole-buffer)
-;;               (anki-editor-push-notes '(4) )))
-
-;; (defun my-anki-finalizer ()
-;;   (interactive)
-;;   (message "Running finalizer2 buffer is %s" (buffer-name))
-;;   (save-excursion
-;;     (switch-to-buffer "anki.org")
-;;     (anki-editor-push-notes)
-;;   ))
-
-;;(add-hook 'org-capture-after-finalize-hook 'my-anki-finalizer)
-
 
 (eval-after-load "org-present"
   '(progn
@@ -368,6 +460,7 @@ CURRENT-BID and NEW-BID are cons cells where the car is the quantity and the cdr
 (global-set-key (kbd "C-c C-h C-o") 'helm-occur)
 (global-set-key (kbd "C-c C-h C-a") 'helm-do-ag)
 (global-set-key (kbd "C-c C-p C-f") 'parse-fix)
+(global-set-key (kbd "C-c C-s C-w") 'ispell-word)
 
 (global-set-key (kbd "C-c C-s C-o") 'switch-to-gtd-org)
 
@@ -414,22 +507,12 @@ CURRENT-BID and NEW-BID are cons cells where the car is the quantity and the cdr
 (global-set-key (kbd "C-c r")  'revert-buffer-with-prejudice)
 (add-to-list 'auto-mode-alist '("build\\.gradle" . groovy-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-
-;;(require 'cl)
-;;(setq auto-mode-alist (remove-if
-;;                       (lambda (x) ( equal (cdr x) 'objc-mode)) auto-mode-alist))
 (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
 
 (defun compile-in-own-buffer (buf cmd)
   (interactive)
   (let ((compilation-buffer-name-function (lambda (x) buf) ))
     (compile cmd)))
-
-;;(require 'flycheck-kotlin)
-;;(add-hook 'kotlin-mode-hook 'flycheck-mode)
-
-;; (set-frame-font "Liberation Mono 12")
-;; (set-frame-font "Ubuntu Mono 14")
 
 (add-hook
  'd-mode-hook
@@ -464,27 +547,6 @@ CURRENT-BID and NEW-BID are cons cells where the car is the quantity and the cdr
    (define-key python-mode-map (kbd "C-M-x") 'python-eval-defun-at-point)
    (pyenv-mode)
    ))
-
-(defun compile-agora-debug ()
-  (interactive)
-  (compile-in-own-buffer "build agora debug" "rm -rf ~/agora_debug && mkdir -p ~/agora_debug && cd ~/agora_debug && cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=~/agora_debug/install -G 'Unix Makefiles' ~/repos/agora && make install"))
-
-(defun compile-agora-release ()
-  (interactive)
-  (compile-in-own-buffer "build agora release" "rm -rf ~/agora_debug && mkdir -p ~/agora_release && cd ~/agora_release && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=~/agora_release/install -G 'Unix Makefiles' ~/repos/agora && make install"))
-
-(defun fast-compile-agora-debug ()
-  (interactive)
-  (compile-in-own-buffer "build agora debug" "cd ~/agora_debug && make -j 4"))
-
-(defun fast-compile-agora-release ()
-  (interactive)
-  (compile-in-own-buffer "build agora release" "cd ~/agora_release && make -j 4 && make install"))
-
-(defun fast-compile-agora-release ()
-  (interactive)
-  (compile-in-own-buffer "build agora release" "cd ~/agora_release && make -j 4"))
-
 
 (defun compile-box2d ()
   (interactive)
@@ -579,20 +641,8 @@ CURRENT-BID and NEW-BID are cons cells where the car is the quantity and the cdr
 (global-set-key [f5]  'scroll-up-one)
 (global-set-key [f6]  'scroll-down-one)
 
-;; (global-set-key [f1]  'wg-switch-to-workgroup)
-;; (global-set-key [f2]  'helm-world-time)
-;; (global-set-key [f3]  'helm-cscope-find-global-definition)
-
-
-
-
 (global-set-key [f4] 'magit-status)
 (global-set-key [f5] 'google-this)
-;;(global-set-key [f6]  'helm-man-woman)
-
-;; (require 'eshell-mode)
-;; (add-hook 'eshell-mode-hook (lambda ()
-;; 			      (define-key eshell-mode-map (kbd "<f7>") 'compile)))
 
 (--each (list c-mode-base-map dired-mode-map compilation-mode-map shell-mode-map)
      (define-key it (kbd "<f7>") 'compile) )
@@ -612,7 +662,6 @@ CURRENT-BID and NEW-BID are cons cells where the car is the quantity and the cdr
     (insert (format "cd %s" dir))
     (eshell-send-input)
     ))
-
 
 (defun switch-shell-to-directory ()
   (interactive)
@@ -713,6 +762,18 @@ CURRENT-BID and NEW-BID are cons cells where the car is the quantity and the cdr
 (global-set-key (kbd "C-M-g") 'dumb-jump-go)
 
 (nyan-mode 't)
+
+(defun format-number-with-separator (number &optional separator)
+  "Format NUMBER with a specified SEPARATOR as thousands separators.
+If SEPARATOR is not provided, it defaults to a comma."
+  (let ((sep (or separator ","))
+        (num-str (number-to-string number)))
+    (when (string-match "\\`-?[0-9]+\\'" num-str)
+      ;; Add separator in groups of three digits from the end.
+      (while (string-match "\\([0-9]+\\)\\([0-9]\\{3\\}\\)" num-str)
+        (setq num-str (replace-match (concat "\\1" sep "\\2") t nil num-str)))
+      num-str)))
+
 
 (defun dump-fonts ()
   (interactive) 
@@ -969,6 +1030,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                                 (seconds-to-time seconds-since-unix-epoch)))))))))
 
 (defun parse-epoch-time-at-point ()
+  "Have a go at parsing a 'x-since-epoch' timestamp from the current point"
   (interactive)
   (parse-epoch-time (thing-at-point 'symbol)))
 (global-set-key (kbd "C-c C-p C-t") 'parse-epoch-time-at-point)
@@ -1073,12 +1135,13 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
   (--> (shell-command-to-string "locate --regex aurora/.git$")
        (s-trim it)
        (s-split "\n" it)
-       (-filter #'f-dir? it)
-       (-remove #'s-blank? it)
+       (-filter 'f-dir? it)
+       (-remove 's-blank? it)
        (match it
-         ( (list x) x )
-         ( _ (error "No match for filtered results '%s'" it))
-  )))
+         ((list x) x)
+         (_ (error "No unique match for filtered results '%s'" it)))))
+
+;;(find-aurora) 
 
 ; (setq foo '("woot")) }
 ; (setq foo '("woot" "toot")) }
@@ -1093,7 +1156,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ;; (--map (s-split "\n" it) (list "foo\ngoo" "bar\nsue"))
 ;; (funcall (lambda (x) (f-dir? (format "%s/.git" x))) "/home/andy/repos/randomcpp")
 
-;;(find-aurora) 
+
 
 (defun add-to-path (orig to-add)
   (->> (--if-let orig (format "%s:%s" it to-add) to-add) 
@@ -1177,6 +1240,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 
 (load "~/.emacs.d/tags.el")
+;;(load "~/.emacs.d/org_archive.el")
 
 
 ;;(global-set-key  [f7] 'get-tag-counts)
@@ -1211,11 +1275,56 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (define-key org-mode-map  (kbd "<f9>") 'org-display-outline-path)
 
 
+
+
 (defun my-outline-path ()
   (interactive)
   (message (s-join " > " (org-get-outline-path))))
 
 (define-key org-mode-map  (kbd "<f10>") 'my-outline-path)
+
+(defun my/org-archive-subtree-preserve-structure ()
+  "Archive the current subtree while preserving its hierarchical structure in the archive file."
+  (interactive)
+  (let* ((org-archive-location (or (org-entry-get nil "ARCHIVE" t)
+                                   org-archive-location))
+         (archive-file (car (org-split-string org-archive-location "::")))
+         (archive-buffer (find-file-noselect archive-file))
+         (current-path (org-get-outline-path t)) ; Get hierarchical path as a list
+         (subtree-text (org-get-subtree)))
+    ;; Remove subtree from the current file
+    (org-cut-subtree)
+    (with-current-buffer archive-buffer
+      ;; Navigate to or create the appropriate hierarchy in the archive file
+      (goto-char (point-min))
+      (dolist (heading current-path)
+        (unless (re-search-forward
+                 (format org-complex-heading-regexp-format (regexp-quote heading))
+                 nil t)
+          ;; If heading doesn't exist, create it
+          (goto-char (point-max))
+          (unless (bolp) (insert "\n"))
+          (org-insert-heading)
+          (insert heading))
+        (org-narrow-to-subtree)) ; Narrow to keep searching within the subtree
+      (widen) ; Exit narrowed view before pasting
+      ;; Move to the correct location and paste the subtree
+      (goto-char (point-max))
+      (unless (bolp) (insert "\n"))
+      (insert subtree-text))
+    ;; Save changes in the archive file
+    (with-current-buffer archive-buffer
+      (save-buffer))))
+
+
+
+(defun org-get-subtree ()
+  "Return the text of the current subtree as a string."
+  (save-restriction
+    (org-narrow-to-subtree)
+    (buffer-substring-no-properties (point-min) (point-max))))
+
+
 
 
 (defun get-heading-counts ()
@@ -1288,6 +1397,17 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ;; 8=FIX.4.29=16335=D34=97249=TESTBUY352=20190206-16:25:10.40356=TESTSELL311=14163685067084226997921=238=10040=154=155=AAPL60=20190206-16:25:08.968207=TO6000=TEST123410=106"  
 
 ;;(global-set-key [f3] 'parse-fix)
+
+;;(frog-menu-read "Select option: " '("Option1" "Option2" "Option3"))
+
+
+
+(defun flyspell-correct-using-frog-menu ()
+  (interactive)
+  (let* ((corrections (flyspell-correct-word-generic))
+         (choice (frog-menu-read "Correct with: " corrections)))
+    (when choice
+      (flyspell-do-correct 'save choice nil (point) (point)))))
 
 (defun wu (fmt x)
   (message fmt x)
@@ -1706,6 +1826,8 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(jdee-db-spec-breakpoint-face-colors (cons "#000000" "#3f3f3f"))
  '(lsp-pylsp-plugins-flake8-exclude [])
  '(lsp-pylsp-plugins-flake8-ignore ["E265" "E402" "D102" "E302" "D103" "E303"])
+ '(lsp-pylsp-plugins-mypy-enabled t)
+ '(lsp-pylsp-plugins-mypy-enables 't)
  '(lsp-pylsp-plugins-pydocstyle-add-ignore ["D103"])
  '(lsp-pylsp-plugins-pydocstyle-enabled nil)
  '(magit-todos-exclude-globs '(".git/" "deps/" "vendor/"))
@@ -1720,7 +1842,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
      ("im" tags-todo "+morning" nil)))
  '(org-agenda-files
    '("/home/andy/repos/gtd/gtd.org" "/home/andy/repos/gtd/journal.org"))
- '(org-babel-load-languages '((dot . t) (emacs-lisp . t) (C . t)))
+ '(org-babel-load-languages '((dot . t) (emacs-lisp . t) (C . t) (shell . t)))
  '(org-capture-templates
    '(("t" "Todo" entry
       (file+headline "~/repos/gtd/gtd.org" "TODOs")
@@ -1780,7 +1902,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(org-twbs-todo-kwd-class-undone "label label-warning")
  '(org-use-tag-inheritance '("wifidetails" "astronomy"))
  '(package-selected-packages
-   '(shadchen dash hide-mode-line elisp-format clang-format+ magit-todos lsp-treemacs lsp-ui helm-lsp lsp-mode flycheck-clangcheck pyenv-mode geiser-racket compat magit-gerrit eros axe helm-rg flycheck-mypy forest-blue-theme impatient-mode rg "rg" geiser-guile worf openwith helm-org-ql org-latex-impatient org-drill ace-isearch frog-jump-buffer ace-jump-buffer ztree anki-connect ace-window swift-mode ada-mode yasnippet-classic-snippets yasnippet-snippets helm-dash magit color-theme-sanityinc-tomorrow org-superstar anki-editor key-chord git-timemachine org-anki anki-mode chess weyland-yutani-theme afternoon-theme tron-legacy-theme ox-twbs undo-tree arduino-mode command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti hy-mode org-kanban dracula-theme slime ob-kotlin amd-mode sed-mode ranger doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode multiple-cursors ag helm-projectile projectile dumb-jump helm-cscope ein elpy yaml-mode web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game))
+   '(format-all shadchen dash hide-mode-line elisp-format clang-format+ magit-todos lsp-treemacs lsp-ui helm-lsp lsp-mode flycheck-clangcheck pyenv-mode geiser-racket compat magit-gerrit eros axe helm-rg flycheck-mypy forest-blue-theme impatient-mode rg "rg" geiser-guile worf openwith helm-org-ql org-latex-impatient org-drill ace-isearch frog-jump-buffer ace-jump-buffer ztree anki-connect ace-window swift-mode ada-mode yasnippet-classic-snippets yasnippet-snippets helm-dash magit color-theme-sanityinc-tomorrow org-superstar anki-editor key-chord git-timemachine org-anki anki-mode chess weyland-yutani-theme afternoon-theme tron-legacy-theme ox-twbs undo-tree arduino-mode command-log-mode smart-dash zones psgml reason-mode webfeeder olivetti hy-mode org-kanban dracula-theme slime ob-kotlin amd-mode sed-mode ranger doom-themes aggressive-indent meson-mode ace-mc helm-org-rifle elixir-mode dfmt f3 f org-mobile-sync company-dcd dirtree direx indium flymake-cursor darcula-theme typescript-mode go julia-shell julia-repl julia-mode flycheck-kotlin erlang google-this py-autopep8 flymake-python-pyflakes haskell-mode editorconfig flycheck-clang-tidy kotlin-mode erc-view-log color-theme-sanityinc-solarized color-theme-solarized scala-mode helm-unicode cmake-mode nim-mode json-rpc restclient workgroups2 gnuplot gnuplot-mode orgtbl-ascii-plot forth-mode csv-mode git-gutter org-present json-mode d-mode ponylang-mode flycheck-pony cider clojure-mode multiple-cursors ag helm-projectile projectile dumb-jump helm-cscope ein elpy yaml-mode web-mode utop tuareg tide switch-window swiper-helm solarized-theme sml-mode smex scala-mode2 sass-mode rust-mode rtags rainbow-delimiters quack pylint protobuf-mode paredit org nyan-mode nurumacs nasm-mode monokai-theme monky markdown-mode less-css-mode jsx-mode js3-mode jedi jade-mode ido-ubiquitous iasm-mode helm-swoop helm-package helm-gtags helm-company helm-cider helm-ag groovy-mode graphviz-dot-mode go-mode ghci-completion ghc-imported-from ghc ggtags geiser fsharp-mode fountain-mode flycheck-pyflakes flycheck-irony flycheck-haskell find-file-in-project ensime elm-mode edts dash-functional dart-mode csv-nav csharp-mode coffee-mode clang-format caroline-theme caml auctex ace-jump-mode ac-slime ac-helm ac-haskell-process ac-clang ac-cider abyss-theme 2048-game))
  '(pdf-view-midnight-colors (cons "#eceff4" "#323334"))
  '(projectile-globally-ignored-files '("TAGS" "urg"))
  '(projectile-indexing-method 'hybrid)
@@ -1790,7 +1912,11 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(rustic-ansi-faces
    ["#323334" "#C16069" "#A2BF8A" "#ECCC87" "#80A0C2" "#B58DAE" "#86C0D1" "#eceff4"])
  '(safe-local-variable-values
-   '((helm-ag-command-option . "-tpy -tcpp -td")
+   '((etags-regen-ignores "test/manual/etags/")
+     (etags-regen-regexp-alist
+      (("c" "objc")
+       "/[ \11]*DEFVAR_[A-Z_ \11(]+\"\\([^\"]+\\)\"/\\1/" "/[ \11]*DEFVAR_[A-Z_ \11(]+\"[^\"]+\",[ \11]\\([A-Za-z0-9_]+\\)/\\1/"))
+     (helm-ag-command-option . "-tpy -tcpp -td")
      (test-case-name . twisted.internet.test.test_qtreactor)
      (test-case-name . twisted.internet.test.test_inotify)
      (test-case-name . twisted.internet.test.test_core)))

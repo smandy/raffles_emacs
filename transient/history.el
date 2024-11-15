@@ -28,6 +28,6 @@
                ("--autostash"))
  (magit-remote
   ("-f"))
- (magit-remote.<remote>.*url "git@github.com:smandy/implot.git" "git@github.com:epezent/implot.git" "git@github.com:smandy/aurora.git" "git@github.com:smandy/zenith.git")
+ (magit-remote.<remote>.*url "git@github.com:smandy/argo.git" "git@bitbucket.org:smandy/argo.git" "git@github.com:smandy/implot.git" "git@github.com:epezent/implot.git" "git@github.com:smandy/aurora.git" "git@github.com:smandy/zenith.git")
  (magit-run nil)
  (magit-tag nil))
