@@ -2,7 +2,13 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("jobhunt"
+(("goldStars.org"
+ (filename . "~/repos/gtd/goldStars.org")
+ (front-context-string . "\n#+SEQ_TODO: TOD")
+ (rear-context-string)
+ (position . 1)
+ (last-modified 26439 29640 757715 264000))
+("jobhunt"
  (filename . "~/repos/gtd/gtd.org")
  (front-context-string . "** Jobhunt\n*** 2")
  (rear-context-string . "en seed capital\n")
@@ -70,16 +76,16 @@
  (last-modified 26253 17527 885720 226000))
 ("org-refile-last-stored"
  (filename . "~/repos/gtd/gtd.org")
- (front-context-string . "*** [2024-11-13 ")
- (rear-context-string . "as root though!\n")
- (position . 817737)
- (last-modified 26423 29698 850381 572000))
+ (front-context-string . "** ESTA Waiver F")
+ (rear-context-string . "+------------|\n\n")
+ (position . 453279)
+ (last-modified 26423 38241 566601 938000))
 ("org-capture-last-stored"
- (filename . "~/repos/gtd/gtd.org")
- (front-context-string . "** [2024-11-15 F")
- (rear-context-string . " [20pt]\n* Inbox\n")
- (position . 342)
- (last-modified 26423 15396 373132 359000))
+ (filename . "~/repos/gtd/journal.org")
+ (front-context-string . "**** [2024-11-27")
+ (rear-context-string . " every evening.\n")
+ (position . 982745)
+ (last-modified 26439 4643 654687 683000))
 ("unabomber_manifesto.org"
  (filename . "~/Dropbox/unabomber_manifesto.org")
  (front-context-string . "AUTONOMY\n\n42. Au")

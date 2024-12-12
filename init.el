@@ -1029,6 +1029,12 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                                 "%Y-%m-%dT%H:%M:%S.%N"
                                 (seconds-to-time seconds-since-unix-epoch)))))))))
 
+;; (parse-epoch-time "1482672627")
+;; (parse-epoch-time "1482672627.025747002") 
+;; (parse-epoch-time "1482672627025.747023")   
+;; (parse-epoch-time "1482672627025747.032")  
+;; (parse-epoch-time "1482672627025747023") 
+
 (defun parse-epoch-time-at-point ()
   "Have a go at parsing a 'x-since-epoch' timestamp from the current point"
   (interactive)
@@ -1054,26 +1060,6 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
         (unsigned-min 0))
     (format ";;\n;; 64-bit Signed Integer Range: %s to %s\n;; 64-bit Unsigned Integer Range: %s to %s" signed-min signed-max unsigned-min unsigned-max)))
 
-;; (int64-limits) 
-
-;; (int-limits)
-
-;; (/ (1- (expt 2 63)) (expt 10 0)) 9223372036854775807
-
-;; (num-to-words  1482672627) 
-;; (num-to-words  1482672627.025747002)
-;; (num-to-words  1482672627025.747023)  
-;; (num-to-words  1482672627025747.032)  
-;; (num-to-words  1482672627025747023) 
-
-;; (num-to-words 9223372036854775808)
-
-
-;; (parse-epoch-time "1482672627") 
-;; (parse-epoch-time "1482672627.025747002")
-;; (parse-epoch-time "1482672627025.747023")  
-;; (parse-epoch-time "1482672627025747.032")  
-;; (parse-epoch-time "1482672627025747023") 
 
 ;; Experiment - ( rough) capture timestamps with current-time in emacs
 ;; and time.time() in python. Reverse engineer the time value in python
@@ -1378,11 +1364,15 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
   (let* ((msg (thing-at-point 'line))
          (parsed (->> msg
                       (string-match "8=FIX.*")
-                      (substring msg )
+                      (substring msg)
                       (s-split "")
-                      (--map (s-split "=" it))  ;; Split into pairs
+                      (--map (s-split "=" it))       ;; Split into pairs
                       (--filter (= (length it) 2))   ;; reject non-pair pairs
-                      (--map (apply 'cons it))   ;; turn into cons cells for convenience (list a b ) -> (a . b)
+                      (--map (apply 'cons it))       ;; turn into cons
+                                                     ;; cells for
+                                                     ;; convenience
+                                                     ;; (list a b ) ->
+                                                     ;; (a . b)
                       (-map (-lambda ((tag_value &as tag . value))
                               (list (gethash tag tags-hash) tag
                                     (--if-let (gethash tag_value enums-hash) (format "%s (%s)" value it) value))))
