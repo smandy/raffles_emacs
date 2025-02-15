@@ -192,11 +192,9 @@ CURRENT-BID and NEW-BID are cons cells where the car is the quantity and the cdr
 
 (global-set-key [f12] 'org-archive-subtree)
 
-
-
 (defun as/do-nothing (&rest args)
   (interactive)
-  (message "Doing nothing with %s %s" args (format-time- "%H:%M:%S.%3N" (current-time)) )
+  ;;(message "Doing nothing with %s %s" args (format-time "%H:%M:%S.%3N" (current-time)) )
   (message "Doing nothing with %s" args)
   )
 
@@ -210,6 +208,8 @@ CURRENT-BID and NEW-BID are cons cells where the car is the quantity and the cdr
   (princ (with-current-buffer buffer
            (format "<!DOCTYPE html><html><title>Impatient Markdown</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://ndossougbe.github.io/strapdown/dist/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
          (current-buffer)))
+
+(set-fontset-font t 'unicode "Noto Sans Symbols2" nil 'append)
 
 
 
@@ -545,7 +545,7 @@ CURRENT-BID and NEW-BID are cons cells where the car is the quantity and the cdr
 'python-mode-hook
  (lambda ()
    (define-key python-mode-map (kbd "C-M-x") 'python-eval-defun-at-point)
-   (pyenv-mode)
+   ;;(pyenv-mode)
    ))
 
 (defun compile-box2d ()
@@ -1004,8 +1004,8 @@ the * TODO [#A] items with latest dates go to the top."
 
 (defun parse-epoch-time (s)
   "Parse symbol into an epoch time. Use heuristics to determine if dealing
-with micros, seconds, nanos etc. Display result using 'message' if successful"
-  (require 'dash)
+   with micros, seconds, nanos etc. Display result using
+   'message' if successful"
   (cond ((stringp s)
         (let* ((x (float (string-to-number s))) ;; Non number parses to zero
                (unix-epoch-year 1970)
@@ -1029,7 +1029,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                                 "%Y-%m-%dT%H:%M:%S.%N"
                                 (seconds-to-time seconds-since-unix-epoch)))))))))
 
-;; (parse-epoch-time "1482672627")
+;; (parse-epoch-time "1482672627") 
 ;; (parse-epoch-time "1482672627.025747002") 
 ;; (parse-epoch-time "1482672627025.747023")   
 ;; (parse-epoch-time "1482672627025747.032")  
@@ -1041,6 +1041,12 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
   (parse-epoch-time (thing-at-point 'symbol)))
 (global-set-key (kbd "C-c C-p C-t") 'parse-epoch-time-at-point)
 
+(defun my-epoch-parser-idle-function ()
+  "Run `my-hover-function` if Emacs is idle."
+  (when (not (input-pending-p))  ; Check if there's no pending input
+    (parse-epoch-time-at-point)))
+
+(run-with-idle-timer 1.0 t 'my-epoch-parser-idle-function)
 
 (defun int-limits ()
   "Print the maximum and minimum values for 32-bit signed and unsigned integers."
@@ -1368,11 +1374,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
                       (s-split "")
                       (--map (s-split "=" it))       ;; Split into pairs
                       (--filter (= (length it) 2))   ;; reject non-pair pairs
-                      (--map (apply 'cons it))       ;; turn into cons
-                                                     ;; cells for
-                                                     ;; convenience
-                                                     ;; (list a b ) ->
-                                                     ;; (a . b)
+                      (--map (apply 'cons it))       ;; turn into cons cells forconvenience (list a b ) -> (a . b)
                       (-map (-lambda ((tag_value &as tag . value))
                               (list (gethash tag tags-hash) tag
                                     (--if-let (gethash tag_value enums-hash) (format "%s (%s)" value it) value))))
@@ -1490,10 +1492,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 
 (eval-after-load 'hy-mode '(progn
                              (define-key hy-mode-map (kbd "C-c C-c") 'hy-shell-eval-buffer)
-                             (define-key hy-mode-map (kbd "C-c C-r") 'hy-shell-eval-region)
-                             (define-key hy-mode-map (kbd "<f8>") 'run-octave)))
-
-
+                             (define-key hy-mode-map (kbd "C-c C-r") 'hy-shell-eval-region)))
 
 (eval-after-load 'nodejs-repl
   '(progn
@@ -1513,14 +1512,14 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 (require 'ob-octave)
 (require 'ob-scala)
 
-;; Want to have inline images displayed after executin a block of python code
+;; Want to have inline images displayed after executing a block of python code
 (advice-add 'org-babel-execute-src-block :after (lambda (&rest args)
                                                   (message "Display images %s" (length args))
                                                   (org-display-inline-images)))
 
 ;; There was a place before time where undo tree didn't exist
 (require 'undo-tree)
-(global-undo-tree-mode)
+;;(global-undo-tree-mode)
 
 ;; Add a cc-mode style for editing LLVM C and C++ code
 (c-add-style "llvm.org"
@@ -1705,13 +1704,9 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
 ;;   )
 
 
-(defun my-epoch-parser-idle-function ()
-  "Run `my-hover-function` if Emacs is idle."
-  (when (not (input-pending-p))  ; Check if there's no pending input
-    (parse-epoch-time-at-point)))
 
 
-(run-with-idle-timer 1.0 t 'my-epoch-parser-idle-function)
+
 
 ;; Add the hover function to programming modes
 ;;(add-hook 'prog-mode-hook 'enable-my-hover-function)
@@ -1835,8 +1830,8 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
  '(org-babel-load-languages '((dot . t) (emacs-lisp . t) (C . t) (shell . t)))
  '(org-capture-templates
    '(("t" "Todo" entry
-      (file+headline "~/repos/gtd/gtd.org" "TODOs")
-      "* TODO %?" :prepend t)
+      (file+olp "~/repos/gtd/gtd.org" "Inbox")
+      "* TODO %U %?" :prepend t)
      ("T" "Aurora Todo" entry
       (file+headline "~/repos/aurora/todos.org" "TODO")
       "* TODO %?" :prepend t)
@@ -1854,7 +1849,7 @@ with micros, seconds, nanos etc. Display result using 'message' if successful"
       "* %<%H:%M>\12:PROPERTIES:\12:ANKI_NOTE_TYPE: Basic\12:ANKI_DECK: main\12:END:\12** Front\12%?\12** Back\12" :kill-buffer 't)
      ("s" "Schedule" entry
       (file+olp "~/repos/gtd/gtd.org" "Schedule")
-      "* TODO %?" :prepend 't)
+      "* %u %?" :prepend 't)
      ("p" "Shopping" entry
       (file+headline "~/repos/gtd/_shopping.org" "Stuff")
       "* TODO %?" :prepend t)
